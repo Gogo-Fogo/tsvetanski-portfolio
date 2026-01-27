@@ -6,39 +6,40 @@ import { ArrowLeft, GitFork, Lightbulb, Car, ScrollText, Gamepad2, Orbit } from 
 
 const projects = [
   {
-    title: "Guilty As Arrr",
-    description: "Real-time spatial audio attenuation for multi-user social deduction.",
-    tags: ["Networked Multiplayer", "Photon Fusion", "Spatial Audio"],
+    title: "Repo X (Multiplayer Voice)",
+    description: "Real-time spatial audio attenuation for multi-user environments. A social deduction prototype focused on networked voice latency and proximity chat.",
+    tags: ["Networked Systems", "Photon Voice 2", "Unity"],
     icon: <GitFork className="w-6 h-6" />
   },
   {
-    title: "VR Dirt Bike Game",
-    description: "Immersive training for smart and safe driving practices.",
-    tags: ["VR Safety Sim", "Educational VR", "HCI"],
+    title: "VR Interaction Lab",
+    description: "Precision interaction mechanics for hazardous material handling and assembly. A defense & safety protocol simulation.",
+    tags: ["Human Factors", "XR Interaction Toolkit", "Hand Tracking"],
     icon: <Lightbulb className="w-6 h-6" />
   },
   {
-    title: "VR Car Drift/Driving Simulator",
-    description: "High-fidelity spatial interaction and vehicle dynamics in a night city environment.",
-    tags: ["VR Driving Sim", "Vehicle Physics", "Spatial Input"],
+    title: "Trash Been",
+    description: "Rapid prototyping showcase. Built in 1 week (Winner of Breda Application). Demonstrates tight scope management and visual scripting systems.",
+    tags: ["Technical Design", "Visual Scripting", "Rapid Prototyping"],
     icon: <Car className="w-6 h-6" />
   },
+  // Add 3 more empty placeholders for the remaining projects to maintain grid structure for now
   {
-    title: "Fallout Mod",
-    description: "Overhauled game level demonstrating world-building and existing IP adaptation.",
-    tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
-    icon: <ScrollText className="w-6 h-6" />
-  },
-  {
-    title: "Shonen TCG Game",
-    description: "Developing a robust 3D multiplayer trading card game prototype.",
-    tags: ["Multiplayer Gamedev", "3D Card Mechanics", "Game Systems"],
+    title: "Project Alpha",
+    description: "Placeholder for future simulation or XR project.",
+    tags: ["Simulation", "XR", "Future Project"],
     icon: <Gamepad2 className="w-6 h-6" />
   },
   {
-    title: "VR Patapon Game (GDD)",
-    description: "Conceptualizing an innovative VR rhythm-strategy game.",
-    tags: ["VR Game Design", "GDD", "Rhythm-based"],
+    title: "Project Beta",
+    description: "Placeholder for future simulation or XR project.",
+    tags: ["Simulation", "XR", "Future Project"],
+    icon: <ScrollText className="w-6 h-6" />
+  },
+  {
+    title: "Project Gamma",
+    description: "Placeholder for future simulation or XR project.",
+    tags: ["Simulation", "XR", "Future Project"],
     icon: <Orbit className="w-6 h-6" />
   }
 ];

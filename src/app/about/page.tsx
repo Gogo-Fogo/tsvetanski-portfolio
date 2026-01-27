@@ -28,12 +28,12 @@ export default function About() {
             <div className="space-y-8">
               <div>
                 <h3 className="font-bold text-xl">M.S. Interaction Design & Information Architecture</h3>
-                <p className="text-gray-500 font-mono text-sm uppercase">University of Baltimore (Incoming Spring 2026, Accelerated)</p>
+                <p className="text-gray-500 font-mono text-sm uppercase">University of Baltimore (Incoming Spring 2026)</p>
                 <p className="mt-2 text-gray-600 max-w-md">
-                  **STEM Designated.** Focus: Human-Computer Interaction (HCI), User Research, Human-Systems Integration.
-                </p>
-                <p className="mt-2 text-blue-600 font-bold">
-                  *Currently working on a project for a US Military client as part of this program.*
+                  **STEM Designated.** Focus: Human-Computer Interaction (HCI), User Research, and Designing Complex Systems (Human-Systems Integration).
+                  <br />
+                  <br />
+                  Selected for accelerated track. Conducting Human-Systems Integration research for **US Military** client projects.
                 </p>
               </div>
               <div>
