@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Georgi Tsvetanski | Spatial Interaction Prototyper",
-  description: "Simulation Engineering & Spatial Interaction Prototyping Portfolio",
+  title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
+  description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
 };
 
 export default function RootLayout({

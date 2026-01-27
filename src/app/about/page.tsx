@@ -8,7 +8,7 @@ export default function About() {
           <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO HOME
           </Link>
-          <h1 className="text-4xl font-bold tracking-tighter mt-4">BIOMETRICS & BACKGROUND</h1>
+            <h1 className="text-4xl font-bold tracking-tighter mt-4">BIOMETRICS & BACKGROUND</h1>
         </header>
 
         <section className="mb-16">
@@ -27,8 +27,25 @@ export default function About() {
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-400 mb-6">Education</h2>
             <div className="space-y-8">
               <div>
-                <h3 className="font-bold text-xl">STEM M.S.</h3>
-                <p className="text-gray-500 font-mono text-sm uppercase">Simulation & Interactive Media</p>
+                <h3 className="font-bold text-xl">M.S. Interaction Design & Information Architecture</h3>
+                <p className="text-gray-500 font-mono text-sm uppercase">University of Baltimore (Incoming Spring 2026, Accelerated)</p>
+                <p className="mt-2 text-gray-600 max-w-md">
+                  **STEM Designated.** Focus: Human-Computer Interaction (HCI), User Research, Human-Systems Integration.
+                </p>
+                <p className="mt-2 text-blue-600 font-bold">
+                  *Currently working on a project for a US Military client as part of this program.*
+                </p>
+              </div>
+              <div>
+                <h3 className="font-bold text-xl">B.S. Simulation and Game Design</h3>
+                <p className="text-gray-500 font-mono text-sm uppercase">University of Baltimore (Jan 2025)</p>
+                <p className="mt-2 text-gray-600 max-w-md">
+                  **STEM Designated.** Coding & Development Track. Focused on application of simulation to non-entertainment fields.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-bold text-xl">B.A. Communication and Media Studies</h3>
+                <p className="text-gray-500 font-mono text-sm uppercase">University of Maryland (Jan 2023)</p>
               </div>
             </div>
           </section>
@@ -36,10 +53,12 @@ export default function About() {
           <section>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-400 mb-6">Core Competencies</h2>
             <ul className="space-y-2 font-mono text-sm">
-              <li>- Spatial Prototyping</li>
-              <li>- Simulation Engineering</li>
-              <li>- XR Interaction Design</li>
-              <li>- Performance Optimization</li>
+              <li>- Spatial Interaction Prototyping (Unity/XR)</li>
+              <li>- Simulation Engineering & Human Factors</li>
+              <li>- AI-Assisted Development & Rapid Prototyping</li>
+              <li>- Networked Multiplayer Systems (Photon)</li>
+              <li>- User Research & HCI Principles</li>
+              <li>- Live-Ops & Product Management</li>
             </ul>
           </section>
         </div>
