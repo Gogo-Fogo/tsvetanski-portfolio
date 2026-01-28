@@ -15,6 +15,28 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
   description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+  metadataBase: new URL("https://tsvetanski.com"),
+  openGraph: {
+    title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
+    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+    url: "https://tsvetanski.com",
+    siteName: "Georgi Tsvetanski Portfolio",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Georgi Tsvetanski Portfolio"
+      }
+    ],
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
+    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+    images: ["/og-image.svg"]
+  }
 };
 
 export default function RootLayout({

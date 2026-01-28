@@ -47,6 +47,49 @@ const education = [
   }
 ];
 
+const experience = [
+  {
+    role: "QA Tester | Gameplay Analyst",
+    org: "Shokuho Mod Team (Mount & Blade II: Bannerlord)",
+    period: "Mar 2025 – Present",
+    highlights: [
+      "Structured playtests and bug documentation for AI, combat, and economy systems.",
+      "Performance monitoring using MSI Afterburner and OBS Studio.",
+      "Statistical summaries to inform balance and design decisions."
+    ]
+  },
+  {
+    role: "Digital & Visual Media Specialist",
+    org: "UMD Cyber-Physical Systems Engineering",
+    period: "May 2024 – Oct 2024",
+    highlights: [
+      "Led video production and interviews for program visibility.",
+      "Managed social media content strategy and campaign reporting.",
+      "Mentored interns and coordinated media support at events."
+    ]
+  },
+  {
+    role: "Game Developer | Multimedia Specialist | Senior Community Manager",
+    org: "Pixel Bulb Studio (Shinobi Story)",
+    period: "Jan 2021 – Apr 2024",
+    highlights: [
+      "Designed in-game content, NPC behaviors, and level flows.",
+      "Produced marketing media, social assets, and community campaigns.",
+      "Analyzed player behavior and retention strategies."
+    ]
+  },
+  {
+    role: "President / Vice President",
+    org: "Undergraduate Communication Association (UCA)",
+    period: "May 2023 – Dec 2024",
+    highlights: [
+      "Led recruitment, budgeting, and strategic planning.",
+      "Directed events, partnerships, and marketing efforts.",
+      "Elevated the organization to Tier 2 via leadership program completion."
+    ]
+  }
+];
+
 export default function Resume() {
   return (
     <main className="min-h-screen bg-[#f7f6f3] text-black p-8 md:p-24 font-sans">
@@ -103,6 +146,26 @@ export default function Resume() {
                   <p className="font-semibold text-black">{item.title}</p>
                   <p className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.detail}</p>
                   {item.note ? <p className="mt-2">{item.note}</p> : null}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Experience</h2>
+            <div className="space-y-6 text-sm text-gray-600">
+              {experience.map((item) => (
+                <div key={item.role}>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="font-semibold text-black">{item.role}</p>
+                    <span className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.period}</span>
+                  </div>
+                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.org}</p>
+                  <ul className="mt-2 space-y-1">
+                    {item.highlights.map((point) => (
+                      <li key={point}>- {point}</li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>

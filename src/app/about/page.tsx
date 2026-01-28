@@ -60,6 +60,27 @@ export default function About() {
           </section>
         </div>
 
+        <section className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Certifications</h2>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>- Google Ads Search Certification</li>
+              <li>- Design Powered by Data: UX Web Analytics</li>
+              <li>- User Experience (UX) for Non-Designers</li>
+              <li>- Bulgarian Language Proficiency (CEFR B2)</li>
+            </ul>
+          </div>
+          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Honors & Awards</h2>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>- Montgomery College Excellence in Equity Award (Digital Art)</li>
+              <li>- Phi Theta Kappa Honor Society</li>
+              <li>- II International Children’s Art Contest (Turgenev)</li>
+              <li>- “Stefan Gechev” Literature Competition Recognition</li>
+            </ul>
+          </div>
+        </section>
+
         <section className="mt-24 border-t border-gray-200 pt-16">
           <div className="flex flex-wrap gap-4">
             <Link href="/resume" className="inline-block rounded-full border border-black bg-black text-white px-8 py-4 text-xs font-semibold uppercase tracking-[0.3em] hover:bg-transparent hover:text-black transition-colors">

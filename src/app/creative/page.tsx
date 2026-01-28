@@ -46,6 +46,20 @@ export default function Creative() {
 
         <section className="space-y-8">
           <div className="border border-gray-100 rounded-2xl p-8 space-y-4">
+            <h2 className="text-xl font-semibold tracking-tight">Writing & Storytelling</h2>
+            <p className="text-gray-600">
+              Published blog writing focused on science, student life, and storytelling for the Universities at Shady Grove.
+            </p>
+            <a
+              className="text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-black"
+              href="https://uatshadygrove.org/author/georgitsvetanskigogo/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View USG Author Archive
+            </a>
+          </div>
+          <div className="border border-gray-100 rounded-2xl p-8 space-y-4">
             <h2 className="text-xl font-semibold tracking-tight">Videography & Motion</h2>
             <p className="text-gray-600">
               Short-form reels, trailers, and motion pieces that communicate interaction design and visual storytelling.

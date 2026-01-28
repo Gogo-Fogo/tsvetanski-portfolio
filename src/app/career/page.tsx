@@ -9,31 +9,36 @@ const projects = [
     title: "Repo X (Pirate Social Deduction)",
     description: "Multiplayer prototype focused on spatial voice chat, proximity tuning, and social presence systems for group play.",
     tags: ["Photon Voice", "Multiplayer Systems", "Spatial Audio"],
-    icon: <GitFork className="w-6 h-6" />
+    icon: <GitFork className="w-6 h-6" />,
+    href: "/projects/repo-x"
   },
   {
     title: "VR Interaction Lab",
     description: "Focused XR interactions exploring hand tracking, precision tasks, and training-grade interaction affordances.",
     tags: ["XR Interaction", "Hand Tracking", "Human Factors"],
-    icon: <Lightbulb className="w-6 h-6" />
+    icon: <Lightbulb className="w-6 h-6" />,
+    href: "/projects/vr-interaction-lab"
   },
   {
     title: "Fallout Team Level Design",
     description: "Collaborative level design sprint emphasizing spatial flow, environmental storytelling, and player guidance.",
     tags: ["Level Design", "Team Production", "Environment"],
-    icon: <ScrollText className="w-6 h-6" />
+    icon: <ScrollText className="w-6 h-6" />,
+    href: "/projects/fallout-level-design"
   },
   {
     title: "VR Microgames",
     description: "Two compact VR prototypes focused on interaction feel, comfort tuning, and spatial UI feedback.",
     tags: ["Spatial UX", "Rapid Prototyping", "Comfort Design"],
-    icon: <Orbit className="w-6 h-6" />
+    icon: <Orbit className="w-6 h-6" />,
+    href: "/projects/vr-microgames"
   },
   {
     title: "Trash Been",
     description: "Rapidly shipped prototype that demonstrates scope control, gameplay loops, and production discipline.",
     tags: ["Rapid Prototyping", "Gameplay Systems", "Production"],
-    icon: <Gamepad2 className="w-6 h-6" />
+    icon: <Gamepad2 className="w-6 h-6" />,
+    href: "/projects/trash-been"
   }
 ];
 
@@ -74,27 +79,49 @@ export default function Career() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {projects.map((project, index) => (
-            <motion.div 
-              key={index}
-              variants={item}
-              className="group relative border border-transparent p-8 rounded-2xl transition-all duration-500 bg-white/70 hover:bg-white shadow-[0_20px_60px_rgba(15,15,15,0.06)] hover:shadow-[0_24px_70px_rgba(15,15,15,0.12)] flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
-                  {project.icon}
+            <motion.div key={index} variants={item}>
+              {project.href ? (
+                <Link
+                  href={project.href}
+                  className="group block h-full border border-transparent p-8 rounded-2xl transition-all duration-500 bg-white/70 hover:bg-white shadow-[0_20px_60px_rgba(15,15,15,0.06)] hover:shadow-[0_24px_70px_rgba(15,15,15,0.12)] flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                      {project.icon}
+                    </div>
+                    <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
+                    <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-500">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-8">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-gray-200 px-3 py-1 rounded-full uppercase text-gray-400 group-hover:border-black group-hover:text-black transition-colors duration-500">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              ) : (
+                <div className="group relative border border-transparent p-8 rounded-2xl transition-all duration-500 bg-white/70 hover:bg-white shadow-[0_20px_60px_rgba(15,15,15,0.06)] hover:shadow-[0_24px_70px_rgba(15,15,15,0.12)] flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                      {project.icon}
+                    </div>
+                    <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
+                    <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-500">
+                      {project.description}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-8">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-gray-200 px-3 py-1 rounded-full uppercase text-gray-400 group-hover:border-black group-hover:text-black transition-colors duration-500">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-500">
-                  {project.description}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 mt-8">
-                {project.tags.map((tag, i) => (
-                  <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-gray-200 px-3 py-1 rounded-full uppercase text-gray-400 group-hover:border-black group-hover:text-black transition-colors duration-500">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              )}
             </motion.div>
           ))}
         </motion.div>
