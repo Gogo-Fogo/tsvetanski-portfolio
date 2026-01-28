@@ -19,6 +19,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date()
     },
     {
+      url: 'https://tsvetanski.com/cpse',
+      lastModified: new Date()
+    },
+    {
       url: 'https://tsvetanski.com/resume',
       lastModified: new Date()
     },

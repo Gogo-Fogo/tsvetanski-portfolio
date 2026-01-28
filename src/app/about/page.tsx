@@ -22,6 +22,34 @@ export default function About() {
           </div>
         </section>
 
+        <section className="mb-16">
+          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Experience Snapshot</h2>
+          <div className="grid gap-6">
+            <div className="border border-gray-100 bg-white/70 rounded-2xl p-6 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-lg font-semibold">QA Tester | Gameplay Analyst</h3>
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">Shokuho Mod Team · 2025–Present</span>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-gray-600">
+                <li>- Structured playtests and bug documentation for AI, combat, and economy systems.</li>
+                <li>- Performance monitoring with MSI Afterburner and OBS to track framerate and stutter events.</li>
+                <li>- Statistical summaries to support balance decisions and design iteration.</li>
+              </ul>
+            </div>
+            <div className="border border-gray-100 bg-white/70 rounded-2xl p-6 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-lg font-semibold">Digital & Visual Media Specialist</h3>
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">UMD CPSE · 2024</span>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-gray-600">
+                <li>- Led video production, interviews, and field capture for program storytelling.</li>
+                <li>- Managed social content strategy and campaign reporting across platforms.</li>
+                <li>- Mentored interns and coordinated media coverage for events and demo days.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <section>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Education</h2>
@@ -67,6 +95,7 @@ export default function About() {
               <li>- Google Ads Search Certification</li>
               <li>- Design Powered by Data: UX Web Analytics</li>
               <li>- User Experience (UX) for Non-Designers</li>
+              <li>- "How to become a game developer?"</li>
               <li>- Bulgarian Language Proficiency (CEFR B2)</li>
             </ul>
           </div>

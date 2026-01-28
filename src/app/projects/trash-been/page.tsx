@@ -16,10 +16,12 @@ export default function TrashBeenCaseStudy() {
         </header>
 
         <section className="grid gap-8">
-          <div className="border border-dashed border-gray-200 bg-white/40 rounded-2xl p-8">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-400 mb-4">Media & Metrics</h2>
-            <p className="text-sm text-gray-500">
-              Placeholder for gameplay screenshots, playtest notes, and outcome stats.
+          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Project Summary</h2>
+            <p className="text-sm text-gray-600">
+              Built from scratch in one week for the Breda application. Players sprint through a polluted city collecting
+              trash bags to restore color and vitality. As the environment cleans up, movement speed and jump height increase,
+              while enemy “globs” slow the player to keep the pacing tense.
             </p>
           </div>
           <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
@@ -44,7 +46,7 @@ export default function TrashBeenCaseStudy() {
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Tools & Tech</h2>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li>- Unity</li>
-                <li>- Visual scripting</li>
+                <li>- Visual scripting + template reverse engineering</li>
                 <li>- Rapid iteration + playtest loop</li>
                 <li>- Gameplay/UI prototyping</li>
               </ul>
@@ -54,8 +56,8 @@ export default function TrashBeenCaseStudy() {
           <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Outcome</h2>
             <p className="text-gray-600 text-sm">
-              Delivered a complete, playable prototype with tested mechanics and a clear roadmap for replayability (leaderboards,
-              procedural variation, and narrative beats).
+              Delivered a complete, playable prototype with tested mechanics and a clear roadmap for replayability: leaderboards,
+              procedural variation, and animated narrative beats.
             </p>
           </div>
         </section>

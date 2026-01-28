@@ -17,16 +17,24 @@ const skills = [
 
 const projects = [
   {
+    title: "Shinobi Story",
+    description: "Content strategy and marketing rollout highlighting new beats, community engagement, and performance gains.",
+    href: "/projects/shinobi-story"
+  },
+  {
     title: "Repo X (Pirate Social Deduction)",
-    description: "Multiplayer prototype focused on spatial voice chat, proximity tuning, and social presence systems for group play."
+    description: "Multiplayer prototype focused on spatial voice chat, proximity tuning, and social presence systems for group play.",
+    href: "/projects/repo-x"
   },
   {
     title: "VR Interaction Lab",
-    description: "Focused XR interactions exploring hand tracking, precision tasks, and training-grade interaction affordances."
+    description: "Focused XR interactions exploring hand tracking, precision tasks, and training-grade interaction affordances.",
+    href: "/projects/vr-interaction-lab"
   },
   {
     title: "Trash Been",
-    description: "Rapidly shipped prototype demonstrating scope control, gameplay loops, and production discipline."
+    description: "Rapidly shipped prototype demonstrating scope control, gameplay loops, and production discipline.",
+    href: "/projects/trash-been"
   }
 ];
 
@@ -64,6 +72,7 @@ const experience = [
     period: "May 2024 – Oct 2024",
     highlights: [
       "Led video production and interviews for program visibility.",
+      "Produced the UMD CPSE Summer Program 2024 video (youtu.be/YP9sqDBSWdo), which drew a Nobel Prize–winning physicist to join as a special guest.",
       "Managed social media content strategy and campaign reporting.",
       "Mentored interns and coordinated media support at events."
     ]
@@ -103,6 +112,12 @@ export default function Resume() {
             A multifaceted creator bridging spatial design, simulation engineering, and human-centered systems. My work blends
             XR prototyping, research-driven interaction design, and production-focused development.
           </p>
+          <Link
+            href="/cpse"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-black shadow-sm transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-white"
+          >
+            View CPSE Experience
+          </Link>
         </header>
 
         <section className="grid gap-10">
@@ -130,8 +145,18 @@ export default function Resume() {
               <div className="space-y-5 text-sm text-gray-600">
                 {projects.map((project) => (
                   <div key={project.title}>
-                    <p className="font-semibold text-black">{project.title}</p>
-                    <p className="mt-1">{project.description}</p>
+                    {project.href ? (
+                      <Link
+                        className="flex w-full items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-black shadow-sm transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-white"
+                        href={project.href}
+                      >
+                        <span>{project.title}</span>
+                        <span className="text-xs uppercase tracking-[0.3em] opacity-60">View</span>
+                      </Link>
+                    ) : (
+                      <p className="font-semibold text-black">{project.title}</p>
+                    )}
+                    <p className="mt-2 px-4 text-sm text-gray-600">{project.description}</p>
                   </div>
                 ))}
               </div>
