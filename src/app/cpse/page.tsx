@@ -1,4 +1,24 @@
 import Link from 'next/link';
+import LightboxVideo from '@/components/lightbox-video';
+
+type VideoStats = {
+  viewCount?: string;
+  likeCount?: string;
+  title?: string;
+};
+
+const formatCount = (value?: string) => {
+  if (!value) {
+    return null;
+  }
+
+  const count = Number(value);
+  if (Number.isNaN(count)) {
+    return null;
+  }
+
+  return count.toLocaleString();
+};
 
 const impactHighlights = [
   "Led video production and interviews to expand program visibility and storytelling reach.",
@@ -13,12 +33,6 @@ const cpseVideos = [
     url: "https://youtu.be/YP9sqDBSWdo",
     embedUrl: "https://www.youtube.com/embed/YP9sqDBSWdo",
     note: "Immersive program highlight"
-  },
-  {
-    title: "Find Your Pathway | UMDCP Communication 2025",
-    url: "https://www.youtube.com/watch?v=dX-CHGxzUyA",
-    embedUrl: "https://www.youtube.com/embed/dX-CHGxzUyA",
-    note: "Communication video"
   },
   {
     title: "UMD CPSE | Dr. Romel Gomez | Shaping Future Engineers",
@@ -41,8 +55,52 @@ const getThumbnailUrl = (embedUrl: string) => {
   return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 };
 
-export default function CpsePage() {
+const getEmbedUrl = (embedUrl: string) =>
+  `${embedUrl}${embedUrl.includes('?') ? '&' : '?'}rel=0&modestbranding=1&playsinline=1&vq=hd1080`;
+
+export default async function CpsePage() {
+  const allVideoIds = cpseVideos.map((video) => getVideoId(video.embedUrl)).filter(Boolean);
+  const uniqueVideoIds = Array.from(new Set(allVideoIds));
+  const statsById = new Map<string, VideoStats>();
+
+  const apiKey = process.env.YOUTUBE_API_KEY;
+  if (apiKey && uniqueVideoIds.length > 0) {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${uniqueVideoIds.join(',')}&key=${apiKey}`,
+        { next: { revalidate: 604800 } }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        data.items?.forEach((item: { id: string; statistics?: VideoStats; snippet?: { title?: string } }) => {
+          if (item?.id) {
+            statsById.set(item.id, { ...item.statistics, title: item.snippet?.title });
+          }
+        });
+      }
+    } catch (error) {
+      console.warn('YouTube stats fetch failed', error);
+    }
+  }
+
+  const getStatsText = (embedUrl: string) => {
+    const videoId = getVideoId(embedUrl);
+    const stats = statsById.get(videoId);
+    const viewCount = formatCount(stats?.viewCount);
+    const likeCount = formatCount(stats?.likeCount);
+
+    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : 'Stats unavailable';
+  };
+
+  const getTitle = (embedUrl: string, fallbackTitle: string) => {
+    const videoId = getVideoId(embedUrl);
+    return statsById.get(videoId)?.title ?? fallbackTitle;
+  };
+
   const featuredVideo = cpseVideos[0];
+  const featuredTitle = getTitle(featuredVideo.embedUrl, featuredVideo.title);
+  const featuredEmbedUrl = getEmbedUrl(featuredVideo.embedUrl);
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
@@ -77,9 +135,9 @@ export default function CpsePage() {
           <div className="grid gap-8 md:grid-cols-2">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Key Impact</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
+              <ul className="list-disc pl-5 space-y-3 text-sm text-[var(--muted)]">
                 {impactHighlights.map((item) => (
-                  <li key={item}>- {item}</li>
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </div>
@@ -87,11 +145,11 @@ export default function CpsePage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Featured Video</h2>
               <div className="space-y-4">
-                <div className="aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+                <div className="aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
                   <iframe
                     className="h-full w-full"
-                    src={featuredVideo.embedUrl}
-                    title={featuredVideo.title}
+                    src={featuredEmbedUrl}
+                    title={featuredTitle}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
@@ -99,9 +157,10 @@ export default function CpsePage() {
                 </div>
                 <div>
                   <a className="font-semibold text-[var(--foreground)] hover:underline" href={featuredVideo.url} target="_blank" rel="noreferrer">
-                    {featuredVideo.title}
+                    {featuredTitle}
                   </a>
                   <p className="text-sm text-[var(--muted)] mt-1">{featuredVideo.note}</p>
+                  <p className="text-xs text-[var(--muted)] mt-2">{getStatsText(featuredVideo.embedUrl)}</p>
                 </div>
               </div>
             </div>
@@ -129,24 +188,28 @@ export default function CpsePage() {
               {cpseVideos.map((video) => {
                 const thumbnailUrl = getThumbnailUrl(video.embedUrl);
 
+                const statsText = getStatsText(video.embedUrl);
+
                 return (
                   <div
                     key={video.url}
                     className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
                   >
-                    <a
-                      className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]"
-                      href={video.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img src={thumbnailUrl} alt={video.title} className="h-full w-full object-cover" />
-                    </a>
+                    <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+                      <LightboxVideo
+                        embedUrl={video.embedUrl}
+                        thumbnailUrl={thumbnailUrl}
+                        title={getTitle(video.embedUrl, video.title)}
+                        className="h-full w-full object-cover"
+                        roundedClassName="rounded-xl"
+                      />
+                    </div>
                     <div className="text-sm text-[var(--muted)]">
                       <a className="font-medium text-[var(--foreground)] hover:underline" href={video.url} target="_blank" rel="noreferrer">
-                        {video.title}
+                        {getTitle(video.embedUrl, video.title)}
                       </a>
                       <span className="text-xs text-[var(--muted)] block">{video.note}</span>
+                      <span className="text-xs text-[var(--muted)] block mt-1">{statsText}</span>
                     </div>
                   </div>
                 );
@@ -158,6 +221,16 @@ export default function CpsePage() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4,6 +4,7 @@ import VideoCarousel, { type VideoCard } from './video-carousel';
 type VideoStats = {
   viewCount?: string;
   likeCount?: string;
+  title?: string;
 };
 
 const formatCount = (value?: string) => {
@@ -20,32 +21,6 @@ const formatCount = (value?: string) => {
 };
 
 export default async function Creative() {
-  const unityCreations = [
-    {
-      title: "Totally Bugged Out",
-      description: "Solo first-person bug survival game with a universal throw system and wall-climbing AI."
-    },
-    {
-      title: "Cranky (Game Jam 2024)",
-      description: "Local multiplayer jam prototype with split-screen chaos; led animation and co-designed gameplay."
-    },
-    {
-      title: "Cranky: The Squirrel Annihilator",
-      description: "Solo first-person pug chase with rhythm-driven movement, reactive AI, and full UI."
-    },
-    {
-      title: "Shogun: Flowers Fall in Blood",
-      description: "Solo tactical RPG prototype blending grid combat, gesture skills, and gacha simulation."
-    },
-    {
-      title: "The Signal",
-      description: "Team-designed narrative board game with modular tiles, enemy behaviors, and class systems."
-    },
-    {
-      title: "The Last Paycheck",
-      description: "Narrative systems design document exploring survival, inflation, and emotional engagement."
-    }
-  ];
   const videographyLinks = [
     {
       title: "Shinobi Story | Video 1",
@@ -57,7 +32,7 @@ export default async function Creative() {
       title: "Shinobi Story | Video 2",
       url: "https://youtu.be/X1hkWDu-i9E",
       embedUrl: "https://www.youtube.com/embed/X1hkWDu-i9E",
-      thumbnailUrl: "https://img.youtube.com/vi/X1hkWDu-i9E/hqdefault.jpg",
+      thumbnailUrl: "https://img.youtube.com/vi/X1hkWDu-i9E/maxresdefault.jpg",
       note: "Shinobi Story video"
     },
     {
@@ -98,13 +73,13 @@ export default async function Creative() {
   const getVideoId = (embedUrl: string) => embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
 
   const getThumbnailUrl = (embedUrl: string, thumbnailOverride?: string) => {
-    if (thumbnailOverride) {
-      return thumbnailOverride;
-    }
+  if (thumbnailOverride) {
+    return thumbnailOverride;
+  }
 
-    const videoId = getVideoId(embedUrl);
-    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-  };
+  const videoId = getVideoId(embedUrl);
+  return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+};
 
   const allVideoIds = [...videographyLinks, ...communicationLinks]
     .map((video) => getVideoId(video.embedUrl))
@@ -117,15 +92,15 @@ export default async function Creative() {
   if (apiKey && uniqueVideoIds.length > 0) {
     try {
       const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${uniqueVideoIds.join(',')}&key=${apiKey}`,
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${uniqueVideoIds.join(',')}&key=${apiKey}`,
         { next: { revalidate: 604800 } }
       );
 
       if (response.ok) {
         const data = await response.json();
-        data.items?.forEach((item: { id: string; statistics?: VideoStats }) => {
+        data.items?.forEach((item: { id: string; statistics?: VideoStats; snippet?: { title?: string } }) => {
           if (item?.id) {
-            statsById.set(item.id, item.statistics ?? {});
+            statsById.set(item.id, { ...item.statistics, title: item.snippet?.title });
           }
         });
       }
@@ -143,20 +118,29 @@ export default async function Creative() {
     return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : 'Stats unavailable';
   };
 
+  const getTitle = (embedUrl: string, fallbackTitle: string) => {
+    const videoId = getVideoId(embedUrl);
+    return statsById.get(videoId)?.title ?? fallbackTitle;
+  };
+
   const videographyCards: VideoCard[] = videographyLinks.map((video) => ({
-    title: video.title,
+    title: getTitle(video.embedUrl, video.title),
     url: video.url,
+    embedUrl: video.embedUrl,
     thumbnailUrl: getThumbnailUrl(video.embedUrl, video.thumbnailUrl),
     note: video.note,
     statsText: getStatsText(video.embedUrl),
+    hoverClassName: 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]',
   }));
 
   const communicationCards: VideoCard[] = communicationLinks.map((video) => ({
-    title: video.title,
+    title: getTitle(video.embedUrl, video.title),
     url: video.url,
+    embedUrl: video.embedUrl,
     thumbnailUrl: getThumbnailUrl(video.embedUrl),
     note: video.note,
     statsText: getStatsText(video.embedUrl),
+    hoverClassName: 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]',
   }));
 
   return (
@@ -167,8 +151,8 @@ export default async function Creative() {
             ← BACK TO HOME
           </Link>
           <h1 className="text-4xl font-bold tracking-tighter mt-4 text-[var(--foreground)]">CREATIVE WORK</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-xl">
-            A focused space for multimedia and videography projects that support the spatial design narrative.
+          <p className="text-[var(--muted)] mt-3 max-w-xl text-base">
+            Multimedia and videography projects that support the spatial design narrative.
           </p>
           <Link
             href="/cpse"
@@ -179,37 +163,14 @@ export default async function Creative() {
         </header>
 
         <section className="space-y-10">
-          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)] space-y-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Selected Unity Creations</h2>
-                <p className="text-[var(--muted)] mt-2">
-                  Prototypes and systems-driven concepts that informed my design and interaction work.
-                </p>
-              </div>
-              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Solo + Team Projects</span>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {unityCreations.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]"
-                >
-                  <h3 className="text-base font-semibold text-[var(--foreground)]">{item.title}</h3>
-                  <p className="text-sm text-[var(--muted)] mt-2">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Writing & Storytelling</h2>
-                <p className="text-[var(--muted)] mt-2">
-                  Published blog writing focused on science, student life, and storytelling for the Universities at Shady Grove.
-                </p>
+                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
+                  <li>Science + student life storytelling.</li>
+                  <li>Published at USG.</li>
+                </ul>
               </div>
               <a
                 className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -226,9 +187,10 @@ export default async function Creative() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Motion</h2>
-                <p className="text-[var(--muted)] mt-2">
-                  Short-form reels, trailers, and motion pieces that communicate interaction design and visual storytelling.
-                </p>
+                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
+                  <li>Short-form reels and trailers.</li>
+                  <li>Motion pieces for visual storytelling.</li>
+                </ul>
               </div>
               <div className="flex flex-wrap gap-4">
                 <a
@@ -257,9 +219,10 @@ export default async function Creative() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Communication & Media</h2>
-                <p className="text-[var(--muted)] mt-2">
-                  Selected communication work kept separate to preserve the primary XR/simulation focus of the portfolio.
-                </p>
+                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
+                  <li>Selected communication work.</li>
+                  <li>Kept separate to preserve XR/simulation focus.</li>
+                </ul>
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)] mt-3">
                   Role: Videography / field capture (edited by teammate)
                 </p>
@@ -281,6 +244,17 @@ export default async function Creative() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
