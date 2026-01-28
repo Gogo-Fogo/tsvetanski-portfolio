@@ -59,16 +59,16 @@ const item = {
 
 export default function Career() {
   return (
-    <main className="min-h-screen bg-[#f7f6f3] text-black p-8 md:p-24 font-sans">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-6xl mx-auto">
         <header className="mb-20">
-          <Link href="/" className="group flex items-center space-x-2 text-sm font-medium text-gray-500 hover:text-black transition-colors duration-200">
+          <Link href="/" className="group flex items-center space-x-2 text-sm font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200">
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>RETURN</span>
           </Link>
           <div className="mt-8">
             <h1 className="text-4xl font-bold tracking-tight">THE LAB</h1>
-            <p className="text-gray-500 mt-3 font-medium tracking-[0.2em] text-xs uppercase">Spatial Prototyping & XR Systems</p>
+            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Spatial Prototyping & XR Systems</p>
           </div>
         </header>
 
@@ -83,39 +83,39 @@ export default function Career() {
               {project.href ? (
                 <Link
                   href={project.href}
-                  className="group block h-full border border-transparent p-8 rounded-2xl transition-all duration-500 bg-white/70 hover:bg-white shadow-[0_20px_60px_rgba(15,15,15,0.06)] hover:shadow-[0_24px_70px_rgba(15,15,15,0.12)] flex flex-col justify-between"
+                  className="group block h-full border border-transparent p-8 rounded-2xl transition-all duration-500 bg-[var(--surface)] hover:bg-[var(--surface)] shadow-[var(--shadow)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),var(--glow-strong)] flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center mb-6 group-hover:bg-[var(--foreground)] group-hover:text-[var(--background)] transition-colors duration-500 shadow-sm">
                       {project.icon}
                     </div>
                     <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-500">
+                    <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-[var(--foreground)] transition-colors duration-500">
                       {project.description}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-8">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-gray-200 px-3 py-1 rounded-full uppercase text-gray-400 group-hover:border-black group-hover:text-black transition-colors duration-500">
+                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)] group-hover:border-[var(--foreground)] group-hover:text-[var(--foreground)] transition-colors duration-500">
                         {tag}
                       </span>
                     ))}
                   </div>
                 </Link>
               ) : (
-                <div className="group relative border border-transparent p-8 rounded-2xl transition-all duration-500 bg-white/70 hover:bg-white shadow-[0_20px_60px_rgba(15,15,15,0.06)] hover:shadow-[0_24px_70px_rgba(15,15,15,0.12)] flex flex-col justify-between">
+                <div className="group relative border border-transparent p-8 rounded-2xl transition-all duration-500 bg-[var(--surface)] hover:bg-[var(--surface)] shadow-[var(--shadow)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),var(--glow-strong)] flex flex-col justify-between">
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-colors duration-500 shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center mb-6 group-hover:bg-[var(--foreground)] group-hover:text-[var(--background)] transition-colors duration-500 shadow-sm">
                       {project.icon}
                     </div>
                     <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-900 transition-colors duration-500">
+                    <p className="text-sm text-[var(--muted)] leading-relaxed group-hover:text-[var(--foreground)] transition-colors duration-500">
                       {project.description}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-8">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-gray-200 px-3 py-1 rounded-full uppercase text-gray-400 group-hover:border-black group-hover:text-black transition-colors duration-500">
+                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)] group-hover:border-[var(--foreground)] group-hover:text-[var(--foreground)] transition-colors duration-500">
                         {tag}
                       </span>
                     ))}
@@ -129,3 +129,7 @@ export default function Career() {
     </main>
   );
 }
+
+
+
+

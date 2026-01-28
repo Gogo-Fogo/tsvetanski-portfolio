@@ -101,29 +101,29 @@ const experience = [
 
 export default function Resume() {
   return (
-    <main className="min-h-screen bg-[#f7f6f3] text-black p-8 md:p-24 font-sans">
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-4xl mx-auto">
         <header className="mb-16">
           <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO HOME
           </Link>
           <h1 className="text-4xl font-bold tracking-tight mt-4">RESUME</h1>
-          <p className="text-gray-600 mt-3 max-w-2xl">
+          <p className="text-[var(--muted)] mt-3 max-w-2xl">
             A multifaceted creator bridging spatial design, simulation engineering, and human-centered systems. My work blends
             XR prototyping, research-driven interaction design, and production-focused development.
           </p>
           <Link
             href="/cpse"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-black shadow-sm transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
           >
             View CPSE Experience
           </Link>
         </header>
 
         <section className="grid gap-10">
-          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Highlights</h2>
-            <ul className="space-y-3 text-sm text-gray-600">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Highlights</h2>
+            <ul className="space-y-3 text-sm text-[var(--muted)]">
               {highlights.map((item) => (
                 <li key={item}>- {item}</li>
               ))}
@@ -131,61 +131,61 @@ export default function Resume() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Core Skills</h2>
-              <ul className="space-y-2 text-sm text-gray-600">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Core Skills</h2>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
                 {skills.map((skill) => (
                   <li key={skill}>- {skill}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Featured Projects</h2>
-              <div className="space-y-5 text-sm text-gray-600">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Featured Projects</h2>
+              <div className="space-y-5 text-sm text-[var(--muted)]">
                 {projects.map((project) => (
                   <div key={project.title}>
                     {project.href ? (
                       <Link
-                        className="flex w-full items-center justify-between rounded-xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-black shadow-sm transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-white"
+                        className="flex w-full items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--foreground)] shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
                         href={project.href}
                       >
                         <span>{project.title}</span>
                         <span className="text-xs uppercase tracking-[0.3em] opacity-60">View</span>
                       </Link>
                     ) : (
-                      <p className="font-semibold text-black">{project.title}</p>
+                      <p className="font-semibold text-[var(--foreground)]">{project.title}</p>
                     )}
-                    <p className="mt-2 px-4 text-sm text-gray-600">{project.description}</p>
+                    <p className="mt-2 px-4 text-sm text-[var(--muted)]">{project.description}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Education</h2>
-            <div className="space-y-6 text-sm text-gray-600">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Education</h2>
+            <div className="space-y-6 text-sm text-[var(--muted)]">
               {education.map((item) => (
                 <div key={item.title}>
-                  <p className="font-semibold text-black">{item.title}</p>
-                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.detail}</p>
+                  <p className="font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">{item.detail}</p>
                   {item.note ? <p className="mt-2">{item.note}</p> : null}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="border border-gray-100 bg-white/70 rounded-2xl p-8 shadow-[0_20px_50px_rgba(15,15,15,0.06)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-gray-500 mb-6">Experience</h2>
-            <div className="space-y-6 text-sm text-gray-600">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Experience</h2>
+            <div className="space-y-6 text-sm text-[var(--muted)]">
               {experience.map((item) => (
                 <div key={item.role}>
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-semibold text-black">{item.role}</p>
-                    <span className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.period}</span>
+                    <p className="font-semibold text-[var(--foreground)]">{item.role}</p>
+                    <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">{item.period}</span>
                   </div>
-                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-gray-500">{item.org}</p>
+                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">{item.org}</p>
                   <ul className="mt-2 space-y-1">
                     {item.highlights.map((point) => (
                       <li key={point}>- {point}</li>
@@ -201,7 +201,7 @@ export default function Resume() {
           <Link
             href="/resume.pdf"
             target="_blank"
-            className="inline-block rounded-full border border-black bg-black text-white px-8 py-4 text-xs font-semibold uppercase tracking-[0.3em] hover:bg-transparent hover:text-black transition-colors"
+            className="inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)] px-8 py-4 text-xs font-semibold uppercase tracking-[0.3em] hover:bg-transparent hover:text-[var(--foreground)] transition-colors"
           >
             Download Full Resume [PDF]
           </Link>
@@ -210,3 +210,6 @@ export default function Resume() {
     </main>
   );
 }
+
+
+
