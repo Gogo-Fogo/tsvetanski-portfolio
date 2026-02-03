@@ -155,33 +155,26 @@ export default async function Creative() {
           <p className="text-[var(--muted)] mt-3 max-w-xl text-base">
             Multimedia and videography projects that support the spatial design narrative.
           </p>
-          <Link
-            href="/cpse"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
-          >
-            View CPSE Experience
-          </Link>
         </header>
 
         <section className="space-y-10">
-          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Writing & Storytelling</h2>
-                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
-                  <li>Science + student life storytelling.</li>
-                  <li>Published at USG.</li>
-                </ul>
+          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)] space-y-6">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
+                <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
+                Priority Highlight
               </div>
-              <a
-                className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
-                href="https://uatshadygrove.org/author/georgitsvetanskigogo/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                View USG Author Archive
-              </a>
+              <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">CPSE Communication & Media</h2>
+              <p className="text-[var(--muted)] text-base">
+                Paid role delivering field capture, interviews, and storytelling for the UMD Cyber-Physical Systems Engineering program.
+              </p>
             </div>
+            <Link
+              href="/cpse"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
+            >
+              View CPSE Experience
+            </Link>
           </div>
 
           <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)] space-y-8">
@@ -216,35 +209,32 @@ export default async function Creative() {
             <VideoCarousel items={videographyCards} />
           </div>
 
-          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)] space-y-6">
+          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Communication & Media</h2>
+                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Writing & Storytelling</h2>
                 <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
-                  <li>Selected communication work.</li>
-                  <li>Kept separate to preserve XR/simulation focus.</li>
+                  <li>Science + student life storytelling.</li>
+                  <li>Published at USG.</li>
                 </ul>
-                <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)] mt-3">
-                  Role: Videography / field capture (edited by teammate)
-                </p>
               </div>
               <a
                 className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
-                href="https://www.youtube.com/@UMDCPSE"
+                href="https://uatshadygrove.org/author/georgitsvetanskigogo/"
                 target="_blank"
                 rel="noreferrer"
               >
-                Source: UMDCPSE Channel
+                View USG Author Archive
               </a>
             </div>
-
-            <VideoCarousel items={communicationCards} />
           </div>
         </section>
       </div>
     </main>
   );
 }
+
+
 
 
 

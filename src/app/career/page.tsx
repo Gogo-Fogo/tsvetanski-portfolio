@@ -9,6 +9,7 @@ interface Project {
   title: string;
   description: string;
   tags: string[];
+  type?: 'commercial' | 'prototype';
   href?: string;
   bannerImage?: string;
   bannerAlt?: string;
@@ -20,13 +21,13 @@ interface Project {
 const projects: Project[] = [
   {
     title: "Guilty As Arrr",
-    description: "Real-time spatial audio attenuation for multi-user social deduction.",
+    description: "Multiplayer social deduction with proximity voice as a core mechanic.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     href: "/projects/repo-x"
   },
   {
     title: "Trash Been (Urban Logistics)",
-    description: "Simulating urban waste management systems through optimized collection routes and spatial flow.",
+    description: "Urban logistics sim—optimize routes, reduce waste, visualize system health.",
     tags: ["Logistics Simulation", "System Design", "Unity"],
     bannerImage: "/images/TB_MindMap.png",
     bannerAlt: "Trash Been logistics mind map",
@@ -36,13 +37,13 @@ const projects: Project[] = [
   },
   {
     title: "VR Dirt Bike Game",
-    description: "Immersive training for smart and safe driving practices using VR safety simulation.",
+    description: "Safety-training sim for smart riding habits in VR.",
     tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
     href: "/projects/vr-microgames"
   },
   {
     title: "VR Car Drift Simulator",
-    description: "High-fidelity spatial interaction and vehicle dynamics in a night city environment.",
+    description: "High-fidelity drift training with vehicle dynamics and spatial feedback.",
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
     href: "/projects/vr-interaction-lab"
   },
@@ -54,7 +55,7 @@ const projects: Project[] = [
   },
   {
     title: "Shinobi Story",
-    description: "Narrative-forward stealth experience with new content strategy and marketing beats.",
+    description: "Narrative stealth title + live content strategy and growth.",
     tags: ["Content Strategy", "Narrative Design", "Game Marketing"],
     bannerImage: "/images/ShinobiStoryBanner.jpg",
     bannerAlt: "Shinobi Story banner",
@@ -64,15 +65,18 @@ const projects: Project[] = [
   },
   {
     title: "Shonen TCG Game",
-    description: "Developing a robust 3D multiplayer trading card game prototype with complex game systems.",
+    description: "Prototype for a 3D multiplayer TCG with deep rulesets.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
+    type: 'prototype'
   },
   {
     title: "VR Patapon Game",
-    description: "Conceptualizing an innovative VR rhythm-strategy game with unique interaction models.",
+    description: "Concept for a VR rhythm-strategy game with experimental inputs.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
+    type: 'prototype'
   }
 ];
+
 
 const container = {
   hidden: { opacity: 0 },
@@ -101,6 +105,7 @@ export default function Career() {
           <div className="mt-8">
             <h1 className="text-4xl font-bold tracking-tight">THE LAB</h1>
             <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Spatial Prototyping & XR Systems</p>
+            <p className="text-[var(--muted)] mt-2 text-sm">Engineering Depth × Human-Centered Design.</p>
           </div>
         </header>
 
@@ -112,7 +117,7 @@ export default function Career() {
         >
           {projects.map((project, index) => (
             <motion.div key={index} variants={item}>
-              {project.href ? (
+              {project.href && project.type !== 'prototype' ? (
                 <Link
                   href={project.href}
                   className="group block h-full border border-transparent p-8 rounded-2xl transition-all duration-500 bg-[var(--surface)] hover:bg-[var(--surface)] shadow-[var(--shadow)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),var(--glow-strong)] flex flex-col justify-between"
@@ -152,7 +157,18 @@ export default function Career() {
                   </div>
                 </Link>
               ) : (
-                <div className="group relative border border-transparent p-8 rounded-2xl transition-all duration-500 bg-[var(--surface)] hover:bg-[var(--surface)] shadow-[var(--shadow)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),var(--glow-strong)] flex flex-col justify-between">
+                <div
+                  className={`group relative p-8 rounded-2xl bg-[var(--surface)] flex flex-col justify-between ${
+                    project.type === 'prototype'
+                      ? 'border border-dashed border-[var(--border)]/70 opacity-85 cursor-default'
+                      : 'border border-transparent shadow-[var(--shadow)]'
+                  }`}
+                >
+                  {project.type === 'prototype' ? (
+                    <span className="absolute right-6 top-6 rounded-full border border-[var(--border)]/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                      Concept
+                    </span>
+                  ) : null}
                   <div>
                     <div
                       className={`mb-6 w-full overflow-hidden rounded-xl bg-[var(--surface)] ${
@@ -174,14 +190,14 @@ export default function Career() {
                       )}
                     </div>
                     <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2 group-hover:text-[var(--foreground)] transition-colors duration-500">
+                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2">
                       <li>{project.description}</li>
                       <li>Key focus: {project.tags[0]}</li>
                     </ul>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-8">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)] group-hover:border-[var(--foreground)] group-hover:text-[var(--foreground)] transition-colors duration-500">
+                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)]">
                         {tag}
                       </span>
                     ))}
@@ -191,10 +207,15 @@ export default function Career() {
             </motion.div>
           ))}
         </motion.div>
+
       </div>
     </main>
   );
 }
+
+
+
+
 
 
 

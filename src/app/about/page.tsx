@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import DegreeGraph from '@/components/degree-graph';
 
 export default function About() {
   return (
@@ -8,18 +9,23 @@ export default function About() {
           <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO HOME
           </Link>
-            <h1 className="text-4xl font-bold tracking-tight mt-4">BIOMETRICS & BACKGROUND</h1>
+            <h1 className="text-4xl font-bold tracking-tight mt-4">ABOUT</h1>
         </header>
 
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
-            <p className="text-[var(--muted)] leading-relaxed">
-              Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
-              I specialize in rapid, high-fidelity spatial interaction prototyping, leveraging AI-assisted development workflows to deliver 
-              simulation-grade results at startup speeds.
-            </p>
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="hidden lg:block">
+              <DegreeGraph />
+            </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
+              <p className="text-[var(--muted)] leading-relaxed">
+                Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
+                I specialize in rapid, high-fidelity spatial interaction prototyping, leveraging AI-assisted development workflows to deliver 
+                simulation-grade results at startup speeds.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -34,76 +40,46 @@ export default function About() {
           </div>
         </section>
 
-        <section className="mb-16">
-          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Experience Snapshot</h2>
-          <div className="grid gap-6">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-lg font-semibold">QA Tester | Gameplay Analyst</h3>
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Shokuho Mod Team · 2025–Present</span>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                <li>- Structured playtests and bug documentation for AI, combat, and economy systems.</li>
-                <li>- Performance monitoring with MSI Afterburner and OBS to track framerate and stutter events.</li>
-                <li>- Statistical summaries to support balance decisions and design iteration.</li>
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-lg font-semibold">Digital & Visual Media Specialist</h3>
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">UMD CPSE · 2024</span>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                <li>- Led video production, interviews, and field capture for program storytelling.</li>
-                <li>- Managed social content strategy and campaign reporting across platforms.</li>
-                <li>- Mentored interns and coordinated media coverage for events and demo days.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <section>
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Education</h2>
-            <div className="space-y-8">
-              <div>
-                <h3 className="font-bold text-xl">M.S. Interaction Design & Information Architecture (Accelerated)</h3>
-                <p className="text-[var(--muted)] font-mono text-xs uppercase tracking-[0.2em]">University of Baltimore (Incoming Spring 2026)</p>
-                <div className="mt-3 space-y-3">
-                  <p className="text-[var(--muted)] max-w-md">
-                    STEM-designated program focusing on <span className="text-[var(--foreground)]">Human-Computer Interaction (HCI)</span>, User Research, and Designing Complex Systems.
-                  </p>
-                  <div className="border-l-2 border-[var(--border)] pl-4 py-1">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Key Project</p>
-                    <p className="text-sm font-semibold text-[var(--foreground)]">US Military Client Simulation</p>
-                    <p className="text-xs text-[var(--muted)] mt-1">Human-Systems Integration research and prototype development.</p>
-                  </div>
+            <div className="space-y-6">
+              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <h3 className="font-bold text-lg">M.S. Interaction Design & Information Architecture (Accelerated)</h3>
+                  <p className="text-[var(--muted)] font-mono text-[10px] uppercase tracking-[0.2em]">Incoming Spring 2026</p>
+                </div>
+                <p className="text-[var(--muted)] text-sm mt-3">
+                  University of Baltimore · HCI, user research, complex systems design.
+                </p>
+                <div className="mt-4 border-l-2 border-[var(--border)] pl-4 py-1">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">Key Project</p>
+                  <p className="text-sm font-semibold text-[var(--foreground)]">US Military Client Simulation</p>
                 </div>
               </div>
-              <div>
-                <h3 className="font-bold text-xl">B.S. Simulation and Game Design</h3>
-                <p className="text-[var(--muted)] font-mono text-xs uppercase tracking-[0.2em]">University of Baltimore (Jan 2025)</p>
-                <p className="mt-3 text-[var(--muted)] max-w-md">
-                  STEM designated. Coding & development track with emphasis on simulation for non-entertainment fields.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-bold text-xl">B.A. Communication and Media Studies</h3>
-                <p className="text-[var(--muted)] font-mono text-xs uppercase tracking-[0.2em]">University of Maryland (Jan 2023)</p>
-              </div>
+
+              <ul className="space-y-3 text-sm text-[var(--muted)]">
+                <li>
+                  <span className="font-semibold text-[var(--foreground)]">B.S. Simulation and Game Design</span> — University of Baltimore (Jan 2025)
+                </li>
+                <li>
+                  <span className="font-semibold text-[var(--foreground)]">B.A. Communication and Media Studies</span> — University of Maryland (Jan 2023)
+                </li>
+                <li>
+                  <span className="font-semibold text-[var(--foreground)]">A.A. Digital Animation</span> — Montgomery College (Aug 2020–Jul 2023)
+                </li>
+              </ul>
             </div>
           </section>
 
           <section>
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Core Competencies</h2>
-            <ul className="space-y-2 font-mono text-sm text-[var(--muted)]">
-              <li>- Spatial Interaction Prototyping (Unity/XR)</li>
-              <li>- Simulation Engineering & Human Factors</li>
-              <li>- AI-Assisted Development & Rapid Prototyping</li>
-              <li>- Networked Multiplayer Systems (Photon)</li>
-              <li>- User Research & HCI Principles</li>
-              <li>- Live-Ops & Product Management</li>
-            </ul>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Core Identity</h2>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
+              <p className="text-sm text-[var(--muted)] leading-relaxed">
+                Focused on human-centered simulation systems that balance performance, clarity, and usability in spatial workflows.
+                Detailed skills and experience live in the Resume section.
+              </p>
+            </div>
           </section>
         </div>
 
@@ -143,5 +119,10 @@ export default function About() {
     </main>
   );
 }
+
+
+
+
+
 
 

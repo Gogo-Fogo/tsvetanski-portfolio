@@ -62,23 +62,15 @@ export default function Home() {
               <li>Interactive storytelling</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-              View Creative →
+              View Media →
             </div>
             <span className="mt-6 block h-px w-14 bg-[var(--accent-orange)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>
         </div>
 
         <nav className="flex flex-wrap justify-center gap-6 sm:gap-7 pt-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
-          <Link href="/career" className="group flex flex-col items-center">
-            <span className="transition-colors group-hover:text-[var(--foreground)]">The Lab</span>
-            <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
-          </Link>
           <Link href="/about" className="group flex flex-col items-center">
-            <span className="transition-colors group-hover:text-[var(--foreground)]">Biometrics</span>
-            <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
-          </Link>
-          <Link href="/creative" className="group flex flex-col items-center">
-            <span className="transition-colors group-hover:text-[var(--foreground)]">Creative</span>
+            <span className="transition-colors group-hover:text-[var(--foreground)]">About</span>
             <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
           </Link>
           <Link href="/resume" className="group flex flex-col items-center">
@@ -115,7 +107,7 @@ export default function Home() {
               className="inline-flex items-center justify-center rounded-full border border-[var(--foreground)] text-[var(--foreground)] p-4 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors"
               aria-label="Instagram"
               title="Instagram"
-dd            >
+            >
               <Instagram className="h-4 w-4" />
             </a>
           </div>
