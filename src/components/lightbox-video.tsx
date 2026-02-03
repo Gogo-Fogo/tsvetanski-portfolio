@@ -21,6 +21,11 @@ export default function LightboxVideo({
   const embedParams = 'rel=0&modestbranding=1&playsinline=1&vq=hd1080';
   const embedSrc = embedUrl.includes('?') ? `${embedUrl}&${embedParams}` : `${embedUrl}?${embedParams}`;
 
+  const shouldZoomThumbnail =
+    thumbnailUrl.includes('hqdefault') ||
+    thumbnailUrl.includes('mqdefault') ||
+    thumbnailUrl.includes('default');
+
   return (
     <>
       <button
@@ -32,7 +37,30 @@ export default function LightboxVideo({
         <img
           src={thumbnailUrl}
           alt={title}
-          className={`${roundedClassName} ${className ?? ''} relative z-0`.trim()}
+          className={`${roundedClassName} ${className ?? ''} relative z-0 h-full w-full object-cover ${
+            shouldZoomThumbnail ? 'scale-[1.08]' : ''
+          }`.trim()}
+          onLoad={(event) => {
+            const target = event.currentTarget;
+            if (target.dataset.fallbackApplied) {
+              return;
+            }
+
+            const isPlaceholder = target.naturalWidth <= 120 && target.naturalHeight <= 90;
+            if (!isPlaceholder) {
+              return;
+            }
+
+            target.dataset.fallbackApplied = 'true';
+
+            if (thumbnailUrl.includes('maxresdefault')) {
+              target.src = thumbnailUrl.replace('maxresdefault', 'hqdefault');
+            } else if (thumbnailUrl.includes('hqdefault')) {
+              target.src = thumbnailUrl.replace('hqdefault', 'mqdefault');
+            } else if (thumbnailUrl.includes('mqdefault')) {
+              target.src = thumbnailUrl.replace('mqdefault', 'default');
+            }
+          }}
           onError={(event) => {
             const target = event.currentTarget;
             if (target.dataset.fallbackApplied) {

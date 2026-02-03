@@ -8,24 +8,25 @@ export default function RepoXCaseStudy() {
           <Link href="/career" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO THE LAB
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Repo X</h1>
+          <h1 className="text-4xl font-bold tracking-tight mt-4">Guilty As Arrr</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Multiplayer social-deduction prototype focused on spatial voice, proximity tuning, and emergent group play.
+            Multiplayer VR pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.
           </p>
         </header>
 
         <section className="grid gap-8">
           <div className="border border-dashed border-[var(--border)] bg-[var(--surface)]/40 rounded-2xl p-8">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Media & Metrics</h2>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Network Architecture</h2>
             <p className="text-sm text-[var(--muted)]">
-              Placeholder for screenshots, playtest clips, or KPIs (e.g., session length, tester count).
+              Built on <span className="text-[var(--foreground)] font-medium">Photon Fusion</span> for high-performance networked state synchronization, 
+              ensuring sub-50ms latency for critical social cues and spatial voice proximity.
             </p>
           </div>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Goal</h2>
             <p className="text-[var(--muted)] text-sm">
-              Prototype a pirate-themed social deduction loop that relies on spatial audio, proximity-based cues, and lightweight
-              systemic rules to keep sessions readable and replayable.
+              Develop a robust multiplayer framework for spatial interaction. The focus was on <span className="text-[var(--foreground)] font-medium">spatial audio attenuation</span> as a core gameplay mechanic, where 
+              the physical distance and orientation of players directly impact the social deduction loop.
             </p>
           </div>
 
@@ -42,9 +43,10 @@ export default function RepoXCaseStudy() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Tools & Tech</h2>
               <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Unity</li>
-                <li>- Photon (Multiplayer)</li>
-                <li>- Photon Voice / Spatial Audio</li>
+                <li>- Unity (URP)</li>
+                <li>- Photon Fusion (Networking)</li>
+                <li>- Photon Voice 2 (Spatial Audio)</li>
+                <li>- Meta Interaction SDK</li>
                 <li>- Rapid prototyping workflow</li>
               </ul>
             </div>

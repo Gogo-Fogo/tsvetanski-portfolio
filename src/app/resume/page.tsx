@@ -22,8 +22,8 @@ const projects = [
     href: "/projects/shinobi-story"
   },
   {
-    title: "Repo X (Pirate Social Deduction)",
-    description: "Multiplayer prototype focused on spatial voice chat, proximity tuning, and social presence systems for group play.",
+    title: "Guilty As Arrr",
+    description: "Multiplayer VR pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.",
     href: "/projects/repo-x"
   },
   {
@@ -32,8 +32,8 @@ const projects = [
     href: "/projects/vr-interaction-lab"
   },
   {
-    title: "Trash Been",
-    description: "Rapidly shipped prototype demonstrating scope control, gameplay loops, and production discipline.",
+    title: "Trash Been: Urban Logistics",
+    description: "System-driven simulation focused on urban waste management, optimized collection routes, and spatial flow analysis.",
     href: "/projects/trash-been"
   }
 ];
@@ -41,8 +41,8 @@ const projects = [
 const education = [
   {
     title: "M.S. Interaction Design & Information Architecture (Accelerated)",
-    detail: "University of Baltimore (Concurrent Enrollment Spring 2026)",
-    note: "Focus on HCI, research methods, and complex systems."
+    detail: "University of Baltimore (Incoming Spring 2026)",
+    note: "Focus on Human-Computer Interaction (HCI), US Military client simulation, and complex systems design."
   },
   {
     title: "B.S. Simulation and Game Design",

@@ -8,27 +8,28 @@ export default function TrashBeenCaseStudy() {
           <Link href="/career" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO THE LAB
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been</h1>
+          <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been: Urban Logistics</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A rapid prototype built in one week with tight scope control, focused on environmental transformation and
-            momentum-driven platforming.
+            A system-driven simulation focused on urban waste management, optimized collection routes, and spatial flow analysis.
           </p>
         </header>
 
         <section className="grid gap-8">
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Summary</h2>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Simulation Overview</h2>
             <p className="text-sm text-[var(--muted)]">
-              Built from scratch in one week for the Breda application. Players sprint through a polluted city collecting
-              trash bags to restore color and vitality. As the environment cleans up, movement speed and jump height increase,
-              while enemy “globs” slow the player to keep the pacing tense.
+              Developed as a rapid vertical slice to simulate <span className="text-[var(--foreground)] font-medium">Urban Logistics</span>. 
+              The project models waste accumulation across a city grid and challenges the player to optimize collection routes 
+              under temporal constraints. As efficiency increases, the environment dynamically transforms, providing real-time 
+              feedback on system health.
             </p>
           </div>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Goal</h2>
             <p className="text-[var(--muted)] text-sm">
-              Build a complete vertical slice in one week, shipping a clear loop where players restore a polluted city by
-              collecting trash and unlocking movement upgrades.
+              Create a data-informed simulation loop that validates <span className="text-[var(--foreground)] font-medium">spatial efficiency</span>. 
+              The goal was to prove that complex logistics could be gamified into an intuitive, high-engagement interaction model 
+              without losing simulation fidelity.
             </p>
           </div>
 
@@ -36,10 +37,10 @@ export default function TrashBeenCaseStudy() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Key Contributions</h2>
               <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Scoped mechanics and level flow to fit a one-week sprint.</li>
-                <li>- Built movement, collection, and transformation systems.</li>
-                <li>- Implemented enemy behaviors and tuning for pacing.</li>
-                <li>- QA tested and iterated using community feedback.</li>
+                <li>- Engineered the dynamic waste accumulation and routing system.</li>
+                <li>- Designed spatial feedback loops through environmental transformation.</li>
+                <li>- Implemented pathfinding and logistics-based scoring algorithms.</li>
+                <li>- Conducted rapid iteration sprints with focus on system readability.</li>
               </ul>
             </div>
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">

@@ -12,6 +12,7 @@ export type VideoCard = {
   note: string;
   statsText: string;
   hoverClassName?: string;
+  className?: string;
 };
 
 type VideoCarouselProps = {
@@ -35,10 +36,10 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-visible pt-6 -mt-6">
       {featured && (
         <div
-          className={`rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-strong)] transition-shadow duration-300 ${
+          className={`relative z-10 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-strong)] transition-shadow duration-300 ${
             featured.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
           }`}
         >
@@ -47,7 +48,7 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
               embedUrl={featured.embedUrl}
               thumbnailUrl={featured.thumbnailUrl}
               title={featured.title}
-              className="h-full w-full object-cover"
+              className={`h-full w-full object-cover ${featured.className ?? ''}`.trim()}
               roundedClassName="rounded-2xl"
             />
           </div>
@@ -66,7 +67,7 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
         </div>
       )}
 
-      <div className="relative">
+      <div className="relative overflow-visible">
         {rest.length > 0 && (
           <div className="absolute -top-2 right-0 flex items-center gap-2">
             <button
@@ -87,40 +88,42 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
             </button>
           </div>
         )}
-        <div
-          ref={scrollRef}
-          className="flex gap-6 overflow-x-auto pr-10 snap-x snap-mandatory"
-        >
-          {rest.map((video) => (
-            <div
-              key={video.url}
-              className={`snap-start min-w-[240px] max-w-[280px] flex-1 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-shadow duration-300 ${
-                video.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
-              }`}
-            >
-              <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                <LightboxVideo
-                  embedUrl={video.embedUrl}
-                  thumbnailUrl={video.thumbnailUrl}
-                  title={video.title}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-xl"
-                />
+        <div className="overflow-visible">
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto overflow-y-visible pl-4 pr-10 pb-8 pt-4 snap-x snap-mandatory"
+          >
+            {rest.map((video) => (
+              <div
+                key={video.url}
+                className={`snap-start min-w-[240px] max-w-[280px] flex-1 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-shadow duration-300 ${
+                  video.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
+                }`}
+              >
+                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+                  <LightboxVideo
+                    embedUrl={video.embedUrl}
+                    thumbnailUrl={video.thumbnailUrl}
+                    title={video.title}
+                  className={`h-full w-full object-cover ${video.className ?? ''}`.trim()}
+                    roundedClassName="rounded-xl"
+                  />
+                </div>
+                <div className="text-sm text-[var(--muted)]">
+                  <a
+                    className="font-medium text-[var(--foreground)] hover:underline"
+                    href={video.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {video.title}
+                  </a>
+                  <span className="text-xs text-[var(--muted)] block">{video.note}</span>
+                  <span className="mt-2 block text-xs text-[var(--muted)]">{video.statsText}</span>
+                </div>
               </div>
-              <div className="text-sm text-[var(--muted)]">
-                <a
-                  className="font-medium text-[var(--foreground)] hover:underline"
-                  href={video.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {video.title}
-                </a>
-                <span className="text-xs text-[var(--muted)] block">{video.note}</span>
-                <span className="mt-2 block text-xs text-[var(--muted)]">{video.statsText}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

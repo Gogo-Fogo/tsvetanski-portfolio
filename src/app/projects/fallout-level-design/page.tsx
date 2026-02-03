@@ -8,24 +8,26 @@ export default function FalloutLevelDesignCaseStudy() {
           <Link href="/career" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO THE LAB
           </Link>
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Fallout Team Level Design</h1>
+          <h1 className="text-4xl font-bold tracking-tight mt-4">Fallout Mod (Level Design)</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A collaborative level design sprint focused on spatial flow, environmental storytelling, and player guidance.
+            Overhauled game level demonstrating world-building, environmental storytelling, and adaptation of existing IP within a team collaboration workflow.
           </p>
         </header>
 
         <section className="grid gap-8">
           <div className="border border-dashed border-[var(--border)] bg-[var(--surface)]/40 rounded-2xl p-8">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Media & Metrics</h2>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Spatial Storytelling</h2>
             <p className="text-sm text-[var(--muted)]">
-              Placeholder for greybox shots, layout diagrams, or team feedback notes.
+              Focused on <span className="text-[var(--foreground)] font-medium">environmental narrative density</span>—using layout and set-dressing 
+              to communicate history and player objectives without explicit dialogue.
             </p>
           </div>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Goal</h2>
             <p className="text-[var(--muted)] text-sm">
-              Build a readable, atmospheric level that supports team collaboration while guiding players through exploration,
-              encounter beats, and narrative reveals.
+              Demonstrate the ability to work within an established IP and technical framework. The goal was to build an atmospheric, 
+              playable level that maintains <span className="text-[var(--foreground)] font-medium">brand consistency</span> while introducing 
+              fresh encounter beats and spatial flow.
             </p>
           </div>
 

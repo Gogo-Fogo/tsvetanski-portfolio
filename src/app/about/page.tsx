@@ -12,6 +12,18 @@ export default function About() {
         </header>
 
         <section className="mb-16">
+          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
+            <p className="text-[var(--muted)] leading-relaxed">
+              Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
+              I specialize in rapid, high-fidelity spatial interaction prototyping, leveraging AI-assisted development workflows to deliver 
+              simulation-grade results at startup speeds.
+            </p>
+          </div>
+        </section>
+
+        <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Commercial Success</h2>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl px-8 py-6 shadow-[var(--shadow)]">
             <h3 className="text-3xl font-bold italic">Shinobi Story</h3>
@@ -56,10 +68,17 @@ export default function About() {
             <div className="space-y-8">
               <div>
                 <h3 className="font-bold text-xl">M.S. Interaction Design & Information Architecture (Accelerated)</h3>
-                <p className="text-[var(--muted)] font-mono text-xs uppercase tracking-[0.2em]">University of Baltimore (Concurrent Enrollment Spring 2026)</p>
-                <p className="mt-3 text-[var(--muted)] max-w-md">
-                  Selected for accelerated track with a focus on Human-Computer Interaction, research methods, and complex system design.
-                </p>
+                <p className="text-[var(--muted)] font-mono text-xs uppercase tracking-[0.2em]">University of Baltimore (Incoming Spring 2026)</p>
+                <div className="mt-3 space-y-3">
+                  <p className="text-[var(--muted)] max-w-md">
+                    STEM-designated program focusing on <span className="text-[var(--foreground)]">Human-Computer Interaction (HCI)</span>, User Research, and Designing Complex Systems.
+                  </p>
+                  <div className="border-l-2 border-[var(--border)] pl-4 py-1">
+                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Key Project</p>
+                    <p className="text-sm font-semibold text-[var(--foreground)]">US Military Client Simulation</p>
+                    <p className="text-xs text-[var(--muted)] mt-1">Human-Systems Integration research and prototype development.</p>
+                  </div>
+                </div>
               </div>
               <div>
                 <h3 className="font-bold text-xl">B.S. Simulation and Game Design</h3>

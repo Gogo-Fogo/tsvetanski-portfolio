@@ -23,26 +23,27 @@ const formatCount = (value?: string) => {
 export default async function Creative() {
   const videographyLinks = [
     {
-      title: "Shinobi Story | Video 1",
+      title: "Blood Moon Festival - Shinobi Story Halloween Update",
       url: "https://youtu.be/mkfwWyJT5OU",
       embedUrl: "https://www.youtube.com/embed/mkfwWyJT5OU",
+      thumbnailUrl: "https://img.youtube.com/vi/mkfwWyJT5OU/maxresdefault.jpg",
       note: "Shinobi Story video"
     },
     {
-      title: "Shinobi Story | Video 2",
+      title: "Shinobi Story | Gameplay Prototype",
       url: "https://youtu.be/X1hkWDu-i9E",
       embedUrl: "https://www.youtube.com/embed/X1hkWDu-i9E",
       thumbnailUrl: "https://img.youtube.com/vi/X1hkWDu-i9E/maxresdefault.jpg",
       note: "Shinobi Story video"
     },
     {
-      title: "Shinobi Story | Video 3",
+      title: "Shinobi Story | Combat Mechanics",
       url: "https://youtu.be/3NiuTEdX1IU",
       embedUrl: "https://www.youtube.com/embed/3NiuTEdX1IU",
       note: "Shinobi Story video"
     },
     {
-      title: "Shinobi Story | Video 4",
+      title: "Shinobi Story | Environment Showcase",
       url: "https://youtu.be/bPsGUDkz6-0",
       embedUrl: "https://www.youtube.com/embed/bPsGUDkz6-0",
       note: "Shinobi Story video"
@@ -244,6 +245,7 @@ export default async function Creative() {
     </main>
   );
 }
+
 
 
 

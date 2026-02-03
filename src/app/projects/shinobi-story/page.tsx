@@ -8,7 +8,16 @@ type VideoStats = {
   title?: string;
 };
 
-const shinobiStoryVideos = [
+type ShinobiVideo = {
+  title: string;
+  url: string;
+  embedUrl: string;
+  note: string;
+  thumbnailUrl?: string;
+  zoomClassName?: string;
+};
+
+const shinobiStoryVideos: ShinobiVideo[] = [
   {
     title: 'Shinobi Story | Video 1',
     url: 'https://youtu.be/mkfwWyJT5OU',
@@ -19,7 +28,9 @@ const shinobiStoryVideos = [
     title: 'Shinobi Story | Video 2',
     url: 'https://youtu.be/X1hkWDu-i9E',
     embedUrl: 'https://www.youtube.com/embed/X1hkWDu-i9E',
-    note: 'Shinobi Story video'
+    note: 'Shinobi Story video',
+    thumbnailUrl: 'https://img.youtube.com/vi/X1hkWDu-i9E/hqdefault.jpg',
+    zoomClassName: 'scale-[1.3] object-[center_65%]'
   },
   {
     title: 'Shinobi Story | Video 3',
@@ -116,9 +127,10 @@ export default async function ShinobiStoryPage() {
     title: getTitle(video.embedUrl, video.title),
     url: video.url,
     embedUrl: video.embedUrl,
-    thumbnailUrl: getThumbnailUrl(video.embedUrl),
+    thumbnailUrl: video.thumbnailUrl ?? getThumbnailUrl(video.embedUrl),
     note: video.note,
     statsText: getStatsText(video.embedUrl),
+    className: video.zoomClassName,
   }));
 
   return (
@@ -195,12 +207,35 @@ export default async function ShinobiStoryPage() {
             ))}
           </div>
 
-          <VideoCarousel items={videoCards} />
+          <div className="relative z-10 pt-10 md:pt-14">
+            <VideoCarousel items={videoCards} />
+          </div>
         </section>
       </div>
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

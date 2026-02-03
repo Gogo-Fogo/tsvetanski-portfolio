@@ -115,7 +115,7 @@ export default function Home() {
               className="inline-flex items-center justify-center rounded-full border border-[var(--foreground)] text-[var(--foreground)] p-4 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors"
               aria-label="Instagram"
               title="Instagram"
-            >
+dd            >
               <Instagram className="h-4 w-4" />
             </a>
           </div>

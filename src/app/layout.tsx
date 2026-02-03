@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-  description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+  description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
   metadataBase: new URL("https://tsvetanski.com"),
   openGraph: {
     title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
     url: "https://tsvetanski.com",
     siteName: "Georgi Tsvetanski Portfolio",
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Building precise spatial systems for training and mission-critical environments.",
+    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
     images: ["/og-image.svg"]
   }
 };
@@ -56,6 +56,4 @@ export default function RootLayout({
     </html>
   );
 }
-
-
 

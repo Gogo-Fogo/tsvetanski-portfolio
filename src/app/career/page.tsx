@@ -5,61 +5,72 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  href?: string;
+  bannerImage?: string;
+  bannerAlt?: string;
+  bannerWidth?: number;
+  bannerHeight?: number;
+  bannerBorderClass?: string;
+}
+
+const projects: Project[] = [
   {
-    title: "Repo X (Pirate Social Deduction)",
-    description: "Multiplayer prototype with spatial voice, proximity tuning, and social presence systems.",
-    tags: ["Photon Voice", "Multiplayer Systems", "Spatial Audio"],
+    title: "Guilty As Arrr",
+    description: "Real-time spatial audio attenuation for multi-user social deduction.",
+    tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     href: "/projects/repo-x"
   },
   {
-    title: "Unity Creations",
-    description: "Game prototypes and systems design across solo and team projects.",
-    tags: ["Game Design", "Systems", "Prototyping"],
-    bannerImage: "/images/SS_NewContentStrategy.png",
-    bannerAlt: "Unity creations highlight",
+    title: "Trash Been (Urban Logistics)",
+    description: "Simulating urban waste management systems through optimized collection routes and spatial flow.",
+    tags: ["Logistics Simulation", "System Design", "Unity"],
+    bannerImage: "/images/TB_MindMap.png",
+    bannerAlt: "Trash Been logistics mind map",
     bannerWidth: 1400,
-    bannerHeight: 900
-  },
-  {
-    title: "Shinobi Story",
-    description: "Narrative action game with content strategy, marketing beats, and player engagement planning.",
-    tags: ["Narrative Design", "Gameplay Systems", "Marketing"],
-    bannerImage: "/images/ShinobiStoryBanner.jpg",
-    bannerAlt: "Shinobi Story banner",
-    bannerWidth: 1600,
     bannerHeight: 900,
-    bannerBorderClass: "border-2 border-[#D8B33C]",
-    href: "/projects/shinobi-story"
+    href: "/projects/trash-been"
   },
   {
-    title: "VR Interaction Lab",
-    description: "XR interactions exploring hand tracking, precision tasks, and training-grade affordances.",
-    tags: ["XR Interaction", "Hand Tracking", "Human Factors"],
-    href: "/projects/vr-interaction-lab"
-  },
-  {
-    title: "Fallout Team Level Design",
-    description: "Level design sprint focused on spatial flow, storytelling, and player guidance.",
-    tags: ["Level Design", "Team Production", "Environment"],
-    href: "/projects/fallout-level-design"
-  },
-  {
-    title: "VR Microgames",
-    description: "Two compact VR prototypes for interaction feel, comfort, and spatial UI feedback.",
-    tags: ["Spatial UX", "Rapid Prototyping", "Comfort Design"],
+    title: "VR Dirt Bike Game",
+    description: "Immersive training for smart and safe driving practices using VR safety simulation.",
+    tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
     href: "/projects/vr-microgames"
   },
   {
-    title: "Breda (Breda University of Applied Sciences)",
-    description: "Successful Breda application highlighting game design and production planning.",
-    tags: ["Game Design", "Application Project", "Production"],
-    bannerImage: "/images/Breda_Banner.png",
-    bannerAlt: "Breda application banner",
-    bannerWidth: 1600,
+    title: "VR Car Drift Simulator",
+    description: "High-fidelity spatial interaction and vehicle dynamics in a night city environment.",
+    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    href: "/projects/vr-interaction-lab"
+  },
+  {
+    title: "Fallout Mod (Level Design)",
+    description: "Overhauled game level demonstrating world-building, environmental storytelling, and existing IP adaptation.",
+    tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
+    href: "/projects/fallout-level-design"
+  },
+  {
+    title: "Shinobi Story",
+    description: "Narrative-forward stealth experience with new content strategy and marketing beats.",
+    tags: ["Content Strategy", "Narrative Design", "Game Marketing"],
+    bannerImage: "/images/ShinobiStoryBanner.jpg",
+    bannerAlt: "Shinobi Story banner",
+    bannerWidth: 1400,
     bannerHeight: 900,
-    bannerBorderClass: "border-2 border-[#D8B33C]",
-    href: "/projects/breda"
+    href: "/projects/shinobi-story"
+  },
+  {
+    title: "Shonen TCG Game",
+    description: "Developing a robust 3D multiplayer trading card game prototype with complex game systems.",
+    tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
+  },
+  {
+    title: "VR Patapon Game",
+    description: "Conceptualizing an innovative VR rhythm-strategy game with unique interaction models.",
+    tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
   }
 ];
 
@@ -184,6 +195,9 @@ export default function Career() {
     </main>
   );
 }
+
+
+
 
 
 
