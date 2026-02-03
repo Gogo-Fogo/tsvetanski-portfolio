@@ -4,7 +4,7 @@ import DegreeGraph from '@/components/degree-graph';
 export default function About() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <header className="mb-16">
           <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO HOME
@@ -14,11 +14,11 @@ export default function About() {
 
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
             <div className="hidden lg:block">
-              <DegreeGraph />
+              <DegreeGraph className="h-[460px] w-full" />
             </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <div className="border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-8 shadow-[var(--shadow)]">
               <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
               <p className="text-[var(--muted)] leading-relaxed">
                 Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
@@ -119,6 +119,11 @@ export default function About() {
     </main>
   );
 }
+
+
+
+
+
 
 
 
