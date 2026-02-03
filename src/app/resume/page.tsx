@@ -151,7 +151,7 @@ export default function Resume() {
                         href={project.href}
                       >
                         <span>{project.title}</span>
-                        <span className="text-xs uppercase tracking-[0.3em] opacity-60">View</span>
+                        <span className="text-xs uppercase tracking-[0.3em] opacity-60">Click to view</span>
                       </Link>
                     ) : (
                       <p className="font-semibold text-[var(--foreground)]">{project.title}</p>
@@ -210,6 +210,7 @@ export default function Resume() {
     </main>
   );
 }
+
 
 
 

@@ -25,11 +25,11 @@
 }
 
 [data-theme="dark"] {
-  --background: #0b0b0c;
+  --background: #0b1018;
   --foreground: #f3f3f3;
-  --surface: #151518;
-  --surface-muted: #121216;
-  --border: #2a2a2f;
+  --surface: #111824;
+  --surface-muted: #0f151f;
+  --border: #243044;
   --muted: #a0a0a0;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
   --shadow-strong: 0 24px 70px rgba(0, 0, 0, 0.6);
@@ -37,20 +37,39 @@
   --glow-strong: 0 0 28px rgba(86, 215, 255, 0.45);
   --accent-cyan: rgba(86, 215, 255, 0.65);
   --accent-orange: rgba(255, 122, 60, 0.65);
-  --hero-start: #0b0b0c;
-  --hero-mid: #111216;
-  --hero-end: #0a0a0a;
+  --hero-start: #0b1018;
+  --hero-mid: #0f1722;
+  --hero-end: #0a0f18;
+  --ambient-1: rgba(86, 215, 255, 0.28);
+  --ambient-2: rgba(120, 170, 255, 0.24);
+  --ambient-3: rgba(90, 135, 255, 0.26);
   color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(circle at 12% 18%, var(--ambient-1), transparent 52%),
+    radial-gradient(circle at 85% 12%, var(--ambient-2), transparent 48%),
+    radial-gradient(circle at 55% 78%, var(--ambient-3), transparent 58%),
+    linear-gradient(140deg, var(--background) 0%, var(--hero-mid) 40%, var(--hero-end) 100%);
+  background-size: 140% 140%, 150% 150%, 135% 135%, 100% 100%;
+  background-attachment: fixed;
+  animation: ambientFloat 12s ease-in-out infinite;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.01em;
   font-size: 17.5px;
+}
+
+@keyframes ambientFloat {
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%;
+  }
+  50% {
+    background-position: 30% 20%, 70% 25%, 60% 80%, 0% 0%;
+  }
 }
 
 @keyframes themePulseLight {
