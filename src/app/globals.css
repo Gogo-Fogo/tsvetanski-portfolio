@@ -92,7 +92,36 @@ body {
   }
 }
 
+@keyframes nodePulseLight {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px var(--node-glow, rgba(255, 185, 120, 0.18)));
+  }
+  50% {
+    filter: drop-shadow(0 0 26px var(--node-glow-strong, rgba(255, 185, 120, 0.6)));
+  }
+}
+
+@keyframes nodePulseDark {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px var(--node-glow, rgba(86, 215, 255, 0.2)));
+  }
+  50% {
+    filter: drop-shadow(0 0 26px var(--node-glow-strong, rgba(86, 215, 255, 0.65)));
+  }
+}
+
 ::selection {
   background: var(--foreground);
   color: var(--background);
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__edge-path {
+  stroke: rgba(148, 163, 184, 0.9) !important;
+  stroke-width: 2.4px !important;
 }
