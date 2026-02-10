@@ -27,8 +27,6 @@ export default function Home() {
             </h1>
             <div className="text-base sm:text-lg text-[var(--muted)] max-w-2xl space-y-2">
               <p>Spatial interaction prototyper for XR + simulation.</p>
-              <p>B.S. Simulation & Game Design + B.A. Communication & Media Studies + AAS Digital Animation.</p>
-              <p>Open to Technical Design, XR Development, Gameplay Engineering, and Technical QA (Remote / EU relocation).</p>
             </div>
           </div>
         </div>

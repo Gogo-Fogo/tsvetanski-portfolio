@@ -86,6 +86,39 @@ export default async function Creative() {
     }
   ];
 
+  const animationArchiveLinks = [
+    {
+      title: 'Old Animation Project (Degree Work)',
+      url: 'https://youtu.be/UfA0f0ih1I8',
+      embedUrl: 'https://www.youtube.com/embed/UfA0f0ih1I8',
+      note: 'Animation degree archive',
+    },
+    {
+      title: 'Animation Concept Video',
+      url: 'https://youtu.be/bWOdY2UhzWE',
+      embedUrl: 'https://www.youtube.com/embed/bWOdY2UhzWE',
+      note: 'Concept development',
+    },
+    {
+      title: 'Animatic Archive',
+      url: 'https://youtu.be/7hqtDkMbLaQ',
+      embedUrl: 'https://www.youtube.com/embed/7hqtDkMbLaQ',
+      note: 'Animatic study',
+    },
+    {
+      title: 'Intro Logo Animation (Client/Friend Project)',
+      url: 'https://youtu.be/hwuUvoTI_JM',
+      embedUrl: 'https://www.youtube.com/embed/hwuUvoTI_JM',
+      note: 'Logo + intro motion piece',
+    },
+    {
+      title: 'Sketchbook Video Archive',
+      url: 'https://youtu.be/FtY1ZvEQQM0',
+      embedUrl: 'https://www.youtube.com/embed/FtY1ZvEQQM0',
+      note: 'Traditional sketch process',
+    },
+  ];
+
   const animationGallery = [
     { src: '/images/Art_Storyboards.jpg', alt: 'Storyboard work' },
     { src: '/images/Art_3D.jpg', alt: '3D work sample 1' },
@@ -415,12 +448,36 @@ export default async function Creative() {
                 </div>
               ))}
             </div>
+
+            <div className="pt-2">
+              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)] mb-4">Animation Degree Archive Videos</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                {animationArchiveLinks.map((video) => (
+                  <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
+                    <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
+                      <LightboxVideo
+                        embedUrl={video.embedUrl}
+                        thumbnailUrl={getThumbnailUrl(video.embedUrl)}
+                        title={getTitle(video.embedUrl, video.title)}
+                        className="h-full w-full object-cover"
+                        roundedClassName="rounded-lg"
+                      />
+                    </div>
+                    <a className="text-sm font-semibold text-[var(--foreground)] hover:underline" href={video.url} target="_blank" rel="noreferrer">
+                      {getTitle(video.embedUrl, video.title)}
+                    </a>
+                    <p className="text-xs text-[var(--muted)]">{video.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       </div>
     </main>
   );
 }
+
 
 
 

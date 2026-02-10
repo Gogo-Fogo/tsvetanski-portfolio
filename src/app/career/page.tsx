@@ -20,6 +20,17 @@ interface Project {
   bannerBorderClass?: string;
 }
 
+interface SideProjectCard {
+  title: string;
+  subtitle: string;
+  description: string;
+  roles?: string;
+  image?: string;
+  imageAlt?: string;
+  ctaLabel?: string;
+  href?: string;
+}
+
 type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
 
 const filterOptions: { value: ProjectFilter; label: string }[] = [
@@ -93,6 +104,70 @@ const projects: Project[] = [
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     facets: ['xr', 'art-storytelling'],
     type: 'prototype'
+  }
+];
+
+const sideProjects: SideProjectCard[] = [
+  {
+    title: 'Totally Bugged Out',
+    subtitle: 'Solo Project — First-Person Bug Survival Game',
+    description:
+      'Set in a bug-infested Balkan house, this prototype uses a universal throw system and swarming enemy behavior that can traverse walls and ceilings.',
+    image: '/images/Totally Bugged Out_banner.png',
+    imageAlt: 'Totally Bugged Out project banner',
+    ctaLabel: 'View Case Study',
+    href: '/projects/totally-bugged-out'
+  },
+  {
+    title: 'Cranky (Game Jam 2024)',
+    subtitle: 'Prototype / Local Multiplayer — Unity (1 Week)',
+    description:
+      'Built for Global Game Jam as a chaotic split-screen experience where two pugs chase squirrels in fast, goofy matches.',
+    roles: 'Roles: Lead Animator, Co-Designer',
+    image: '/images/Cranky_GameJam_Banner_2024.jpg',
+    imageAlt: 'Cranky Game Jam 2024 banner',
+    ctaLabel: 'View Case Study',
+    href: '/projects/cranky-game-jam'
+  },
+  {
+    title: 'Cranky: The Squirrel Annihilator',
+    subtitle: 'Solo Project — First-Person Dog Chase Game',
+    description:
+      'A solo expansion of the jam concept with first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL-ready deployment.',
+    image: '/images/CrankyTheSquirrelAnnihilator_banner.png',
+    imageAlt: 'Cranky The Squirrel Annihilator banner',
+    ctaLabel: 'View Case Study',
+    href: '/projects/cranky-squirrel-annihilator'
+  },
+  {
+    title: 'Shogun: Flowers Fall in Blood',
+    subtitle: 'Solo Project — Tactical RPG / Unity',
+    description:
+      'Mobile tactical RPG prototype combining grid-based combat, gesture-driven skills, progression systems, enemy AI, and gacha simulation.',
+    roles: 'Role: Solo Developer',
+    ctaLabel: 'View Case Study',
+    href: '/projects/shogun-flowers-fall-in-blood'
+  },
+  {
+    title: 'The Signal',
+    subtitle: 'Team Project — Narrative Board Game Design',
+    description:
+      'Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.',
+    roles: 'Team Roles: Design, Systems, Lore Writing, Visual Assets',
+    image: '/images/Banner_TheSignal.jpg',
+    imageAlt: 'The Signal board game banner',
+    ctaLabel: 'View Case Study',
+    href: '/projects/the-signal'
+  },
+  {
+    title: 'The Last Paycheck',
+    subtitle: 'Solo Project — Narrative + Systems Design',
+    description:
+      'A dystopian 2050 design document focused on poverty, survival, unstable jobs, inflation pressure, and player emotional engagement.',
+    image: '/images/TheLastPaycheck_Banner.png',
+    imageAlt: 'The Last Paycheck banner',
+    ctaLabel: 'View Case Study',
+    href: '/projects/the-last-paycheck'
   }
 ];
 
@@ -272,12 +347,63 @@ export default function Career() {
             Experimental prototypes and independent builds that combine 3D art, game systems design, and rapid technical iteration.
             These projects are where I test mechanics, interaction ideas, and production workflows before moving concepts into more formal case studies.
           </p>
+
+          <h3 className="mt-8 text-[10px] font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Explore My Creations</h3>
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sideProjects.map((project) => (
+              <article
+                key={project.title}
+                className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_24px_var(--accent-cyan)]"
+              >
+                <div className="mb-4 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+                  {project.image ? (
+                    <LightboxImage
+                      src={project.image}
+                      alt={project.imageAlt ?? `${project.title} banner`}
+                      width={1200}
+                      height={675}
+                      className="h-auto w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-28 items-center justify-center text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
+                      Banner coming soon
+                    </div>
+                  )}
+                </div>
+
+                <h4 className="text-base font-semibold tracking-tight text-[var(--foreground)]">{project.title}</h4>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{project.subtitle}</p>
+                <p className="mt-3 text-sm text-[var(--muted)]">{project.description}</p>
+                {project.roles ? <p className="mt-3 text-xs text-[var(--muted)]">{project.roles}</p> : null}
+
+                {project.href ? (
+                  <Link
+                    href={project.href}
+                    className="mt-4 inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
+                  >
+                    {project.ctaLabel ?? 'View'}
+                  </Link>
+                ) : (
+                  <span className="mt-4 inline-block rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
+                    {project.ctaLabel ?? 'Details soon'}
+                  </span>
+                )}
+              </article>
+            ))}
+          </div>
         </section>
 
       </div>
     </main>
   );
 }
+
+
+
+
+
+
+
 
 
 
