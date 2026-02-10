@@ -39,8 +39,8 @@ const nodesData: GraphNode[] = [
   },
   {
     id: "degree-ba",
-    label: "B.A. Digital Media & Communication",
-    labelLines: ["B.A", "Digital Media &", "Communication"],
+    label: "B.A. Communication and Media Studies",
+    labelLines: ["B.A", "Communication &", "Media Studies"],
     group: "degree",
     color: "#facc15",
     position: { x: 480, y: 160 }

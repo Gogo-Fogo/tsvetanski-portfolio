@@ -25,6 +25,10 @@ export default function About() {
                 I specialize in rapid, high-fidelity spatial interaction prototyping, leveraging AI-assisted development workflows to deliver 
                 simulation-grade results at startup speeds.
               </p>
+              <p className="text-[var(--muted)] leading-relaxed mt-3">
+                I build immersive systems and responsive gameplay in Unity (C#), from physics-driven prototypes to commercial outcomes,
+                with strong grounding in QA, live-ops, and player-centered delivery.
+              </p>
             </div>
           </div>
         </section>
@@ -46,11 +50,11 @@ export default function About() {
             <div className="space-y-6">
               <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
                 <div className="flex flex-wrap items-start justify-between gap-2">
-                  <h3 className="font-bold text-lg">M.S. Interaction Design & Information Architecture (Accelerated)</h3>
-                  <p className="text-[var(--muted)] font-mono text-[10px] uppercase tracking-[0.2em]">Incoming Spring 2026</p>
+                  <h3 className="font-bold text-lg">Accelerated B.S./M.S. Pathway (High-Performance Track)</h3>
+                  <p className="text-[var(--muted)] font-mono text-[10px] uppercase tracking-[0.2em]">Jan 2025–May 2027</p>
                 </div>
                 <p className="text-[var(--muted)] text-sm mt-3">
-                  University of Baltimore · HCI, user research, complex systems design.
+                  University of Baltimore · Simulation & Game Design + Interaction Design.
                 </p>
                 <div className="mt-4 border-l-2 border-[var(--border)] pl-4 py-1">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">Key Project</p>
@@ -63,10 +67,13 @@ export default function About() {
                   <span className="font-semibold text-[var(--foreground)]">B.S. Simulation and Game Design</span> — University of Baltimore (Jan 2025)
                 </li>
                 <li>
-                  <span className="font-semibold text-[var(--foreground)]">B.A. Communication and Media Studies</span> — University of Maryland (Jan 2023)
+                  <span className="font-semibold text-[var(--foreground)]">B.A. Communication and Media Studies</span> — University of Maryland (Jan 2023–Dec 2024)
                 </li>
                 <li>
-                  <span className="font-semibold text-[var(--foreground)]">A.A. Digital Animation</span> — Montgomery College (Aug 2020–Jul 2023)
+                  <span className="font-semibold text-[var(--foreground)]">Associate&apos;s Degree, Digital Animation (AAS)</span> — Montgomery College (Aug 2020–Jul 2023)
+                </li>
+                <li>
+                  <span className="font-semibold text-[var(--foreground)]">Diploma of Education, Bulgarian Language, Literature, and History</span> — Bulgarian Educational and Cultural Center "Kliment Ohridski," Washington DC (2015–2019)
                 </li>
               </ul>
             </div>
@@ -80,6 +87,37 @@ export default function About() {
                 Detailed skills and experience live in the Resume section.
               </p>
             </div>
+
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] mt-6">
+              <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Languages</h3>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <li><span className="text-[var(--foreground)] font-medium">Bulgarian</span> — Native or bilingual proficiency</li>
+                <li><span className="text-[var(--foreground)] font-medium">English</span> — Native or bilingual proficiency</li>
+                <li><span className="text-[var(--foreground)] font-medium">Chinese</span> — Elementary proficiency</li>
+                <li><span className="text-[var(--foreground)] font-medium">Russian</span> — Elementary proficiency</li>
+              </ul>
+            </div>
+
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] mt-6">
+              <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Selected Skills</h3>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <li>- XR & Simulation: Virtual Reality (VR), Unity, rapid prototyping, playtesting & iteration.</li>
+                <li>- Game Production: bug tracking, game balancing, performance monitoring, quality assurance.</li>
+                <li>- Design & UX: user experience (UX), interaction/system design, storyboarding, Figma/Adobe XD.</li>
+                <li>- Media & Marketing: video production/editing, social media management, analytics, content creation.</li>
+                <li>- Collaboration: product/project management, leadership, mentoring, team coordination.</li>
+              </ul>
+            </div>
+
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] mt-6">
+              <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Tools</h3>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <li>- Game Engines: Unity, Unreal Engine</li>
+                <li>- Video & Design: Adobe Premiere Pro, After Effects, Photoshop, Illustrator</li>
+                <li>- 3D: Autodesk Maya, ZBrush</li>
+                <li>- Workflow: Notion, Trello, GitHub/GitLab</li>
+              </ul>
+            </div>
           </section>
         </div>
 
@@ -87,20 +125,30 @@ export default function About() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Certifications</h2>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>- Google Ads Search Certification</li>
-              <li>- Design Powered by Data: UX Web Analytics</li>
-              <li>- User Experience (UX) for Non-Designers</li>
-              <li>- "How to become a game developer?"</li>
-              <li>- Bulgarian Language Proficiency (CEFR B2)</li>
+              <li>- Design Powered by Data: Getting Started with UX Web Analytics (LinkedIn, Dec 2024)</li>
+              <li>- Google Ads Search Certification (Skillshop, Dec 2024–Dec 2025, ID: 126278099)</li>
+              <li>- Fundamentals of Social Media (Muck Rack, Jun 2024, ID: s6fmbrwpdfca)</li>
+              <li>- Making a Short Film: Start to Finish (LinkedIn, Dec 2023)</li>
+              <li>- Learning Notion (LinkedIn, Aug 2023)</li>
+              <li>- User Experience (UX) for Non-Designers (LinkedIn, May 2023)</li>
+              <li>- "How to become a game developer?" (ARC Academy, Feb 2022)</li>
+              <li>- Bulgarian Language Proficiency (CEFR Level B2) (Sofia University St. Kliment Ohridski, May 2019)</li>
             </ul>
           </div>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Honors & Awards</h2>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>- Montgomery College Excellence in Equity Award (Digital Art)</li>
-              <li>- Phi Theta Kappa Honor Society</li>
-              <li>- II International Children’s Art Contest (Turgenev)</li>
-              <li>- “Stefan Gechev” Literature Competition Recognition</li>
+              <li>- Dean’s List – Honors (College of Public Affairs / Yale Gordon College of Arts and Sciences, Jan 2026)</li>
+              <li>- Helen P. Denit Honors Program Scholar (University of Baltimore, Jan 2025)</li>
+              <li>- Dean’s List (3 Semesters) — Spring 2023, Fall 2023, Spring 2024 (University of Maryland, Jun 2024)</li>
+              <li>- Honors Program Member & NSCS Nominee (University of Maryland, Jul 2023)</li>
+              <li>- Dean’s List (Full Year 2022) (Montgomery College, Apr 2023)</li>
+              <li>- Montgomery College Excellence in Equity Award for Digital Art (Apr 2021)</li>
+              <li>- Phi Theta Kappa Honor Society (Apr 2021)</li>
+              <li>- 2018 SERT WATTS UP? Poster Contest (MCPS School Energy & Recycling Team, May 2018)</li>
+              <li>- “Stefan Gechev” 20th Literature Competition — II Place (State Agency for Bulgarians Abroad, Jul 2016)</li>
+              <li>- II International Contest of the Children’s Art, Ivan Sergeyevich Turgenev — First Round Winner (National Level), Diploma of Achievement (Jan 2013)</li>
+              <li>- Certificate of Language Proficiency (CEFR Level B2) — Sofia University “St. Kliment Ohridski”</li>
             </ul>
           </div>
         </section>
@@ -119,6 +167,14 @@ export default function About() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
 
 
 

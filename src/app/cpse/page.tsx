@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/components/breadcrumbs';
+import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
 type VideoStats = {
@@ -21,10 +22,25 @@ const formatCount = (value?: string) => {
 };
 
 const impactHighlights = [
-  "Led video production and interviews to expand program visibility and storytelling reach.",
+  "Led video production from planning to post-production, including interview strategy, filming, and editing.",
   "Produced the UMD CPSE Summer Program 2024 video, which attracted a Nobel Prize–winning physicist as a special guest.",
-  "Managed social media content strategy and campaign reporting for CPSE initiatives.",
-  "Mentored interns and coordinated media support at live events and demo days."
+  "Managed weekly social campaigns and analytics reporting across Instagram, Facebook, and YouTube.",
+  "Mentored interns, coordinated event media operations, and handled equipment/material procurement workflows."
+];
+
+const cpseImageAssets = [
+  {
+    src: '/images/CPSE_FLYER_SummerProgram.jpg',
+    alt: 'CPSE Summer Program flyer design'
+  },
+  {
+    src: '/images/CPSE_MoCoShowArticleHeader.jpg',
+    alt: 'CPSE MoCoShow article header visual'
+  },
+  {
+    src: '/images/CPSE_FactSheet.jpg',
+    alt: 'CPSE fact sheet visual'
+  }
 ];
 
 const cpseVideos = [
@@ -109,15 +125,15 @@ export default async function CpsePage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Creative Work', href: '/creative' },
+              { label: 'Videography & Storytelling', href: '/creative' },
               { label: 'UMD CPSE' },
             ]}
             className="mb-4"
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">UMD CPSE EXPERIENCE</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Highlights from my time supporting the UMD Cyber-Physical Systems Engineering program as a digital and visual media
-            specialist, including program storytelling, field capture, and outreach work.
+            Highlights from two consecutive roles supporting the UMD Cyber-Physical Systems Engineering program, spanning content creation,
+            social strategy, and full-cycle video production.
           </p>
         </header>
 
@@ -131,9 +147,16 @@ export default async function CpsePage() {
               </div>
               <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">May 2024 – Oct 2024</span>
             </div>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p className="text-base font-semibold text-[var(--foreground)]">Social Media & Marketing Content Creator</p>
+                <p className="text-sm text-[var(--muted)]">UMD Cyber-Physical Systems Engineering</p>
+              </div>
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Sep 2023 – May 2024</span>
+            </div>
             <p className="text-sm text-[var(--muted)] mt-4">
-              Documented the 5-week immersive summer program and its projects, translating technical work in IoT and
-              cyber-physical systems into engaging visuals for prospective students, partners, and the broader community.
+              Work included translating technical IoT/cyber-physical systems work into audience-friendly media, running social content pipelines,
+              and producing recruitment-oriented program narratives.
             </p>
           </div>
 
@@ -168,6 +191,26 @@ export default async function CpsePage() {
                   <p className="text-xs text-[var(--muted)] mt-2">{getStatsText(featuredVideo.embedUrl)}</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Campaign Visual Assets</h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {cpseImageAssets.map((asset) => (
+                <div key={asset.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+                  <div className="aspect-[4/3] w-full">
+                    <LightboxImage
+                      src={asset.src}
+                      alt={asset.alt}
+                      fill
+                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
+                      className="h-full w-full object-cover"
+                      roundedClassName="rounded-none"
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -226,6 +269,8 @@ export default async function CpsePage() {
     </main>
   );
 }
+
+
 
 
 

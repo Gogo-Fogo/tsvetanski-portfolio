@@ -40,30 +40,56 @@ const projects = [
 
 const education = [
   {
-    title: "M.S. Interaction Design & Information Architecture (Accelerated)",
-    detail: "University of Baltimore (Incoming Spring 2026)",
-    note: "Focus on Human-Computer Interaction (HCI), US Military client simulation, and complex systems design."
-  },
-  {
-    title: "B.S. Simulation and Game Design",
-    detail: "University of Baltimore (Jan 2025)",
-    note: "STEM designated. Simulation for non-entertainment fields."
+    title: "B.S. / M.S. Simulation & Game Design / Interaction Design",
+    detail: "University of Baltimore (Jan 2025 – May 2027)",
+    note: "Selected for the Accelerated B.S./M.S. Pathway (High-Performance Track). Focused on interaction design, digital simulation, information architecture, and user research for immersive systems."
   },
   {
     title: "B.A. Communication and Media Studies",
-    detail: "University of Maryland (Jan 2023)"
+    detail: "University of Maryland (Jan 2023 – Dec 2024)",
+    note: "Activities: UCA President (Fall 2024), UCA Vice President (Fall 2023 & Spring 2024), Student Blogger (Fall 2023)."
+  },
+  {
+    title: "Associate's Degree, Digital Animation (AAS)",
+    detail: "Montgomery College (Aug 2020 – Jul 2023)",
+    note: "Activities: Art Society Club. Training in 2D/3D animation pipelines, storyboarding, and motion graphics."
+  },
+  {
+    title: "Diploma of Education, Bulgarian Language, Literature, and History",
+    detail: "Bulgarian Educational and Cultural Center \"Kliment Ohridski,\" Washington DC (2015 – 2019)",
+    note: "Early foundation in language, communication, and cultural history."
   }
 ];
 
 const experience = [
   {
     role: "QA Tester | Gameplay Analyst",
-    org: "Shokuho Mod Team (Mount & Blade II: Bannerlord)",
-    period: "Mar 2025 – Present",
+    org: "Shokuho Mod Team (Volunteer Project) · Freelance",
+    period: "Mar 2025 – Aug 2025",
     highlights: [
-      "Structured playtests and bug documentation for AI, combat, and economy systems.",
-      "Performance monitoring using MSI Afterburner and OBS Studio.",
-      "Statistical summaries to inform balance and design decisions."
+      "Conducted structured playtests with fresh saves and controlled scenarios.",
+      "Documented bugs in AI behavior, combat balance, and economy systems using standardized reporting templates.",
+      "Monitored performance with MSI Afterburner and OBS, and created statistical summaries to support design/balance decisions."
+    ]
+  },
+  {
+    role: "President",
+    org: "Undergraduate Communication Association (UCA)",
+    period: "Jul 2024 – Dec 2024",
+    highlights: [
+      "Oversaw constitution/policy execution, strategic agendas, and executive coordination.",
+      "Managed budgeting, financial records, and budget-request preparation.",
+      "Represented the organization in funding and operational planning decisions."
+    ]
+  },
+  {
+    role: "Vice President",
+    org: "Undergraduate Communication Association (UCA)",
+    period: "May 2023 – Aug 2024",
+    highlights: [
+      "Delegated officer responsibilities and coordinated execution through Trello workflows.",
+      "Organized events, led recruitment, and supported partner/stakeholder communication.",
+      "Helped elevate UCA to Tier 2 by meeting leadership program requirements."
     ]
   },
   {
@@ -71,30 +97,57 @@ const experience = [
     org: "UMD Cyber-Physical Systems Engineering",
     period: "May 2024 – Oct 2024",
     highlights: [
-      "Led video production and interviews for program visibility.",
-      "Produced the UMD CPSE Summer Program 2024 video (youtu.be/YP9sqDBSWdo), which drew a Nobel Prize–winning physicist to join as a special guest.",
-      "Managed social media content strategy and campaign reporting.",
-      "Mentored interns and coordinated media support at events."
+      "Led video production from strategy to post-production, including planning, interviewing, recording, and editing.",
+      "Managed social media strategy for Instagram/Facebook and executed weekly campaigns with trend/performance reporting.",
+      "Mentored interns, coordinated event media support, and managed equipment/material procurement with vendors."
     ]
   },
   {
-    role: "Game Developer | Multimedia Specialist | Senior Community Manager",
-    org: "Pixel Bulb Studio (Shinobi Story)",
-    period: "Jan 2021 – Apr 2024",
+    role: "Social Media & Marketing Content Creator",
+    org: "UMD Cyber-Physical Systems Engineering",
+    period: "Sep 2023 – May 2024",
     highlights: [
-      "Designed in-game content, NPC behaviors, and level flows.",
-      "Produced marketing media, social assets, and community campaigns.",
+      "Created reels, flyers, and campaign content for CPSE program rebranding across Instagram, YouTube, Facebook, and TikTok.",
+      "Drafted and edited weekly social posts, and produced end-of-semester analytics reporting.",
+      "Designed promotional assets aligned with UMD branding/social media guidelines and wrote student/program feature articles."
+    ]
+  },
+  {
+    role: "Blog Writer",
+    org: "The Universities at Shady Grove",
+    period: "Oct 2023 – May 2024",
+    highlights: [
+      "Authored student-facing articles on science, student life, and personal/academic experience.",
+      "Produced and published blog content in WordPress on deadline for the USG student platform."
+    ]
+  },
+  {
+    role: "Game Developer",
+    org: "Pixel Bulb Studio (Shinobi Story)",
+    period: "May 2021 – Apr 2024",
+    highlights: [
+      "Designed in-game content, NPC behaviors, quests, boss events, and level flows.",
+      "Supported sprint execution and database workflows, including internal training/tutorial support.",
       "Analyzed player behavior and retention strategies."
     ]
   },
   {
-    role: "President / Vice President",
-    org: "Undergraduate Communication Association (UCA)",
-    period: "May 2023 – Dec 2024",
+    role: "Marketing & Communications Specialist",
+    org: "Pixel Bulb Studio",
+    period: "Jan 2021 – May 2021",
     highlights: [
-      "Led recruitment, budgeting, and strategic planning.",
-      "Directed events, partnerships, and marketing efforts.",
-      "Elevated the organization to Tier 2 via leadership program completion."
+      "Led community-facing marketing campaigns and social channel operations.",
+      "Planned/implemented digital strategy including branding, ad assets, and moderation workflows.",
+      "Analyzed performance metrics and delivered strategic recommendations."
+    ]
+  },
+  {
+    role: "Multimedia Specialist",
+    org: "Pixel Bulb Studio",
+    period: "Dec 2019 – Apr 2021",
+    highlights: [
+      "Produced multimedia assets including ads, banners, videos, and animations.",
+      "Adapted raw materials into platform-ready content and collaborated across multimedia workflows."
     ]
   }
 ];
@@ -111,6 +164,9 @@ export default function Resume() {
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
             A multifaceted creator bridging spatial design, simulation engineering, and human-centered systems. My work blends
             XR prototyping, research-driven interaction design, and production-focused development.
+          </p>
+          <p className="text-[var(--muted)] mt-2 text-sm max-w-2xl">
+            Targeting entry-level roles in Technical Design, XR Development, Gameplay Engineering, and Technical QA.
           </p>
           <Link
             href="/cpse"
@@ -138,6 +194,16 @@ export default function Resume() {
                   <li key={skill}>- {skill}</li>
                 ))}
               </ul>
+
+              <div className="mt-6 border-t border-[var(--border)] pt-6">
+                <h3 className="text-[10px] font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-3">Skills Matrix</h3>
+                <ul className="space-y-2 text-xs text-[var(--muted)]">
+                  <li>- Game Engines: Unity, Unreal Engine</li>
+                  <li>- Video & Design: Adobe Premiere Pro, After Effects, Photoshop, Illustrator</li>
+                  <li>- 3D: Autodesk Maya, ZBrush</li>
+                  <li>- Workflow: Notion, Trello, GitHub/GitLab</li>
+                </ul>
+              </div>
             </div>
 
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
@@ -210,6 +276,12 @@ export default function Resume() {
     </main>
   );
 }
+
+
+
+
+
+
 
 
 

@@ -266,10 +266,19 @@ export default function Career() {
           <p className="mt-10 text-sm text-[var(--muted)]">No projects in this filter yet. Try another category.</p>
         ) : null}
 
+        <section className="mt-16 border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Side Projects</h2>
+          <p className="text-sm text-[var(--muted)] max-w-3xl">
+            Experimental prototypes and independent builds that combine 3D art, game systems design, and rapid technical iteration.
+            These projects are where I test mechanics, interaction ideas, and production workflows before moving concepts into more formal case studies.
+          </p>
+        </section>
+
       </div>
     </main>
   );
 }
+
 
 
 

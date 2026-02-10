@@ -17,11 +17,13 @@ export type VideoCard = {
 
 type VideoCarouselProps = {
   items: VideoCard[];
+  featuredVariant?: 'default' | 'compact';
 };
 
-export default function VideoCarousel({ items }: VideoCarouselProps) {
+export default function VideoCarousel({ items, featuredVariant = 'default' }: VideoCarouselProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [featured, ...rest] = items;
+  const isCompactFeatured = featuredVariant === 'compact';
 
   const scrollByOffset = (direction: "prev" | "next") => {
     if (!scrollRef.current) {
@@ -39,7 +41,9 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
     <div className="space-y-6 overflow-visible pt-6 -mt-6">
       {featured && (
         <div
-          className={`relative z-10 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow-strong)] transition-shadow duration-300 ${
+          className={`relative z-10 rounded-3xl border border-[var(--border)] bg-[var(--surface)] ${
+            isCompactFeatured ? 'p-4 md:p-5 max-w-3xl mx-auto' : 'p-5'
+          } shadow-[var(--shadow-strong)] transition-shadow duration-300 ${
             featured.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
           }`}
         >
@@ -54,7 +58,7 @@ export default function VideoCarousel({ items }: VideoCarouselProps) {
           </div>
           <div className="mt-4 text-sm text-[var(--muted)]">
             <a
-              className="text-lg font-semibold text-[var(--foreground)] hover:underline"
+              className={`${isCompactFeatured ? 'text-base md:text-lg' : 'text-lg'} font-semibold text-[var(--foreground)] hover:underline`}
               href={featured.url}
               target="_blank"
               rel="noreferrer"

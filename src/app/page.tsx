@@ -27,7 +27,8 @@ export default function Home() {
             </h1>
             <div className="text-base sm:text-lg text-[var(--muted)] max-w-2xl space-y-2">
               <p>Spatial interaction prototyper for XR + simulation.</p>
-              <p>Rockville, MD · Open to XR collaborations.</p>
+              <p>B.S. Simulation & Game Design + B.A. Communication & Media Studies + AAS Digital Animation.</p>
+              <p>Open to Technical Design, XR Development, Gameplay Engineering, and Technical QA (Remote / EU relocation).</p>
             </div>
           </div>
         </div>
@@ -62,7 +63,7 @@ export default function Home() {
               <li>Narrative communication work</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-              Explore Creative Work →
+              Explore Videography & Storytelling →
             </div>
             <span className="mt-6 block h-px w-14 bg-[var(--accent-orange)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>
@@ -83,7 +84,7 @@ export default function Home() {
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4 text-center">Connect</h2>
           <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
             <a
-              href="mailto:georgi.tsvetanski@gmail.com"
+              href="mailto:georgi@tsvetanski.com"
               className="inline-flex items-center justify-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)] p-4 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-transparent hover:text-[var(--foreground)] transition-colors"
               aria-label="Email"
               title="Email"
