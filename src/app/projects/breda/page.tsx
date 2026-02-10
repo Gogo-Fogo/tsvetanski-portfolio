@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
 type VideoStats = {
@@ -59,9 +59,14 @@ export default async function BredaProjectPage() {
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-4xl mx-auto">
         <header className="mb-16">
-          <Link href="/career" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
-            ← BACK TO THE LAB
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Projects', href: '/career' },
+              { label: 'Trash Been (Breda Case)' },
+            ]}
+            className="mb-4"
+          />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Successful Breda Application</p>
           <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been</h1>
           <ul className="list-disc pl-5 text-[var(--muted)] mt-3 max-w-2xl text-base space-y-2">

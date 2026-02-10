@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Breadcrumbs from '@/components/breadcrumbs';
 import VideoCarousel, { type VideoCard } from './video-carousel';
 
 type VideoStats = {
@@ -148,12 +149,16 @@ export default async function Creative() {
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-5xl mx-auto">
         <header className="mb-16">
-          <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
-            ← BACK TO HOME
-          </Link>
-          <h1 className="text-4xl font-bold tracking-tighter mt-4 text-[var(--foreground)]">CREATIVE WORK</h1>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Creative Work' },
+            ]}
+            className="mb-4"
+          />
+          <h1 className="text-4xl font-bold tracking-tighter mt-4 text-[var(--foreground)]">Videography & Communication Work</h1>
           <p className="text-[var(--muted)] mt-3 max-w-xl text-base">
-            Multimedia and videography projects that support the spatial design narrative.
+            Video editing, interviews, and narrative communication projects aligned with technical and educational outcomes.
           </p>
         </header>
 
@@ -233,6 +238,7 @@ export default async function Creative() {
     </main>
   );
 }
+
 
 
 

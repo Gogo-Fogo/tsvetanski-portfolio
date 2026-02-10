@@ -37,15 +37,15 @@ export default function Home() {
             href="/career"
             className="group rounded-3xl border border-transparent bg-[var(--surface)] p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
           >
-            <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Primary Track</p>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Spatial Computing + Game Design</h2>
+            <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Primary Focus</p>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">XR Simulation Engineering</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
-              <li>XR interactions</li>
-              <li>Simulation systems</li>
-              <li>Case studies</li>
+              <li>Spatial interaction systems</li>
+              <li>Simulation and gameplay engineering</li>
+              <li>Technical project case studies</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-              Enter The Lab →
+              View Projects →
             </div>
             <span className="mt-6 block h-px w-14 bg-[var(--accent-cyan)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>
@@ -54,15 +54,15 @@ export default function Home() {
             href="/creative"
             className="group rounded-3xl border border-transparent bg-[var(--surface)] p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
           >
-            <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Secondary Track</p>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Media + Videography</h2>
+            <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Secondary Focus</p>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Storytelling</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
-              <li>Trailers</li>
-              <li>Motion design</li>
-              <li>Interactive storytelling</li>
+              <li>Cinematic edits and trailers</li>
+              <li>Interview and outreach media</li>
+              <li>Narrative communication work</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-              View Media →
+              Explore Creative Work →
             </div>
             <span className="mt-6 block h-px w-14 bg-[var(--accent-orange)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>

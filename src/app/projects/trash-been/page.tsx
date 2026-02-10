@@ -1,13 +1,18 @@
-import Link from 'next/link';
+import Breadcrumbs from '@/components/breadcrumbs';
 
 export default function TrashBeenCaseStudy() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-4xl mx-auto">
         <header className="mb-16">
-          <Link href="/career" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
-            ← BACK TO THE LAB
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Projects', href: '/career' },
+              { label: 'Trash Been' },
+            ]}
+            className="mb-4"
+          />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been: Urban Logistics</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
             A system-driven simulation focused on urban waste management, optimized collection routes, and spatial flow analysis.
@@ -66,5 +71,6 @@ export default function TrashBeenCaseStudy() {
     </main>
   );
 }
+
 
 

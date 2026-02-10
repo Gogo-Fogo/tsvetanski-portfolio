@@ -1,14 +1,16 @@
 "use client";
 
 import LightboxImage from '@/components/lightbox-image';
+import Breadcrumbs from '@/components/breadcrumbs';
 import Link from 'next/link';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
 
 interface Project {
   title: string;
   description: string;
   tags: string[];
+  facets: ProjectFilter[];
   type?: 'commercial' | 'prototype';
   href?: string;
   bannerImage?: string;
@@ -18,17 +20,28 @@ interface Project {
   bannerBorderClass?: string;
 }
 
+type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
+
+const filterOptions: { value: ProjectFilter; label: string }[] = [
+  { value: 'all', label: 'All Projects' },
+  { value: 'engineering', label: 'Technical Implementation' },
+  { value: 'xr', label: 'VR/XR Interaction' },
+  { value: 'art-storytelling', label: 'Design & Storytelling' },
+];
+
 const projects: Project[] = [
   {
     title: "Guilty As Arrr",
     description: "Multiplayer social deduction with proximity voice as a core mechanic.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
+    facets: ['engineering', 'xr'],
     href: "/projects/repo-x"
   },
   {
     title: "Trash Been (Urban Logistics)",
     description: "Urban logistics sim—optimize routes, reduce waste, visualize system health.",
     tags: ["Logistics Simulation", "System Design", "Unity"],
+    facets: ['engineering', 'art-storytelling'],
     bannerImage: "/images/TB_MindMap.png",
     bannerAlt: "Trash Been logistics mind map",
     bannerWidth: 1400,
@@ -39,24 +52,28 @@ const projects: Project[] = [
     title: "VR Dirt Bike Game",
     description: "Safety-training sim for smart riding habits in VR.",
     tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
+    facets: ['engineering', 'xr'],
     href: "/projects/vr-microgames"
   },
   {
     title: "VR Car Drift Simulator",
     description: "High-fidelity drift training with vehicle dynamics and spatial feedback.",
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    facets: ['engineering', 'xr'],
     href: "/projects/vr-interaction-lab"
   },
   {
     title: "Fallout Mod (Level Design)",
     description: "Overhauled game level demonstrating world-building, environmental storytelling, and existing IP adaptation.",
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
+    facets: ['art-storytelling'],
     href: "/projects/fallout-level-design"
   },
   {
     title: "Shinobi Story",
     description: "Narrative stealth title + live content strategy and growth.",
     tags: ["Content Strategy", "Narrative Design", "Game Marketing"],
+    facets: ['art-storytelling', 'engineering'],
     bannerImage: "/images/ShinobiStoryBanner.jpg",
     bannerAlt: "Shinobi Story banner",
     bannerWidth: 1400,
@@ -67,12 +84,14 @@ const projects: Project[] = [
     title: "Shonen TCG Game",
     description: "Prototype for a 3D multiplayer TCG with deep rulesets.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
+    facets: ['engineering', 'art-storytelling'],
     type: 'prototype'
   },
   {
     title: "VR Patapon Game",
     description: "Concept for a VR rhythm-strategy game with experimental inputs.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
+    facets: ['xr', 'art-storytelling'],
     type: 'prototype'
   }
 ];
@@ -94,29 +113,64 @@ const item = {
 };
 
 export default function Career() {
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>('all');
+
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === 'all') {
+      return projects;
+    }
+
+    return projects.filter((project) => project.facets.includes(activeFilter));
+  }, [activeFilter]);
+
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-6xl mx-auto">
         <header className="mb-20">
-          <Link href="/" className="group flex items-center space-x-2 text-sm font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200">
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>RETURN</span>
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Projects' },
+            ]}
+          />
           <div className="mt-8">
-            <h1 className="text-4xl font-bold tracking-tight">THE LAB</h1>
-            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Spatial Prototyping & XR Systems</p>
-            <p className="text-[var(--muted)] mt-2 text-sm">Engineering Depth × Human-Centered Design.</p>
+            <h1 className="text-4xl font-bold tracking-tight">XR & Game Project Portfolio</h1>
+            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Technical Implementation · VR/XR Interaction · Design & Storytelling</p>
+            <p className="text-[var(--muted)] mt-2 text-sm">Browse by discipline to find work faster.</p>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            {filterOptions.map((option) => {
+              const active = option.value === activeFilter;
+
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setActiveFilter(option.value)}
+                  className={`rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                    active
+                      ? 'bg-[var(--foreground)] text-[var(--background)]'
+                      : 'border border-[var(--border)] text-[var(--muted)] hover:border-[var(--foreground)] hover:text-[var(--foreground)]'
+                  }`}
+                  aria-pressed={active}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
           </div>
         </header>
 
-        <motion.div 
+        <motion.div
+          key={activeFilter}
           variants={container}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project, index) => (
-            <motion.div key={index} variants={item}>
+          {filteredProjects.map((project) => (
+            <motion.div key={project.title} variants={item}>
               {project.href && project.type !== 'prototype' ? (
                 <Link
                   href={project.href}
@@ -208,10 +262,17 @@ export default function Career() {
           ))}
         </motion.div>
 
+        {filteredProjects.length === 0 ? (
+          <p className="mt-10 text-sm text-[var(--muted)]">No projects in this filter yet. Try another category.</p>
+        ) : null}
+
       </div>
     </main>
   );
 }
+
+
+
 
 
 
