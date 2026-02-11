@@ -247,8 +247,8 @@ export default async function Creative() {
                 </Link>
               </div>
 
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
-                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                   <LightboxVideo
                     embedUrl={cpseHighlightVideo.embedUrl}
                     thumbnailUrl={getThumbnailUrl(cpseHighlightVideo.embedUrl)}
@@ -362,8 +362,8 @@ export default async function Creative() {
                 </a>
               </div>
 
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
-                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                   <LightboxVideo
                     embedUrl={communicationLinks[0].embedUrl}
                     thumbnailUrl={getThumbnailUrl(communicationLinks[0].embedUrl)}
@@ -414,7 +414,10 @@ export default async function Creative() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {animationGallery.map((image) => (
-                <div key={image.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+                <div
+                  key={image.src}
+                  className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
+                >
                   <div className="aspect-[4/3] w-full">
                     <LightboxImage
                       src={image.src}
@@ -431,8 +434,8 @@ export default async function Creative() {
 
             <div className="grid gap-4 md:grid-cols-2">
               {communicationLinks.slice(3).map((video) => (
-                <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
-                  <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
+                <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
+                  <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
                     <LightboxVideo
                       embedUrl={video.embedUrl}
                       thumbnailUrl={getThumbnailUrl(video.embedUrl)}
@@ -453,8 +456,8 @@ export default async function Creative() {
               <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)] mb-4">Animation Degree Archive Videos</p>
               <div className="grid gap-4 md:grid-cols-2">
                 {animationArchiveLinks.map((video) => (
-                  <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
-                    <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
+                  <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
+                    <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
                       <LightboxVideo
                         embedUrl={video.embedUrl}
                         thumbnailUrl={getThumbnailUrl(video.embedUrl)}
@@ -477,6 +480,25 @@ export default async function Creative() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

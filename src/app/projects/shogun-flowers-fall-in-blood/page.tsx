@@ -22,7 +22,7 @@ export default function ShogunFlowersFallInBloodPage() {
         </header>
 
         <section className="grid gap-8">
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="aspect-[16/6] w-full">
               <LightboxImage
                 src="/images/ShogunFlowersFallinBlood_banner.png"
@@ -92,7 +92,7 @@ export default function ShogunFlowersFallInBloodPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 md:items-start gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/ShogunFlowersFallinBlood_HW_NarutoBlazing_Showcase_Example.png"
                 alt="Shogun homework research showcase inspired by Naruto Blazing"
@@ -102,7 +102,7 @@ export default function ShogunFlowersFallInBloodPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/ShogunFlowersFallinBlood_WhereIAmAtRightNow_Gameplay.png"
                 alt="Shogun current gameplay prototype progress"

@@ -98,7 +98,7 @@ export default async function BredaProjectPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/TB_MindMap.png"
                 alt="Trash Been mind map"
@@ -110,7 +110,7 @@ export default async function BredaProjectPage() {
                 Visualizing the gameplay, city transformation, and platforming mechanics.
               </div>
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/TB_QA.png"
                 alt="Trash Been QA and testing"
@@ -127,7 +127,7 @@ export default async function BredaProjectPage() {
           <div className="grid gap-6">
             {trashBeenVideos.map((video) => (
               <div key={video.url} className="space-y-3">
-                <div className="aspect-video w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+                <div className="aspect-video w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
                   <iframe
                     className="h-full w-full"
                     src={getEmbedUrl(video.embedUrl)}

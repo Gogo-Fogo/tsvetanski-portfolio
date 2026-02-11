@@ -21,7 +21,7 @@ export default function TheLastPaycheckPage() {
         </header>
 
         <section className="grid gap-8">
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/TheLastPaycheck_Banner.png"
               alt="The Last Paycheck project banner"

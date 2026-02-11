@@ -22,7 +22,7 @@ export default function CrankyGameJamPage() {
         </header>
 
         <section className="grid gap-8">
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/Cranky_GameJam_Banner_2024.jpg"
               alt="Cranky Game Jam 2024 banner"
@@ -61,7 +61,7 @@ export default function CrankyGameJamPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/GAMEJAM_CRANKY_PlanningWithTeamBoard.jpg"
                 alt="Cranky game jam planning board"
@@ -71,7 +71,7 @@ export default function CrankyGameJamPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/GAMEJAM_CRANKY_TEAM_DEVMODE.jpg"
                 alt="Cranky game jam team in development mode"
@@ -84,7 +84,7 @@ export default function CrankyGameJamPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_GameJam_Trello.png"
                 alt="Cranky game jam Trello management board"
@@ -94,7 +94,7 @@ export default function CrankyGameJamPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_GameJam_DemoDay_Handheld_LegionGo.jpg"
                 alt="Cranky game jam demo day on Lenovo Legion Go"
@@ -107,7 +107,7 @@ export default function CrankyGameJamPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_Pug_Render_Blender.png"
                 alt="Cranky pug render in Blender"
@@ -117,7 +117,7 @@ export default function CrankyGameJamPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/CRANKY_Animation_Blender_Rigging.png"
                 alt="Cranky animation rigging work in Blender"
@@ -127,7 +127,7 @@ export default function CrankyGameJamPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_SubstancePainter.png"
                 alt="Cranky texture workflow in Substance Painter"

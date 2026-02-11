@@ -43,7 +43,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
         <div
           className={`relative z-10 rounded-3xl border border-[var(--border)] bg-[var(--surface)] ${
             isCompactFeatured ? 'p-4 md:p-5 max-w-3xl mx-auto' : 'p-5'
-          } shadow-[var(--shadow-strong)] transition-shadow duration-300 ${
+          } shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 ${
             featured.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
           }`}
         >
@@ -100,7 +100,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
             {rest.map((video) => (
               <div
                 key={video.url}
-                className={`snap-start min-w-[240px] max-w-[280px] flex-1 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-shadow duration-300 ${
+                className={`snap-start min-w-[240px] max-w-[280px] flex-1 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 ${
                   video.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
                 }`}
               >

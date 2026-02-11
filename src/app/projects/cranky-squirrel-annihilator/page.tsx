@@ -22,7 +22,7 @@ export default function CrankySquirrelAnnihilatorPage() {
         </header>
 
         <section className="grid gap-8">
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/CrankyTheSquirrelAnnihilator_banner.png"
               alt="Cranky: The Squirrel Annihilator banner"
@@ -54,7 +54,7 @@ export default function CrankySquirrelAnnihilatorPage() {
               </a>
             </div>
 
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_Face_2.png"
                 alt="Cranky face close-up"
@@ -67,7 +67,7 @@ export default function CrankySquirrelAnnihilatorPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_squirrel.png"
                 alt="Cranky squirrel target art"
@@ -77,7 +77,7 @@ export default function CrankySquirrelAnnihilatorPage() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/Cranky_Face.png"
                 alt="Cranky gameplay character expression"

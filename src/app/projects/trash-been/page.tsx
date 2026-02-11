@@ -22,7 +22,7 @@ export default function TrashBeenCaseStudy() {
         </header>
 
         <section className="grid gap-8">
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/Breda_Banner.png"
               alt="Trash Been playable character banner"
@@ -43,7 +43,7 @@ export default function TrashBeenCaseStudy() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/TB_MindMap.png"
                 alt="Trash Been gameplay and systems mind map"
@@ -53,7 +53,7 @@ export default function TrashBeenCaseStudy() {
                 roundedClassName="rounded-2xl"
               />
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-shadow duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxImage
                 src="/images/TB_QA.png"
                 alt="Trash Been QA and testing notes"
