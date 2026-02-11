@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import useEmblaCarousel from "embla-carousel-react";
 import LightboxVideo from '@/components/lightbox-video';
 
 export type VideoCard = {
@@ -21,20 +22,63 @@ type VideoCarouselProps = {
 };
 
 export default function VideoCarousel({ items, featuredVariant = 'default' }: VideoCarouselProps) {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: false,
+  });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
   const [featured, ...rest] = items;
   const isCompactFeatured = featuredVariant === 'compact';
 
-  const scrollByOffset = (direction: "prev" | "next") => {
-    if (!scrollRef.current) {
+  const getEmblaScrollState = useCallback(() => {
+    if (!emblaApi) {
+      return { prev: false, next: false };
+    }
+
+    return {
+      prev: emblaApi.canScrollPrev(),
+      next: emblaApi.canScrollNext(),
+    };
+  }, [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    const scrollState = getEmblaScrollState();
+    setCanScrollPrev(scrollState.prev);
+    setCanScrollNext(scrollState.next);
+  }, [getEmblaScrollState]);
+
+  useEffect(() => {
+    if (!emblaApi) {
       return;
     }
 
-    const offset = scrollRef.current.clientWidth * 0.9;
-    scrollRef.current.scrollBy({
-      left: direction === "next" ? offset : -offset,
-      behavior: "smooth",
+    const frameId = requestAnimationFrame(() => {
+      onSelect();
     });
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const scrollByOffset = (direction: "prev" | "next") => {
+    if (!emblaApi) {
+      return;
+    }
+
+    if (direction === "next") {
+      emblaApi.scrollNext();
+      return;
+    }
+
+    emblaApi.scrollPrev();
   };
 
   return (
@@ -78,6 +122,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
               type="button"
               onClick={() => scrollByOffset("prev")}
               aria-label="Scroll videos left"
+              disabled={!canScrollPrev}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-[var(--foreground)]"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -86,21 +131,36 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
               type="button"
               onClick={() => scrollByOffset("next")}
               aria-label="Scroll videos right"
+              disabled={!canScrollNext}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-[var(--foreground)]"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         )}
-        <div className="overflow-visible">
+        <div
+          className="overflow-hidden"
+          ref={emblaRef}
+          tabIndex={0}
+          aria-label="Video carousel"
+          onKeyDown={(event) => {
+            if (event.key === "ArrowRight") {
+              event.preventDefault();
+              scrollByOffset("next");
+            }
+            if (event.key === "ArrowLeft") {
+              event.preventDefault();
+              scrollByOffset("prev");
+            }
+          }}
+        >
           <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto overflow-y-visible pl-4 pr-10 pb-8 pt-4 snap-x snap-mandatory"
+            className="flex gap-6 overflow-visible pl-4 pr-10 pb-8 pt-4"
           >
             {rest.map((video) => (
               <div
                 key={video.url}
-                className={`snap-start min-w-[240px] max-w-[280px] flex-1 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 ${
+                className={`min-w-[240px] max-w-[280px] basis-[280px] space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 ${
                   video.hoverClassName ?? 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]'
                 }`}
               >
@@ -109,7 +169,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
                     embedUrl={video.embedUrl}
                     thumbnailUrl={video.thumbnailUrl}
                     title={video.title}
-                  className={`h-full w-full object-cover ${video.className ?? ''}`.trim()}
+                    className={`h-full w-full object-cover ${video.className ?? ''}`.trim()}
                     roundedClassName="rounded-xl"
                   />
                 </div>

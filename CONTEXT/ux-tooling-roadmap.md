@@ -3,16 +3,24 @@
 This roadmap tracks the agreed rollout for interactive UX tooling on the portfolio.
 
 ## Phase 0 — Baseline / Safety
-- [ ] Create branch: `feature/ux-tooling-wave-1`
-- [ ] Capture baseline Lighthouse metrics (Performance, Accessibility, Best Practices)
-- [ ] Keep this file updated after each push
+- [x] Create branch: `feature/ux-tooling-wave-1`
+- [x] Capture baseline Lighthouse metrics (Performance, Accessibility, Best Practices)
+- [x] Keep this file updated after each push
+
+### Baseline Snapshot (2026-02-10)
+- Performance: **76**
+- Accessibility: **100**
+- Best Practices: **100**
+- Reports:
+  - `CONTEXT/lighthouse-baseline.report.html`
+  - `CONTEXT/lighthouse-baseline.report.json`
 
 ---
 
 ## Push 1 — Embla Carousel
-- [ ] Install Embla Carousel
-- [ ] Replace manual horizontal scroll behavior in `src/app/creative/video-carousel.tsx`
-- [ ] Preserve keyboard navigation + touch swipe
+- [x] Install Embla Carousel
+- [x] Replace manual horizontal scroll behavior in `src/app/creative/video-carousel.tsx`
+- [x] Preserve keyboard navigation + touch swipe
 - [ ] Test mobile scrolling + no layout shift
 - [ ] Commit: `feat(creative): upgrade video carousel with embla`
 
@@ -85,7 +93,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 ---
 
 ## Quality Gate (Run on every push)
-- [ ] `npm run lint`
-- [ ] `npm run build`
+- [x] `npm run lint`
+- [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [ ] Lighthouse spot-check after major UX pushes
