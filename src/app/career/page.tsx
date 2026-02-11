@@ -2,6 +2,7 @@
 
 import LightboxImage from '@/components/lightbox-image';
 import Breadcrumbs from '@/components/breadcrumbs';
+import { HoverCard, Tooltip } from '@/components/floating-ui-primitives';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -171,6 +172,33 @@ const sideProjects: SideProjectCard[] = [
   }
 ];
 
+const tagDescriptions: Record<string, string> = {
+  'Photon Fusion': 'Host/client networking framework used for synchronized multiplayer gameplay.',
+  'Networked Multiplayer': 'Systems designed for low-latency shared interactions between players.',
+  'Spatial Audio': 'Positional voice/sound cues that reinforce proximity and game tension.',
+  'Logistics Simulation': 'System modeling focused on routing, throughput, and constraint balancing.',
+  'System Design': 'Designing mechanics and rules that create clear, replayable player loops.',
+  Unity: 'Primary game engine used for rapid prototyping and iteration.',
+  'VR Safety Simulation': 'XR scenarios focused on safe habits and behavior transfer.',
+  'Educational VR': 'Immersive modules designed for guided learning outcomes.',
+  'Human Factors': 'Interaction decisions informed by user behavior and ergonomics.',
+  'VR Driving Simulation': 'Vehicle handling and drift-focused training in immersive contexts.',
+  'Vehicle Physics': 'Motion tuning and physical response systems for believable control.',
+  'Spatial Interaction': 'User actions mapped to 3D space, affordances, and feedback loops.',
+  'Level Design': 'Layout and encounter flow shaping player movement and pacing.',
+  'Environmental Storytelling': 'Using space, props, and composition to communicate narrative context.',
+  'Team Collaboration': 'Cross-discipline workflow with shared ownership and iteration.',
+  'Content Strategy': 'Content planning, cadence, and message alignment for growth.',
+  'Narrative Design': 'Story structure, beats, and player-facing narrative framing.',
+  'Game Marketing': 'Audience positioning, campaign rollouts, and engagement planning.',
+  '3D Multiplayer TCG': 'Card game mechanics translated into a networked 3D play space.',
+  'Game Systems Design': 'Ruleset architecture, progression curves, and balance foundations.',
+  Prototyping: 'Fast concept validation through iterative, playable experiments.',
+  'VR GDD': 'Concept planning and technical scoping for VR-first gameplay.',
+  'Rhythm Interaction': 'Timing-based inputs and feedback for expressive play.',
+  Strategy: 'Decision-heavy loops emphasizing planning, tradeoffs, and adaptation.',
+};
+
 
 const container = {
   hidden: { opacity: 0 },
@@ -279,9 +307,9 @@ export default function Career() {
                   </div>
                   <div className="flex flex-wrap gap-2 mt-8">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)] group-hover:border-[var(--foreground)] group-hover:text-[var(--foreground)] transition-colors duration-500">
+                      <HoverCard key={i} title={tag} description={tagDescriptions[tag] ?? 'Core competency applied in this case study.'}>
                         {tag}
-                      </span>
+                      </HoverCard>
                     ))}
                   </div>
                 </Link>
@@ -326,9 +354,9 @@ export default function Career() {
                   </div>
                   <div className="flex flex-wrap gap-2 mt-8">
                     {project.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold tracking-[0.2em] border border-[var(--border)] px-3 py-1 rounded-full uppercase text-[var(--muted)]">
+                      <HoverCard key={i} title={tag} description={tagDescriptions[tag] ?? 'Core competency applied in this case study.'}>
                         {tag}
-                      </span>
+                      </HoverCard>
                     ))}
                   </div>
                 </div>
@@ -377,16 +405,20 @@ export default function Career() {
                 {project.roles ? <p className="mt-3 text-xs text-[var(--muted)]">{project.roles}</p> : null}
 
                 {project.href ? (
-                  <Link
-                    href={project.href}
-                    className="mt-4 inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
-                  >
-                    {project.ctaLabel ?? 'View'}
-                  </Link>
+                  <Tooltip label="Open full case study">
+                    <Link
+                      href={project.href}
+                      className="mt-4 inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
+                    >
+                      {project.ctaLabel ?? 'View'}
+                    </Link>
+                  </Tooltip>
                 ) : (
-                  <span className="mt-4 inline-block rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
-                    {project.ctaLabel ?? 'Details soon'}
-                  </span>
+                  <Tooltip label="Work in progress; case study coming soon">
+                    <span className="mt-4 inline-block rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
+                      {project.ctaLabel ?? 'Details soon'}
+                    </span>
+                  </Tooltip>
                 )}
               </article>
             ))}
@@ -397,6 +429,7 @@ export default function Career() {
     </main>
   );
 }
+
 
 
 

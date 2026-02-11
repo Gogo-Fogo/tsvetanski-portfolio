@@ -56,10 +56,10 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
     - `CONTEXT/lighthouse-push3.report.json`
 
 ## Push 4 — Floating UI
-- [ ] Install Floating UI
-- [ ] Add tooltip/hovercard patterns for project metadata/CTAs
-- [ ] Verify placement behavior on small viewports
-- [ ] Commit: `feat(ui): add floating-ui tooltips and hovercards`
+- [x] Install Floating UI
+- [x] Add tooltip/hovercard patterns for project metadata/CTAs
+- [x] Verify placement behavior on small viewports
+- [x] Commit: `feat(ui): add floating-ui tooltips and hovercards`
 
 ## Push 5 — Sonner
 - [ ] Install Sonner and root toaster
@@ -108,6 +108,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [x] Lighthouse spot-check after major UX pushes
+
 
 
 
