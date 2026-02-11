@@ -21,6 +21,7 @@
     "react-dom": "19.2.3",
     "react-force-graph-2d": "^1.29.0",
     "reactflow": "^11.11.4",
+    "sonner": "^2.0.7",
     "yet-another-react-lightbox": "^3.28.0"
   },
   "devDependencies": {

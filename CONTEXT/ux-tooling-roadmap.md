@@ -62,9 +62,9 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] Commit: `feat(ui): add floating-ui tooltips and hovercards`
 
 ## Push 5 — Sonner
-- [ ] Install Sonner and root toaster
-- [ ] Add minimal success/error/loading toasts for key actions
-- [ ] Avoid toast spam and preserve readability
+- [x] Install Sonner and root toaster
+- [x] Add minimal success/error/loading toasts for key actions
+- [x] Avoid toast spam and preserve readability
 - [ ] Commit: `feat(feedback): add sonner toast notifications`
 
 ## Mail Upgrade Checkpoint (Gate)
@@ -108,6 +108,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [x] Lighthouse spot-check after major UX pushes
+
 
 
 

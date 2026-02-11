@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 import ThemeToggle from "./theme-toggle";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
@@ -71,6 +72,7 @@ export default function RootLayout({
       >
         <SmoothScrollProvider />
         <ThemeToggle />
+        <Toaster richColors position="bottom-right" closeButton />
         {children}
       </body>
     </html>

@@ -1,6 +1,7 @@
-import LightboxImage from '@/components/lightbox-image';
+import Image from 'next/image';
+import CopyEmailButton from '@/components/copy-email-button';
 import Link from 'next/link';
-import { Instagram, Linkedin, Mail } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -11,13 +12,12 @@ export default function Home() {
       <div className="relative z-10 max-w-5xl w-full items-center justify-center font-sans text-sm flex flex-col space-y-6 sm:space-y-7 lg:space-y-9 animate-in fade-in duration-1000 slide-in-from-bottom-4">
         <div className="flex flex-col items-center space-y-4 sm:space-y-5 lg:space-y-6 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-10">
           <div className="relative h-32 w-32 sm:h-36 sm:w-36 lg:h-44 lg:w-44">
-            <LightboxImage
+            <Image
               src="/images/Tsvetanski_Georgi_Headshot.jpeg"
               alt="Georgi Tsvetanski headshot"
               fill
               sizes="(min-width: 768px) 176px, 144px"
-              className="object-cover shadow-[var(--shadow-strong)]"
-              roundedClassName="rounded-full"
+              className="rounded-full object-cover"
               priority
             />
           </div>
@@ -81,14 +81,7 @@ export default function Home() {
         <section className="mt-5 sm:mt-6 lg:mt-8 w-full max-w-3xl border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-6 lg:p-7 shadow-[var(--shadow)]">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4 text-center">Connect</h2>
           <div className="mt-4 sm:mt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
-            <a
-              href="mailto:georgi@tsvetanski.com"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)] p-4 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-transparent hover:text-[var(--foreground)] transition-colors"
-              aria-label="Email"
-              title="Email"
-            >
-              <Mail className="h-4 w-4" />
-            </a>
+            <CopyEmailButton email="georgi@tsvetanski.com" />
             <a
               href="https://www.linkedin.com/in/georgi-tsvetanski-526373234"
               target="_blank"
