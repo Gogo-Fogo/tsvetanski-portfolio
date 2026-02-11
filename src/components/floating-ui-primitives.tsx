@@ -119,10 +119,13 @@ export function HoverCard({ title, description, children }: HoverCardProps) {
       <span
         ref={setReferenceEl}
         tabIndex={0}
-        className="inline-flex items-center rounded-full border border-[var(--border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--foreground)]/40"
+        className="inline-flex cursor-help items-center rounded-full border border-[var(--border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--foreground)]/40"
         {...getReferenceProps()}
       >
         {children}
+        <span aria-hidden="true" className="ml-1 text-[9px] tracking-normal opacity-70">
+          ⓘ
+        </span>
       </span>
 
       {open ? (
