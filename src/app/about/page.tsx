@@ -73,7 +73,7 @@ export default function About() {
                   <span className="font-semibold text-[var(--foreground)]">Associate&apos;s Degree, Digital Animation (AAS)</span> — Montgomery College (Aug 2020–Jul 2023)
                 </li>
                 <li>
-                  <span className="font-semibold text-[var(--foreground)]">Diploma of Education, Bulgarian Language, Literature, and History</span> — Bulgarian Educational and Cultural Center "Kliment Ohridski," Washington DC (2015–2019)
+                  <span className="font-semibold text-[var(--foreground)]">Diploma of Education, Bulgarian Language, Literature, and History</span> — Bulgarian Educational and Cultural Center &quot;Kliment Ohridski,&quot; Washington DC (2015–2019)
                 </li>
               </ul>
             </div>
@@ -131,7 +131,7 @@ export default function About() {
               <li>- Making a Short Film: Start to Finish (LinkedIn, Dec 2023)</li>
               <li>- Learning Notion (LinkedIn, Aug 2023)</li>
               <li>- User Experience (UX) for Non-Designers (LinkedIn, May 2023)</li>
-              <li>- "How to become a game developer?" (ARC Academy, Feb 2022)</li>
+              <li>- &quot;How to become a game developer?&quot; (ARC Academy, Feb 2022)</li>
               <li>- Bulgarian Language Proficiency (CEFR Level B2) (Sofia University St. Kliment Ohridski, May 2019)</li>
             </ul>
           </div>
@@ -167,6 +167,7 @@ export default function About() {
     </main>
   );
 }
+
 
 
 
