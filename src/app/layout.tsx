@@ -6,6 +6,7 @@ import "./globals.css";
 import ThemeToggle from "./theme-toggle";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 import CommandPaletteLazy from "@/components/command-palette-lazy";
+import FloatingContactBubble from "@/components/floating-contact-bubble";
 
 const themeBootstrapScript = `
 (() => {
@@ -75,6 +76,7 @@ export default function RootLayout({
         <NuqsAdapter>
           <SmoothScrollProvider />
           <ThemeToggle />
+          <FloatingContactBubble />
           <CommandPaletteLazy />
           <Toaster richColors position="bottom-right" closeButton />
           {children}

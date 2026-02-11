@@ -112,6 +112,7 @@ body {
   }
 }
 
+
 ::selection {
   background: var(--foreground);
   color: var(--background);
@@ -148,6 +149,33 @@ html.lenis body {
   }
 }
 
+@keyframes contactBubbleGlowPulse {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.28;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 0.62;
+  }
+}
+
+@keyframes contactRingPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.94);
+    opacity: 0.72;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.42);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.42);
+    opacity: 0;
+  }
+}
+
 .video-ambient-glow {
   background:
     radial-gradient(circle at 22% 28%, rgba(56, 189, 248, 0.42), transparent 62%),
@@ -162,7 +190,110 @@ html.lenis body {
     animation: none;
     opacity: 0.55;
   }
+
+  .contact-bubble-btn {
+    animation: none !important;
+  }
+
+  .contact-bubble-glow {
+    animation: none !important;
+    opacity: 0.35;
+  }
+
+  .contact-bubble-halo {
+    animation: none !important;
+    opacity: 0.45;
+  }
+
+  .contact-bubble-ring {
+    animation: none !important;
+    opacity: 0;
+  }
 }
+
+[data-theme="dark"] .contact-bubble-btn {
+  animation: themePulseDark 4.5s ease-in-out infinite;
+}
+
+[data-theme="light"] .contact-bubble-btn {
+  animation: themePulseLight 4.5s ease-in-out infinite;
+}
+
+.contact-bubble-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -12px;
+  z-index: -1;
+  border-radius: 9999px;
+  animation: contactBubbleGlowPulse 4.5s ease-in-out infinite;
+}
+
+.contact-bubble-halo {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 78px;
+  height: 78px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  z-index: -1;
+  animation: contactBubbleGlowPulse 4.5s ease-in-out infinite;
+}
+
+.contact-bubble-ring {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 68px;
+  height: 68px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  animation: contactRingPulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.contact-bubble-ring-b {
+  animation-delay: 1.4s;
+}
+
+[data-theme="dark"] .contact-bubble-glow {
+  background: radial-gradient(circle, rgba(86, 215, 255, 0.48) 0%, rgba(86, 215, 255, 0.22) 42%, rgba(86, 215, 255, 0) 72%);
+  filter: blur(10px);
+}
+
+[data-theme="dark"] .contact-bubble-halo {
+  background: radial-gradient(circle, rgba(86, 215, 255, 0.62) 0%, rgba(120, 170, 255, 0.35) 45%, rgba(86, 215, 255, 0) 74%);
+  filter: blur(12px);
+}
+
+[data-theme="dark"] .contact-bubble-ring {
+  border-color: rgba(86, 215, 255, 0.5);
+  box-shadow: 0 0 22px rgba(86, 215, 255, 0.45);
+}
+
+[data-theme="light"] .contact-bubble-glow {
+  background: radial-gradient(circle, rgba(255, 185, 120, 0.48) 0%, rgba(255, 185, 120, 0.24) 42%, rgba(255, 185, 120, 0) 72%);
+  filter: blur(10px);
+}
+
+[data-theme="light"] .contact-bubble-halo {
+  background: radial-gradient(circle, rgba(255, 185, 120, 0.62) 0%, rgba(255, 122, 60, 0.34) 45%, rgba(255, 185, 120, 0) 74%);
+  filter: blur(12px);
+}
+
+[data-theme="light"] .contact-bubble-ring {
+  border-color: rgba(255, 185, 120, 0.55);
+  box-shadow: 0 0 18px rgba(255, 185, 120, 0.5);
+}
+
+
+
+
+
+
+
 
 
 
