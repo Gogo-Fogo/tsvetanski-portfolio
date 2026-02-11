@@ -6,6 +6,9 @@ type LightboxVideoProps = {
   embedUrl: string;
   thumbnailUrl: string;
   title: string;
+  popupCaption?: string;
+  popupCtaHref?: string;
+  popupCtaLabel?: string;
   className?: string;
   roundedClassName?: string;
 };
@@ -14,6 +17,9 @@ export default function LightboxVideo({
   embedUrl,
   thumbnailUrl,
   title,
+  popupCaption,
+  popupCtaHref,
+  popupCtaLabel,
   className,
   roundedClassName = 'rounded-2xl'
 }: LightboxVideoProps) {
@@ -89,15 +95,36 @@ export default function LightboxVideo({
               Close
             </button>
           </Dialog.Close>
-          <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-            <iframe
-              className="h-full w-full"
-              src={embedSrc}
-              title={title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="video-ambient-glow pointer-events-none absolute inset-[-7%] -z-10 rounded-[2rem]"
             />
+            <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
+              <iframe
+                className="h-full w-full"
+                src={embedSrc}
+                title={title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+            {popupCaption ? (
+              <div className="mt-3 rounded-xl border border-white/10 bg-black/55 px-4 py-3 text-sm text-white/85 backdrop-blur-sm">
+                <p>{popupCaption}</p>
+                {popupCtaHref && popupCtaLabel ? (
+                  <a
+                    href={popupCtaHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-block text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-white"
+                  >
+                    {popupCtaLabel}
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </Dialog.Content>
       </Dialog.Portal>

@@ -134,3 +134,37 @@ html.lenis body {
   overflow: hidden;
 }
 
+@keyframes videoAmbientDrift {
+  0%,
+  100% {
+    background-position: 18% 24%, 82% 36%, 52% 82%;
+    filter: blur(26px) saturate(1.05);
+    opacity: 0.6;
+  }
+  50% {
+    background-position: 28% 32%, 72% 24%, 47% 90%;
+    filter: blur(30px) saturate(1.15);
+    opacity: 0.75;
+  }
+}
+
+.video-ambient-glow {
+  background:
+    radial-gradient(circle at 22% 28%, rgba(56, 189, 248, 0.42), transparent 62%),
+    radial-gradient(circle at 78% 30%, rgba(251, 146, 60, 0.35), transparent 64%),
+    radial-gradient(circle at 50% 84%, rgba(59, 130, 246, 0.24), transparent 66%);
+  filter: blur(36px) saturate(1.1);
+  animation: videoAmbientDrift 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-ambient-glow {
+    animation: none;
+    opacity: 0.55;
+  }
+}
+
+
+
+
+

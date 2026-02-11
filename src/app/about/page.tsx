@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import DegreeGraph from '@/components/degree-graph';
+import { MotionPage } from '@/components/motion-safe';
 
 export default function About() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-5xl mx-auto">
+      <MotionPage className="max-w-5xl mx-auto">
         <header className="mb-16">
           <Link href="/" className="text-sm font-mono mb-4 inline-block hover:underline decoration-1 underline-offset-4">
             ← BACK TO HOME
@@ -163,10 +164,11 @@ export default function About() {
             </Link>
           </div>
         </section>
-      </div>
+      </MotionPage>
     </main>
   );
 }
+
 
 
 

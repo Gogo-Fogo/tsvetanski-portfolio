@@ -85,8 +85,8 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [ ] Commit: `feat(projects): persist filters in url with nuqs`
 
 ## Push 8 — Motion Expansion
-- [ ] Expand Motion usage to tasteful page/section transitions
-- [ ] Respect `prefers-reduced-motion`
+- [x] Expand Motion usage to tasteful page/section transitions
+- [x] Respect `prefers-reduced-motion`
 - [ ] Commit: `feat(motion): add progressive route and section transitions`
 
 ## Optional Phase (After Mail Upgrades)
@@ -108,6 +108,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [x] Lighthouse spot-check after major UX pushes
+
 
 
 

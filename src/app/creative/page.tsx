@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 import VideoCarousel, { type VideoCard } from './video-carousel';
+import { MotionPage } from '@/components/motion-safe';
 
 type VideoStats = {
   viewCount?: string;
@@ -207,7 +208,7 @@ export default async function Creative() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-5xl mx-auto">
+      <MotionPage className="max-w-5xl mx-auto">
         <header className="mb-16">
           <Breadcrumbs
             items={[
@@ -253,6 +254,9 @@ export default async function Creative() {
                     embedUrl={cpseHighlightVideo.embedUrl}
                     thumbnailUrl={getThumbnailUrl(cpseHighlightVideo.embedUrl)}
                     title={cpseHighlightVideo.title}
+                    popupCaption="CPSE summer-program highlight reel documenting immersive learning outcomes and student project impact."
+                    popupCtaHref="/cpse"
+                    popupCtaLabel="View CPSE case study"
                     className="h-full w-full object-cover"
                     roundedClassName="rounded-xl"
                   />
@@ -269,7 +273,10 @@ export default async function Creative() {
               <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)] mb-3">CPSE Campaign Visual Assets</p>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {cpseImageAssets.map((asset) => (
-                  <div key={asset.src} className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
+                  <div
+                    key={asset.src}
+                    className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(56,189,248,0.55)]"
+                  >
                     <div className="aspect-[4/3] w-full">
                       <LightboxImage
                         src={asset.src}
@@ -368,6 +375,9 @@ export default async function Creative() {
                     embedUrl={communicationLinks[0].embedUrl}
                     thumbnailUrl={getThumbnailUrl(communicationLinks[0].embedUrl)}
                     title={getTitle(communicationLinks[0].embedUrl, communicationLinks[0].title)}
+                    popupCaption="Interview-led communication case study focused on translating major pathways into clear career outcomes."
+                    popupCtaHref="https://youtu.be/dX-CHGxzUyA"
+                    popupCtaLabel="Open on YouTube"
                     className="h-full w-full object-cover"
                     roundedClassName="rounded-xl"
                   />
@@ -476,10 +486,13 @@ export default async function Creative() {
             </div>
           </div>
         </section>
-      </div>
+      </MotionPage>
     </main>
   );
 }
+
+
+
 
 
 

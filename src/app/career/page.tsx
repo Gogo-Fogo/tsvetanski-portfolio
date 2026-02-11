@@ -3,6 +3,7 @@
 import LightboxImage from '@/components/lightbox-image';
 import Breadcrumbs from '@/components/breadcrumbs';
 import { HoverCard, Tooltip } from '@/components/floating-ui-primitives';
+import { MotionPage } from '@/components/motion-safe';
 import Link from 'next/link';
 import { Suspense, useMemo } from 'react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
@@ -298,7 +299,7 @@ function CareerContent() {
   }, [searchQuery]);
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-6xl mx-auto">
+      <MotionPage className="max-w-6xl mx-auto">
         <header className="mb-20">
           <Breadcrumbs
             items={[
@@ -510,7 +511,7 @@ function CareerContent() {
           ) : null}
         </section>
 
-      </div>
+      </MotionPage>
     </main>
   );
 }
@@ -530,6 +531,7 @@ export default function Career() {
     </Suspense>
   );
 }
+
 
 
 

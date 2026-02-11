@@ -2,6 +2,7 @@ import Image from 'next/image';
 import CopyEmailButton from '@/components/copy-email-button';
 import Link from 'next/link';
 import { Instagram, Linkedin } from 'lucide-react';
+import { MotionPage } from '@/components/motion-safe';
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
         <div className="absolute left-1/2 top-20 h-64 w-64 -translate-x-1/2 rounded-full bg-[var(--surface)] blur-[120px]"></div>
       </div>
-      <div className="relative z-10 max-w-5xl w-full items-center justify-center font-sans text-sm flex flex-col space-y-6 sm:space-y-7 lg:space-y-9 animate-in fade-in duration-1000 slide-in-from-bottom-4">
+      <MotionPage className="relative z-10 max-w-5xl w-full items-center justify-center font-sans text-sm flex flex-col space-y-6 sm:space-y-7 lg:space-y-9">
         <div className="flex flex-col items-center space-y-4 sm:space-y-5 lg:space-y-6 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-10">
           <div className="relative h-32 w-32 sm:h-36 sm:w-36 lg:h-44 lg:w-44">
             <Image
@@ -104,7 +105,7 @@ export default function Home() {
             </a>
           </div>
         </section>
-      </div>
+      </MotionPage>
       
       <div className="absolute bottom-10 text-[10px] font-mono tracking-[0.4em] text-[var(--muted)] uppercase">
         EST. 2026 // SYSTEM STABLE
