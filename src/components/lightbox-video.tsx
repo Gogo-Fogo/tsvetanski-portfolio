@@ -112,7 +112,7 @@ export default function LightboxVideo({
             </div>
             {popupCaption ? (
               <div className="mt-3 rounded-xl border border-white/10 bg-black/55 px-4 py-3 text-sm text-white/85 backdrop-blur-sm">
-                <p>{popupCaption}</p>
+                <p className="max-w-[70ch] leading-relaxed">{popupCaption}</p>
                 {popupCtaHref && popupCtaLabel ? (
                   <a
                     href={popupCtaHref}
