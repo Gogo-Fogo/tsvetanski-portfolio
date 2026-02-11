@@ -125,3 +125,12 @@ body {
   stroke: rgba(148, 163, 184, 0.9) !important;
   stroke-width: 2.4px !important;
 }
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+

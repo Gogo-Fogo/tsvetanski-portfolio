@@ -39,8 +39,8 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [ ] Commit: `feat(media): migrate gallery lightbox to yarl`
 
 ## Push 3 — Lenis Smooth Scrolling
-- [ ] Install Lenis
-- [ ] Add global smooth scroll wrapper as a client island
+- [x] Install Lenis
+- [x] Add global smooth scroll wrapper as a client island
 - [ ] Validate anchor links + keyboard scrolling behavior
 - [ ] Commit: `feat(ux): add lenis smooth scrolling`
 
@@ -97,3 +97,4 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [ ] Lighthouse spot-check after major UX pushes
+
