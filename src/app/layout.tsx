@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import ThemeToggle from "./theme-toggle";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
+import CommandPaletteLazy from "@/components/command-palette-lazy";
 
 const themeBootstrapScript = `
 (() => {
@@ -72,6 +73,7 @@ export default function RootLayout({
       >
         <SmoothScrollProvider />
         <ThemeToggle />
+        <CommandPaletteLazy />
         <Toaster richColors position="bottom-right" closeButton />
         {children}
       </body>

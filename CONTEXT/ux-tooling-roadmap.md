@@ -73,9 +73,9 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 ---
 
 ## Push 6 — cmdk Command Palette
-- [ ] Install cmdk
-- [ ] Add `Cmd/Ctrl + K` palette with routes and quick actions
-- [ ] Lazy-load palette to protect initial load performance
+- [x] Install cmdk
+- [x] Add `Cmd/Ctrl + K` palette with routes and quick actions
+- [x] Lazy-load palette to protect initial load performance
 - [ ] Commit: `feat(nav): add command palette with cmdk`
 
 ## Push 7 — nuqs URL State
@@ -108,6 +108,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [x] Lighthouse spot-check after major UX pushes
+
 
 
 
