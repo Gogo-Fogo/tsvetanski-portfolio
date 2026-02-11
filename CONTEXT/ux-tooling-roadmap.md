@@ -41,8 +41,19 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 ## Push 3 — Lenis Smooth Scrolling
 - [x] Install Lenis
 - [x] Add global smooth scroll wrapper as a client island
-- [ ] Validate anchor links + keyboard scrolling behavior
-- [ ] Commit: `feat(ux): add lenis smooth scrolling`
+- [x] Validate anchor links + keyboard scrolling behavior
+- [x] Commit: `feat(ux): add lenis smooth scrolling`
+
+### Push 3 Validation Snapshot (2026-02-10)
+- Anchor links: **No in-page hash anchors currently present** (`href="#..."` not found), so no Lenis anchor regression observed.
+- Keyboard scrolling: **Pass (manual check on `/creative`)**
+- Lighthouse spot-check (`/creative`):
+  - Performance: **76**
+  - Accessibility: **96**
+  - Best Practices: **96**
+  - Reports:
+    - `CONTEXT/lighthouse-push3.report.html`
+    - `CONTEXT/lighthouse-push3.report.json`
 
 ## Push 4 — Floating UI
 - [ ] Install Floating UI
@@ -96,5 +107,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run lint`
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
-- [ ] Lighthouse spot-check after major UX pushes
+- [x] Lighthouse spot-check after major UX pushes
+
+
 
