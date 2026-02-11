@@ -80,6 +80,7 @@ export default function LightboxVideo({
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
         <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 outline-none">
+          <Dialog.Title className="sr-only">{title}</Dialog.Title>
           <Dialog.Close asChild>
             <button
               type="button"

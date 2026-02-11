@@ -29,26 +29,24 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
   });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const [featured, ...rest] = items;
   const isCompactFeatured = featuredVariant === 'compact';
 
-  const getEmblaScrollState = useCallback(() => {
+  const onSelect = useCallback(() => {
     if (!emblaApi) {
-      return { prev: false, next: false };
+      setCanScrollPrev(false);
+      setCanScrollNext(false);
+      setSelectedIndex(0);
+      return;
     }
 
-    return {
-      prev: emblaApi.canScrollPrev(),
-      next: emblaApi.canScrollNext(),
-    };
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
-
-  const onSelect = useCallback(() => {
-    const scrollState = getEmblaScrollState();
-    setCanScrollPrev(scrollState.prev);
-    setCanScrollNext(scrollState.next);
-  }, [getEmblaScrollState]);
 
   useEffect(() => {
     if (!emblaApi) {
@@ -56,6 +54,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
     }
 
     const frameId = requestAnimationFrame(() => {
+      setScrollSnaps(emblaApi.scrollSnapList());
       onSelect();
     });
     emblaApi.on("select", onSelect);
@@ -79,6 +78,14 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
     }
 
     emblaApi.scrollPrev();
+  };
+
+  const scrollTo = (index: number) => {
+    if (!emblaApi) {
+      return;
+    }
+
+    emblaApi.scrollTo(index);
   };
 
   return (
@@ -189,6 +196,28 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
             ))}
           </div>
         </div>
+        {scrollSnaps.length > 1 && (
+          <div className="mt-1 flex items-center justify-center gap-2 pb-1" aria-label="Carousel pagination">
+            {scrollSnaps.map((_, index) => {
+              const isActive = index === selectedIndex;
+
+              return (
+                <button
+                  key={`dot-${index}`}
+                  type="button"
+                  onClick={() => scrollTo(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`h-2.5 rounded-full border border-[var(--border)] transition-all ${
+                    isActive
+                      ? 'w-6 bg-[var(--foreground)]'
+                      : 'w-2.5 bg-[var(--surface)] hover:bg-[var(--muted)]'
+                  }`}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
