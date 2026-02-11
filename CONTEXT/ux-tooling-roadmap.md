@@ -79,9 +79,9 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [ ] Commit: `feat(nav): add command palette with cmdk`
 
 ## Push 7 — nuqs URL State
-- [ ] Install nuqs
-- [ ] Persist project filters/tabs/search state in URL
-- [ ] Validate browser back/forward behavior
+- [x] Install nuqs
+- [x] Persist project filters/tabs/search state in URL
+- [x] Validate browser back/forward behavior
 - [ ] Commit: `feat(projects): persist filters in url with nuqs`
 
 ## Push 8 — Motion Expansion
@@ -108,6 +108,7 @@ This roadmap tracks the agreed rollout for interactive UX tooling on the portfol
 - [x] `npm run build`
 - [ ] Manual desktop + mobile viewport checks
 - [x] Lighthouse spot-check after major UX pushes
+
 
 
 

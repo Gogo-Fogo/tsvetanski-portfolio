@@ -4,13 +4,14 @@ import LightboxImage from '@/components/lightbox-image';
 import Breadcrumbs from '@/components/breadcrumbs';
 import { HoverCard, Tooltip } from '@/components/floating-ui-primitives';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { Suspense, useMemo } from 'react';
+import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 
 interface Project {
   title: string;
   description: string;
   tags: string[];
+  searchTerms?: string[];
   facets: ProjectFilter[];
   type?: 'commercial' | 'prototype';
   href?: string;
@@ -25,6 +26,7 @@ interface SideProjectCard {
   title: string;
   subtitle: string;
   description: string;
+  searchTerms?: string[];
   roles?: string;
   image?: string;
   imageAlt?: string;
@@ -46,6 +48,7 @@ const projects: Project[] = [
     title: "Guilty As Arrr",
     description: "Multiplayer social deduction with proximity voice as a core mechanic.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
+    searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering', 'xr'],
     href: "/projects/repo-x"
   },
@@ -53,6 +56,7 @@ const projects: Project[] = [
     title: "Trash Been (Urban Logistics)",
     description: "Urban logistics sim—optimize routes, reduce waste, visualize system health.",
     tags: ["Logistics Simulation", "System Design", "Unity"],
+    searchTerms: ["urban logistics", "waste", "route optimization"],
     facets: ['engineering', 'art-storytelling'],
     bannerImage: "/images/TB_MindMap.png",
     bannerAlt: "Trash Been logistics mind map",
@@ -64,6 +68,7 @@ const projects: Project[] = [
     title: "VR Dirt Bike Game",
     description: "Safety-training sim for smart riding habits in VR.",
     tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
+    searchTerms: ["dirt bike", "safety training", "education", "riding"],
     facets: ['engineering', 'xr'],
     href: "/projects/vr-microgames"
   },
@@ -71,6 +76,7 @@ const projects: Project[] = [
     title: "VR Car Drift Simulator",
     description: "High-fidelity drift training with vehicle dynamics and spatial feedback.",
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],
     href: "/projects/vr-interaction-lab"
   },
@@ -78,6 +84,7 @@ const projects: Project[] = [
     title: "Fallout Mod (Level Design)",
     description: "Overhauled game level demonstrating world-building, environmental storytelling, and existing IP adaptation.",
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
+    searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
     href: "/projects/fallout-level-design"
   },
@@ -85,6 +92,7 @@ const projects: Project[] = [
     title: "Shinobi Story",
     description: "Narrative stealth title + live content strategy and growth.",
     tags: ["Content Strategy", "Narrative Design", "Game Marketing"],
+    searchTerms: ["stealth", "ninja", "live ops", "growth strategy"],
     facets: ['art-storytelling', 'engineering'],
     bannerImage: "/images/ShinobiStoryBanner.jpg",
     bannerAlt: "Shinobi Story banner",
@@ -96,6 +104,7 @@ const projects: Project[] = [
     title: "Shonen TCG Game",
     description: "Prototype for a 3D multiplayer TCG with deep rulesets.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
+    searchTerms: ["card game", "tcg", "anime", "prototype"],
     facets: ['engineering', 'art-storytelling'],
     type: 'prototype'
   },
@@ -103,6 +112,7 @@ const projects: Project[] = [
     title: "VR Patapon Game",
     description: "Concept for a VR rhythm-strategy game with experimental inputs.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
+    searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
     type: 'prototype'
   }
@@ -114,6 +124,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Solo Project — First-Person Bug Survival Game',
     description:
       'Set in a bug-infested Balkan house, this prototype uses a universal throw system and swarming enemy behavior that can traverse walls and ceilings.',
+    searchTerms: ['bugs', 'survival', 'first-person', 'balkan', 'swarm ai'],
     image: '/images/Totally Bugged Out_banner.png',
     imageAlt: 'Totally Bugged Out project banner',
     ctaLabel: 'View Case Study',
@@ -124,6 +135,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Prototype / Local Multiplayer — Unity (1 Week)',
     description:
       'Built for Global Game Jam as a chaotic split-screen experience where two pugs chase squirrels in fast, goofy matches.',
+    searchTerms: ['cranky', 'pug', 'squirrels', 'global game jam', 'local multiplayer'],
     roles: 'Roles: Lead Animator, Co-Designer',
     image: '/images/Cranky_GameJam_Banner_2024.jpg',
     imageAlt: 'Cranky Game Jam 2024 banner',
@@ -135,6 +147,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Solo Project — First-Person Dog Chase Game',
     description:
       'A solo expansion of the jam concept with first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL-ready deployment.',
+    searchTerms: ['cranky', 'squirrel annihilator', 'dog chase', 'webgl', 'ai'],
     image: '/images/CrankyTheSquirrelAnnihilator_banner.png',
     imageAlt: 'Cranky The Squirrel Annihilator banner',
     ctaLabel: 'View Case Study',
@@ -145,6 +158,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Solo Project — Tactical RPG / Unity',
     description:
       'Mobile tactical RPG prototype combining grid-based combat, gesture-driven skills, progression systems, enemy AI, and gacha simulation.',
+    searchTerms: ['shogun', 'naruto', 'tactical rpg', 'gacha', 'mobile'],
     roles: 'Role: Solo Developer',
     ctaLabel: 'View Case Study',
     href: '/projects/shogun-flowers-fall-in-blood'
@@ -154,6 +168,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Team Project — Narrative Board Game Design',
     description:
       'Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.',
+    searchTerms: ['board game', 'sci-fi', 'co-op', 'class customization', 'modular exploration'],
     roles: 'Team Roles: Design, Systems, Lore Writing, Visual Assets',
     image: '/images/Banner_TheSignal.jpg',
     imageAlt: 'The Signal board game banner',
@@ -165,6 +180,7 @@ const sideProjects: SideProjectCard[] = [
     subtitle: 'Solo Project — Narrative + Systems Design',
     description:
       'A dystopian 2050 design document focused on poverty, survival, unstable jobs, inflation pressure, and player emotional engagement.',
+    searchTerms: ['dystopian', '2050', 'poverty', 'survival', 'systems design'],
     image: '/images/TheLastPaycheck_Banner.png',
     imageAlt: 'The Last Paycheck banner',
     ctaLabel: 'View Case Study',
@@ -199,33 +215,87 @@ const tagDescriptions: Record<string, string> = {
   Strategy: 'Decision-heavy loops emphasizing planning, tradeoffs, and adaptation.',
 };
 
+const normalizeForSearch = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+const matchesSearch = (haystack: string, query: string) => {
+  const normalizedHaystack = normalizeForSearch(haystack);
+  const tokens = normalizeForSearch(query)
+    .split(' ')
+    .filter(Boolean);
+
+  if (tokens.length === 0) {
+    return true;
   }
+
+  return tokens.every((token) => normalizedHaystack.includes(token));
 };
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+function CareerContent() {
+  const [activeFilter, setActiveFilter] = useQueryState(
+    'filter',
+    parseAsStringLiteral<ProjectFilter>(['all', 'engineering', 'xr', 'art-storytelling']).withDefault('all')
+  );
+  const [searchQuery, setSearchQuery] = useQueryState(
+    'q',
+    parseAsString
+  );
 
-export default function Career() {
-  const [activeFilter, setActiveFilter] = useState<ProjectFilter>('all');
+  const resolvedFilter: ProjectFilter =
+    activeFilter && filterOptions.some((option) => option.value === activeFilter)
+      ? activeFilter
+      : 'all';
 
   const filteredProjects = useMemo(() => {
-    if (activeFilter === 'all') {
-      return projects;
+    const normalizedQuery = (searchQuery ?? '').trim();
+
+    const baseList =
+      resolvedFilter === 'all'
+        ? projects
+        : projects.filter((project) => project.facets.includes(resolvedFilter));
+
+    if (normalizedQuery.length === 0) {
+      return baseList;
     }
 
-    return projects.filter((project) => project.facets.includes(activeFilter));
-  }, [activeFilter]);
+    return baseList.filter((project) => {
+      const haystack = [
+        project.title,
+        project.description,
+        project.tags.join(' '),
+        project.searchTerms?.join(' ') ?? '',
+        project.href ?? '',
+      ]
+        .join(' ');
 
+      return matchesSearch(haystack, normalizedQuery);
+    });
+  }, [resolvedFilter, searchQuery]);
+
+  const filteredSideProjects = useMemo(() => {
+    const normalizedQuery = (searchQuery ?? '').trim();
+
+    if (normalizedQuery.length === 0) {
+      return sideProjects;
+    }
+
+    return sideProjects.filter((project) => {
+      const haystack = [
+        project.title,
+        project.subtitle,
+        project.description,
+        project.roles ?? '',
+        project.searchTerms?.join(' ') ?? '',
+        project.href ?? '',
+      ].join(' ');
+
+      return matchesSearch(haystack, normalizedQuery);
+    });
+  }, [searchQuery]);
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <div className="max-w-6xl mx-auto">
@@ -244,14 +314,14 @@ export default function Career() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             {filterOptions.map((option) => {
-              const active = option.value === activeFilter;
+              const active = option.value === resolvedFilter;
 
               return (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => setActiveFilter(option.value)}
-                  className={`rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors ${
+                  className={`cursor-pointer rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors ${
                     active
                       ? 'bg-[var(--foreground)] text-[var(--background)]'
                       : 'border border-[var(--border)] text-[var(--muted)] hover:border-[var(--foreground)] hover:text-[var(--foreground)]'
@@ -263,17 +333,28 @@ export default function Career() {
               );
             })}
           </div>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <input
+              type="search"
+              value={searchQuery ?? ''}
+              onChange={(event) => {
+                const nextValue = event.target.value;
+                setSearchQuery(nextValue.length > 0 ? nextValue : null);
+              }}
+              placeholder="Search projects by title, skill, or keyword"
+              className="w-full max-w-xl rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--foreground)] outline-none transition-colors placeholder:text-[var(--muted)] focus:border-[var(--foreground)]"
+              aria-label="Search projects"
+            />
+            <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
+              Results: {filteredProjects.length}
+            </p>
+          </div>
         </header>
 
-        <motion.div
-          key={activeFilter}
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
-            <motion.div key={project.title} variants={item}>
+            <div key={project.title}>
               {project.href && project.type !== 'prototype' ? (
                 <Link
                   href={project.href}
@@ -361,9 +442,9 @@ export default function Career() {
                   </div>
                 </div>
               )}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {filteredProjects.length === 0 ? (
           <p className="mt-10 text-sm text-[var(--muted)]">No projects in this filter yet. Try another category.</p>
@@ -378,7 +459,7 @@ export default function Career() {
 
           <h3 className="mt-8 text-[10px] font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Explore My Creations</h3>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sideProjects.map((project) => (
+            {filteredSideProjects.map((project) => (
               <article
                 key={project.title}
                 className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_24px_var(--accent-cyan)]"
@@ -423,12 +504,37 @@ export default function Career() {
               </article>
             ))}
           </div>
+
+          {filteredSideProjects.length === 0 ? (
+            <p className="mt-6 text-sm text-[var(--muted)]">No side projects match this search yet.</p>
+          ) : null}
         </section>
 
       </div>
     </main>
   );
 }
+
+export default function Career() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-sm text-[var(--muted)]">Loading projects…</p>
+          </div>
+        </main>
+      }
+    >
+      <CareerContent />
+    </Suspense>
+  );
+}
+
+
+
+
+
 
 
 
