@@ -241,10 +241,31 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     setHoveredNode(node);
     if (event) {
       const rect = event.currentTarget.getBoundingClientRect();
-      const containerRect = event.currentTarget.closest('svg')?.getBoundingClientRect();
+      const containerRect = event.currentTarget.closest('div')?.getBoundingClientRect();
       if (containerRect) {
-        const x = Math.min(Math.max(rect.left + rect.width / 2, containerRect.left + 100), containerRect.right - 100);
-        const y = Math.min(Math.max(rect.top - 10, containerRect.top + 50), containerRect.bottom - 100);
+        // Position tooltip relative to viewport, ensuring it stays within bounds
+        const tooltipWidth = 200; // Approximate tooltip width
+        const tooltipHeight = 100; // Approximate tooltip height
+        const padding = 20;
+        
+        // Default position above the node
+        let x = rect.left + rect.width / 2;
+        let y = rect.top - tooltipHeight - padding;
+
+        // Keep tooltip within horizontal bounds
+        x = Math.min(Math.max(x, containerRect.left + tooltipWidth/2 + padding), 
+                    containerRect.right - tooltipWidth/2 - padding);
+
+        // If tooltip would go above viewport, show it below the node instead
+        if (y < containerRect.top + padding) {
+          y = rect.bottom + padding;
+        }
+
+        // If tooltip would go below viewport, show it above the node
+        if (y + tooltipHeight > containerRect.bottom - padding) {
+          y = rect.top - tooltipHeight - padding;
+        }
+
         setMousePos({ x, y });
       }
     }
@@ -262,9 +283,11 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       if (activeNode) {
         const subNodes = nodes.filter(node => node.parentId === activeDegree);
         const spacing = 120; // Base spacing between sub-nodes
+        const angleStep = (2 * Math.PI) / subNodes.length; // Distribute evenly in a circle
         
         subNodes.forEach((node, index) => {
-          const angle = (index - (subNodes.length - 1) / 2) * (Math.PI / 4);
+          // Start from top (-PI/2) and distribute evenly around the circle
+          const angle = -Math.PI / 2 + index * angleStep;
           node.position = {
             x: activeNode.position.x + Math.cos(angle) * spacing,
             y: activeNode.position.y + Math.sin(angle) * spacing
@@ -283,7 +306,26 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   const handleNodeClick = (nodeId: string, group: GraphNode["group"]) => {
     if (group === "degree" || group === "core") {
-      setActiveDegree((prev) => (prev === nodeId ? null : nodeId));
+      setActiveDegree((prev) => {
+        if (prev === nodeId) {
+          // Zooming out when closing a node
+          setZoom(1);
+          setPan({ x: 0, y: 0 });
+          return null;
+        } else {
+          // Zooming in when opening a node
+          const node = nodesData.find(n => n.id === nodeId);
+          if (node) {
+            setZoom(1.5);
+            // Center on the clicked node
+            setPan({
+              x: -(node.position.x - 350) * 1.5,
+              y: -(node.position.y - 260) * 1.5
+            });
+          }
+          return nodeId;
+        }
+      });
     }
   };
 
