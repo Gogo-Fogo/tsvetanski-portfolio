@@ -16,8 +16,11 @@ export default function About() {
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-            <div className="hidden lg:block">
-              <DegreeGraph className="h-[460px] w-full" />
+            <div className="relative">
+              <DegreeGraph 
+                className="h-[300px] lg:h-[460px] w-full transition-all duration-300" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent lg:hidden pointer-events-none" />
             </div>
             <div className="border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-8 shadow-[var(--shadow)]">
               <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
