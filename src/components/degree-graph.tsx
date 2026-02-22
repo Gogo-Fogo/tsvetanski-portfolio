@@ -206,24 +206,74 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const [activeDegree, setActiveDegree] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+  }, [pan]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const bounds = 200 * zoom;
+    const newX = Math.min(Math.max(e.clientX - dragStart.x, -bounds), bounds);
+    const newY = Math.min(Math.max(e.clientY - dragStart.y, -bounds), bounds);
+    setPan({ x: newX, y: newY });
+  }, [isDragging, dragStart, zoom]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleZoom = (delta: number) => {
+    setZoom(prev => Math.min(Math.max(prev + delta * 0.1, 0.5), 2));
+  };
+
+  const handleReset = () => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  };
 
   const handleNodeHover = useCallback((node: GraphNode | null, event?: React.MouseEvent) => {
     setHoveredNode(node);
     if (event) {
-      // Get the position relative to the viewport
       const rect = event.currentTarget.getBoundingClientRect();
-      setMousePos({
-        x: rect.left + rect.width / 2,
-        y: rect.top,
-      });
+      const containerRect = event.currentTarget.closest('svg')?.getBoundingClientRect();
+      if (containerRect) {
+        const x = Math.min(Math.max(rect.left + rect.width / 2, containerRect.left + 100), containerRect.right - 100);
+        const y = Math.min(Math.max(rect.top - 10, containerRect.top + 50), containerRect.bottom - 100);
+        setMousePos({ x, y });
+      }
     }
   }, []);
 
   const visibleNodes = useMemo(() => {
-    return nodesData.filter((node) => {
+    const nodes = nodesData.filter((node) => {
       if (coreIds.has(node.id)) return true;
       return activeDegree ? node.parentId === activeDegree : false;
     });
+
+    // Adjust positions when a node is expanded
+    if (activeDegree) {
+      const activeNode = nodes.find(node => node.id === activeDegree);
+      if (activeNode) {
+        const subNodes = nodes.filter(node => node.parentId === activeDegree);
+        const spacing = 120; // Base spacing between sub-nodes
+        
+        subNodes.forEach((node, index) => {
+          const angle = (index - (subNodes.length - 1) / 2) * (Math.PI / 4);
+          node.position = {
+            x: activeNode.position.x + Math.cos(angle) * spacing,
+            y: activeNode.position.y + Math.sin(angle) * spacing
+          };
+        });
+      }
+    }
+
+    return nodes;
   }, [activeDegree]);
 
   const visibleEdges = useMemo(() => {
@@ -247,7 +297,56 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       <div className="pointer-events-none absolute left-6 top-6 z-10 max-w-[280px] text-2xl font-bold tracking-tight text-[var(--foreground)] hidden lg:block">
         Click a circle to explore.
       </div>
-      <svg className="absolute inset-0 translate-x-3 translate-y-24 scale-[1.3]" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet">
+      <div className="absolute right-4 top-4 z-20 flex gap-2">
+        {activeDegree && (
+          <button
+            onClick={() => setActiveDegree(null)}
+            className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+        )}
+        <button
+          onClick={() => handleZoom(1)}
+          className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <button
+          onClick={() => handleZoom(-1)}
+          className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <button
+          onClick={handleReset}
+          className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </button>
+      </div>
+      <svg 
+        className="absolute inset-0 transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        style={{
+          transform: `translate(${pan.x}px, ${pan.y + 96}px) scale(${zoom * 1.3})`,
+        }}
+        viewBox="0 0 700 520" 
+        preserveAspectRatio="xMidYMid meet"
+      >
         <g stroke="rgba(148, 163, 184, 0.75)" strokeWidth={2} fill="none">
           <defs>
             <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -310,7 +409,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           return (
             <g key={node.id} transform={`translate(${node.position.x}, ${node.position.y})`}>
               <g
-                className="transition-all duration-500 ease-in-out"
+                className="transition-all duration-700 ease-in-out"
                 style={{
                   opacity: node.parentId ? (node.parentId === activeDegree ? "1" : "0.5") : "1",
                   transform: `scale(${node.parentId ? (node.parentId === activeDegree ? "1" : "0.8") : "1"})`,
@@ -343,7 +442,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   onClick={() => handleNodeClick(node.id, node.group)}
                   onMouseEnter={(e) => handleNodeHover(node, e)}
                   onMouseLeave={() => handleNodeHover(null)}
-                  className="cursor-pointer origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite] transition-transform duration-300 hover:scale-110"
+                  className="cursor-pointer origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite]"
                 >
                   <animate
                     attributeName="r"
