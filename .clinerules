@@ -1,0 +1,9 @@
+1. Environment: Always assume a Windows PowerShell environment. Never use Bash heredocs (<<). If you need to run a script, write it to a temporary file, execute it, and delete it.
+
+2. API Safety: To avoid crashes, do not attempt to bulk-read large binary files (.pdf) or massive data-dumps (like Lighthouse .json). Rely on the .md files in CONTEXT/.
+
+3. Tech Stack: Next.js App Router, TypeScript (.tsx), Tailwind v4, and Framer Motion. Use server components by default.
+
+4. Git Workflow: Before pushing, ensure git status is clean by staging all changes. Write professional, descriptive commit messages.
+
+5. Project Knowledge: Before building a new page or case study, check CONTEXT/site-architecture-audit-2026-02-22.md and CONTEXT/docs/project-snapshots/project-snapshot-coverage-map.md to ensure technical and narrative consistency.
