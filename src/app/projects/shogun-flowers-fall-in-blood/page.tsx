@@ -21,7 +21,8 @@ export default function ShogunFlowersFallInBloodPage() {
           </p>
         </header>
 
-        <section className="grid gap-8">
+        <section className="flex flex-col gap-12 md:gap-16">
+          {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="aspect-[16/6] w-full">
               <LightboxImage
@@ -35,93 +36,24 @@ export default function ShogunFlowersFallInBloodPage() {
             </div>
           </div>
 
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Shogun: Flowers Fall in Blood is my personal prototype for a next-generation mobile tactical RPG. The design combines
-              the grid-based, position-focused combat philosophy of Naruto Shippuden: Ultimate Ninja Blazing with gesture-driven
-              execution ideas inspired by Ronin: The Last Samurai.
-            </p>
-            <p className="text-sm text-[var(--muted)] leading-relaxed mt-3">
-              My goal is to reimagine a “Blazing-like” game from the ground up—respecting its core mechanics while modernizing the
-              player experience for current mobile expectations. The project is fully designed and prototyped by me in Unity.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Overview & Core Philosophy */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Doing My Homework</h2>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Before building, I analyzed what made Naruto Blazing work at a systems level:
+                Shogun: Flowers Fall in Blood is a mobile tactical RPG prototype that reimagines grid-based, position-focused combat for modern mobile expectations.
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                <li>- Squad synergy and team attacks</li>
-                <li>- Shared HP risk-reward mechanics</li>
-                <li>- Movement and range circles</li>
-                <li>- Phantom Castle PvP structure</li>
-                <li>- Emergency Missions and Ninja Road endgame loops</li>
-              </ul>
-              <a
-                href="https://docs.google.com/document/d/1tQy-96n6PT-5ejI6dY2StB-Uuhs10RdjcZGwNd-t5xM/edit?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)]"
-              >
-                View Research
-              </a>
-            </div>
-
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">The GDD</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I wrote a full internal studio-style game design document covering core systems, combat loops, class archetypes,
-                elemental/status interactions, multiplayer layers, monetization, retention, and LiveOps planning.
+              <p className="text-sm text-[var(--muted)] leading-relaxed mt-4">
+                The design combines the tactical depth of Naruto Blazing with the execution-driven philosophy of Ronin: The Last Samurai, all prototyped in Unity.
               </p>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mt-3">
-                I built this as if handing it to a full team, while also using it as a scope control tool for solo execution.
-              </p>
-              <a
-                href="https://docs.google.com/document/d/1H1RVHiRcTWC9bKdPeEIab16GYU6gXJxJ2aQxmZIGaZg/edit?tab=t.0#heading=h.p4vrpp5ibll6"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                View GDD
-              </a>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 md:items-start gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <LightboxImage
-                src="/images/ShogunFlowersFallinBlood_HW_NarutoBlazing_Showcase_Example.png"
-                alt="Shogun homework research showcase inspired by Naruto Blazing"
-                width={1400}
-                height={900}
-                className="h-auto w-full object-contain"
-                roundedClassName="rounded-2xl"
-              />
             </div>
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <LightboxImage
-                src="/images/ShogunFlowersFallinBlood_WhereIAmAtRightNow_Gameplay.png"
-                alt="Shogun current gameplay prototype progress"
-                width={1400}
-                height={900}
-                className="h-auto w-full object-cover"
-                roundedClassName="rounded-2xl"
-              />
-            </div>
-          </div>
-
-          <div className="group border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">TRV Reference Video</h2>
-            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-black">
               <div className="aspect-video w-full">
-                <LightboxVideo
-                  embedUrl="https://www.youtube.com/embed/3DBdaVHeVnY"
-                  thumbnailUrl="https://img.youtube.com/vi/3DBdaVHeVnY/maxresdefault.jpg"
-                  title="Taikou Risshiden V Reference Video"
+                <LightboxImage
+                  src="/images/ShogunFlowersFallinBlood_WhereIAmAtRightNow_Gameplay.png"
+                  alt="Shogun current gameplay prototype progress"
+                  width={1400}
+                  height={900}
                   className="h-full w-full object-cover"
                   roundedClassName="rounded-none"
                 />
@@ -129,10 +61,46 @@ export default function ShogunFlowersFallInBloodPage() {
             </div>
           </div>
 
-          <div className="group border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Prototype Gameplay</h2>
-            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-black">
-              <div className="aspect-video md:aspect-[32/9] w-full">
+          {/* Research & Design Documents */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Systems Research</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                I analyzed Naruto Blazing at a systems level to understand its "movement circle" and risk-reward mechanics.
+              </p>
+              <ul className="space-y-2 text-sm text-[var(--muted)] mb-6">
+                <li>- Squad synergy & team attack patterns</li>
+                <li>- Shared HP management risk loops</li>
+                <li>- Range-based movement tactical grids</li>
+              </ul>
+              <a
+                href="https://docs.google.com/document/d/1tQy-96n6PT-5ejI6dY2StB-Uuhs10RdjcZGwNd-t5xM/edit?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)]"
+              >
+                View Systems Audit
+              </a>
+            </div>
+
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="aspect-video w-full">
+                <LightboxImage
+                  src="/images/ShogunFlowersFallinBlood_HW_NarutoBlazing_Showcase_Example.png"
+                  alt="Shogun homework research showcase inspired by Naruto Blazing"
+                  width={1400}
+                  height={900}
+                  className="h-full w-full object-contain"
+                  roundedClassName="rounded-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* GDD & Studio Standards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-2">
+              <div className="aspect-video md:aspect-[32/9] w-full bg-black">
                 <LightboxVideo
                   embedUrl="https://www.youtube.com/embed/mTIhaiYbRDk"
                   thumbnailUrl="https://img.youtube.com/vi/mTIhaiYbRDk/maxresdefault.jpg"
@@ -140,6 +108,45 @@ export default function ShogunFlowersFallInBloodPage() {
                   className="h-full w-full object-cover"
                   roundedClassName="rounded-none"
                 />
+              </div>
+            </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Technical GDD</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                I authored a studio-style Game Design Document that covers everything from LiveOps and monetization to combat loop class archetypes.
+              </p>
+              <a
+                href="https://docs.google.com/document/d/1H1RVHiRcTWC9bKdPeEIab16GYU6gXJxJ2aQxmZIGaZg/edit?tab=t.0#heading=h.p4vrpp5ibll6"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+              >
+                Read Full GDD
+              </a>
+            </div>
+          </div>
+
+          {/* Historical References */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-6">
+              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Historical Inspiration</h2>
+                <p className="text-sm text-[var(--muted)] leading-relaxed">
+                  Researching <i>Taikou Risshiden V</i> helped me refine circle-based movement and positional triggers. Its influence is key to my turn-order timeline and initiative systems.
+                </p>
+              </div>
+            </div>
+            <div className="group border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-4 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-black">
+                <div className="aspect-video w-full">
+                  <LightboxVideo
+                    embedUrl="https://www.youtube.com/embed/3DBdaVHeVnY"
+                    thumbnailUrl="https://img.youtube.com/vi/3DBdaVHeVnY/maxresdefault.jpg"
+                    title="Taikou Risshiden V Reference Video"
+                    className="h-full w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
               </div>
             </div>
           </div>

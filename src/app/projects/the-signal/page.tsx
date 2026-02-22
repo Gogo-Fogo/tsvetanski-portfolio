@@ -20,53 +20,65 @@ export default function TheSignalPage() {
           <p className="text-[var(--muted)] mt-1 text-sm">Georgi Tsvetanski, Alex Jeffries, Zefran Jehle</p>
         </header>
 
-        <section className="grid gap-8">
+        <section className="flex flex-col gap-12 md:gap-16">
+          {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <LightboxImage
-              src="/images/Banner_TheSignal.jpg"
-              alt="The Signal board game banner"
-              width={1600}
-              height={900}
-              className="h-auto w-full object-cover"
-              roundedClassName="rounded-2xl"
-            />
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              The Signal is a sci-fi narrative board game inspired by FTL and Darkest Dungeon, where players explore a decaying
-              alien vessel and confront an evolving, malevolent Signal. Players gather loot, gain Insight, and adapt their builds
-              while navigating procedurally placed rooms filled with hostile lifeforms and corrupted technology.
-            </p>
-            <p className="text-sm text-[var(--muted)] leading-relaxed mt-3">
-              The project was developed collaboratively as a final project for GAME320: Design Implementation, focusing on
-              player-driven exploration, dynamic enemy encounters, and emergent storytelling.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-5">
-              <a
-                href="https://docs.google.com/document/d/18TgjQ83h_Q6F8Q9KVB6a97QQQzh9wcs-PznotlDIVQ0/edit?tab=t.0"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)]"
-              >
-                View Game Design Implementation
-              </a>
-              <a
-                href="https://docs.google.com/presentation/d/1bfBJ6skJa0pFTh2KjSEqbHBgYkYuR89TeZupIfUqqG8/edit?slide=id.g35076292f3f_3_305#slide=id.g35076292f3f_3_305"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                View Slide Presentation
-              </a>
+            <div className="aspect-video w-full">
+              <LightboxImage
+                src="/images/Banner_TheSignal.jpg"
+                alt="The Signal board game banner"
+                width={1600}
+                height={900}
+                className="h-full w-full object-cover"
+                roundedClassName="rounded-none"
+              />
             </div>
           </div>
 
-          <div className="group border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Team Walkthrough Video (Draft)</h2>
-            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-black">
-              <div className="aspect-video md:aspect-[32/9] w-full">
+          {/* Overview & Collaborative Design */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                The Signal is a sci-fi narrative board game inspired by <i>FTL</i> and <i>Darkest Dungeon</i>. Players explore a decaying alien vessel while navigating procedural room layouts and hostile encounters.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="https://docs.google.com/document/d/18TgjQ83h_Q6F8Q9KVB6a97QQQzh9wcs-PznotlDIVQ0/edit?tab=t.0"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)]"
+                >
+                  Design Doc
+                </a>
+                <a
+                  href="https://docs.google.com/presentation/d/1bfBJ6skJa0pFTh2KjSEqbHBgYkYuR89TeZupIfUqqG8/edit?slide=id.g35076292f3f_3_305#slide=id.g35076292f3f_3_305"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+                >
+                  Presentation
+                </a>
+              </div>
+            </div>
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="aspect-video w-full">
+                <LightboxImage
+                  src="/images/TheSignal_BoardGame_Done_Showcase.png"
+                  alt="The Signal final board game showcase"
+                  width={1400}
+                  height={900}
+                  className="h-full w-full object-cover"
+                  roundedClassName="rounded-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Systems & Gameplay Walkthrough */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-2">
+              <div className="aspect-video w-full">
                 <LightboxVideo
                   embedUrl="https://www.youtube.com/embed/vf-XuVHubbk"
                   thumbnailUrl="https://img.youtube.com/vi/vf-XuVHubbk/maxresdefault.jpg"
@@ -76,28 +88,103 @@ export default function TheSignalPage() {
                 />
               </div>
             </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Key Design Pillars</h2>
+              <ul className="space-y-4 text-sm text-[var(--muted)]">
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Procedural Discovery:</span>
+                  Room tiles and encounters are placed dynamically, ensuring no two explorations feel identical.
+                </li>
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Dopamine-Driven Loops:</span>
+                  Focused on high-impact loot drops and risk-reward decision points inspired by modern roguelikes.
+                </li>
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Insight System:</span>
+                  A narrative-driven mechanic where players gather data logs that influence both scoring and the final confrontation.
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:items-start">
+          {/* Visual Asset Pipeline */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <LightboxImage
-                src="/images/TheSignal_Board.png"
-                alt="The Signal board and room layout visualization"
-                width={1400}
-                height={900}
-                className="h-auto w-full object-contain"
-                roundedClassName="rounded-2xl"
-              />
+              <div className="grid grid-cols-1 gap-4 p-4">
+                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+                  <LightboxImage
+                    src="/images/TheSignal_Board.png"
+                    alt="The Signal board and room layout visualization"
+                    width={1400}
+                    height={900}
+                    className="h-auto w-full object-contain"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+                  <LightboxImage
+                    src="/images/TheSignal_PhotoshopBoardCreation.png"
+                    alt="The Signal board creation process"
+                    width={1400}
+                    height={900}
+                    className="h-auto w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <LightboxImage
-                src="/images/TheSignal_PhotoshopBoardCreation.png"
-                alt="The Signal board creation process"
-                width={1400}
-                height={900}
-                className="h-auto w-full object-cover"
-                roundedClassName="rounded-2xl"
-              />
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual Production</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                I managed the visual asset pipeline, combining custom iconography with high-fidelity stock assets to create an oppressive, decaying sci-fi aesthetic.
+              </p>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <li>- Photoshop-driven board & tile creation</li>
+                <li>- Custom card & token layout design</li>
+                <li>- Fragmented narrative flavor text writing</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Monster Design & Balance */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Systems Balancing</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                Balancing evolving enemy behaviors against player "builds" was the core challenge of the implementation phase.
+              </p>
+              <a
+                href="https://docs.google.com/spreadsheets/d/1lhhB8pDsiwd-MkOLUejhbkQfkNkfXh6KfUYBQohW_Mk/edit?gid=0#gid=0"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+              >
+                View Balancing Sheet
+              </a>
+            </div>
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
+              <div className="grid grid-cols-1 gap-4 p-4">
+                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+                  <LightboxImage
+                    src="/images/TheSignal_Monsters-scaled.png"
+                    alt="The Signal monster design sheet"
+                    width={1400}
+                    height={900}
+                    className="h-auto w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+                  <LightboxImage
+                    src="/images/TheSignal_Equipment_EnemySheet.png"
+                    alt="The Signal equipment and enemy sheet"
+                    width={1400}
+                    height={900}
+                    className="h-auto w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

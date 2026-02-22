@@ -4,6 +4,6 @@
 
 3. Tech Stack: Next.js App Router, TypeScript (.tsx), Tailwind v4, and Framer Motion. Use server components by default.
 
-4. Git Workflow: Before pushing, ensure git status is clean by staging all changes. Write professional, descriptive commit messages.
+4. Git Workflow: Before pushing, ensure git status is clean by staging all changes. Write professional, descriptive commit messages. Every commit must include a subject and a descriptive body. When committing from CLI, use a safe multi-line message method (e.g., multiple -m flags or a temp message file with -F) so formatting is preserved.
 
 5. Project Knowledge: Before building a new page or case study, check CONTEXT/site-architecture-audit-2026-02-22.md and CONTEXT/docs/project-snapshots/project-snapshot-coverage-map.md to ensure technical and narrative consistency.

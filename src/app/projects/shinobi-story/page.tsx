@@ -152,68 +152,129 @@ export default async function ShinobiStoryPage() {
           </p>
         </header>
 
-        <section className="grid gap-10">
+        <section className="flex flex-col gap-12 md:gap-16">
+          {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <LightboxImage
-              src="/images/ShinobiStoryBanner.jpg"
-              alt="Shinobi Story banner"
-              width={1600}
-              height={900}
-              className="h-full w-full object-cover"
-              roundedClassName="rounded-2xl"
-            />
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Focus</h2>
-            <p className="text-[var(--muted)] text-sm">
-              Shinobi Story blends action combat, platforming, and narrative design with a cohesive content strategy. The
-              work highlights marketing beats, before-and-after improvements, and new content planning aligned with the
-              player journey.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Performance Metrics</h2>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-[var(--muted)]">
-                <li>68,000+ registered users</li>
-                <li>16,500+ Discord community members</li>
-                <li>$110k total revenue with ~85% margin</li>
-                <li>Low COGS, sustained live-ops engagement</li>
-                <li>Project run: Jan 2019 – Sep 2024</li>
-              </ul>
+            <div className="aspect-video w-full">
+              <LightboxImage
+                src="/images/ShinobiStoryBanner.jpg"
+                alt="Shinobi Story banner"
+                width={1600}
+                height={900}
+                className="h-full w-full object-cover"
+                roundedClassName="rounded-none"
+              />
             </div>
+          </div>
+
+          {/* Business Impact & Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-6">
+              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Live-Ops Performance</h2>
+                <ul className="space-y-4 text-sm text-[var(--muted)]">
+                  <li>
+                    <span className="text-[var(--foreground)] font-medium block">Scale & Community:</span>
+                    68,000+ registered users and a 16,500+ member Discord community.
+                  </li>
+                  <li>
+                    <span className="text-[var(--foreground)] font-medium block">Commercial Success:</span>
+                    $110k total revenue with an ~85% margin and low COGS.
+                  </li>
+                  <li>
+                    <span className="text-[var(--foreground)] font-medium block">Longevity:</span>
+                    Sustained engagement across a 5-year project lifecycle (2019–2024).
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Growth Narrative</h2>
-              <p className="text-sm text-[var(--muted)]">
-                Started in customer support to learn the live community pulse, then transitioned into development and mentorship.
-                Within a year, I was guiding new developers in scripting, level design, and debugging while shaping content rollouts
-                and training resources.
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Narrative</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                Shinobi Story blends action combat, platforming, and narrative design with a cohesive content strategy.
+              </p>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">
+                I started in customer support to learn the live community pulse, then transitioned into development and mentorship. Within a year, I was guiding new developers in scripting, level design, and debugging while shaping content rollouts and training resources.
               </p>
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {shinobiStoryImages.map((image) => (
-              <div
-                key={image.src}
-                className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-              >
+          {/* Marketing & Content Strategy */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="aspect-video w-full">
                 <LightboxImage
-                  src={image.src}
-                  alt={image.alt}
+                  src="/images/SS_MarketingCampaign.png"
+                  alt="Shinobi Story marketing campaign"
                   width={1200}
                   height={900}
                   className="h-full w-full object-cover"
-                  roundedClassName="rounded-2xl"
+                  roundedClassName="rounded-none"
                 />
               </div>
-            ))}
+            </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Marketing Rollouts</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">
+                I designed marketing beats and promotional materials that aligned with major content drops, ensuring maximum community engagement and user retention during peak development cycles.
+              </p>
+            </div>
           </div>
 
-          <div className="relative z-10 pt-10 md:pt-14">
-            <VideoCarousel items={videoCards} />
+          {/* Content Strategy Alternating */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Content Planning</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">
+                Developed a new content strategy that mapped player progression to specific narrative beats. This ensured a steady flow of "must-play" content for both new users and the veteran community.
+              </p>
+            </div>
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
+              <div className="aspect-video w-full">
+                <LightboxImage
+                  src="/images/SS_NewContentStrategy.png"
+                  alt="Shinobi Story new content strategy"
+                  width={1200}
+                  height={900}
+                  className="h-full w-full object-cover"
+                  roundedClassName="rounded-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Technical Optimization / Quality */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="aspect-video w-full">
+                <LightboxImage
+                  src="/images/SS_BeforeAndAfter.png"
+                  alt="Shinobi Story before and after visual optimization"
+                  width={1200}
+                  height={900}
+                  className="h-full w-full object-cover"
+                  roundedClassName="rounded-none"
+                />
+              </div>
+            </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual & Technical Polish</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                Beyond content, I drove visual fidelity improvements across the game world. This "before and after" workflow became the standard for auditing community-created levels and official content alike.
+              </p>
+              <p className="text-sm text-[var(--muted)] leading-relaxed font-medium text-[var(--foreground)]">
+                Focus: Environmental lighting, asset density, and player pathfinding clarity.
+              </p>
+            </div>
+          </div>
+
+          {/* Video Showcase */}
+          <div className="space-y-8">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] text-center">Cinematic & Gameplay Showcase</h2>
+            <div className="relative z-10">
+              <VideoCarousel items={videoCards} />
+            </div>
           </div>
         </section>
       </div>

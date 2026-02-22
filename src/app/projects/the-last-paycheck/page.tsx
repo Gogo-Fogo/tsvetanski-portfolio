@@ -20,55 +20,60 @@ export default function TheLastPaycheckPage() {
           </p>
         </header>
 
-        <section className="grid gap-8">
+        <section className="flex flex-col gap-12 md:gap-16">
+          {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <LightboxImage
-              src="/images/TheLastPaycheck_Banner.png"
-              alt="The Last Paycheck project banner"
-              width={1600}
-              height={900}
-              className="h-auto w-full object-cover"
-              roundedClassName="rounded-2xl"
-            />
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Premise</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              The Last Paycheck is a game design document exploring poverty, unstable labor, and emotional survival in a dystopian
-              2050 America. The player must support their child while navigating job insecurity, inflation pressure, and high-risk
-              daily decisions.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Design Focus</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Narrative systems for social pressure and personal trade-offs</li>
-                <li>- Economic mechanics around unstable income and rising costs</li>
-                <li>- Emotional engagement through parent-child survival stakes</li>
-                <li>- Consequence-driven decision loops across multiple timelines</li>
-              </ul>
+            <div className="aspect-video w-full">
+              <LightboxImage
+                src="/images/TheLastPaycheck_Banner.png"
+                alt="The Last Paycheck project banner"
+                width={1600}
+                height={900}
+                className="h-full w-full object-cover"
+                roundedClassName="rounded-none"
+              />
             </div>
+          </div>
+
+          {/* Project Premise & Type */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Type</h2>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Premise</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                This is currently a full design document project (GDD), built to validate narrative + systems direction before moving
-                into prototype production.
+                The Last Paycheck is a game design document exploring poverty, unstable labor, and emotional survival in a dystopian
+                2050 America. The player must support their child while navigating job insecurity, inflation pressure, and high-risk
+                daily decisions.
               </p>
             </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Focus</h2>
+              <ul className="space-y-3 text-sm text-[var(--muted)]">
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Narrative Systems:</span>
+                  Designing for social pressure and personal trade-offs in a harsh economic climate.
+                </li>
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Economic Mechanics:</span>
+                  Modeling unstable income, rising costs, and their impact on daily decisions.
+                </li>
+                <li>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Emotional Engagement:</span>
+                  Focus on parent-child survival stakes and consequence-driven decision loops.
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Read the GDD</h2>
+          {/* Call to Action for GDD */}
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] text-center">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Explore the Full Design</h2>
             <a
               href="https://docs.google.com/document/d/1JTBtBdJxqJtGmq32sABKRfg9poBi-yePNI8TkbjgvEI/edit?usp=sharing"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
+              className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
             >
-              Open GDD
+              Read the Game Design Document
             </a>
           </div>
         </section>

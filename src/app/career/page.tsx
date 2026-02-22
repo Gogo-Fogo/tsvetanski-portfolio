@@ -33,6 +33,8 @@ interface SideProjectCard {
   imageAlt?: string;
   ctaLabel?: string;
   href?: string;
+  bannerWidth?: number;
+  bannerHeight?: number;
 }
 
 type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
@@ -47,27 +49,15 @@ const filterOptions: { value: ProjectFilter; label: string }[] = [
 const projects: Project[] = [
   {
     title: "Guilty As Arrr",
-    description: "Multiplayer social deduction with proximity voice as a core mechanic.",
+    description: "Real-time spatial audio attenuation for multi-user social deduction.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering', 'xr'],
     href: "/projects/repo-x"
   },
   {
-    title: "Trash Been (Urban Logistics)",
-    description: "Urban logistics sim—optimize routes, reduce waste, visualize system health.",
-    tags: ["Logistics Simulation", "System Design", "Unity"],
-    searchTerms: ["urban logistics", "waste", "route optimization"],
-    facets: ['engineering', 'art-storytelling'],
-    bannerImage: "/images/TB_MindMap.png",
-    bannerAlt: "Trash Been logistics mind map",
-    bannerWidth: 1400,
-    bannerHeight: 900,
-    href: "/projects/trash-been"
-  },
-  {
     title: "VR Dirt Bike Game",
-    description: "Safety-training sim for smart riding habits in VR.",
+    description: "Immersive training for smart and safe driving practices.",
     tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
     searchTerms: ["dirt bike", "safety training", "education", "riding"],
     facets: ['engineering', 'xr'],
@@ -75,7 +65,7 @@ const projects: Project[] = [
   },
   {
     title: "VR Car Drift Simulator",
-    description: "High-fidelity drift training with vehicle dynamics and spatial feedback.",
+    description: "High-fidelity spatial interaction and vehicle dynamics in a night city environment.",
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
     searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],
@@ -83,27 +73,15 @@ const projects: Project[] = [
   },
   {
     title: "Fallout Mod (Level Design)",
-    description: "Overhauled game level demonstrating world-building, environmental storytelling, and existing IP adaptation.",
+    description: "Overhauled game level demonstrating world-building and existing IP adaptation.",
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
     searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
     href: "/projects/fallout-level-design"
   },
   {
-    title: "Shinobi Story",
-    description: "Narrative stealth title + live content strategy and growth.",
-    tags: ["Content Strategy", "Narrative Design", "Game Marketing"],
-    searchTerms: ["stealth", "ninja", "live ops", "growth strategy"],
-    facets: ['art-storytelling', 'engineering'],
-    bannerImage: "/images/ShinobiStoryBanner.jpg",
-    bannerAlt: "Shinobi Story banner",
-    bannerWidth: 1400,
-    bannerHeight: 900,
-    href: "/projects/shinobi-story"
-  },
-  {
     title: "Shonen TCG Game",
-    description: "Prototype for a 3D multiplayer TCG with deep rulesets.",
+    description: "Developing a robust 3D multiplayer trading card game prototype.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
     searchTerms: ["card game", "tcg", "anime", "prototype"],
     facets: ['engineering', 'art-storytelling'],
@@ -111,7 +89,7 @@ const projects: Project[] = [
   },
   {
     title: "VR Patapon Game",
-    description: "Concept for a VR rhythm-strategy game with experimental inputs.",
+    description: "Conceptualizing an innovative VR rhythm-strategy game.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
@@ -359,30 +337,27 @@ function CareerContent() {
               {project.href && project.type !== 'prototype' ? (
                 <Link
                   href={project.href}
-                  className="group block h-full border border-transparent p-8 rounded-2xl transition-all duration-500 bg-[var(--surface)] hover:bg-[var(--surface)] shadow-[var(--shadow)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),var(--glow-strong)] flex flex-col justify-between"
+                  className="group block h-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] flex flex-col justify-between"
                 >
                   <div>
-                    <div
-                      className={`mb-6 w-full overflow-hidden rounded-xl bg-[var(--surface)] ${
-                        project.bannerBorderClass ?? "border border-[var(--border)]"
-                      }`}
-                    >
+                    <div className="mb-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                       {project.bannerImage ? (
                         <LightboxImage
                           src={project.bannerImage}
                           alt={project.bannerAlt ?? `${project.title} banner`}
-                          width={project.bannerWidth ?? 1200}
-                          height={project.bannerHeight ?? 675}
+                          width={project.bannerWidth ?? 1600}
+                          height={project.bannerHeight ?? 900}
                           className="h-auto w-full object-cover"
+                          roundedClassName="rounded-none"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
+                        <div className="flex h-48 w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
                           Banner coming soon
                         </div>
                       )}
                     </div>
                     <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2 group-hover:text-[var(--foreground)] transition-colors duration-500">
+                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2">
                       <li>{project.description}</li>
                       <li>Key focus: {project.tags[0]}</li>
                     </ul>
@@ -397,10 +372,10 @@ function CareerContent() {
                 </Link>
               ) : (
                 <div
-                  className={`group relative p-8 rounded-2xl bg-[var(--surface)] flex flex-col justify-between ${
+                  className={`group relative p-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] flex flex-col justify-between ${
                     project.type === 'prototype'
-                      ? 'border border-dashed border-[var(--border)]/70 opacity-85 cursor-default'
-                      : 'border border-transparent shadow-[var(--shadow)]'
+                      ? 'border-dashed opacity-85 cursor-default'
+                      : ''
                   }`}
                 >
                   {project.type === 'prototype' ? (
@@ -409,21 +384,18 @@ function CareerContent() {
                     </span>
                   ) : null}
                   <div>
-                    <div
-                      className={`mb-6 w-full overflow-hidden rounded-xl bg-[var(--surface)] ${
-                        project.bannerBorderClass ?? "border border-[var(--border)]"
-                      }`}
-                    >
+                    <div className="mb-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                       {project.bannerImage ? (
                         <LightboxImage
                           src={project.bannerImage}
                           alt={project.bannerAlt ?? `${project.title} banner`}
-                          width={project.bannerWidth ?? 1200}
-                          height={project.bannerHeight ?? 675}
+                          width={project.bannerWidth ?? 1600}
+                          height={project.bannerHeight ?? 900}
                           className="h-auto w-full object-cover"
+                          roundedClassName="rounded-none"
                         />
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
+                        <div className="flex h-48 w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
                           Banner coming soon
                         </div>
                       )}
@@ -463,16 +435,17 @@ function CareerContent() {
             {filteredSideProjects.map((project) => (
               <article
                 key={project.title}
-                className="group rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 shadow-[var(--shadow)] transition-all duration-300 hover:[box-shadow:var(--shadow-strong),0_0_24px_var(--accent-cyan)]"
+                className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
               >
                 <div className="mb-4 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                   {project.image ? (
                     <LightboxImage
                       src={project.image}
                       alt={project.imageAlt ?? `${project.title} banner`}
-                      width={1200}
-                      height={675}
+                      width={project.bannerWidth ?? 1600}
+                      height={project.bannerHeight ?? 900}
                       className="h-auto w-full object-cover"
+                      roundedClassName="rounded-none"
                     />
                   ) : (
                     <div className="flex h-28 items-center justify-center text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
@@ -490,14 +463,14 @@ function CareerContent() {
                   <Tooltip label="Open full case study">
                     <Link
                       href={project.href}
-                      className="mt-4 inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
+                      className="mt-4 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
                     >
                       {project.ctaLabel ?? 'View'}
                     </Link>
                   </Tooltip>
                 ) : (
                   <Tooltip label="Work in progress; case study coming soon">
-                    <span className="mt-4 inline-block rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
+                    <span className="mt-4 inline-flex items-center rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
                       {project.ctaLabel ?? 'Details soon'}
                     </span>
                   </Tooltip>
