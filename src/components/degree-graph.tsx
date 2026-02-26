@@ -324,21 +324,21 @@ const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
   "degree-ba": {
     // Mirror AA discipline for BA: deterministic fan + non-overlapping label anchors.
     subNodeOffsets: {
-      "sub-ba-1": { x: 112, y: -94 },
+      "sub-ba-1": { x: 112, y: -100 },
       "sub-ba-2": { x: 146, y: 0 },
-      "sub-ba-3": { x: 112, y: 94 },
+      "sub-ba-3": { x: 112, y: 106 },
     },
     subLabelOffsets: {
-      "sub-ba-1": { x: -92, y: 18 },
-      "sub-ba-2": { x: -96, y: 24 },
-      "sub-ba-3": { x: -88, y: -34 },
+      "sub-ba-1": { x: -86, y: 18 },
+      "sub-ba-2": { x: 126, y: -70 },
+      "sub-ba-3": { x: 78, y: -44 },
     },
-    activeLabelOffset: { x: -40, y: 84 },
+    activeLabelOffset: { x: -10, y: 38 },
     subLabelMaxDisplacement: 0,
     activeLabelMaxDisplacement: 0,
     lockSubNodePositions: true,
     lockSubLabelPositions: true,
-    focusPanBias: { x: -8, y: -12 },
+    focusPanBias: { x: 6, y: -56 },
     excludeActiveLabelInFocus: false,
   },
   "degree-bs": {
