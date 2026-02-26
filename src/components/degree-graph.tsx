@@ -214,6 +214,7 @@ type LabelLayout = {
   lines: string[];
   anchorDx: number;
   anchorDy: number;
+  maxDisplacement?: number;
 };
 
 type Box = {
@@ -239,6 +240,18 @@ type LayoutConfig = {
   labelHorizontalPadding: number;
   labelVerticalPadding: number;
   viewBoxMargin: number;
+};
+
+type ExpandedBranchPreset = {
+  subNodeOffsets?: Record<string, Vec2>;
+  subLabelOffsets?: Record<string, Vec2>;
+  activeLabelOffset?: Vec2;
+  subLabelMaxDisplacement?: number;
+  activeLabelMaxDisplacement?: number;
+  lockSubNodePositions?: boolean;
+  lockSubLabelPositions?: boolean;
+  focusPanBias?: Vec2;
+  excludeActiveLabelInFocus?: boolean;
 };
 
 type LayoutMetrics = {
@@ -267,7 +280,7 @@ const VIEWBOX_HEIGHT = 520;
 const LAYOUT_CONFIG: LayoutConfig = {
   desktopMinWidth: 1024,
   baseSubSpacing: 130,
-  spreadRadians: Math.PI / 3,
+  spreadRadians: Math.PI / 4,
   fallbackSpacingStep: 8,
   fallbackSpacingAttempts: 3,
   iterations: 8,
@@ -280,6 +293,33 @@ const LAYOUT_CONFIG: LayoutConfig = {
   labelHorizontalPadding: 12,
   labelVerticalPadding: 4,
   viewBoxMargin: 12,
+};
+
+const EDGE_CURVATURE = 0.2;
+
+const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
+  "degree-aa": {
+    // Force AA into a deterministic, balanced desktop composition.
+    subNodeOffsets: {
+      // Equal-radius fan from parent (all ~142px away): top / mid / bottom.
+      "sub-aa-1": { x: -102, y: -92 },
+      "sub-aa-2": { x: -142, y: 0 },
+      "sub-aa-3": { x: -116, y: 92 },
+    },
+    subLabelOffsets: {
+      // Labels stay left of each sphere to avoid branch-curve collisions.
+      "sub-aa-1": { x: -54, y: 30 },
+      "sub-aa-2": { x: -132, y: 30 },
+      "sub-aa-3": { x: -132, y: 30 },
+    },
+    activeLabelOffset: { x: 40, y: 80 },
+    subLabelMaxDisplacement: 0,
+    activeLabelMaxDisplacement: 0,
+    lockSubNodePositions: true,
+    lockSubLabelPositions: true,
+    focusPanBias: { x: 0, y: -52 },
+    excludeActiveLabelInFocus: false,
+  },
 };
 
 const nodeSize = (group: GraphNode["group"]) => (group === "core" ? 48 : group === "degree" ? 40 : 28);
@@ -341,7 +381,69 @@ const toCircleBox = (node: LayoutNode, padding = 0): Box => {
   };
 };
 
-const buildVisibleLayoutNodes = (activeDegree: string | null, spacing: number): LayoutNode[] => {
+const edgeControlPoint = (source: Vec2, target: Vec2): Vec2 => {
+  const midX = (source.x + target.x) / 2;
+  const midY = (source.y + target.y) / 2;
+  return {
+    x: midX + EDGE_CURVATURE * (target.y - source.y),
+    y: midY - EDGE_CURVATURE * (target.x - source.x),
+  };
+};
+
+const quadraticPoint = (p0: Vec2, p1: Vec2, p2: Vec2, t: number): Vec2 => {
+  const invT = 1 - t;
+  return {
+    x: invT * invT * p0.x + 2 * invT * t * p1.x + t * t * p2.x,
+    y: invT * invT * p0.y + 2 * invT * t * p1.y + t * t * p2.y,
+  };
+};
+
+const curveIntersectsBox = (
+  p0: Vec2,
+  p1: Vec2,
+  p2: Vec2,
+  box: Box,
+  padding = 0,
+  samples = 24
+) => {
+  const left = box.left - padding;
+  const right = box.right + padding;
+  const top = box.top - padding;
+  const bottom = box.bottom + padding;
+
+  for (let i = 0; i <= samples; i += 1) {
+    const t = i / samples;
+    const point = quadraticPoint(p0, p1, p2, t);
+    if (point.x >= left && point.x <= right && point.y >= top && point.y <= bottom) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const closestPointOnCurve = (p0: Vec2, p1: Vec2, p2: Vec2, target: Vec2, samples = 24): Vec2 => {
+  let closestPoint = p0;
+  let closestDistance = Number.POSITIVE_INFINITY;
+
+  for (let i = 0; i <= samples; i += 1) {
+    const t = i / samples;
+    const point = quadraticPoint(p0, p1, p2, t);
+    const distance = vectorLength({ x: target.x - point.x, y: target.y - point.y });
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestPoint = point;
+    }
+  }
+
+  return closestPoint;
+};
+
+const buildVisibleLayoutNodes = (
+  activeDegree: string | null,
+  spacing: number,
+  isDesktop: boolean
+): LayoutNode[] => {
   const nodes = nodesData
     .filter((node) => coreIds.has(node.id) || (activeDegree ? node.parentId === activeDegree : false))
     .map((node) => ({
@@ -367,8 +469,15 @@ const buildVisibleLayoutNodes = (activeDegree: string | null, spacing: number): 
     );
   }
 
-  subNodes.forEach((node, index) => {
-    const angle = awayAngle + (index - (subNodes.length - 1) / 2) * LAYOUT_CONFIG.spreadRadians;
+  const candidateAngles = subNodes
+    .map((_, index) => awayAngle + (index - (subNodes.length - 1) / 2) * LAYOUT_CONFIG.spreadRadians)
+    .map((angle) => ({ angle, yDirection: Math.sin(angle) }))
+    .sort((a, b) => a.yDirection - b.yDirection);
+
+  const orderedSubNodes = [...subNodes].sort((a, b) => a.anchorPosition.y - b.anchorPosition.y);
+
+  orderedSubNodes.forEach((node, index) => {
+    const angle = candidateAngles[index]?.angle ?? awayAngle;
     const nextPosition = {
       x: activeNode.position.x + Math.cos(angle) * spacing,
       y: activeNode.position.y + Math.sin(angle) * spacing,
@@ -376,6 +485,22 @@ const buildVisibleLayoutNodes = (activeDegree: string | null, spacing: number): 
     node.position = nextPosition;
     node.anchorPosition = { ...nextPosition };
   });
+
+  if (isDesktop) {
+    const preset = activeDegree ? DESKTOP_EXPANDED_PRESETS[activeDegree] : undefined;
+    if (preset?.subNodeOffsets) {
+      subNodes.forEach((node) => {
+        const offset = preset.subNodeOffsets?.[node.id];
+        if (!offset) return;
+        const nextPosition = {
+          x: activeNode.position.x + offset.x,
+          y: activeNode.position.y + offset.y,
+        };
+        node.position = nextPosition;
+        node.anchorPosition = { ...nextPosition };
+      });
+    }
+  }
 
   return nodes;
 };
@@ -387,6 +512,7 @@ const buildBaseLabelLayouts = (
 ): Map<string, LabelLayout> => {
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
   const layouts = new Map<string, LabelLayout>();
+  const activePreset = isDesktop && activeDegree ? DESKTOP_EXPANDED_PRESETS[activeDegree] : undefined;
 
   const getSubLabelLines = (label: string) => {
     const words = label.split(" ");
@@ -410,25 +536,44 @@ const buildBaseLabelLayouts = (
       : size / 2 + (node.id === "degree-ba" ? 62 : node.group === "degree" ? 52 : 44);
     const labelOffset =
       isDesktop && activeDegree === node.id && node.group === "degree"
-        ? defaultLabelOffset + 24
+        ? defaultLabelOffset + 36
         : defaultLabelOffset;
 
     let dx = 0;
     let dy = labelOffset - height + 4;
+    let maxDisplacement: number | undefined;
+
+    if (isDesktop && activeDegree === node.id && node.group === "degree" && activePreset?.activeLabelOffset) {
+      dx = activePreset.activeLabelOffset.x;
+      dy = activePreset.activeLabelOffset.y;
+      if (typeof activePreset.activeLabelMaxDisplacement === "number") {
+        maxDisplacement = activePreset.activeLabelMaxDisplacement;
+      }
+    }
 
     if (node.isExpandedSub && activeDegree) {
-      const parentNode = node.parentId ? nodeById.get(node.parentId) : undefined;
-      if (parentNode) {
-        const angle = Math.atan2(
-          node.position.y - parentNode.position.y,
-          node.position.x - parentNode.position.x
-        );
-        const projectedHalfExtent =
-          Math.abs(Math.cos(angle)) * (width / 2 + LAYOUT_CONFIG.labelHorizontalPadding) +
-          Math.abs(Math.sin(angle)) * (height / 2 + LAYOUT_CONFIG.labelVerticalPadding);
-        const radialDistance = size / 2 + 14 + projectedHalfExtent;
-        dx = Math.cos(angle) * radialDistance;
-        dy = Math.sin(angle) * radialDistance - height / 2 + 4;
+      const subLabelPreset = activePreset?.subLabelOffsets?.[node.id];
+      if (subLabelPreset) {
+        dx = subLabelPreset.x;
+        dy = subLabelPreset.y;
+        if (typeof activePreset?.subLabelMaxDisplacement === "number") {
+          maxDisplacement = activePreset.subLabelMaxDisplacement;
+        }
+      } else {
+        const parentNode = node.parentId ? nodeById.get(node.parentId) : undefined;
+        if (parentNode) {
+          const angle = Math.atan2(
+            node.position.y - parentNode.position.y,
+            node.position.x - parentNode.position.x
+          );
+          const sideShift = Math.cos(angle) * Math.min(38, width * 0.35);
+          const belowOffset = size / 2 + 16;
+          const aboveOffset = -(size / 2 + height + 12);
+          const shouldPlaceAbove = Math.sin(angle) > 0.35 || node.position.y > VIEWBOX_HEIGHT - 130;
+
+          dx = sideShift;
+          dy = shouldPlaceAbove ? aboveOffset : belowOffset;
+        }
       }
     }
 
@@ -442,6 +587,7 @@ const buildBaseLabelLayouts = (
       lines,
       anchorDx: dx,
       anchorDy: dy,
+      maxDisplacement,
     });
   });
 
@@ -574,8 +720,11 @@ const resolveLabelCircleCollisions = (
 
     let currentBox = toLabelBox(labelNode, layout);
     nodes.forEach((circleNode) => {
-      if (circleNode.id === labelNode.id) return;
-      const circleBox = toCircleBox(circleNode, LAYOUT_CONFIG.circleCollisionPadding);
+      const circlePadding =
+        circleNode.id === labelNode.id
+          ? LAYOUT_CONFIG.circleCollisionPadding + 14
+          : LAYOUT_CONFIG.circleCollisionPadding;
+      const circleBox = toCircleBox(circleNode, circlePadding);
       if (!boxesOverlap(currentBox, circleBox)) return;
 
       const overlapX = Math.min(currentBox.right - circleBox.left, circleBox.right - currentBox.left);
@@ -596,8 +745,55 @@ const resolveLabelCircleCollisions = (
   });
 };
 
+const resolveLabelEdgeCurveCollisions = (
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>,
+  activeDegree: string
+) => {
+  const activeNode = nodes.find((node) => node.id === activeDegree);
+  if (!activeNode) return;
+
+  const activeSubNodes = nodes.filter((node) => node.isExpandedSub && node.parentId === activeDegree);
+  if (activeSubNodes.length === 0) return;
+
+  const labelNodes = nodes.filter((node) => node.id === activeDegree || node.isExpandedSub);
+  activeSubNodes.forEach((subNode) => {
+    const controlPoint = edgeControlPoint(activeNode.position, subNode.position);
+
+    labelNodes.forEach((labelNode) => {
+      const layout = labelLayouts.get(labelNode.id);
+      if (!layout) return;
+
+      const labelBox = toLabelBox(labelNode, layout);
+      if (!curveIntersectsBox(activeNode.position, controlPoint, subNode.position, labelBox, 5)) {
+        return;
+      }
+
+      const center = centerOfBox(labelBox);
+      const closestPoint = closestPointOnCurve(
+        activeNode.position,
+        controlPoint,
+        subNode.position,
+        center
+      );
+      const fallback = {
+        x: -(subNode.position.y - activeNode.position.y),
+        y: subNode.position.x - activeNode.position.x,
+      };
+      const away = normalizeVector(
+        { x: center.x - closestPoint.x, y: center.y - closestPoint.y },
+        fallback
+      );
+      const push = labelNode.isExpandedSub ? 12 : 10;
+      layout.dx += away.x * push;
+      layout.dy += away.y * push;
+    });
+  });
+};
+
 const clampLabelToBounds = (node: LayoutNode, layout: LabelLayout) => {
-  const margin = LAYOUT_CONFIG.viewBoxMargin;
+  // Allow a tiny extra left range for the AA top label so it can clear its node/curve.
+  const margin = node.id === "sub-aa-1" ? 0 : LAYOUT_CONFIG.viewBoxMargin;
   const box = toLabelBox(node, layout);
 
   if (box.left < margin) {
@@ -633,6 +829,7 @@ const computeFocusBounds = (
   labelLayouts: Map<string, LabelLayout>
 ): Box | null => {
   if (!activeDegree) return null;
+  const activePreset = DESKTOP_EXPANDED_PRESETS[activeDegree];
   const focusNodes = nodes.filter((node) => node.id === activeDegree || node.isExpandedSub);
   if (focusNodes.length === 0) return null;
 
@@ -651,7 +848,9 @@ const computeFocusBounds = (
   focusNodes.forEach((node) => {
     includeBox(toCircleBox(node, 8));
     const labelLayout = labelLayouts.get(node.id);
-    if (labelLayout) includeBox(toLabelBox(node, labelLayout));
+    if (!labelLayout) return;
+    if (activePreset?.excludeActiveLabelInFocus && node.id === activeDegree) return;
+    includeBox(toLabelBox(node, labelLayout));
   });
 
   return bounds;
@@ -732,41 +931,67 @@ const getLayoutMetrics = (
 };
 
 const solveDesktopLayout = (activeDegree: string, spacing: number): SolverResult => {
-  const nodes = buildVisibleLayoutNodes(activeDegree, spacing);
+  const activePreset = DESKTOP_EXPANDED_PRESETS[activeDegree];
+  const lockSubNodePositions = !!activePreset?.lockSubNodePositions;
+  const lockSubLabelPositions = !!activePreset?.lockSubLabelPositions;
+  const nodes = buildVisibleLayoutNodes(activeDegree, spacing, true);
   const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, true);
 
   for (let iteration = 0; iteration < LAYOUT_CONFIG.iterations; iteration += 1) {
-    resolveSubNodeCircleCollisions(nodes);
-    resolveLabelLabelCollisions(nodes, labelLayouts);
-    resolveLabelCircleCollisions(nodes, labelLayouts);
+    if (!lockSubNodePositions) {
+      resolveSubNodeCircleCollisions(nodes);
+    }
+    if (!lockSubLabelPositions) {
+      resolveLabelLabelCollisions(nodes, labelLayouts);
+      resolveLabelCircleCollisions(nodes, labelLayouts);
+      resolveLabelEdgeCurveCollisions(nodes, labelLayouts, activeDegree);
+    }
 
-    nodes.forEach((node) => {
-      if (!node.isExpandedSub) return;
-      node.position.x += (node.anchorPosition.x - node.position.x) * LAYOUT_CONFIG.nodeSpring;
-      node.position.y += (node.anchorPosition.y - node.position.y) * LAYOUT_CONFIG.nodeSpring;
-      const clampedPosition = clampDisplacement(
-        node.position,
-        node.anchorPosition,
-        LAYOUT_CONFIG.subMaxDisplacement
-      );
-      node.position.x = clampedPosition.x;
-      node.position.y = clampedPosition.y;
-    });
+    if (!lockSubNodePositions) {
+      nodes.forEach((node) => {
+        if (!node.isExpandedSub) return;
+        node.position.x += (node.anchorPosition.x - node.position.x) * LAYOUT_CONFIG.nodeSpring;
+        node.position.y += (node.anchorPosition.y - node.position.y) * LAYOUT_CONFIG.nodeSpring;
+        const clampedPosition = clampDisplacement(
+          node.position,
+          node.anchorPosition,
+          LAYOUT_CONFIG.subMaxDisplacement
+        );
+        node.position.x = clampedPosition.x;
+        node.position.y = clampedPosition.y;
+      });
+    }
 
     nodes.forEach((node) => {
       const layout = labelLayouts.get(node.id);
       if (!layout) return;
 
-      layout.dx += (layout.anchorDx - layout.dx) * LAYOUT_CONFIG.labelSpring;
-      layout.dy += (layout.anchorDy - layout.dy) * LAYOUT_CONFIG.labelSpring;
+      const lockCurrentLabel =
+        node.isExpandedSub && lockSubLabelPositions && typeof layout.maxDisplacement === "number";
+      const lockActiveLabel =
+        node.id === activeDegree && typeof layout.maxDisplacement === "number" && layout.maxDisplacement === 0;
 
-      const clampedLayout = clampDisplacement(
-        { x: layout.dx, y: layout.dy },
-        { x: layout.anchorDx, y: layout.anchorDy },
-        LAYOUT_CONFIG.labelMaxDisplacement
-      );
-      layout.dx = clampedLayout.x;
-      layout.dy = clampedLayout.y;
+      if (!lockCurrentLabel && !lockActiveLabel) {
+        layout.dx += (layout.anchorDx - layout.dx) * LAYOUT_CONFIG.labelSpring;
+        layout.dy += (layout.anchorDy - layout.dy) * LAYOUT_CONFIG.labelSpring;
+      } else {
+        layout.dx = layout.anchorDx;
+        layout.dy = layout.anchorDy;
+      }
+
+      const maxDisplacement = layout.maxDisplacement ?? LAYOUT_CONFIG.labelMaxDisplacement;
+      if (maxDisplacement === 0) {
+        layout.dx = layout.anchorDx;
+        layout.dy = layout.anchorDy;
+      } else {
+        const clampedLayout = clampDisplacement(
+          { x: layout.dx, y: layout.dy },
+          { x: layout.anchorDx, y: layout.anchorDy },
+          maxDisplacement
+        );
+        layout.dx = clampedLayout.x;
+        layout.dy = clampedLayout.y;
+      }
       clampLabelToBounds(node, layout);
     });
   }
@@ -818,7 +1043,7 @@ const computeGraphLayout = (activeDegree: string | null, isDesktop: boolean): Gr
     }
   }
 
-  const nodes = buildVisibleLayoutNodes(activeDegree, LAYOUT_CONFIG.baseSubSpacing);
+  const nodes = buildVisibleLayoutNodes(activeDegree, LAYOUT_CONFIG.baseSubSpacing, isDesktop);
   const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, isDesktop);
   applySimpleLabelPush(nodes, activeDegree, labelLayouts);
 
@@ -972,14 +1197,16 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     setZoom(zoomFactor);
 
     if (isDesktop) {
+      const preset = DESKTOP_EXPANDED_PRESETS[nodeId];
+      const focusPanBias = preset?.focusPanBias ?? { x: 0, y: -14 };
       const nextLayout = computeGraphLayout(nodeId, true);
       const focusBounds = nextLayout.focusBounds;
       if (focusBounds) {
         const focusCenterX = (focusBounds.left + focusBounds.right) / 2;
         const focusCenterY = (focusBounds.top + focusBounds.bottom) / 2;
         const targetPan = {
-          x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor,
-          y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor,
+          x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
+          y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
         };
         setPan(clampPan(targetPan, zoomFactor));
       } else {
@@ -1098,7 +1325,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   : "0.5";
 
             // Add some curvature based on the distance
-            const curvature = 0.2;
+            const curvature = EDGE_CURVATURE;
             const midX = (source.position.x + target.position.x) / 2;
             const midY = (source.position.y + target.position.y) / 2;
             const cx1 = midX + curvature * (target.position.y - source.position.y);
@@ -1219,7 +1446,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   height={labelHeight + 8}
                   rx={10}
                   fill={activeDegree ? "var(--surface)" : "transparent"}
-                  fillOpacity={activeDegree ? 0.7 : 1}
+                  fillOpacity={activeDegree ? 0.9 : 1}
                   stroke="rgba(148, 163, 184, 0.45)"
                   strokeDasharray="6 6"
                 />
