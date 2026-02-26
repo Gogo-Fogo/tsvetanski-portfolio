@@ -252,6 +252,7 @@ type ExpandedBranchPreset = {
   lockSubLabelPositions?: boolean;
   focusPanBias?: Vec2;
   excludeActiveLabelInFocus?: boolean;
+  centerOnNode?: boolean;
 };
 
 type LayoutMetrics = {
@@ -319,6 +320,65 @@ const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
     lockSubLabelPositions: true,
     focusPanBias: { x: 0, y: -52 },
     excludeActiveLabelInFocus: false,
+  },
+  "degree-ba": {
+    // Mirror AA discipline for BA: deterministic fan + non-overlapping label anchors.
+    subNodeOffsets: {
+      "sub-ba-1": { x: 112, y: -94 },
+      "sub-ba-2": { x: 146, y: 0 },
+      "sub-ba-3": { x: 112, y: 94 },
+    },
+    subLabelOffsets: {
+      "sub-ba-1": { x: -92, y: 18 },
+      "sub-ba-2": { x: -96, y: 24 },
+      "sub-ba-3": { x: -88, y: -34 },
+    },
+    activeLabelOffset: { x: -40, y: 84 },
+    subLabelMaxDisplacement: 0,
+    activeLabelMaxDisplacement: 0,
+    lockSubNodePositions: true,
+    lockSubLabelPositions: true,
+    focusPanBias: { x: -8, y: -12 },
+    excludeActiveLabelInFocus: false,
+  },
+  "degree-bs": {
+    // Bottom branch: keep labels outside the center to avoid crossing active text.
+    subNodeOffsets: {
+      "sub-bs-1": { x: 78, y: 8 },
+      "sub-bs-2": { x: 0, y: 114 },
+      "sub-bs-3": { x: -78, y: 8 },
+    },
+    subLabelOffsets: {
+      "sub-bs-1": { x: 0, y: 30 },
+      "sub-bs-2": { x: 0, y: 30 },
+      "sub-bs-3": { x: 0, y: 30 },
+    },
+    activeLabelOffset: { x: -92, y: -92 },
+    subLabelMaxDisplacement: 0,
+    activeLabelMaxDisplacement: 0,
+    lockSubNodePositions: true,
+    lockSubLabelPositions: true,
+    focusPanBias: { x: 16, y: -78 },
+    excludeActiveLabelInFocus: false,
+    centerOnNode: true,
+  },
+  "core-ms": {
+    // Core branch: fan upward with labels below each node to prevent top clipping.
+    subNodeOffsets: {
+      "sub-core-1": { x: -82, y: -86 },
+      "sub-core-2": { x: 0, y: -130 },
+      "sub-core-3": { x: 82, y: -86 },
+    },
+    subLabelOffsets: {
+      "sub-core-1": { x: -24, y: -56 },
+      "sub-core-2": { x: 0, y: 24 },
+      "sub-core-3": { x: 24, y: -56 },
+    },
+    subLabelMaxDisplacement: 0,
+    lockSubNodePositions: true,
+    lockSubLabelPositions: true,
+    focusPanBias: { x: 0, y: 28 },
+    excludeActiveLabelInFocus: true,
   },
 };
 
@@ -1199,26 +1259,34 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     if (isDesktop) {
       const preset = DESKTOP_EXPANDED_PRESETS[nodeId];
       const focusPanBias = preset?.focusPanBias ?? { x: 0, y: -14 };
-      const nextLayout = computeGraphLayout(nodeId, true);
-      const focusBounds = nextLayout.focusBounds;
-      if (focusBounds) {
-        const focusCenterX = (focusBounds.left + focusBounds.right) / 2;
-        const focusCenterY = (focusBounds.top + focusBounds.bottom) / 2;
+      if (preset?.centerOnNode) {
         const targetPan = {
-          x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
-          y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
+          x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
+          y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
         };
         setPan(clampPan(targetPan, zoomFactor));
       } else {
-        setPan(
-          clampPan(
-            {
-              x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor,
-              y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor,
-            },
-            zoomFactor
-          )
-        );
+        const nextLayout = computeGraphLayout(nodeId, true);
+        const focusBounds = nextLayout.focusBounds;
+        if (focusBounds) {
+          const focusCenterX = (focusBounds.left + focusBounds.right) / 2;
+          const focusCenterY = (focusBounds.top + focusBounds.bottom) / 2;
+          const targetPan = {
+            x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
+            y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
+          };
+          setPan(clampPan(targetPan, zoomFactor));
+        } else {
+          setPan(
+            clampPan(
+              {
+                x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor,
+                y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor,
+              },
+              zoomFactor
+            )
+          );
+        }
       }
     } else {
       const awayDirection = getAwayDirection(nodeId);
@@ -1242,7 +1310,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     : `relative h-[460px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] ${className ?? ""}`;
 
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} data-testid="degree-graph">
       <div className="pointer-events-none absolute left-6 top-6 z-10 max-w-[280px] text-2xl font-bold tracking-tight text-[var(--foreground)] hidden lg:block">
         Click a circle to explore.
       </div>
@@ -1412,6 +1480,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                 <circle
                   r={size / 2}
                   fill={node.color}
+                  data-node-id={node.id}
                   style={{
                     // Lower intensity for subtle glow, higher for stronger pulse
                     // Use hex transparency to preserve the node color in the glow.
