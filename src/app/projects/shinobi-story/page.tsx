@@ -46,21 +46,6 @@ const shinobiStoryVideos: ShinobiVideo[] = [
   }
 ];
 
-const shinobiStoryImages = [
-  {
-    src: '/images/SS_MarketingCampaign.png',
-    alt: 'Shinobi Story marketing campaign'
-  },
-  {
-    src: '/images/SS_NewContentStrategy.png',
-    alt: 'Shinobi Story new content strategy'
-  },
-  {
-    src: '/images/SS_BeforeAndAfter.png',
-    alt: 'Shinobi Story before and after'
-  }
-];
-
 const formatCount = (value?: string) => {
   if (!value) {
     return null;
@@ -227,7 +212,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Content Planning</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Developed a new content strategy that mapped player progression to specific narrative beats. This ensured a steady flow of "must-play" content for both new users and the veteran community.
+                Developed a new content strategy that mapped player progression to specific narrative beats. This ensured a steady flow of &quot;must-play&quot; content for both new users and the veteran community.
               </p>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
@@ -261,7 +246,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual & Technical Polish</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Beyond content, I drove visual fidelity improvements across the game world. This "before and after" workflow became the standard for auditing community-created levels and official content alike.
+                Beyond content, I drove visual fidelity improvements across the game world. This &quot;before and after&quot; workflow became the standard for auditing community-created levels and official content alike.
               </p>
               <p className="text-sm text-[var(--muted)] leading-relaxed font-medium text-[var(--foreground)]">
                 Focus: Environmental lighting, asset density, and player pathfinding clarity.

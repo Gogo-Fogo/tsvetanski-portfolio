@@ -59,9 +59,12 @@ export default function LightboxImage({
               Close
             </button>
           </Dialog.Close>
-          <img
+          <Image
             src={src}
             alt={alt}
+            width={width ?? 1600}
+            height={height ?? 900}
+            sizes="90vw"
             className="mx-auto max-h-[84vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
           />
         </Dialog.Content>

@@ -162,7 +162,7 @@ export default function CrankyGameJamPage() {
               <ul className="space-y-4 text-sm text-[var(--muted)]">
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Modeling & Rigging:</span>
-                  Built in Blender with a focus on flexible rigging to allow for the exaggerated, "floppy" movements inspired by Party Animals.
+                  Built in Blender with a focus on flexible rigging to allow for the exaggerated, &quot;floppy&quot; movements inspired by Party Animals.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Texture Workflow:</span>

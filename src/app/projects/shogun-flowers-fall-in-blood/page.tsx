@@ -66,7 +66,7 @@ export default function ShogunFlowersFallInBloodPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Systems Research</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                I analyzed Naruto Blazing at a systems level to understand its "movement circle" and risk-reward mechanics.
+                I analyzed Naruto Blazing at a systems level to understand its &quot;movement circle&quot; and risk-reward mechanics.
               </p>
               <ul className="space-y-2 text-sm text-[var(--muted)] mb-6">
                 <li>- Squad synergy & team attack patterns</li>

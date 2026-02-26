@@ -91,7 +91,7 @@ export default function CrankySquirrelAnnihilatorPage() {
               <ul className="space-y-4 text-sm text-[var(--muted)]">
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Analog Paw Running:</span>
-                  Players alternate L1 + R1 (or keyboard keys) to simulate physical front paw motion, adding a rhythmic, tactile feel to the dog's movement.
+                  Players alternate L1 + R1 (or keyboard keys) to simulate physical front paw motion, adding a rhythmic, tactile feel to the dog&apos;s movement.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Reactive Squirrel AI:</span>
@@ -99,7 +99,7 @@ export default function CrankySquirrelAnnihilatorPage() {
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Physics-Driven Humor:</span>
-                  The game leans into "clunky" physics to emphasize the comedic nature of a pug's movement, inspired by Fall Guys.
+                  The game leans into &quot;clunky&quot; physics to emphasize the comedic nature of a pug&apos;s movement, inspired by Fall Guys.
                 </li>
               </ul>
             </div>

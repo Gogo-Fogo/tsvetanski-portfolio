@@ -95,7 +95,7 @@ export default function TotallyBuggedOutPage() {
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Advanced Roach AI:</span>
-                  Enemies feature multi-state behaviors including wall-climbing, player-chasing, and "panic-fleeing" when nearby roaches are destroyed.
+                  Enemies feature multi-state behaviors including wall-climbing, player-chasing, and &quot;panic-fleeing&quot; when nearby roaches are destroyed.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Survival Loop:</span>

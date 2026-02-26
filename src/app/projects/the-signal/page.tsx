@@ -151,7 +151,7 @@ export default function TheSignalPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Systems Balancing</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Balancing evolving enemy behaviors against player "builds" was the core challenge of the implementation phase.
+                Balancing evolving enemy behaviors against player &quot;builds&quot; was the core challenge of the implementation phase.
               </p>
               <a
                 href="https://docs.google.com/spreadsheets/d/1lhhB8pDsiwd-MkOLUejhbkQfkNkfXh6KfUYBQohW_Mk/edit?gid=0#gid=0"

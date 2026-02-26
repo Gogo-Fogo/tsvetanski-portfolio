@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import GraphTooltip from "./graph-tooltip";
 
 type GraphNode = {
@@ -197,6 +197,638 @@ const edgesData: GraphLink[] = [
 
 const coreIds = new Set(["core-ms", "degree-aa", "degree-ba", "degree-bs"]);
 
+type Vec2 = { x: number; y: number };
+
+type LayoutNode = GraphNode & {
+  anchorPosition: Vec2;
+  isExpandedSub: boolean;
+};
+
+type LabelLayout = {
+  dx: number;
+  dy: number;
+  width: number;
+  height: number;
+  lineHeight: number;
+  fontSize: number;
+  lines: string[];
+  anchorDx: number;
+  anchorDy: number;
+};
+
+type Box = {
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
+type LayoutConfig = {
+  desktopMinWidth: number;
+  baseSubSpacing: number;
+  spreadRadians: number;
+  fallbackSpacingStep: number;
+  fallbackSpacingAttempts: number;
+  iterations: number;
+  labelCollisionPadding: number;
+  circleCollisionPadding: number;
+  nodeSpring: number;
+  labelSpring: number;
+  subMaxDisplacement: number;
+  labelMaxDisplacement: number;
+  labelHorizontalPadding: number;
+  labelVerticalPadding: number;
+  viewBoxMargin: number;
+};
+
+type LayoutMetrics = {
+  labelOverlaps: number;
+  circleOverlaps: number;
+  outOfBounds: number;
+  displacement: number;
+  score: number;
+};
+
+type GraphLayoutResult = {
+  nodes: LayoutNode[];
+  nodeById: Map<string, LayoutNode>;
+  labelLayouts: Map<string, LabelLayout>;
+  labelBoxes: Map<string, Box>;
+  focusBounds: Box | null;
+};
+
+type SolverResult = GraphLayoutResult & {
+  metrics: LayoutMetrics;
+};
+
+const VIEWBOX_WIDTH = 700;
+const VIEWBOX_HEIGHT = 520;
+
+const LAYOUT_CONFIG: LayoutConfig = {
+  desktopMinWidth: 1024,
+  baseSubSpacing: 130,
+  spreadRadians: Math.PI / 3,
+  fallbackSpacingStep: 8,
+  fallbackSpacingAttempts: 3,
+  iterations: 8,
+  labelCollisionPadding: 6,
+  circleCollisionPadding: 8,
+  nodeSpring: 0.18,
+  labelSpring: 0.16,
+  subMaxDisplacement: 90,
+  labelMaxDisplacement: 120,
+  labelHorizontalPadding: 12,
+  labelVerticalPadding: 4,
+  viewBoxMargin: 12,
+};
+
+const nodeSize = (group: GraphNode["group"]) => (group === "core" ? 48 : group === "degree" ? 40 : 28);
+
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const clampPan = (nextPan: Vec2, zoomLevel: number): Vec2 => {
+  const bounds = 200 * zoomLevel;
+  return {
+    x: clamp(nextPan.x, -bounds, bounds),
+    y: clamp(nextPan.y, -bounds, bounds),
+  };
+};
+
+const vectorLength = (vector: Vec2) => Math.hypot(vector.x, vector.y);
+
+const normalizeVector = (vector: Vec2, fallback: Vec2 = { x: 0, y: -1 }): Vec2 => {
+  const magnitude = vectorLength(vector);
+  if (magnitude < 0.0001) return fallback;
+  return { x: vector.x / magnitude, y: vector.y / magnitude };
+};
+
+const clampDisplacement = (value: Vec2, anchor: Vec2, maxDistance: number): Vec2 => {
+  const delta = { x: value.x - anchor.x, y: value.y - anchor.y };
+  const distance = vectorLength(delta);
+  if (distance <= maxDistance) return value;
+  const direction = normalizeVector(delta, { x: 1, y: 0 });
+  return {
+    x: anchor.x + direction.x * maxDistance,
+    y: anchor.y + direction.y * maxDistance,
+  };
+};
+
+const centerOfBox = (box: Box): Vec2 => ({
+  x: (box.left + box.right) / 2,
+  y: (box.top + box.bottom) / 2,
+});
+
+const boxesOverlap = (a: Box, b: Box, padding = 0) =>
+  a.left - padding < b.right + padding &&
+  a.right + padding > b.left - padding &&
+  a.top - padding < b.bottom + padding &&
+  a.bottom + padding > b.top - padding;
+
+const toLabelBox = (node: LayoutNode, layout: LabelLayout): Box => ({
+  left: node.position.x + layout.dx - layout.width / 2 - LAYOUT_CONFIG.labelHorizontalPadding,
+  right: node.position.x + layout.dx + layout.width / 2 + LAYOUT_CONFIG.labelHorizontalPadding,
+  top: node.position.y + layout.dy - LAYOUT_CONFIG.labelVerticalPadding,
+  bottom: node.position.y + layout.dy + layout.height + LAYOUT_CONFIG.labelVerticalPadding,
+});
+
+const toCircleBox = (node: LayoutNode, padding = 0): Box => {
+  const radius = nodeSize(node.group) / 2 + 4 + padding;
+  return {
+    left: node.position.x - radius,
+    right: node.position.x + radius,
+    top: node.position.y - radius,
+    bottom: node.position.y + radius,
+  };
+};
+
+const buildVisibleLayoutNodes = (activeDegree: string | null, spacing: number): LayoutNode[] => {
+  const nodes = nodesData
+    .filter((node) => coreIds.has(node.id) || (activeDegree ? node.parentId === activeDegree : false))
+    .map((node) => ({
+      ...node,
+      position: { ...node.position },
+      anchorPosition: { ...node.position },
+      isExpandedSub: activeDegree ? node.parentId === activeDegree : false,
+    }));
+
+  if (!activeDegree) return nodes;
+
+  const activeNode = nodes.find((node) => node.id === activeDegree);
+  if (!activeNode) return nodes;
+
+  const subNodes = nodes.filter((node) => node.isExpandedSub);
+  const coreNode = nodesData.find((node) => node.id === "core-ms");
+  let awayAngle = -Math.PI / 2;
+
+  if (activeDegree !== "core-ms" && coreNode) {
+    awayAngle = Math.atan2(
+      activeNode.position.y - coreNode.position.y,
+      activeNode.position.x - coreNode.position.x
+    );
+  }
+
+  subNodes.forEach((node, index) => {
+    const angle = awayAngle + (index - (subNodes.length - 1) / 2) * LAYOUT_CONFIG.spreadRadians;
+    const nextPosition = {
+      x: activeNode.position.x + Math.cos(angle) * spacing,
+      y: activeNode.position.y + Math.sin(angle) * spacing,
+    };
+    node.position = nextPosition;
+    node.anchorPosition = { ...nextPosition };
+  });
+
+  return nodes;
+};
+
+const buildBaseLabelLayouts = (
+  nodes: LayoutNode[],
+  activeDegree: string | null,
+  isDesktop: boolean
+): Map<string, LabelLayout> => {
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const layouts = new Map<string, LabelLayout>();
+
+  const getSubLabelLines = (label: string) => {
+    const words = label.split(" ");
+    if (words.length < 2 || label.length <= 14) return [label];
+    const splitIndex = Math.ceil(words.length / 2);
+    return [words.slice(0, splitIndex).join(" "), words.slice(splitIndex).join(" ")];
+  };
+
+  nodes.forEach((node) => {
+    const size = nodeSize(node.group);
+    const lines =
+      node.labelLines ??
+      (node.group === "sub" ? getSubLabelLines(node.label) : [node.label]);
+    const isCore = node.id === "core-ms";
+    const fontSize = isCore ? 12 : node.group === "degree" ? 12 : 9;
+    const lineHeight = isCore ? 14 : node.group === "degree" ? 14 : 12;
+    const width = Math.max(...lines.map((line) => line.length)) * (fontSize * 0.8);
+    const height = lines.length * lineHeight + 10;
+    const defaultLabelOffset = isCore
+      ? -(size / 2 + lineHeight * (lines.length - 1))
+      : size / 2 + (node.id === "degree-ba" ? 62 : node.group === "degree" ? 52 : 44);
+    const labelOffset =
+      isDesktop && activeDegree === node.id && node.group === "degree"
+        ? defaultLabelOffset + 24
+        : defaultLabelOffset;
+
+    let dx = 0;
+    let dy = labelOffset - height + 4;
+
+    if (node.isExpandedSub && activeDegree) {
+      const parentNode = node.parentId ? nodeById.get(node.parentId) : undefined;
+      if (parentNode) {
+        const angle = Math.atan2(
+          node.position.y - parentNode.position.y,
+          node.position.x - parentNode.position.x
+        );
+        const projectedHalfExtent =
+          Math.abs(Math.cos(angle)) * (width / 2 + LAYOUT_CONFIG.labelHorizontalPadding) +
+          Math.abs(Math.sin(angle)) * (height / 2 + LAYOUT_CONFIG.labelVerticalPadding);
+        const radialDistance = size / 2 + 14 + projectedHalfExtent;
+        dx = Math.cos(angle) * radialDistance;
+        dy = Math.sin(angle) * radialDistance - height / 2 + 4;
+      }
+    }
+
+    layouts.set(node.id, {
+      dx,
+      dy,
+      width,
+      height,
+      lineHeight,
+      fontSize,
+      lines,
+      anchorDx: dx,
+      anchorDy: dy,
+    });
+  });
+
+  return layouts;
+};
+
+const applySimpleLabelPush = (
+  nodes: LayoutNode[],
+  activeDegree: string | null,
+  labelLayouts: Map<string, LabelLayout>
+) => {
+  if (!activeDegree) return;
+  const activeNode = nodes.find((node) => node.id === activeDegree);
+  if (!activeNode) return;
+
+  const activeSubBoxes = nodes
+    .filter((node) => node.isExpandedSub)
+    .map((node) => toLabelBox(node, labelLayouts.get(node.id)!));
+
+  nodes.forEach((node) => {
+    if (node.isExpandedSub || node.id === activeDegree) return;
+    const layout = labelLayouts.get(node.id);
+    if (!layout) return;
+
+    let attempts = 0;
+    while (attempts < 6) {
+      const labelBox = toLabelBox(node, layout);
+      const collides = activeSubBoxes.some((subBox) => boxesOverlap(labelBox, subBox));
+      if (!collides) break;
+
+      const direction = normalizeVector(
+        {
+          x: node.position.x - activeNode.position.x,
+          y: node.position.y - activeNode.position.y,
+        },
+        { x: 0, y: -1 }
+      );
+      layout.dx += direction.x * 18;
+      layout.dy += direction.y * 18;
+      attempts += 1;
+    }
+  });
+};
+
+const resolveSubNodeCircleCollisions = (nodes: LayoutNode[]) => {
+  for (let i = 0; i < nodes.length; i += 1) {
+    for (let j = i + 1; j < nodes.length; j += 1) {
+      const nodeA = nodes[i];
+      const nodeB = nodes[j];
+      if (!nodeA.isExpandedSub && !nodeB.isExpandedSub) continue;
+
+      const radiusA = nodeSize(nodeA.group) / 2 + 4 + LAYOUT_CONFIG.circleCollisionPadding;
+      const radiusB = nodeSize(nodeB.group) / 2 + 4 + LAYOUT_CONFIG.circleCollisionPadding;
+      const minDistance = radiusA + radiusB;
+
+      const delta = {
+        x: nodeA.position.x - nodeB.position.x,
+        y: nodeA.position.y - nodeB.position.y,
+      };
+      const distance = vectorLength(delta);
+      if (distance >= minDistance) continue;
+
+      const direction = normalizeVector(delta, { x: 1, y: 0 });
+      const pushDistance = minDistance - distance + 0.5;
+
+      if (nodeA.isExpandedSub && nodeB.isExpandedSub) {
+        nodeA.position.x += direction.x * (pushDistance / 2);
+        nodeA.position.y += direction.y * (pushDistance / 2);
+        nodeB.position.x -= direction.x * (pushDistance / 2);
+        nodeB.position.y -= direction.y * (pushDistance / 2);
+        continue;
+      }
+
+      if (nodeA.isExpandedSub) {
+        nodeA.position.x += direction.x * pushDistance;
+        nodeA.position.y += direction.y * pushDistance;
+      } else if (nodeB.isExpandedSub) {
+        nodeB.position.x -= direction.x * pushDistance;
+        nodeB.position.y -= direction.y * pushDistance;
+      }
+    }
+  }
+};
+
+const resolveLabelLabelCollisions = (
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>
+) => {
+  for (let i = 0; i < nodes.length; i += 1) {
+    const nodeA = nodes[i];
+    const layoutA = labelLayouts.get(nodeA.id);
+    if (!layoutA) continue;
+
+    for (let j = i + 1; j < nodes.length; j += 1) {
+      const nodeB = nodes[j];
+      const layoutB = labelLayouts.get(nodeB.id);
+      if (!layoutB) continue;
+
+      const boxA = toLabelBox(nodeA, layoutA);
+      const boxB = toLabelBox(nodeB, layoutB);
+      if (!boxesOverlap(boxA, boxB, LAYOUT_CONFIG.labelCollisionPadding)) continue;
+
+      const overlapX = Math.min(boxA.right - boxB.left, boxB.right - boxA.left);
+      const overlapY = Math.min(boxA.bottom - boxB.top, boxB.bottom - boxA.top);
+      const centerA = centerOfBox(boxA);
+      const centerB = centerOfBox(boxB);
+
+      if (overlapX < overlapY) {
+        const direction = centerA.x <= centerB.x ? -1 : 1;
+        const push = overlapX / 2 + LAYOUT_CONFIG.labelCollisionPadding;
+        layoutA.dx += direction * push;
+        layoutB.dx -= direction * push;
+      } else {
+        const direction = centerA.y <= centerB.y ? -1 : 1;
+        const push = overlapY / 2 + LAYOUT_CONFIG.labelCollisionPadding;
+        layoutA.dy += direction * push;
+        layoutB.dy -= direction * push;
+      }
+    }
+  }
+};
+
+const resolveLabelCircleCollisions = (
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>
+) => {
+  nodes.forEach((labelNode) => {
+    const layout = labelLayouts.get(labelNode.id);
+    if (!layout) return;
+
+    let currentBox = toLabelBox(labelNode, layout);
+    nodes.forEach((circleNode) => {
+      if (circleNode.id === labelNode.id) return;
+      const circleBox = toCircleBox(circleNode, LAYOUT_CONFIG.circleCollisionPadding);
+      if (!boxesOverlap(currentBox, circleBox)) return;
+
+      const overlapX = Math.min(currentBox.right - circleBox.left, circleBox.right - currentBox.left);
+      const overlapY = Math.min(currentBox.bottom - circleBox.top, circleBox.bottom - currentBox.top);
+      const labelCenter = centerOfBox(currentBox);
+      const direction = normalizeVector(
+        {
+          x: labelCenter.x - circleNode.position.x,
+          y: labelCenter.y - circleNode.position.y,
+        },
+        { x: 0, y: -1 }
+      );
+      const push = Math.min(overlapX, overlapY) + 2;
+      layout.dx += direction.x * push;
+      layout.dy += direction.y * push;
+      currentBox = toLabelBox(labelNode, layout);
+    });
+  });
+};
+
+const clampLabelToBounds = (node: LayoutNode, layout: LabelLayout) => {
+  const margin = LAYOUT_CONFIG.viewBoxMargin;
+  const box = toLabelBox(node, layout);
+
+  if (box.left < margin) {
+    layout.dx += margin - box.left;
+  }
+  if (box.right > VIEWBOX_WIDTH - margin) {
+    layout.dx -= box.right - (VIEWBOX_WIDTH - margin);
+  }
+  if (box.top < margin) {
+    layout.dy += margin - box.top;
+  }
+  if (box.bottom > VIEWBOX_HEIGHT - margin) {
+    layout.dy -= box.bottom - (VIEWBOX_HEIGHT - margin);
+  }
+};
+
+const computeLabelBoxes = (
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>
+): Map<string, Box> => {
+  const boxes = new Map<string, Box>();
+  nodes.forEach((node) => {
+    const layout = labelLayouts.get(node.id);
+    if (!layout) return;
+    boxes.set(node.id, toLabelBox(node, layout));
+  });
+  return boxes;
+};
+
+const computeFocusBounds = (
+  activeDegree: string | null,
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>
+): Box | null => {
+  if (!activeDegree) return null;
+  const focusNodes = nodes.filter((node) => node.id === activeDegree || node.isExpandedSub);
+  if (focusNodes.length === 0) return null;
+
+  let bounds: Box | null = null;
+  const includeBox = (box: Box) => {
+    if (!bounds) {
+      bounds = { ...box };
+      return;
+    }
+    bounds.left = Math.min(bounds.left, box.left);
+    bounds.right = Math.max(bounds.right, box.right);
+    bounds.top = Math.min(bounds.top, box.top);
+    bounds.bottom = Math.max(bounds.bottom, box.bottom);
+  };
+
+  focusNodes.forEach((node) => {
+    includeBox(toCircleBox(node, 8));
+    const labelLayout = labelLayouts.get(node.id);
+    if (labelLayout) includeBox(toLabelBox(node, labelLayout));
+  });
+
+  return bounds;
+};
+
+const getLayoutMetrics = (
+  nodes: LayoutNode[],
+  labelLayouts: Map<string, LabelLayout>
+): LayoutMetrics => {
+  const labelBoxes = computeLabelBoxes(nodes, labelLayouts);
+  const boxes = nodes.map((node) => ({ id: node.id, box: labelBoxes.get(node.id)! }));
+
+  let labelOverlaps = 0;
+  for (let i = 0; i < boxes.length; i += 1) {
+    for (let j = i + 1; j < boxes.length; j += 1) {
+      if (boxesOverlap(boxes[i].box, boxes[j].box, LAYOUT_CONFIG.labelCollisionPadding)) {
+        labelOverlaps += 1;
+      }
+    }
+  }
+
+  let circleOverlaps = 0;
+  for (let i = 0; i < nodes.length; i += 1) {
+    for (let j = i + 1; j < nodes.length; j += 1) {
+      const nodeA = nodes[i];
+      const nodeB = nodes[j];
+      if (!nodeA.isExpandedSub && !nodeB.isExpandedSub) continue;
+
+      const radiusA = nodeSize(nodeA.group) / 2 + 4 + LAYOUT_CONFIG.circleCollisionPadding;
+      const radiusB = nodeSize(nodeB.group) / 2 + 4 + LAYOUT_CONFIG.circleCollisionPadding;
+      const minDistance = radiusA + radiusB;
+      const distance = vectorLength({
+        x: nodeA.position.x - nodeB.position.x,
+        y: nodeA.position.y - nodeB.position.y,
+      });
+
+      if (distance < minDistance) circleOverlaps += 1;
+    }
+  }
+
+  let outOfBounds = 0;
+  nodes.forEach((node) => {
+    const box = labelBoxes.get(node.id);
+    if (!box) return;
+    const margin = LAYOUT_CONFIG.viewBoxMargin;
+    if (
+      box.left < margin ||
+      box.right > VIEWBOX_WIDTH - margin ||
+      box.top < margin ||
+      box.bottom > VIEWBOX_HEIGHT - margin
+    ) {
+      outOfBounds += 1;
+    }
+  });
+
+  let displacement = 0;
+  nodes.forEach((node) => {
+    if (!node.isExpandedSub) return;
+    displacement += vectorLength({
+      x: node.position.x - node.anchorPosition.x,
+      y: node.position.y - node.anchorPosition.y,
+    });
+  });
+  labelLayouts.forEach((layout) => {
+    displacement += vectorLength({
+      x: layout.dx - layout.anchorDx,
+      y: layout.dy - layout.anchorDy,
+    });
+  });
+
+  return {
+    labelOverlaps,
+    circleOverlaps,
+    outOfBounds,
+    displacement,
+    score: labelOverlaps * 1000 + circleOverlaps * 850 + outOfBounds * 650 + displacement,
+  };
+};
+
+const solveDesktopLayout = (activeDegree: string, spacing: number): SolverResult => {
+  const nodes = buildVisibleLayoutNodes(activeDegree, spacing);
+  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, true);
+
+  for (let iteration = 0; iteration < LAYOUT_CONFIG.iterations; iteration += 1) {
+    resolveSubNodeCircleCollisions(nodes);
+    resolveLabelLabelCollisions(nodes, labelLayouts);
+    resolveLabelCircleCollisions(nodes, labelLayouts);
+
+    nodes.forEach((node) => {
+      if (!node.isExpandedSub) return;
+      node.position.x += (node.anchorPosition.x - node.position.x) * LAYOUT_CONFIG.nodeSpring;
+      node.position.y += (node.anchorPosition.y - node.position.y) * LAYOUT_CONFIG.nodeSpring;
+      const clampedPosition = clampDisplacement(
+        node.position,
+        node.anchorPosition,
+        LAYOUT_CONFIG.subMaxDisplacement
+      );
+      node.position.x = clampedPosition.x;
+      node.position.y = clampedPosition.y;
+    });
+
+    nodes.forEach((node) => {
+      const layout = labelLayouts.get(node.id);
+      if (!layout) return;
+
+      layout.dx += (layout.anchorDx - layout.dx) * LAYOUT_CONFIG.labelSpring;
+      layout.dy += (layout.anchorDy - layout.dy) * LAYOUT_CONFIG.labelSpring;
+
+      const clampedLayout = clampDisplacement(
+        { x: layout.dx, y: layout.dy },
+        { x: layout.anchorDx, y: layout.anchorDy },
+        LAYOUT_CONFIG.labelMaxDisplacement
+      );
+      layout.dx = clampedLayout.x;
+      layout.dy = clampedLayout.y;
+      clampLabelToBounds(node, layout);
+    });
+  }
+
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const labelBoxes = computeLabelBoxes(nodes, labelLayouts);
+  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts);
+  const metrics = getLayoutMetrics(nodes, labelLayouts);
+
+  return {
+    nodes,
+    nodeById,
+    labelLayouts,
+    labelBoxes,
+    focusBounds,
+    metrics,
+  };
+};
+
+const computeGraphLayout = (activeDegree: string | null, isDesktop: boolean): GraphLayoutResult => {
+  if (activeDegree && isDesktop) {
+    let bestLayout: SolverResult | null = null;
+
+    for (let attempt = 0; attempt <= LAYOUT_CONFIG.fallbackSpacingAttempts; attempt += 1) {
+      const spacing = LAYOUT_CONFIG.baseSubSpacing + attempt * LAYOUT_CONFIG.fallbackSpacingStep;
+      const candidate = solveDesktopLayout(activeDegree, spacing);
+      if (!bestLayout || candidate.metrics.score < bestLayout.metrics.score) {
+        bestLayout = candidate;
+      }
+
+      if (
+        candidate.metrics.labelOverlaps === 0 &&
+        candidate.metrics.circleOverlaps === 0 &&
+        candidate.metrics.outOfBounds === 0
+      ) {
+        bestLayout = candidate;
+        break;
+      }
+    }
+
+    if (bestLayout) {
+      return {
+        nodes: bestLayout.nodes,
+        nodeById: bestLayout.nodeById,
+        labelLayouts: bestLayout.labelLayouts,
+        labelBoxes: bestLayout.labelBoxes,
+        focusBounds: bestLayout.focusBounds,
+      };
+    }
+  }
+
+  const nodes = buildVisibleLayoutNodes(activeDegree, LAYOUT_CONFIG.baseSubSpacing);
+  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, isDesktop);
+  applySimpleLabelPush(nodes, activeDegree, labelLayouts);
+
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const labelBoxes = computeLabelBoxes(nodes, labelLayouts);
+  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts);
+
+  return { nodes, nodeById, labelLayouts, labelBoxes, focusBounds };
+};
+
 type DegreeGraphProps = {
   variant?: "card" | "background";
   className?: string;
@@ -210,6 +842,27 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(`(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`).matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia(`(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsDesktop(event.matches);
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     setIsDragging(true);
@@ -218,10 +871,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging) return;
-    const bounds = 200 * zoom;
-    const newX = Math.min(Math.max(e.clientX - dragStart.x, -bounds), bounds);
-    const newY = Math.min(Math.max(e.clientY - dragStart.y, -bounds), bounds);
-    setPan({ x: newX, y: newY });
+    setPan(clampPan({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y }, zoom));
   }, [isDragging, dragStart, zoom]);
 
   const handleMouseUp = useCallback(() => {
@@ -229,13 +879,23 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   }, []);
 
   const handleZoom = (delta: number) => {
-    setZoom(prev => Math.min(Math.max(prev + delta * 0.1, 0.5), 2));
+    setZoom((prev) => {
+      const nextZoom = clamp(prev + delta * 0.1, 0.5, 2);
+      setPan((currentPan) => clampPan(currentPan, nextZoom));
+      return nextZoom;
+    });
   };
 
   const handleReset = () => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
   };
+
+  const closeActiveBranch = useCallback(() => {
+    setActiveDegree(null);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, []);
 
   const handleNodeHover = useCallback((node: GraphNode | null, event?: React.MouseEvent) => {
     setHoveredNode(node);
@@ -271,65 +931,85 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     }
   }, []);
 
-  const visibleNodes = useMemo(() => {
-    const nodes = nodesData.filter((node) => {
-      if (coreIds.has(node.id)) return true;
-      return activeDegree ? node.parentId === activeDegree : false;
-    });
-
-    // Adjust positions when a node is expanded
-    if (activeDegree) {
-      const activeNode = nodes.find(node => node.id === activeDegree);
-      if (activeNode) {
-        const subNodes = nodes.filter(node => node.parentId === activeDegree);
-        const spacing = 120; // Base spacing between sub-nodes
-        const angleStep = (2 * Math.PI) / subNodes.length; // Distribute evenly in a circle
-        
-        subNodes.forEach((node, index) => {
-          // Start from top (-PI/2) and distribute evenly around the circle
-          const angle = -Math.PI / 2 + index * angleStep;
-          node.position = {
-            x: activeNode.position.x + Math.cos(angle) * spacing,
-            y: activeNode.position.y + Math.sin(angle) * spacing
-          };
-        });
-      }
-    }
-
-    return nodes;
-  }, [activeDegree]);
+  const graphLayout = useMemo(
+    () => computeGraphLayout(activeDegree, isDesktop),
+    [activeDegree, isDesktop]
+  );
+  const visibleNodes = graphLayout.nodes;
+  const visibleNodeById = graphLayout.nodeById;
+  const labelLayouts = graphLayout.labelLayouts;
 
   const visibleEdges = useMemo(() => {
     const visibleIds = new Set(visibleNodes.map((node) => node.id));
     return edgesData.filter((edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target));
   }, [visibleNodes]);
 
+  const getAwayDirection = useCallback((nodeId: string): Vec2 => {
+    const node = nodesData.find((entry) => entry.id === nodeId);
+    const coreNode = nodesData.find((entry) => entry.id === "core-ms");
+    if (!node || !coreNode || nodeId === "core-ms") return { x: 0, y: -1 };
+    return normalizeVector(
+      {
+        x: node.position.x - coreNode.position.x,
+        y: node.position.y - coreNode.position.y,
+      },
+      { x: 0, y: -1 }
+    );
+  }, []);
+
   const handleNodeClick = (nodeId: string, group: GraphNode["group"]) => {
-    if (group === "degree" || group === "core") {
-      setActiveDegree((prev) => {
-        if (prev === nodeId) {
-          // Zooming out when closing a node
-          setZoom(1);
-          setPan({ x: 0, y: 0 });
-          return null;
-        } else {
-          // Zooming in when opening a node
-          const node = nodesData.find(n => n.id === nodeId);
-          if (node) {
-            setZoom(1.5);
-            // Center on the clicked node
-            setPan({
-              x: -(node.position.x - 350) * 1.5,
-              y: -(node.position.y - 260) * 1.5
-            });
-          }
-          return nodeId;
-        }
-      });
+    if (group !== "degree" && group !== "core") return;
+
+    if (activeDegree === nodeId) {
+      closeActiveBranch();
+      return;
     }
+
+    const node = nodesData.find((currentNode) => currentNode.id === nodeId);
+    if (!node) return;
+
+    const zoomFactor = 1.4;
+    setZoom(zoomFactor);
+
+    if (isDesktop) {
+      const nextLayout = computeGraphLayout(nodeId, true);
+      const focusBounds = nextLayout.focusBounds;
+      if (focusBounds) {
+        const focusCenterX = (focusBounds.left + focusBounds.right) / 2;
+        const focusCenterY = (focusBounds.top + focusBounds.bottom) / 2;
+        const targetPan = {
+          x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor,
+          y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor,
+        };
+        setPan(clampPan(targetPan, zoomFactor));
+      } else {
+        setPan(
+          clampPan(
+            {
+              x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor,
+              y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor,
+            },
+            zoomFactor
+          )
+        );
+      }
+    } else {
+      const awayDirection = getAwayDirection(nodeId);
+      const focusPadding = 70;
+      setPan(
+        clampPan(
+          {
+            x: -(node.position.x - 350) * zoomFactor - awayDirection.x * focusPadding,
+            y: -(node.position.y - 260) * zoomFactor - awayDirection.y * focusPadding,
+          },
+          zoomFactor
+        )
+      );
+    }
+
+    setActiveDegree(nodeId);
   };
 
-  const nodeSize = (group: GraphNode["group"]) => (group === "core" ? 48 : group === "degree" ? 40 : 28);
   const containerClasses = variant === "background" 
     ? `absolute inset-0 ${className ?? ""}`
     : `relative h-[460px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] ${className ?? ""}`;
@@ -342,7 +1022,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       <div className="absolute right-4 top-4 z-20 flex gap-2">
         {activeDegree && (
           <button
-            onClick={() => setActiveDegree(null)}
+            onClick={closeActiveBranch}
             className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -378,7 +1058,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
         </button>
       </div>
       <svg 
-        className="absolute inset-0 transition-transform duration-300 ease-out cursor-grab active:cursor-grabbing"
+        className="absolute inset-0 transition-transform duration-[350ms] ease-out cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -386,7 +1066,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
         style={{
           transform: `translate(${pan.x}px, ${pan.y + 96}px) scale(${zoom * 1.3})`,
         }}
-        viewBox="0 0 700 520" 
+        viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
         preserveAspectRatio="xMidYMid meet"
       >
         <g stroke="rgba(148, 163, 184, 0.75)" strokeWidth={2} fill="none">
@@ -398,16 +1078,25 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
             </linearGradient>
           </defs>
           {visibleEdges.map((edge) => {
-            const source = nodesData.find((node) => node.id === edge.source);
-            const target = nodesData.find((node) => node.id === edge.target);
+            const source = visibleNodeById.get(edge.source);
+            const target = visibleNodeById.get(edge.target);
             if (!source || !target) return null;
+            const isActiveBranchEdge = !!(
+              activeDegree &&
+              (edge.source === activeDegree ||
+                edge.target === activeDegree ||
+                source.isExpandedSub ||
+                target.isExpandedSub)
+            );
+            const edgeOpacity =
+              activeDegree && isDesktop
+                ? isActiveBranchEdge
+                  ? "0.9"
+                  : "0.12"
+                : edge.source === activeDegree || edge.target === activeDegree
+                  ? "1"
+                  : "0.5";
 
-            // Calculate control points for the curve
-            const dx = target.position.x - source.position.x;
-            const dy = target.position.y - source.position.y;
-            const controlX = source.position.x + dx / 2;
-            const controlY = source.position.y + dy / 2;
-            
             // Add some curvature based on the distance
             const curvature = 0.2;
             const midX = (source.position.x + target.position.x) / 2;
@@ -421,39 +1110,64 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                 d={`M ${source.position.x} ${source.position.y} Q ${cx1} ${cy1} ${target.position.x} ${target.position.y}`}
                 stroke="url(#edge-gradient)"
                 strokeDasharray={edge.dashed ? "6 6" : undefined}
-                className="transition-all duration-500 ease-in-out"
+                className="transition-all duration-[350ms] ease-in-out"
                 style={{
-                  opacity: edge.source === activeDegree || edge.target === activeDegree ? "1" : "0.5",
+                  opacity: edgeOpacity,
                 }}
               >
-                <animate
-                  attributeName="stroke-dashoffset"
-                  from="0"
-                  to="12"
-                  dur="1s"
-                  repeatCount="indefinite"
-                />
+                {(!activeDegree || isActiveBranchEdge) && (
+                  <animate
+                    attributeName="stroke-dashoffset"
+                    from="0"
+                    to="12"
+                    dur="1s"
+                    repeatCount="indefinite"
+                  />
+                )}
               </path>
             );
           })}
         </g>
         {visibleNodes.map((node) => {
           const size = nodeSize(node.group);
-          const labelLines = node.labelLines ?? [node.label];
-          const isCore = node.id === "core-ms";
-          const fontSize = isCore ? 12 : node.group === "degree" ? 12 : 10;
-          const lineHeight = isCore ? 14 : node.group === "degree" ? 14 : 12;
-          const labelWidth = Math.max(...labelLines.map((line) => line.length)) * (fontSize * 0.8);
-          const labelHeight = labelLines.length * lineHeight + 10;
-          const labelOffset = isCore
-            ? -(size / 2 + lineHeight * (labelLines.length - 1))
-            : size / 2 + (node.id === "degree-ba" ? 62 : node.group === "degree" ? 52 : 44);
+          const labelLayout = labelLayouts.get(node.id);
+          if (!labelLayout) return null;
+
+          const showLabel = !(
+            isDesktop &&
+            activeDegree &&
+            !node.isExpandedSub &&
+            node.id !== activeDegree
+          ) && !(isDesktop && activeDegree === "core-ms" && node.id === "core-ms");
+          const isDimmedContext = !!(
+            isDesktop &&
+            activeDegree &&
+            !node.isExpandedSub &&
+            node.id !== activeDegree
+          );
+
+          const {
+            dx,
+            dy,
+            width: labelWidth,
+            height: labelHeight,
+            lineHeight,
+            fontSize,
+            lines: labelLines,
+          } = labelLayout;
+
           return (
             <g key={node.id} transform={`translate(${node.position.x}, ${node.position.y})`}>
               <g
-                className="transition-all duration-700 ease-in-out"
+                className="transition-all duration-[350ms] ease-in-out"
                 style={{
-                  opacity: node.parentId ? (node.parentId === activeDegree ? "1" : "0.5") : "1",
+                  opacity: node.parentId
+                    ? node.parentId === activeDegree
+                      ? "1"
+                      : "0.4"
+                    : isDimmedContext
+                      ? "0.22"
+                      : "1",
                   transform: `scale(${node.parentId ? (node.parentId === activeDegree ? "1" : "0.8") : "1"})`,
                 }}
               >
@@ -463,7 +1177,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   stroke={node.color}
                   strokeWidth="1"
                   opacity="0.3"
-                  className="transition-transform duration-300"
+                  className="transition-transform duration-[350ms]"
                   style={{
                     transform: activeDegree === node.id ? "scale(1.2)" : "scale(1)",
                   }}
@@ -475,7 +1189,6 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                     // Lower intensity for subtle glow, higher for stronger pulse
                     // Use hex transparency to preserve the node color in the glow.
                     // Example: #7dd3fc55 (light) and #7dd3fcaa (strong).
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-expect-error CSS variables for SVG presentation
                     "--node-glow": `${node.color}55`,
                     "--node-glow-strong": `${node.color}aa`,
@@ -494,14 +1207,19 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   />
                 </circle>
               </g>
-              <g transform={`translate(0, ${labelOffset - labelHeight + 4})`}>
+              <g
+                className="transition-[transform,opacity] duration-[350ms] ease-out"
+                transform={`translate(${dx}, ${dy})`}
+                opacity={showLabel ? 1 : 0}
+              >
                 <rect
                   x={-labelWidth / 2 - 12}
                   y={-4}
                   width={labelWidth + 24}
                   height={labelHeight + 8}
                   rx={10}
-                  fill="transparent"
+                  fill={activeDegree ? "var(--surface)" : "transparent"}
+                  fillOpacity={activeDegree ? 0.7 : 1}
                   stroke="rgba(148, 163, 184, 0.45)"
                   strokeDasharray="6 6"
                 />
@@ -510,7 +1228,9 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   y={lineHeight}
                   textAnchor="middle"
                   style={{ fontSize: `${fontSize}px` }}
-                  className="font-semibold uppercase tracking-[0.22em] fill-[var(--muted)]"
+                  className={`font-semibold uppercase ${
+                    node.group === "sub" ? "tracking-[0.14em]" : "tracking-[0.18em]"
+                  } fill-[var(--muted)]`}
                 >
                   {labelLines.map((line, index) => (
                     <tspan key={line} x={0} dy={index === 0 ? 0 : lineHeight}>
