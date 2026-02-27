@@ -19,6 +19,12 @@ type ShinobiVideo = {
 
 const shinobiStoryVideos: ShinobiVideo[] = [
   {
+    title: 'Shinobi Story | Featured Highlight',
+    url: 'https://youtu.be/bPsGUDkz6-0',
+    embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0',
+    note: 'Featured video - personal milestone'
+  },
+  {
     title: 'Shinobi Story | Video 1',
     url: 'https://youtu.be/mkfwWyJT5OU',
     embedUrl: 'https://www.youtube.com/embed/mkfwWyJT5OU',
@@ -36,12 +42,6 @@ const shinobiStoryVideos: ShinobiVideo[] = [
     title: 'Shinobi Story | Video 3',
     url: 'https://youtu.be/3NiuTEdX1IU',
     embedUrl: 'https://www.youtube.com/embed/3NiuTEdX1IU',
-    note: 'Shinobi Story video'
-  },
-  {
-    title: 'Shinobi Story | Video 4',
-    url: 'https://youtu.be/bPsGUDkz6-0',
-    embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0',
     note: 'Shinobi Story video'
   }
 ];
@@ -152,6 +152,21 @@ export default async function ShinobiStoryPage() {
             </div>
           </div>
 
+          {/* Featured Video Highlight */}
+          <div className="space-y-8">
+            <div className="space-y-2 text-center">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
+                Featured Video Highlight
+              </h2>
+              <p className="text-sm text-[var(--muted)]">
+                Personal highlight: this Shinobi Story video is the main showcase.
+              </p>
+            </div>
+            <div className="relative z-10">
+              <VideoCarousel items={videoCards} />
+            </div>
+          </div>
+
           {/* Business Impact & Overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="space-y-6">
@@ -254,13 +269,6 @@ export default async function ShinobiStoryPage() {
             </div>
           </div>
 
-          {/* Video Showcase */}
-          <div className="space-y-8">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] text-center">Cinematic & Gameplay Showcase</h2>
-            <div className="relative z-10">
-              <VideoCarousel items={videoCards} />
-            </div>
-          </div>
         </section>
       </div>
     </main>

@@ -103,6 +103,9 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
               embedUrl={featured.embedUrl}
               thumbnailUrl={featured.thumbnailUrl}
               title={featured.title}
+              popupCaption={featured.note}
+              popupCtaHref={featured.url}
+              popupCtaLabel="Open on YouTube"
               className={`h-full w-full object-cover ${featured.className ?? ''}`.trim()}
               roundedClassName="rounded-2xl"
             />
@@ -176,6 +179,9 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
                     embedUrl={video.embedUrl}
                     thumbnailUrl={video.thumbnailUrl}
                     title={video.title}
+                    popupCaption={video.note}
+                    popupCtaHref={video.url}
+                    popupCtaLabel="Open on YouTube"
                     className={`h-full w-full object-cover ${video.className ?? ''}`.trim()}
                     roundedClassName="rounded-xl"
                   />

@@ -27,6 +27,12 @@ export default function LightboxVideo({
 }: LightboxVideoProps) {
   const embedParams = 'rel=0&modestbranding=1&playsinline=1&vq=hd1080';
   const embedSrc = embedUrl.includes('?') ? `${embedUrl}&${embedParams}` : `${embedUrl}?${embedParams}`;
+  const videoId = embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
+  const fallbackCtaHref = videoId ? `https://youtu.be/${videoId}` : undefined;
+  const resolvedCaption = popupCaption ?? title;
+  const resolvedCtaHref = popupCtaHref ?? fallbackCtaHref;
+  const resolvedCtaLabel = popupCtaLabel ?? (resolvedCtaHref ? 'Open on YouTube' : undefined);
+  const hasCaption = resolvedCaption.trim().length > 0;
 
   const shouldZoomThumbnail =
     thumbnailUrl.includes('hqdefault') ||
@@ -89,6 +95,17 @@ export default function LightboxVideo({
             }}
             onError={advanceThumbnail}
           />
+          <span
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-0 z-10 ${roundedClassName} bg-gradient-to-t from-black/40 via-black/10 to-transparent transition-opacity duration-200 group-hover:opacity-90`}
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-black/55 shadow-[0_0_28px_rgba(0,0,0,0.5)] transition-all duration-200 group-hover:scale-105 group-hover:bg-black/65"
+          >
+            <span className="ml-1 block h-0 w-0 border-y-[10px] border-y-transparent border-l-[16px] border-l-white" />
+          </span>
+          <span className="sr-only">Open video in lightbox</span>
         </button>
       </Dialog.Trigger>
 
@@ -119,17 +136,17 @@ export default function LightboxVideo({
                 allowFullScreen
               />
             </div>
-            {popupCaption ? (
+            {hasCaption ? (
               <div className="mt-3 rounded-xl border border-white/10 bg-black/55 px-4 py-3 text-sm text-white/85 backdrop-blur-sm">
-                <p className="max-w-[70ch] leading-relaxed">{popupCaption}</p>
-                {popupCtaHref && popupCtaLabel ? (
+                <p className="max-w-[70ch] leading-relaxed">{resolvedCaption}</p>
+                {resolvedCtaHref && resolvedCtaLabel ? (
                   <a
-                    href={popupCtaHref}
+                    href={resolvedCtaHref}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-2 inline-block text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-white"
                   >
-                    {popupCtaLabel}
+                    {resolvedCtaLabel}
                   </a>
                 ) : null}
               </div>
