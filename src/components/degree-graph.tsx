@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import GraphTooltip from "./graph-tooltip";
 
 type GraphNode = {
@@ -251,8 +251,27 @@ type ExpandedBranchPreset = {
   lockSubNodePositions?: boolean;
   lockSubLabelPositions?: boolean;
   focusPanBias?: Vec2;
+  focusZoom?: number;
   excludeActiveLabelInFocus?: boolean;
   centerOnNode?: boolean;
+};
+
+type AllExpandedLayoutOverrides = {
+  nodeOffsets?: Record<string, Vec2>;
+  labelOffsets?: Record<string, Vec2>;
+};
+
+type LayoutEditorTargetKind = "sub-node" | "sub-label" | "active-label" | "all-node" | "all-label";
+
+type LayoutEditorTarget = {
+  kind: LayoutEditorTargetKind;
+  nodeId: string;
+};
+
+type LayoutEditorDragState = {
+  target: LayoutEditorTarget;
+  startClient: Vec2;
+  startOffset: Vec2;
 };
 
 type LayoutMetrics = {
@@ -277,6 +296,21 @@ type SolverResult = GraphLayoutResult & {
 
 const VIEWBOX_WIDTH = 700;
 const VIEWBOX_HEIGHT = 520;
+const LAYOUT_EDITOR_STORAGE_KEY = "degree-graph-layout-overrides-v3";
+const LAYOUT_EDITOR_ALL_STORAGE_KEY = "degree-graph-all-layout-overrides-v1";
+const LAYOUT_EDITOR_ACCESS_KEY = "degree-graph-layout-editor-access-v1";
+const COLLAPSED_ZOOM_MULTIPLIER = 1.27;
+const COLLAPSED_CENTER_BIAS: Vec2 = { x: 0, y: 50 };
+const ALL_EXPANDED_ZOOM_MULTIPLIER = 0.95;
+const ALL_EXPANDED_CENTER_BIAS: Vec2 = { x: 0, y: 42 };
+const ALL_EXPANDED_SUB_SPREAD_MULTIPLIER = 1.55;
+const ALL_EXPANDED_LAYOUT_ITERATIONS = 14;
+const ALL_EXPANDED_SUB_MAX_DISPLACEMENT = 72;
+const ALL_EXPANDED_LABEL_MAX_DISPLACEMENT = 220;
+const ALL_EXPANDED_FALLBACK_SPREAD_ATTEMPTS = 6;
+const ALL_EXPANDED_SPREAD_STEP = 0.12;
+const ALL_EXPANDED_NODE_SPRING = 0.08;
+const ALL_EXPANDED_LABEL_SPRING = 0.03;
 
 const LAYOUT_CONFIG: LayoutConfig = {
   desktopMinWidth: 1024,
@@ -300,20 +334,17 @@ const EDGE_CURVATURE = 0.2;
 
 const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
   "degree-aa": {
-    // Force AA into a deterministic, balanced desktop composition.
     subNodeOffsets: {
-      // Equal-radius fan from parent (all ~142px away): top / mid / bottom.
-      "sub-aa-1": { x: -102, y: -92 },
-      "sub-aa-2": { x: -142, y: 0 },
-      "sub-aa-3": { x: -116, y: 92 },
+      "sub-aa-1": { x: -96, y: -83 },
+      "sub-aa-2": { x: -129, y: 9 },
+      "sub-aa-3": { x: -96, y: 100 },
     },
     subLabelOffsets: {
-      // Labels stay left of each sphere to avoid branch-curve collisions.
-      "sub-aa-1": { x: -54, y: 30 },
-      "sub-aa-2": { x: -132, y: 30 },
-      "sub-aa-3": { x: -132, y: 30 },
+      "sub-aa-1": { x: -49, y: 26 },
+      "sub-aa-2": { x: -72, y: 28 },
+      "sub-aa-3": { x: -48, y: 25 },
     },
-    activeLabelOffset: { x: 40, y: 80 },
+    activeLabelOffset: { x: 51, y: 77 },
     subLabelMaxDisplacement: 0,
     activeLabelMaxDisplacement: 0,
     lockSubNodePositions: true,
@@ -322,18 +353,17 @@ const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
     excludeActiveLabelInFocus: false,
   },
   "degree-ba": {
-    // Mirror AA discipline for BA: deterministic fan + non-overlapping label anchors.
     subNodeOffsets: {
-      "sub-ba-1": { x: 112, y: -100 },
-      "sub-ba-2": { x: 146, y: 0 },
-      "sub-ba-3": { x: 112, y: 106 },
+      "sub-ba-1": { x: 99, y: -86 },
+      "sub-ba-2": { x: 124, y: 12 },
+      "sub-ba-3": { x: 64, y: 88 },
     },
     subLabelOffsets: {
-      "sub-ba-1": { x: -86, y: 18 },
-      "sub-ba-2": { x: 126, y: -70 },
-      "sub-ba-3": { x: 78, y: -44 },
+      "sub-ba-1": { x: 46, y: 26 },
+      "sub-ba-2": { x: 21, y: 32 },
+      "sub-ba-3": { x: 61, y: 30 },
     },
-    activeLabelOffset: { x: -10, y: 38 },
+    activeLabelOffset: { x: -70, y: -107 },
     subLabelMaxDisplacement: 0,
     activeLabelMaxDisplacement: 0,
     lockSubNodePositions: true,
@@ -342,18 +372,17 @@ const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
     excludeActiveLabelInFocus: false,
   },
   "degree-bs": {
-    // Bottom branch: keep labels outside the center to avoid crossing active text.
     subNodeOffsets: {
-      "sub-bs-1": { x: 78, y: 8 },
-      "sub-bs-2": { x: 0, y: 114 },
-      "sub-bs-3": { x: -78, y: 8 },
+      "sub-bs-1": { x: 101, y: 15 },
+      "sub-bs-2": { x: 0, y: 112 },
+      "sub-bs-3": { x: -104, y: 10 },
     },
     subLabelOffsets: {
-      "sub-bs-1": { x: 0, y: 30 },
+      "sub-bs-1": { x: 3, y: 31 },
       "sub-bs-2": { x: 0, y: 30 },
       "sub-bs-3": { x: 0, y: 30 },
     },
-    activeLabelOffset: { x: -92, y: -92 },
+    activeLabelOffset: { x: -95, y: -93 },
     subLabelMaxDisplacement: 0,
     activeLabelMaxDisplacement: 0,
     lockSubNodePositions: true,
@@ -363,23 +392,58 @@ const DESKTOP_EXPANDED_PRESETS: Record<string, ExpandedBranchPreset> = {
     centerOnNode: true,
   },
   "core-ms": {
-    // Core branch: fan upward with labels below each node to prevent top clipping.
     subNodeOffsets: {
-      "sub-core-1": { x: -82, y: -86 },
-      "sub-core-2": { x: 0, y: -130 },
-      "sub-core-3": { x: 82, y: -86 },
+      "sub-core-1": { x: -72, y: -51 },
+      "sub-core-2": { x: 1, y: -82 },
+      "sub-core-3": { x: 71, y: -52 },
     },
     subLabelOffsets: {
-      "sub-core-1": { x: -24, y: -56 },
-      "sub-core-2": { x: 0, y: 24 },
-      "sub-core-3": { x: 24, y: -56 },
+      "sub-core-1": { x: -58, y: -61 },
+      "sub-core-2": { x: 3, y: -61 },
+      "sub-core-3": { x: 59, y: -57 },
     },
+    activeLabelOffset: { x: 1, y: 56 },
     subLabelMaxDisplacement: 0,
+    activeLabelMaxDisplacement: 0,
     lockSubNodePositions: true,
     lockSubLabelPositions: true,
-    focusPanBias: { x: 0, y: 28 },
-    excludeActiveLabelInFocus: true,
+    focusPanBias: { x: 0, y: 24 },
+    excludeActiveLabelInFocus: false,
   },
+};
+
+const ALL_EXPANDED_SUB_LABEL_PRESETS: Record<string, Vec2> = {
+  "sub-aa-1": { x: -44, y: 24 },
+  "sub-core-1": { x: -56, y: 22 },
+  "sub-core-2": { x: 0, y: 24 },
+  "sub-core-3": { x: 10, y: 22 },
+  "sub-ba-1": { x: 50, y: 42 },
+  "sub-ba-2": { x: 38, y: 30 },
+  "sub-ba-3": { x: 40, y: 32 },
+};
+
+const getMergedExpandedPreset = (
+  degreeId: string | null,
+  overrides?: Record<string, ExpandedBranchPreset>
+): ExpandedBranchPreset | undefined => {
+  if (!degreeId) return undefined;
+
+  const basePreset = DESKTOP_EXPANDED_PRESETS[degreeId];
+  const overridePreset = overrides?.[degreeId];
+  if (!basePreset && !overridePreset) return undefined;
+
+  return {
+    ...basePreset,
+    ...overridePreset,
+    subNodeOffsets: {
+      ...(basePreset?.subNodeOffsets ?? {}),
+      ...(overridePreset?.subNodeOffsets ?? {}),
+    },
+    subLabelOffsets: {
+      ...(basePreset?.subLabelOffsets ?? {}),
+      ...(overridePreset?.subLabelOffsets ?? {}),
+    },
+  };
 };
 
 const nodeSize = (group: GraphNode["group"]) => (group === "core" ? 48 : group === "degree" ? 40 : 28);
@@ -387,10 +451,13 @@ const nodeSize = (group: GraphNode["group"]) => (group === "core" ? 48 : group =
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const clampPan = (nextPan: Vec2, zoomLevel: number): Vec2 => {
-  const bounds = 200 * zoomLevel;
+  // Pan is applied in SVG user units (viewBox space). Keep bounds generous so focus logic
+  // isn't fighting this clamp.
+  const xBounds = VIEWBOX_WIDTH * zoomLevel;
+  const yBounds = VIEWBOX_HEIGHT * zoomLevel;
   return {
-    x: clamp(nextPan.x, -bounds, bounds),
-    y: clamp(nextPan.y, -bounds, bounds),
+    x: clamp(nextPan.x, -xBounds, xBounds),
+    y: clamp(nextPan.y, -yBounds, yBounds),
   };
 };
 
@@ -502,16 +569,49 @@ const closestPointOnCurve = (p0: Vec2, p1: Vec2, p2: Vec2, target: Vec2, samples
 const buildVisibleLayoutNodes = (
   activeDegree: string | null,
   spacing: number,
-  isDesktop: boolean
+  isDesktop: boolean,
+  activePreset?: ExpandedBranchPreset,
+  expandAllBranches = false,
+  allExpandedSpreadMultiplier = ALL_EXPANDED_SUB_SPREAD_MULTIPLIER
 ): LayoutNode[] => {
   const nodes = nodesData
-    .filter((node) => coreIds.has(node.id) || (activeDegree ? node.parentId === activeDegree : false))
+    .filter(
+      (node) =>
+        expandAllBranches ||
+        coreIds.has(node.id) ||
+        (activeDegree ? node.parentId === activeDegree : false)
+    )
     .map((node) => ({
       ...node,
       position: { ...node.position },
       anchorPosition: { ...node.position },
-      isExpandedSub: activeDegree ? node.parentId === activeDegree : false,
+      isExpandedSub: expandAllBranches ? node.group === "sub" : activeDegree ? node.parentId === activeDegree : false,
     }));
+
+  if (expandAllBranches) {
+    const nodeById = new Map(nodes.map((node) => [node.id, node]));
+    nodes.forEach((node) => {
+      if (node.group !== "sub" || !node.parentId) return;
+      const parentNode = nodeById.get(node.parentId);
+      if (!parentNode) return;
+
+      const baseOffset = {
+        x: node.position.x - parentNode.position.x,
+        y: node.position.y - parentNode.position.y,
+      };
+      const spreadOffset = {
+        x: baseOffset.x * allExpandedSpreadMultiplier,
+        y: baseOffset.y * allExpandedSpreadMultiplier,
+      };
+
+      node.position = {
+        x: parentNode.position.x + spreadOffset.x,
+        y: parentNode.position.y + spreadOffset.y,
+      };
+      node.anchorPosition = { ...node.position };
+    });
+    return nodes;
+  }
 
   if (!activeDegree) return nodes;
 
@@ -547,10 +647,9 @@ const buildVisibleLayoutNodes = (
   });
 
   if (isDesktop) {
-    const preset = activeDegree ? DESKTOP_EXPANDED_PRESETS[activeDegree] : undefined;
-    if (preset?.subNodeOffsets) {
+    if (activePreset?.subNodeOffsets) {
       subNodes.forEach((node) => {
-        const offset = preset.subNodeOffsets?.[node.id];
+        const offset = activePreset.subNodeOffsets?.[node.id];
         if (!offset) return;
         const nextPosition = {
           x: activeNode.position.x + offset.x,
@@ -568,11 +667,12 @@ const buildVisibleLayoutNodes = (
 const buildBaseLabelLayouts = (
   nodes: LayoutNode[],
   activeDegree: string | null,
-  isDesktop: boolean
+  isDesktop: boolean,
+  activePreset?: ExpandedBranchPreset,
+  expandAllBranches = false
 ): Map<string, LabelLayout> => {
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
   const layouts = new Map<string, LabelLayout>();
-  const activePreset = isDesktop && activeDegree ? DESKTOP_EXPANDED_PRESETS[activeDegree] : undefined;
 
   const getSubLabelLines = (label: string) => {
     const words = label.split(" ");
@@ -598,12 +698,18 @@ const buildBaseLabelLayouts = (
       isDesktop && activeDegree === node.id && node.group === "degree"
         ? defaultLabelOffset + 36
         : defaultLabelOffset;
+    const allModeDegreeLabelOffset = expandAllBranches && node.group === "degree" ? 10 : 0;
 
     let dx = 0;
-    let dy = labelOffset - height + 4;
+    let dy = labelOffset + allModeDegreeLabelOffset - height + 4;
     let maxDisplacement: number | undefined;
 
-    if (isDesktop && activeDegree === node.id && node.group === "degree" && activePreset?.activeLabelOffset) {
+    if (expandAllBranches && isCore) {
+      // Keep the central program label clear of top-row sub labels in ALL mode.
+      dy = -(size / 2 + 60);
+    }
+
+    if (isDesktop && activeDegree === node.id && activePreset?.activeLabelOffset) {
       dx = activePreset.activeLabelOffset.x;
       dy = activePreset.activeLabelOffset.y;
       if (typeof activePreset.activeLabelMaxDisplacement === "number") {
@@ -611,8 +717,11 @@ const buildBaseLabelLayouts = (
       }
     }
 
-    if (node.isExpandedSub && activeDegree) {
-      const subLabelPreset = activePreset?.subLabelOffsets?.[node.id];
+    if ((node.isExpandedSub && activeDegree) || (expandAllBranches && node.group === "sub")) {
+      const allExpandedSubLabelPreset = expandAllBranches
+        ? ALL_EXPANDED_SUB_LABEL_PRESETS[node.id]
+        : undefined;
+      const subLabelPreset = allExpandedSubLabelPreset ?? activePreset?.subLabelOffsets?.[node.id];
       if (subLabelPreset) {
         dx = subLabelPreset.x;
         dy = subLabelPreset.y;
@@ -626,10 +735,15 @@ const buildBaseLabelLayouts = (
             node.position.y - parentNode.position.y,
             node.position.x - parentNode.position.x
           );
-          const sideShift = Math.cos(angle) * Math.min(38, width * 0.35);
-          const belowOffset = size / 2 + 16;
-          const aboveOffset = -(size / 2 + height + 12);
-          const shouldPlaceAbove = Math.sin(angle) > 0.35 || node.position.y > VIEWBOX_HEIGHT - 130;
+          const sideShiftBase = expandAllBranches ? 52 : 38;
+          const sideShiftRatio = expandAllBranches ? 0.5 : 0.35;
+          const sideShift = Math.cos(angle) * Math.min(sideShiftBase, width * sideShiftRatio);
+          const belowOffset = size / 2 + (expandAllBranches ? 20 : 16);
+          const aboveOffset = -(size / 2 + height + (expandAllBranches ? 16 : 12));
+          const directionalY = Math.sin(angle);
+          const shouldPlaceAbove = expandAllBranches
+            ? directionalY < -0.2 || node.position.y > VIEWBOX_HEIGHT - 130
+            : directionalY > 0.35 || node.position.y > VIEWBOX_HEIGHT - 130;
 
           dx = sideShift;
           dy = shouldPlaceAbove ? aboveOffset : belowOffset;
@@ -886,10 +1000,10 @@ const computeLabelBoxes = (
 const computeFocusBounds = (
   activeDegree: string | null,
   nodes: LayoutNode[],
-  labelLayouts: Map<string, LabelLayout>
+  labelLayouts: Map<string, LabelLayout>,
+  activePreset?: ExpandedBranchPreset
 ): Box | null => {
   if (!activeDegree) return null;
-  const activePreset = DESKTOP_EXPANDED_PRESETS[activeDegree];
   const focusNodes = nodes.filter((node) => node.id === activeDegree || node.isExpandedSub);
   if (focusNodes.length === 0) return null;
 
@@ -906,7 +1020,8 @@ const computeFocusBounds = (
   };
 
   focusNodes.forEach((node) => {
-    includeBox(toCircleBox(node, 8));
+    // Include glow + animation breathing room so circles do not look clipped at edges.
+    includeBox(toCircleBox(node, 16));
     const labelLayout = labelLayouts.get(node.id);
     if (!labelLayout) return;
     if (activePreset?.excludeActiveLabelInFocus && node.id === activeDegree) return;
@@ -990,12 +1105,15 @@ const getLayoutMetrics = (
   };
 };
 
-const solveDesktopLayout = (activeDegree: string, spacing: number): SolverResult => {
-  const activePreset = DESKTOP_EXPANDED_PRESETS[activeDegree];
+const solveDesktopLayout = (
+  activeDegree: string,
+  spacing: number,
+  activePreset?: ExpandedBranchPreset
+): SolverResult => {
   const lockSubNodePositions = !!activePreset?.lockSubNodePositions;
   const lockSubLabelPositions = !!activePreset?.lockSubLabelPositions;
-  const nodes = buildVisibleLayoutNodes(activeDegree, spacing, true);
-  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, true);
+  const nodes = buildVisibleLayoutNodes(activeDegree, spacing, true, activePreset);
+  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, true, activePreset, false);
 
   for (let iteration = 0; iteration < LAYOUT_CONFIG.iterations; iteration += 1) {
     if (!lockSubNodePositions) {
@@ -1058,7 +1176,7 @@ const solveDesktopLayout = (activeDegree: string, spacing: number): SolverResult
 
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
   const labelBoxes = computeLabelBoxes(nodes, labelLayouts);
-  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts);
+  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts, activePreset);
   const metrics = getLayoutMetrics(nodes, labelLayouts);
 
   return {
@@ -1071,13 +1189,180 @@ const solveDesktopLayout = (activeDegree: string, spacing: number): SolverResult
   };
 };
 
-const computeGraphLayout = (activeDegree: string | null, isDesktop: boolean): GraphLayoutResult => {
+const computeGraphLayout = (
+  activeDegree: string | null,
+  isDesktop: boolean,
+  activePreset?: ExpandedBranchPreset,
+  expandAllBranches = false,
+  allExpandedOverrides?: AllExpandedLayoutOverrides
+): GraphLayoutResult => {
+  if (expandAllBranches) {
+    let bestLayout:
+      | {
+          nodes: LayoutNode[];
+          labelLayouts: Map<string, LabelLayout>;
+          metrics: LayoutMetrics;
+        }
+      | null = null;
+
+    for (
+      let attempt = 0;
+      attempt <= ALL_EXPANDED_FALLBACK_SPREAD_ATTEMPTS;
+      attempt += 1
+    ) {
+      const spreadMultiplier = ALL_EXPANDED_SUB_SPREAD_MULTIPLIER + attempt * ALL_EXPANDED_SPREAD_STEP;
+      const nodes = buildVisibleLayoutNodes(
+        null,
+        LAYOUT_CONFIG.baseSubSpacing,
+        isDesktop,
+        undefined,
+        true,
+        spreadMultiplier
+      );
+      if (allExpandedOverrides?.nodeOffsets) {
+        nodes.forEach((node) => {
+          const offset = allExpandedOverrides.nodeOffsets?.[node.id];
+          if (!offset) return;
+          node.position.x += offset.x;
+          node.position.y += offset.y;
+          node.anchorPosition.x += offset.x;
+          node.anchorPosition.y += offset.y;
+        });
+      }
+
+      const labelLayouts = buildBaseLabelLayouts(nodes, null, isDesktop, undefined, true);
+      if (allExpandedOverrides?.labelOffsets) {
+        labelLayouts.forEach((layout, nodeId) => {
+          const offset = allExpandedOverrides.labelOffsets?.[nodeId];
+          if (!offset) return;
+          layout.dx += offset.x;
+          layout.dy += offset.y;
+          layout.anchorDx += offset.x;
+          layout.anchorDy += offset.y;
+        });
+      }
+
+      for (let iteration = 0; iteration < ALL_EXPANDED_LAYOUT_ITERATIONS; iteration += 1) {
+        resolveSubNodeCircleCollisions(nodes);
+        resolveLabelLabelCollisions(nodes, labelLayouts);
+        resolveLabelCircleCollisions(nodes, labelLayouts);
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "core-ms");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-aa");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-ba");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-bs");
+
+        nodes.forEach((node) => {
+          if (!node.isExpandedSub) return;
+          node.position.x += (node.anchorPosition.x - node.position.x) * ALL_EXPANDED_NODE_SPRING;
+          node.position.y += (node.anchorPosition.y - node.position.y) * ALL_EXPANDED_NODE_SPRING;
+          const clampedPosition = clampDisplacement(
+            node.position,
+            node.anchorPosition,
+            ALL_EXPANDED_SUB_MAX_DISPLACEMENT
+          );
+          node.position.x = clampedPosition.x;
+          node.position.y = clampedPosition.y;
+        });
+
+        nodes.forEach((node) => {
+          const layout = labelLayouts.get(node.id);
+          if (!layout) return;
+
+          layout.dx += (layout.anchorDx - layout.dx) * ALL_EXPANDED_LABEL_SPRING;
+          layout.dy += (layout.anchorDy - layout.dy) * ALL_EXPANDED_LABEL_SPRING;
+          const clampedLayout = clampDisplacement(
+            { x: layout.dx, y: layout.dy },
+            { x: layout.anchorDx, y: layout.anchorDy },
+            ALL_EXPANDED_LABEL_MAX_DISPLACEMENT
+          );
+          layout.dx = clampedLayout.x;
+          layout.dy = clampedLayout.y;
+          clampLabelToBounds(node, layout);
+        });
+      }
+
+      // Final settle pass: resolve lingering label overlaps without spring pull-back.
+      for (let settleIteration = 0; settleIteration < 14; settleIteration += 1) {
+        resolveLabelLabelCollisions(nodes, labelLayouts);
+        resolveLabelCircleCollisions(nodes, labelLayouts);
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "core-ms");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-aa");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-ba");
+        resolveLabelEdgeCurveCollisions(nodes, labelLayouts, "degree-bs");
+
+        nodes.forEach((node) => {
+          const layout = labelLayouts.get(node.id);
+          if (!layout) return;
+          const clampedLayout = clampDisplacement(
+            { x: layout.dx, y: layout.dy },
+            { x: layout.anchorDx, y: layout.anchorDy },
+            ALL_EXPANDED_LABEL_MAX_DISPLACEMENT
+          );
+          layout.dx = clampedLayout.x;
+          layout.dy = clampedLayout.y;
+          clampLabelToBounds(node, layout);
+        });
+      }
+
+      const metrics = getLayoutMetrics(nodes, labelLayouts);
+      const isBetterCandidate =
+        !bestLayout ||
+        metrics.labelOverlaps < bestLayout.metrics.labelOverlaps ||
+        (metrics.labelOverlaps === bestLayout.metrics.labelOverlaps &&
+          metrics.circleOverlaps < bestLayout.metrics.circleOverlaps) ||
+        (metrics.labelOverlaps === bestLayout.metrics.labelOverlaps &&
+          metrics.circleOverlaps === bestLayout.metrics.circleOverlaps &&
+          metrics.outOfBounds < bestLayout.metrics.outOfBounds) ||
+        (metrics.labelOverlaps === bestLayout.metrics.labelOverlaps &&
+          metrics.circleOverlaps === bestLayout.metrics.circleOverlaps &&
+          metrics.outOfBounds === bestLayout.metrics.outOfBounds &&
+          metrics.score < bestLayout.metrics.score);
+
+      if (isBetterCandidate) {
+        bestLayout = {
+          nodes: nodes.map((node) => ({
+            ...node,
+            position: { ...node.position },
+            anchorPosition: { ...node.anchorPosition },
+          })),
+          labelLayouts: new Map(
+            Array.from(labelLayouts.entries()).map(([nodeId, layout]) => [
+              nodeId,
+              { ...layout },
+            ])
+          ),
+          metrics,
+        };
+      }
+
+      if (
+        metrics.labelOverlaps === 0 &&
+        metrics.circleOverlaps === 0 &&
+        metrics.outOfBounds === 0
+      ) {
+        break;
+      }
+    }
+
+    if (bestLayout) {
+      const nodeById = new Map(bestLayout.nodes.map((node) => [node.id, node]));
+      const labelBoxes = computeLabelBoxes(bestLayout.nodes, bestLayout.labelLayouts);
+      return {
+        nodes: bestLayout.nodes,
+        nodeById,
+        labelLayouts: bestLayout.labelLayouts,
+        labelBoxes,
+        focusBounds: null,
+      };
+    }
+  }
+
   if (activeDegree && isDesktop) {
     let bestLayout: SolverResult | null = null;
 
     for (let attempt = 0; attempt <= LAYOUT_CONFIG.fallbackSpacingAttempts; attempt += 1) {
       const spacing = LAYOUT_CONFIG.baseSubSpacing + attempt * LAYOUT_CONFIG.fallbackSpacingStep;
-      const candidate = solveDesktopLayout(activeDegree, spacing);
+      const candidate = solveDesktopLayout(activeDegree, spacing, activePreset);
       if (!bestLayout || candidate.metrics.score < bestLayout.metrics.score) {
         bestLayout = candidate;
       }
@@ -1103,13 +1388,13 @@ const computeGraphLayout = (activeDegree: string | null, isDesktop: boolean): Gr
     }
   }
 
-  const nodes = buildVisibleLayoutNodes(activeDegree, LAYOUT_CONFIG.baseSubSpacing, isDesktop);
-  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, isDesktop);
+  const nodes = buildVisibleLayoutNodes(activeDegree, LAYOUT_CONFIG.baseSubSpacing, isDesktop, activePreset, false);
+  const labelLayouts = buildBaseLabelLayouts(nodes, activeDegree, isDesktop, activePreset, false);
   applySimpleLabelPush(nodes, activeDegree, labelLayouts);
 
   const nodeById = new Map(nodes.map((node) => [node.id, node]));
   const labelBoxes = computeLabelBoxes(nodes, labelLayouts);
-  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts);
+  const focusBounds = computeFocusBounds(activeDegree, nodes, labelLayouts, activePreset);
 
   return { nodes, nodeById, labelLayouts, labelBoxes, focusBounds };
 };
@@ -1121,16 +1406,68 @@ type DegreeGraphProps = {
 
 export default function DegreeGraph({ variant = "card", className }: DegreeGraphProps) {
   const [activeDegree, setActiveDegree] = useState<string | null>(null);
+  const [expandAllBranches, setExpandAllBranches] = useState(false);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [layoutEditorAccessEnabled] = useState(false);
+  const [layoutEditorEnabled, setLayoutEditorEnabled] = useState(false);
+  const [layoutEditorPanelCollapsed, setLayoutEditorPanelCollapsed] = useState(true);
+  const [editorSelection, setEditorSelection] = useState<LayoutEditorTarget | null>(null);
+  const [editorDrag, setEditorDrag] = useState<LayoutEditorDragState | null>(null);
+  const [copyNotice, setCopyNotice] = useState<string | null>(null);
+  const [lastEditedDegree, setLastEditedDegree] = useState<string | null>(null);
+  const [presetOverrides, setPresetOverrides] = useState<Record<string, ExpandedBranchPreset>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = window.localStorage.getItem(LAYOUT_EDITOR_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return {};
+      return parsed as Record<string, ExpandedBranchPreset>;
+    } catch {
+      return {};
+    }
+  });
+  const [allExpandedOverrides, setAllExpandedOverrides] = useState<AllExpandedLayoutOverrides>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = window.localStorage.getItem(LAYOUT_EDITOR_ALL_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return {};
+      return parsed as AllExpandedLayoutOverrides;
+    } catch {
+      return {};
+    }
+  });
   const [isDesktop, setIsDesktop] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia(`(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`).matches;
   });
+
+  const activePreset = useMemo(
+    () => getMergedExpandedPreset(activeDegree, presetOverrides),
+    [activeDegree, presetOverrides]
+  );
+
+  const toggleLayoutEditor = useCallback(() => {
+    if (!layoutEditorAccessEnabled) return;
+    setLayoutEditorEnabled((current) => {
+      const next = !current;
+      if (!next) {
+        setEditorDrag(null);
+        setEditorSelection(null);
+      } else {
+        setLayoutEditorPanelCollapsed(true);
+      }
+      return next;
+    });
+  }, [layoutEditorAccessEnabled]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1149,10 +1486,58 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     return () => mediaQuery.removeListener(handleChange);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!layoutEditorAccessEnabled) return;
+    window.localStorage.setItem(LAYOUT_EDITOR_ACCESS_KEY, "1");
+  }, [layoutEditorAccessEnabled]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(LAYOUT_EDITOR_STORAGE_KEY, JSON.stringify(presetOverrides));
+  }, [presetOverrides]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(LAYOUT_EDITOR_ALL_STORAGE_KEY, JSON.stringify(allExpandedOverrides));
+  }, [allExpandedOverrides]);
+
+  useEffect(() => {
+    if (!copyNotice) return;
+    const timeoutId = window.setTimeout(() => setCopyNotice(null), 1600);
+    return () => window.clearTimeout(timeoutId);
+  }, [copyNotice]);
+
+  useEffect(() => {
+    if (!layoutEditorAccessEnabled) return;
+    const handleEditorToggle = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
+
+      if (
+        event.key.toLowerCase() === "e" &&
+        (event.shiftKey || event.altKey)
+      ) {
+        event.preventDefault();
+        toggleLayoutEditor();
+        return;
+      }
+
+      if (layoutEditorEnabled && event.shiftKey && event.key.toLowerCase() === "h") {
+        event.preventDefault();
+        setLayoutEditorPanelCollapsed((current) => !current);
+      }
+    };
+
+    window.addEventListener("keydown", handleEditorToggle);
+    return () => window.removeEventListener("keydown", handleEditorToggle);
+  }, [layoutEditorAccessEnabled, layoutEditorEnabled, toggleLayoutEditor]);
+
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (layoutEditorEnabled) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-  }, [pan]);
+  }, [layoutEditorEnabled, pan]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging) return;
@@ -1178,8 +1563,19 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   const closeActiveBranch = useCallback(() => {
     setActiveDegree(null);
+    setExpandAllBranches(false);
     setZoom(1);
     setPan({ x: 0, y: 0 });
+  }, []);
+
+  const toggleExpandAllBranches = useCallback(() => {
+    setHoveredNode(null);
+    setActiveDegree(null);
+    setEditorSelection(null);
+    setEditorDrag(null);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+    setExpandAllBranches((current) => !current);
   }, []);
 
   const handleNodeHover = useCallback((node: GraphNode | null, event?: React.MouseEvent) => {
@@ -1217,12 +1613,406 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   }, []);
 
   const graphLayout = useMemo(
-    () => computeGraphLayout(activeDegree, isDesktop),
-    [activeDegree, isDesktop]
+    () =>
+      computeGraphLayout(
+        activeDegree,
+        isDesktop,
+        activePreset,
+        expandAllBranches,
+        layoutEditorAccessEnabled ? allExpandedOverrides : undefined
+      ),
+    [
+      activeDegree,
+      isDesktop,
+      activePreset,
+      expandAllBranches,
+      allExpandedOverrides,
+      layoutEditorAccessEnabled,
+    ]
   );
   const visibleNodes = graphLayout.nodes;
   const visibleNodeById = graphLayout.nodeById;
   const labelLayouts = graphLayout.labelLayouts;
+  const activeLayoutNode = activeDegree ? visibleNodeById.get(activeDegree) : undefined;
+  const zoomScaleMultiplier = 1.3;
+  const allExpandedRenderScale = zoom * ALL_EXPANDED_ZOOM_MULTIPLIER;
+  const collapsedRenderScale = zoom * COLLAPSED_ZOOM_MULTIPLIER;
+  const overviewRenderScale = expandAllBranches ? allExpandedRenderScale : collapsedRenderScale;
+  const overviewCenterBias = expandAllBranches ? ALL_EXPANDED_CENTER_BIAS : COLLAPSED_CENTER_BIAS;
+  const collapsedGraphBounds = useMemo<Box | null>(() => {
+    if (activeDegree) return null;
+
+    let bounds: Box | null = null;
+    const includeBox = (box: Box) => {
+      if (!bounds) {
+        bounds = { ...box };
+        return;
+      }
+      bounds.left = Math.min(bounds.left, box.left);
+      bounds.right = Math.max(bounds.right, box.right);
+      bounds.top = Math.min(bounds.top, box.top);
+      bounds.bottom = Math.max(bounds.bottom, box.bottom);
+    };
+
+    visibleNodes.forEach((node) => {
+      includeBox(toCircleBox(node, 10));
+      const layout = labelLayouts.get(node.id);
+      if (!layout) return;
+      includeBox(toLabelBox(node, layout));
+    });
+
+    return bounds;
+  }, [activeDegree, labelLayouts, visibleNodes]);
+  const collapsedRenderOffset = useMemo<Vec2>(() => {
+    if (!collapsedGraphBounds) return { x: 0, y: 0 };
+    const center = centerOfBox(collapsedGraphBounds);
+    const targetCenter = {
+      x: VIEWBOX_WIDTH / 2 + overviewCenterBias.x,
+      y: VIEWBOX_HEIGHT / 2 + overviewCenterBias.y,
+    };
+
+    // transform order is translate(...) scale(...), so final position is:
+    // p' = scale * p + translate. Account for scale when centering.
+    return {
+      x: targetCenter.x - center.x * overviewRenderScale,
+      y: targetCenter.y - center.y * overviewRenderScale,
+    };
+  }, [collapsedGraphBounds, overviewCenterBias, overviewRenderScale]);
+
+  const computeFocusPan = useCallback(
+    (
+      focusPoint: Vec2,
+      zoomFactor: number,
+      focusPanBias: Vec2,
+      nextRenderYOffset: number
+    ): Vec2 | null => {
+      const svg = svgRef.current;
+      if (!svg) return null;
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return null;
+
+      // Note: the <g> transform is applied in SVG user units (viewBox space), then mapped into
+      // the viewport via the viewBox/preserveAspectRatio transform.
+      const viewScale = Math.min(rect.width / VIEWBOX_WIDTH, rect.height / VIEWBOX_HEIGHT);
+      const offsetX = (rect.width - VIEWBOX_WIDTH * viewScale) / 2;
+      const offsetY = (rect.height - VIEWBOX_HEIGHT * viewScale) / 2;
+
+      // Keep focused content out from under the title/controls overlay (px -> user units).
+      const paddingTopPx = 60;
+      const paddingBottomPx = 24;
+      const centerPx = {
+        x: rect.width / 2,
+        y: (paddingTopPx + (rect.height - paddingBottomPx)) / 2,
+      };
+      const centerUser = {
+        x: (centerPx.x - offsetX) / viewScale,
+        y: (centerPx.y - offsetY) / viewScale,
+      };
+
+      const contentScale = zoomFactor * zoomScaleMultiplier;
+      const targetTranslate = {
+        x: centerUser.x - contentScale * focusPoint.x + focusPanBias.x,
+        y: centerUser.y - contentScale * focusPoint.y + focusPanBias.y,
+      };
+
+      return clampPan(
+        {
+          x: targetTranslate.x,
+          y: targetTranslate.y - nextRenderYOffset,
+        },
+        zoomFactor
+      );
+    },
+    [zoomScaleMultiplier]
+  );
+
+  const computeFocusPanForBounds = useCallback(
+    (
+      bounds: Box,
+      zoomFactor: number,
+      focusPanBias: Vec2,
+      nextRenderYOffset: number,
+      focusPoint?: Vec2
+    ): Vec2 | null => {
+      const svg = svgRef.current;
+      if (!svg) return null;
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return null;
+
+      const viewScale = Math.min(rect.width / VIEWBOX_WIDTH, rect.height / VIEWBOX_HEIGHT);
+      const offsetX = (rect.width - VIEWBOX_WIDTH * viewScale) / 2;
+      const offsetY = (rect.height - VIEWBOX_HEIGHT * viewScale) / 2;
+
+      // Keep focused content out from under the title/controls overlay (px -> user units).
+      const paddingXPx = 24;
+      const paddingTopPx = 60;
+      const paddingBottomPx = 24;
+
+      const contentScale = zoomFactor * zoomScaleMultiplier;
+
+      // Bounds fit constraints expressed in SVG user units.
+      let minX = (paddingXPx - offsetX) / viewScale - contentScale * bounds.left;
+      let maxX =
+        (rect.width - paddingXPx - offsetX) / viewScale - contentScale * bounds.right;
+      let minY = (paddingTopPx - offsetY) / viewScale - contentScale * bounds.top;
+      let maxY =
+        (rect.height - paddingBottomPx - offsetY) / viewScale - contentScale * bounds.bottom;
+
+      // If the bounds can't fit (bigger than viewport), collapse to a centered range.
+      if (minX > maxX) {
+        const mid = (minX + maxX) / 2;
+        minX = mid;
+        maxX = mid;
+      }
+      if (minY > maxY) {
+        const mid = (minY + maxY) / 2;
+        minY = mid;
+        maxY = mid;
+      }
+
+      const centerPx = {
+        x: rect.width / 2,
+        y: (paddingTopPx + (rect.height - paddingBottomPx)) / 2,
+      };
+      const centerUser = {
+        x: (centerPx.x - offsetX) / viewScale,
+        y: (centerPx.y - offsetY) / viewScale,
+      };
+
+      const desiredFocusUser = focusPoint
+        ? focusPoint
+        : { x: (bounds.left + bounds.right) / 2, y: (bounds.top + bounds.bottom) / 2 };
+
+      const desiredTranslate = {
+        x: centerUser.x - contentScale * desiredFocusUser.x + focusPanBias.x,
+        y: centerUser.y - contentScale * desiredFocusUser.y + focusPanBias.y,
+      };
+
+      return clampPan(
+        {
+          x: clamp(desiredTranslate.x, minX, maxX),
+          y: clamp(desiredTranslate.y, minY, maxY) - nextRenderYOffset,
+        },
+        zoomFactor
+      );
+    },
+    [zoomScaleMultiplier]
+  );
+
+  const setEditorTargetOffset = useCallback(
+    (target: LayoutEditorTarget, offset: Vec2) => {
+      const normalizedOffset = {
+        x: Math.round(offset.x),
+        y: Math.round(offset.y),
+      };
+
+      if (expandAllBranches) {
+        if (target.kind === "all-node") {
+          setAllExpandedOverrides((current) => ({
+            ...current,
+            nodeOffsets: {
+              ...(current.nodeOffsets ?? {}),
+              [target.nodeId]: normalizedOffset,
+            },
+          }));
+          return;
+        }
+
+        if (target.kind === "all-label") {
+          setAllExpandedOverrides((current) => ({
+            ...current,
+            labelOffsets: {
+              ...(current.labelOffsets ?? {}),
+              [target.nodeId]: normalizedOffset,
+            },
+          }));
+        }
+        return;
+      }
+
+      if (!activeDegree) return;
+      setPresetOverrides((current) => {
+        const next = { ...current };
+        const branchPreset = { ...(next[activeDegree] ?? {}) };
+
+        if (target.kind === "sub-node") {
+          branchPreset.subNodeOffsets = {
+            ...(branchPreset.subNodeOffsets ?? {}),
+            [target.nodeId]: normalizedOffset,
+          };
+        } else if (target.kind === "sub-label") {
+          branchPreset.subLabelOffsets = {
+            ...(branchPreset.subLabelOffsets ?? {}),
+            [target.nodeId]: normalizedOffset,
+          };
+        } else {
+          branchPreset.activeLabelOffset = normalizedOffset;
+        }
+
+        next[activeDegree] = branchPreset;
+        return next;
+      });
+      setLastEditedDegree(activeDegree);
+    },
+    [activeDegree, expandAllBranches]
+  );
+
+  const resolveEditorTargetOffset = useCallback(
+    (target: LayoutEditorTarget): Vec2 | null => {
+      if (expandAllBranches) {
+        if (target.kind === "all-node") {
+          return allExpandedOverrides.nodeOffsets?.[target.nodeId] ?? { x: 0, y: 0 };
+        }
+        if (target.kind === "all-label") {
+          return allExpandedOverrides.labelOffsets?.[target.nodeId] ?? { x: 0, y: 0 };
+        }
+      }
+
+      if (!activeDegree) return null;
+      const node = visibleNodeById.get(target.nodeId);
+      if (!node) return null;
+
+      if (target.kind === "sub-node") {
+        if (!activeLayoutNode) return null;
+        return {
+          x: node.position.x - activeLayoutNode.position.x,
+          y: node.position.y - activeLayoutNode.position.y,
+        };
+      }
+
+      const layout = labelLayouts.get(target.nodeId);
+      if (!layout) return null;
+      return { x: layout.dx, y: layout.dy };
+    },
+    [activeDegree, activeLayoutNode, allExpandedOverrides.labelOffsets, allExpandedOverrides.nodeOffsets, expandAllBranches, labelLayouts, visibleNodeById]
+  );
+
+  const beginEditorDrag = useCallback(
+    (event: React.MouseEvent, target: LayoutEditorTarget, startOffset: Vec2) => {
+      const canEditCurrentLayout = !!activeDegree || expandAllBranches;
+      if (!layoutEditorEnabled || !isDesktop || !canEditCurrentLayout) return;
+      event.preventDefault();
+      event.stopPropagation();
+      setEditorSelection(target);
+      setEditorDrag({
+        target,
+        startClient: { x: event.clientX, y: event.clientY },
+        startOffset,
+      });
+    },
+    [activeDegree, expandAllBranches, isDesktop, layoutEditorEnabled]
+  );
+
+  useEffect(() => {
+    if (!layoutEditorEnabled || !editorDrag) return;
+
+    const dragScale = zoom * zoomScaleMultiplier;
+    const handleMove = (event: MouseEvent) => {
+      const dx = (event.clientX - editorDrag.startClient.x) / dragScale;
+      const dy = (event.clientY - editorDrag.startClient.y) / dragScale;
+      setEditorTargetOffset(editorDrag.target, {
+        x: editorDrag.startOffset.x + dx,
+        y: editorDrag.startOffset.y + dy,
+      });
+    };
+
+    const handleUp = () => {
+      setEditorDrag(null);
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleUp);
+    };
+  }, [editorDrag, layoutEditorEnabled, setEditorTargetOffset, zoom, zoomScaleMultiplier]);
+
+  useEffect(() => {
+    if (!layoutEditorEnabled || !editorSelection) return;
+
+    const handleNudge = (event: KeyboardEvent) => {
+      const key = event.key;
+      if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Escape"].includes(key)) return;
+      event.preventDefault();
+
+      if (key === "Escape") {
+        setEditorSelection(null);
+        return;
+      }
+
+      const currentOffset = resolveEditorTargetOffset(editorSelection);
+      if (!currentOffset) return;
+
+      const step = event.shiftKey ? 10 : 2;
+      const delta = { x: 0, y: 0 };
+      if (key === "ArrowLeft") delta.x = -step;
+      if (key === "ArrowRight") delta.x = step;
+      if (key === "ArrowUp") delta.y = -step;
+      if (key === "ArrowDown") delta.y = step;
+
+      setEditorTargetOffset(editorSelection, {
+        x: currentOffset.x + delta.x,
+        y: currentOffset.y + delta.y,
+      });
+    };
+
+    window.addEventListener("keydown", handleNudge);
+    return () => window.removeEventListener("keydown", handleNudge);
+  }, [editorSelection, layoutEditorEnabled, resolveEditorTargetOffset, setEditorTargetOffset]);
+
+  const copyActivePreset = useCallback(async () => {
+    const sourceDegree = activeDegree ?? lastEditedDegree;
+    if (!sourceDegree) return;
+    const mergedPreset = getMergedExpandedPreset(sourceDegree, presetOverrides);
+    if (!mergedPreset) return;
+
+    const payload = `"${sourceDegree}": ${JSON.stringify(mergedPreset, null, 2)}`;
+    try {
+      await navigator.clipboard.writeText(payload);
+      setCopyNotice("Preset copied");
+    } catch {
+      setCopyNotice("Clipboard blocked");
+    }
+  }, [activeDegree, lastEditedDegree, presetOverrides]);
+
+  const resetActiveBranchEdits = useCallback(() => {
+    if (!activeDegree) return;
+    setPresetOverrides((current) => {
+      if (!current[activeDegree]) return current;
+      const next = { ...current };
+      delete next[activeDegree];
+      return next;
+    });
+    setCopyNotice("Branch reset");
+  }, [activeDegree]);
+
+  const hasAllExpandedOverrides = useMemo(() => {
+    const nodeCount = Object.keys(allExpandedOverrides.nodeOffsets ?? {}).length;
+    const labelCount = Object.keys(allExpandedOverrides.labelOffsets ?? {}).length;
+    return nodeCount + labelCount > 0;
+  }, [allExpandedOverrides.labelOffsets, allExpandedOverrides.nodeOffsets]);
+
+  const resetAllExpandedEdits = useCallback(() => {
+    setAllExpandedOverrides({});
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(LAYOUT_EDITOR_ALL_STORAGE_KEY);
+    }
+    setCopyNotice("ALL view reset");
+  }, []);
+
+  const clearAllBranchEdits = useCallback(() => {
+    setPresetOverrides({});
+    setAllExpandedOverrides({});
+    setLastEditedDegree(null);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(LAYOUT_EDITOR_STORAGE_KEY);
+      window.localStorage.removeItem(LAYOUT_EDITOR_ALL_STORAGE_KEY);
+    }
+    setCopyNotice("All local edits cleared");
+  }, []);
 
   const visibleEdges = useMemo(() => {
     const visibleIds = new Set(visibleNodes.map((node) => node.id));
@@ -1245,6 +2035,10 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const handleNodeClick = (nodeId: string, group: GraphNode["group"]) => {
     if (group !== "degree" && group !== "core") return;
 
+    if (expandAllBranches) {
+      setExpandAllBranches(false);
+    }
+
     if (activeDegree === nodeId) {
       closeActiveBranch();
       return;
@@ -1253,49 +2047,36 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     const node = nodesData.find((currentNode) => currentNode.id === nodeId);
     if (!node) return;
 
-    const zoomFactor = 1.4;
+    const desktopPreset = isDesktop ? getMergedExpandedPreset(nodeId, presetOverrides) : undefined;
+    const zoomFactor = desktopPreset?.focusZoom ?? 1.4;
     setZoom(zoomFactor);
 
     if (isDesktop) {
-      const preset = DESKTOP_EXPANDED_PRESETS[nodeId];
+      const preset = desktopPreset;
       const focusPanBias = preset?.focusPanBias ?? { x: 0, y: -14 };
-      if (preset?.centerOnNode) {
-        const targetPan = {
-          x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
-          y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
-        };
-        setPan(clampPan(targetPan, zoomFactor));
-      } else {
-        const nextLayout = computeGraphLayout(nodeId, true);
-        const focusBounds = nextLayout.focusBounds;
-        if (focusBounds) {
-          const focusCenterX = (focusBounds.left + focusBounds.right) / 2;
-          const focusCenterY = (focusBounds.top + focusBounds.bottom) / 2;
-          const targetPan = {
-            x: -(focusCenterX - VIEWBOX_WIDTH / 2) * zoomFactor + focusPanBias.x,
-            y: -(focusCenterY - VIEWBOX_HEIGHT / 2) * zoomFactor + focusPanBias.y,
-          };
-          setPan(clampPan(targetPan, zoomFactor));
-        } else {
-          setPan(
-            clampPan(
-              {
-                x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor,
-                y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor,
-              },
-              zoomFactor
-            )
-          );
-        }
-      }
+      const nextRenderYOffset = nodeId === "core-ms" ? 136 : 96;
+      const nextLayout = computeGraphLayout(nodeId, true, preset);
+      const focusBounds = nextLayout.focusBounds;
+
+      const nextPan = focusBounds
+        ? computeFocusPanForBounds(
+            focusBounds,
+            zoomFactor,
+            focusPanBias,
+            nextRenderYOffset,
+            preset?.centerOnNode ? node.position : undefined
+          )
+        : computeFocusPan(node.position, zoomFactor, focusPanBias, nextRenderYOffset);
+
+      if (nextPan) setPan(nextPan);
     } else {
       const awayDirection = getAwayDirection(nodeId);
       const focusPadding = 70;
       setPan(
         clampPan(
           {
-            x: -(node.position.x - 350) * zoomFactor - awayDirection.x * focusPadding,
-            y: -(node.position.y - 260) * zoomFactor - awayDirection.y * focusPadding,
+            x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor - awayDirection.x * focusPadding,
+            y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor - awayDirection.y * focusPadding,
           },
           zoomFactor
         )
@@ -1308,6 +2089,14 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const containerClasses = variant === "background" 
     ? `absolute inset-0 ${className ?? ""}`
     : `relative h-[460px] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] ${className ?? ""}`;
+  const renderYOffset = activeDegree
+    ? isDesktop && activeDegree === "core-ms"
+      ? 136
+      : 96
+    : 0;
+  const renderScale = activeDegree ? zoom * zoomScaleMultiplier : overviewRenderScale;
+  const renderXOffset = activeDegree ? 0 : collapsedRenderOffset.x;
+  const renderBaseYOffset = activeDegree ? 0 : collapsedRenderOffset.y;
 
   return (
     <div className={containerClasses} data-testid="degree-graph">
@@ -1351,79 +2140,172 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
             <path d="M3 3v5h5"></path>
           </svg>
         </button>
+        <button
+          onClick={toggleExpandAllBranches}
+          className={`rounded-full bg-[var(--surface)] px-3 py-2 text-[10px] font-semibold tracking-[0.08em] transition-colors ${
+            expandAllBranches
+              ? "text-sky-300 hover:text-sky-200"
+              : "text-[var(--muted)] hover:text-[var(--foreground)]"
+          }`}
+          title={expandAllBranches ? "Switch to default view" : "Expand all branches"}
+        >
+          {expandAllBranches ? "DEFAULT" : "ALL"}
+        </button>
+        {layoutEditorAccessEnabled && (
+          <button
+            onClick={toggleLayoutEditor}
+            className={`rounded-full bg-[var(--surface)] px-3 py-2 text-xs font-semibold tracking-[0.08em] transition-colors ${
+              layoutEditorEnabled
+                ? "text-cyan-300 hover:text-cyan-200"
+                : "text-[var(--muted)] hover:text-[var(--foreground)]"
+            }`}
+            title="Toggle layout editor (Shift+E or Alt+E)"
+          >
+            EDIT
+          </button>
+        )}
       </div>
+      {layoutEditorAccessEnabled && layoutEditorEnabled && (
+        layoutEditorPanelCollapsed ? (
+          <div className="absolute bottom-3 left-3 z-30 flex items-center gap-2 rounded-lg border border-cyan-400/35 bg-[var(--surface)]/92 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-cyan-300">
+            <span>Editor On</span>
+            <button
+              onClick={() => setLayoutEditorPanelCollapsed(false)}
+              className="rounded border border-cyan-400/40 px-1.5 py-0.5 text-[9px] text-cyan-200"
+              title="Expand panel (Shift+H)"
+            >
+              Show
+            </button>
+          </div>
+        ) : (
+          <div className="absolute bottom-3 left-3 z-30 max-w-[320px] rounded-lg border border-cyan-400/35 bg-[var(--surface)]/95 px-3 py-2 text-[11px] tracking-[0.04em] text-[var(--muted)]">
+            <div className="flex items-center justify-between">
+              <div className="font-semibold uppercase text-cyan-300">Layout Editor On</div>
+              <button
+                onClick={() => setLayoutEditorPanelCollapsed(true)}
+                className="rounded border border-cyan-400/35 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.08em] text-cyan-200"
+                title="Collapse panel (Shift+H)"
+              >
+                Hide
+              </button>
+            </div>
+            <div>Hotkeys: Shift+E or Alt+E toggle editor, Shift+H hide panel</div>
+            <div>
+              {expandAllBranches
+                ? "ALL mode: drag circles / label boxes. Arrow keys nudge selected (Shift = faster)."
+                : "Branch mode: drag sub circles / label boxes. Arrow keys nudge selected (Shift = faster)."}
+            </div>
+            <div className="mt-1 flex flex-wrap gap-2">
+              <button
+                onClick={copyActivePreset}
+                disabled={expandAllBranches || (!activeDegree && !lastEditedDegree)}
+                className="rounded-md border border-cyan-400/40 px-2 py-1 text-[10px] font-semibold uppercase text-cyan-300 disabled:opacity-40"
+              >
+                Copy {activeDegree ? "Active" : "Last"} Preset
+              </button>
+              <button
+                onClick={resetActiveBranchEdits}
+                disabled={expandAllBranches || !activeDegree || !presetOverrides[activeDegree]}
+                className="rounded-md border border-slate-400/40 px-2 py-1 text-[10px] font-semibold uppercase text-slate-300 disabled:opacity-40"
+              >
+                Reset Branch Edits
+              </button>
+              <button
+                onClick={resetAllExpandedEdits}
+                disabled={!expandAllBranches || !hasAllExpandedOverrides}
+                className="rounded-md border border-sky-400/40 px-2 py-1 text-[10px] font-semibold uppercase text-sky-300 disabled:opacity-40"
+              >
+                Reset ALL View Edits
+              </button>
+              <button
+                onClick={clearAllBranchEdits}
+                disabled={Object.keys(presetOverrides).length === 0 && !hasAllExpandedOverrides}
+                className="rounded-md border border-amber-400/40 px-2 py-1 text-[10px] font-semibold uppercase text-amber-300 disabled:opacity-40"
+              >
+                Clear Local Edits
+              </button>
+              {copyNotice && <span className="pt-1 text-[10px] text-cyan-200">{copyNotice}</span>}
+            </div>
+          </div>
+        )
+      )}
       <svg 
-        className="absolute inset-0 transition-transform duration-[350ms] ease-out cursor-grab active:cursor-grabbing"
+        ref={svgRef}
+        className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        style={{
-          transform: `translate(${pan.x}px, ${pan.y + 96}px) scale(${zoom * 1.3})`,
-        }}
         viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
         preserveAspectRatio="xMidYMid meet"
       >
-        <g stroke="rgba(148, 163, 184, 0.75)" strokeWidth={2} fill="none">
-          <defs>
-            <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(148, 163, 184, 0.2)" />
-              <stop offset="50%" stopColor="rgba(148, 163, 184, 0.75)" />
-              <stop offset="100%" stopColor="rgba(148, 163, 184, 0.2)" />
-            </linearGradient>
-          </defs>
-          {visibleEdges.map((edge) => {
-            const source = visibleNodeById.get(edge.source);
-            const target = visibleNodeById.get(edge.target);
-            if (!source || !target) return null;
-            const isActiveBranchEdge = !!(
-              activeDegree &&
-              (edge.source === activeDegree ||
-                edge.target === activeDegree ||
-                source.isExpandedSub ||
-                target.isExpandedSub)
-            );
-            const edgeOpacity =
-              activeDegree && isDesktop
-                ? isActiveBranchEdge
-                  ? "0.9"
-                  : "0.12"
-                : edge.source === activeDegree || edge.target === activeDegree
-                  ? "1"
-                  : "0.5";
+        <g
+          className="transition-transform duration-[350ms] ease-out"
+          style={{
+            transform: `translate(${pan.x + renderXOffset}px, ${pan.y + renderYOffset + renderBaseYOffset}px) scale(${renderScale})`,
+            transformOrigin: "0 0",
+          }}
+        >
+          <g stroke="rgba(148, 163, 184, 0.75)" strokeWidth={2} fill="none">
+            <defs>
+              <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(148, 163, 184, 0.2)" />
+                <stop offset="50%" stopColor="rgba(148, 163, 184, 0.75)" />
+                <stop offset="100%" stopColor="rgba(148, 163, 184, 0.2)" />
+              </linearGradient>
+            </defs>
+            {visibleEdges.map((edge) => {
+              const source = visibleNodeById.get(edge.source);
+              const target = visibleNodeById.get(edge.target);
+              if (!source || !target) return null;
+              const isActiveBranchEdge = !!(
+                activeDegree &&
+                (edge.source === activeDegree ||
+                  edge.target === activeDegree ||
+                  source.isExpandedSub ||
+                  target.isExpandedSub)
+              );
+              const edgeOpacity =
+                activeDegree && isDesktop
+                  ? isActiveBranchEdge
+                    ? "0.9"
+                    : "0.12"
+                  : edge.source === activeDegree || edge.target === activeDegree
+                    ? "1"
+                    : "0.5";
 
-            // Add some curvature based on the distance
-            const curvature = EDGE_CURVATURE;
-            const midX = (source.position.x + target.position.x) / 2;
-            const midY = (source.position.y + target.position.y) / 2;
-            const cx1 = midX + curvature * (target.position.y - source.position.y);
-            const cy1 = midY - curvature * (target.position.x - source.position.x);
+              // Add some curvature based on the distance
+              const curvature = EDGE_CURVATURE;
+              const midX = (source.position.x + target.position.x) / 2;
+              const midY = (source.position.y + target.position.y) / 2;
+              const cx1 = midX + curvature * (target.position.y - source.position.y);
+              const cy1 = midY - curvature * (target.position.x - source.position.x);
 
-            return (
-              <path
-                key={edge.id}
-                d={`M ${source.position.x} ${source.position.y} Q ${cx1} ${cy1} ${target.position.x} ${target.position.y}`}
-                stroke="url(#edge-gradient)"
-                strokeDasharray={edge.dashed ? "6 6" : undefined}
-                className="transition-all duration-[350ms] ease-in-out"
-                style={{
-                  opacity: edgeOpacity,
-                }}
-              >
-                {(!activeDegree || isActiveBranchEdge) && (
-                  <animate
-                    attributeName="stroke-dashoffset"
-                    from="0"
-                    to="12"
-                    dur="1s"
-                    repeatCount="indefinite"
-                  />
-                )}
-              </path>
-            );
-          })}
-        </g>
-        {visibleNodes.map((node) => {
+              return (
+                <path
+                  key={edge.id}
+                  d={`M ${source.position.x} ${source.position.y} Q ${cx1} ${cy1} ${target.position.x} ${target.position.y}`}
+                  stroke="url(#edge-gradient)"
+                  strokeDasharray={edge.dashed ? "6 6" : undefined}
+                  className="transition-all duration-[350ms] ease-in-out"
+                  style={{
+                    opacity: edgeOpacity,
+                  }}
+                >
+                  {(!activeDegree || isActiveBranchEdge) && (
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      from="0"
+                      to="12"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  )}
+                </path>
+              );
+            })}
+          </g>
+          {visibleNodes.map((node) => {
           const size = nodeSize(node.group);
           const labelLayout = labelLayouts.get(node.id);
           if (!labelLayout) return null;
@@ -1433,12 +2315,56 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
             activeDegree &&
             !node.isExpandedSub &&
             node.id !== activeDegree
-          ) && !(isDesktop && activeDegree === "core-ms" && node.id === "core-ms");
+          );
           const isDimmedContext = !!(
             isDesktop &&
             activeDegree &&
             !node.isExpandedSub &&
             node.id !== activeDegree
+          );
+          const isEditingBranch = layoutEditorEnabled && isDesktop && !!activeDegree && !expandAllBranches;
+          const isEditingAll = layoutEditorEnabled && isDesktop && expandAllBranches;
+          const canEditBranchSubNode = isEditingBranch && node.isExpandedSub && !!activeLayoutNode;
+          const nodeEditorTarget = isEditingAll
+            ? ({ kind: "all-node", nodeId: node.id } as LayoutEditorTarget)
+            : canEditBranchSubNode
+              ? ({ kind: "sub-node", nodeId: node.id } as LayoutEditorTarget)
+              : null;
+          const nodeDragStartOffset =
+            nodeEditorTarget?.kind === "all-node"
+              ? allExpandedOverrides.nodeOffsets?.[node.id] ?? { x: 0, y: 0 }
+              : canEditBranchSubNode && activeLayoutNode
+                ? {
+                    x: node.position.x - activeLayoutNode.position.x,
+                    y: node.position.y - activeLayoutNode.position.y,
+                  }
+                : null;
+
+          const labelEditorTarget =
+            showLabel && isEditingAll
+              ? ({ kind: "all-label", nodeId: node.id } as LayoutEditorTarget)
+              : isEditingBranch && showLabel
+                ? node.isExpandedSub
+                  ? ({ kind: "sub-label", nodeId: node.id } as LayoutEditorTarget)
+                  : node.id === activeDegree
+                    ? ({ kind: "active-label", nodeId: node.id } as LayoutEditorTarget)
+                    : null
+              : null;
+          const labelDragStartOffset =
+            labelEditorTarget?.kind === "all-label"
+              ? allExpandedOverrides.labelOffsets?.[node.id] ?? { x: 0, y: 0 }
+              : { x: labelLayout.dx, y: labelLayout.dy };
+
+          const isSelectedNodeHandle = !!(
+            editorSelection &&
+            (editorSelection.kind === "sub-node" || editorSelection.kind === "all-node") &&
+            editorSelection.nodeId === node.id
+          );
+          const isSelectedLabel = !!(
+            labelEditorTarget &&
+            editorSelection &&
+            editorSelection.kind === labelEditorTarget.kind &&
+            editorSelection.nodeId === labelEditorTarget.nodeId
           );
 
           const {
@@ -1457,21 +2383,31 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                 className="transition-all duration-[350ms] ease-in-out"
                 style={{
                   opacity: node.parentId
-                    ? node.parentId === activeDegree
-                      ? "1"
-                      : "0.4"
+                    ? activeDegree
+                      ? node.parentId === activeDegree
+                        ? "1"
+                        : "0.4"
+                      : "1"
                     : isDimmedContext
                       ? "0.22"
                       : "1",
-                  transform: `scale(${node.parentId ? (node.parentId === activeDegree ? "1" : "0.8") : "1"})`,
+                  transform: `scale(${
+                    node.parentId
+                      ? activeDegree
+                        ? node.parentId === activeDegree
+                          ? "1"
+                          : "0.8"
+                        : "1"
+                      : "1"
+                  })`,
                 }}
               >
                 <circle
                   r={size / 2 + 4}
                   fill="none"
-                  stroke={node.color}
-                  strokeWidth="1"
-                  opacity="0.3"
+                  stroke={isSelectedNodeHandle ? "#22d3ee" : node.color}
+                  strokeWidth={isSelectedNodeHandle ? "2" : "1"}
+                  opacity={isSelectedNodeHandle ? "0.75" : "0.3"}
                   className="transition-transform duration-[350ms]"
                   style={{
                     transform: activeDegree === node.id ? "scale(1.2)" : "scale(1)",
@@ -1490,10 +2426,20 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                     "--node-glow-strong": `${node.color}aa`,
                   }}
                   filter="drop-shadow(0 0 10px rgba(0,0,0,0.25))"
-                  onClick={() => handleNodeClick(node.id, node.group)}
+                  onClick={() => {
+                    if (layoutEditorEnabled && isDesktop) return;
+                    handleNodeClick(node.id, node.group);
+                  }}
+                  onMouseDown={(event) => {
+                    if (!nodeEditorTarget || !nodeDragStartOffset) return;
+                    beginEditorDrag(event, nodeEditorTarget, nodeDragStartOffset);
+                  }}
                   onMouseEnter={(e) => handleNodeHover(node, e)}
                   onMouseLeave={() => handleNodeHover(null)}
-                  className="cursor-pointer origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite]"
+                  data-editor-handle={nodeEditorTarget ? "true" : undefined}
+                  className={`origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite] ${
+                    nodeEditorTarget ? "cursor-move" : "cursor-pointer"
+                  }`}
                 >
                   <animate
                     attributeName="r"
@@ -1507,6 +2453,12 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                 className="transition-[transform,opacity] duration-[350ms] ease-out"
                 transform={`translate(${dx}, ${dy})`}
                 opacity={showLabel ? 1 : 0}
+                onMouseDown={(event) => {
+                  if (!labelEditorTarget) return;
+                  beginEditorDrag(event, labelEditorTarget, labelDragStartOffset);
+                }}
+                style={{ cursor: labelEditorTarget ? "grab" : "default" }}
+                data-editor-handle={labelEditorTarget ? "true" : undefined}
               >
                 <rect
                   x={-labelWidth / 2 - 12}
@@ -1516,7 +2468,8 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   rx={10}
                   fill={activeDegree ? "var(--surface)" : "transparent"}
                   fillOpacity={activeDegree ? 0.9 : 1}
-                  stroke="rgba(148, 163, 184, 0.45)"
+                  stroke={isSelectedLabel ? "rgba(34, 211, 238, 0.95)" : "rgba(148, 163, 184, 0.45)"}
+                  strokeWidth={isSelectedLabel ? 1.4 : 1}
                   strokeDasharray="6 6"
                 />
                 <text
@@ -1538,6 +2491,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
             </g>
           );
         })}
+        </g>
       </svg>
       <GraphTooltip
         x={mousePos.x}

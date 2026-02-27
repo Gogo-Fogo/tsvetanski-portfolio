@@ -16,6 +16,7 @@ interface Project {
   facets: ProjectFilter[];
   type?: 'commercial' | 'prototype';
   href?: string;
+  external?: boolean;
   bannerImage?: string;
   bannerAlt?: string;
   bannerWidth?: number;
@@ -57,11 +58,15 @@ const projects: Project[] = [
   },
   {
     title: "VR Dirt Bike Game",
-    description: "Immersive training for smart and safe driving practices.",
+    description: "Community-focused VR safety prototype for B-360, optimized for accessible mobile headsets.",
     tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
     searchTerms: ["dirt bike", "safety training", "education", "riding"],
     facets: ['engineering', 'xr'],
-    href: "/projects/vr-microgames"
+    href: "/projects/vr-microgames",
+    bannerImage: "/images/B360_bike_simulator.png",
+    bannerAlt: "B-360 VR dirt bike simulator preview",
+    bannerWidth: 1600,
+    bannerHeight: 900
   },
   {
     title: "VR Car Drift Simulator",
@@ -78,6 +83,19 @@ const projects: Project[] = [
     searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
     href: "/projects/fallout-level-design"
+  },
+  {
+    title: "Shinobi Story",
+    description: "Narrative action game with content strategy, marketing beats, and player engagement planning.",
+    tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
+    searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
+    facets: ['engineering', 'art-storytelling'],
+    href: "/projects/shinobi-story",
+    bannerImage: "/images/ShinobiStoryBanner.jpg",
+    bannerAlt: "Shinobi Story banner",
+    bannerWidth: 1600,
+    bannerHeight: 900,
+    bannerBorderClass: "border-2 border-[#D8B33C]"
   },
   {
     title: "Shonen TCG Game",
@@ -177,6 +195,8 @@ const tagDescriptions: Record<string, string> = {
   'VR Safety Simulation': 'XR scenarios focused on safe habits and behavior transfer.',
   'Educational VR': 'Immersive modules designed for guided learning outcomes.',
   'Human Factors': 'Interaction decisions informed by user behavior and ergonomics.',
+  'Community Game Design': 'Design process grounded in local partner needs and real-world deployment constraints.',
+  'Public Impact': 'Work focused on measurable value for communities and partner organizations.',
   'VR Driving Simulation': 'Vehicle handling and drift-focused training in immersive contexts.',
   'Vehicle Physics': 'Motion tuning and physical response systems for believable control.',
   'Spatial Interaction': 'User actions mapped to 3D space, affordances, and feedback loops.',
@@ -337,6 +357,8 @@ function CareerContent() {
               {project.href && project.type !== 'prototype' ? (
                 <Link
                   href={project.href}
+                  target={project.external ? "_blank" : undefined}
+                  rel={project.external ? "noreferrer noopener" : undefined}
                   className="group block h-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] flex flex-col justify-between"
                 >
                   <div>
