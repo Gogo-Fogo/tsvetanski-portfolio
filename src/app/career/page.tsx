@@ -74,7 +74,11 @@ const projects: Project[] = [
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
     searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],
-    href: "/projects/vr-interaction-lab"
+    href: "/projects/vr-interaction-lab",
+    bannerImage: "/images/drift-immersive-banner.jpg",
+    bannerAlt: "Close-up yellow sports car drifting through a night tunnel environment",
+    bannerWidth: 738,
+    bannerHeight: 351
   },
   {
     title: "Fallout Mod (Level Design)",
