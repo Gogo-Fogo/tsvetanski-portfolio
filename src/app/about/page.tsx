@@ -25,7 +25,7 @@ export default function About() {
               <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
               <p className="text-[var(--muted)] leading-relaxed">
                 Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
-                I specialize in rapid, high-fidelity spatial interaction prototyping. AI-assisted workflows let me move at startup speed without sacrificing engineering rigor.
+                I specialize in rapid spatial interaction prototyping — AI-assisted workflows let me iterate at startup speed without sacrificing engineering rigor.
               </p>
               <p className="text-[var(--muted)] leading-relaxed mt-3">
                 I build immersive systems and responsive gameplay in Unity (C#), from physics-driven prototypes to commercial outcomes,

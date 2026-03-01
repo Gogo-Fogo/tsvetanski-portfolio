@@ -1,6 +1,6 @@
 # High-Fidelity Progress Tracker
 
-Updated: 2026-03-01
+Updated: 2026-03-02
 
 ## Status Key
 - **not started** — no work done
@@ -11,7 +11,7 @@ Updated: 2026-03-01
 - [x] Public asset cleanup (removed 30MB+ bloat)
 - [x] PDF link verification (all recruiter PDFs confirmed linked)
 - [x] This tracking doc created
-- [ ] Worktree synced to main
+- [x] Worktree synced to main
 
 ## Phase 1: Reconnaissance ✅ DONE
 - [x] 1A: Dev server + screenshot setup
@@ -29,7 +29,7 @@ Updated: 2026-03-01
 | # | Page | Route | Status | Notes |
 |---|------|-------|--------|-------|
 | 1 | Home | `/` | done | Subtitle dual-track added, $110K surfaced, CTAs parallelized |
-| 2 | About | `/about` | done | Mobile order-swap (graph moves below card), "leveraging" removed, $110K copy cleaned |
+| 2 | About | `/about` | done | Mobile order-swap (graph moves below card), "leveraging" removed, $110K copy cleaned; "high-fidelity" removed from T-Shaped card |
 | 3 | Career Hub | `/career` | done | "innovative"/"robust" removed, $110K on Shinobi card, "Explore My Creations" removed; Guilty As Arrr banner added |
 | 4 | Shinobi Story | `/projects/shinobi-story` | done | Subtitle rewritten with numbers, section copy specific, stats fallback → null |
 | 5 | CPSE | `/cpse` | done | Nobel Prize in subtitle, stats fallback → null |
@@ -51,3 +51,9 @@ Updated: 2026-03-01
 - 2026-02-28: Committed Phase 2 polish for pages 1–9 (commits 8d491ff, 89b5c9b)
 - 2026-03-01: Remaining projects blueprint pass — dark mode fix, copy rewrites, banner adds (commits 4c10de6, 3448612, f2e2521)
 - 2026-03-01: Mobile pass — THEME toggle label hidden on mobile, Career Hub Guilty As Arrr banner fixed
+- 2026-03-01: Tablet pass (768px dark mode) — all pages verified clean; light mode desktop verified
+- 2026-03-01: Visual scan of all remaining project pages (dark desktop) — all clean
+- 2026-03-01: Deep copy review of all project pages — fixes to the-signal ("high-fidelity" → "licensed"), v4n-gogo subtitle tightened
+- 2026-03-01: Sitemap: added 7 missing project routes (shinobi-story, shogun, the-signal, totally-bugged-out, cranky-squirrel-annihilator, cranky-game-jam, the-last-paycheck)
+- 2026-03-01: Career Hub: Fallout Mod banner added (hall-of-idols), V4N GOGO description cleaned, Shogun side project banner added
+- 2026-03-02: About page: "high-fidelity" removed from T-Shaped Developer card (line 28)
