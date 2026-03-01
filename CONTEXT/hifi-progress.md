@@ -1,6 +1,6 @@
 # High-Fidelity Progress Tracker
 
-Updated: 2026-03-02
+Updated: 2026-03-02 (session 3)
 
 ## Status Key
 - **not started** — no work done
@@ -57,3 +57,8 @@ Updated: 2026-03-02
 - 2026-03-01: Sitemap: added 7 missing project routes (shinobi-story, shogun, the-signal, totally-bugged-out, cranky-squirrel-annihilator, cranky-game-jam, the-last-paycheck)
 - 2026-03-01: Career Hub: Fallout Mod banner added (hall-of-idols), V4N GOGO description cleaned, Shogun side project banner added
 - 2026-03-02: About page: "high-fidelity" removed from T-Shaped Developer card (line 28)
+- 2026-03-02: Career Hub VR Drift card: "High-fidelity spatial interaction" → specific physics/cockpit copy; Phase 2 marked ✅ DONE
+- 2026-03-02: SEO — per-page metadata added to all 17 pages (16 page.tsx + career/layout.tsx); root description cleaned
+- 2026-03-02: OG image — opengraph-image.tsx created (next/og PNG, 1200×630); replaces /og-image.svg which was not renderable on social platforms
+- 2026-03-02: External link audit — all social, YouTube, itch.io, and academic links verified live (200 OK); all recruiter docs confirmed present on disk
+- 2026-03-02: Accessibility pass — proper landmarks, labeled buttons, descriptive alt text, breadcrumb nav, heading hierarchy confirmed clean on home + project pages
