@@ -49,6 +49,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: 'https://tsvetanski.com/projects/vr-microgames',
       lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/shinobi-story',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/shogun-flowers-fall-in-blood',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/the-signal',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/totally-bugged-out',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/cranky-squirrel-annihilator',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/cranky-game-jam',
+      lastModified: new Date()
+    },
+    {
+      url: 'https://tsvetanski.com/projects/the-last-paycheck',
+      lastModified: new Date()
     }
   ];
 }

@@ -86,15 +86,19 @@ const projects: Project[] = [
   },
   {
     title: "Fallout Mod (Level Design)",
-    description: "Overhauled game level demonstrating world-building and existing IP adaptation.",
+    description: "Team-built Fallout 4 interior level — joined mid-project as third-floor lead, handling interior production, merge stability, and visual optimization.",
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
     searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
-    href: "/projects/fallout-level-design"
+    href: "/projects/fallout-level-design",
+    bannerImage: "/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png",
+    bannerAlt: "Hall of Idols puzzle chamber — Fallout 4 level design",
+    bannerWidth: 2048,
+    bannerHeight: 959
   },
   {
     title: "V4N GOGO Figurine Lab",
-    description: "Independent figurine-making practice documented with Instagram photos and higher-bitrate YouTube process videos.",
+    description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
     tags: ["Figurine Sculpting", "Concept Development", "Visual Storytelling"],
     searchTerms: ["figurine", "figure making", "art channel", "instagram", "youtube", "v4n gogo", "concept track", "llc"],
     facets: ['art-storytelling'],
