@@ -110,7 +110,7 @@ const projects: Project[] = [
   },
   {
     title: "Shinobi Story",
-    description: "Roblox ninja action game. Led content strategy and community — grew it to $110K in revenue.",
+    description: "Fan-built Naruto MMORPG on a modified WoTLK engine — $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
     searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
     facets: ['engineering', 'art-storytelling'],

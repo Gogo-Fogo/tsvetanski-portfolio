@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Shinobi Story | Georgi Tsvetanski",
-  description: "Led content strategy and live operations for a Roblox ninja RPG — $110K in revenue, weekly live events, and a community pipeline that scaled to thousands of players.",
+  description: "Led content strategy and live operations for a fan-built Naruto MMORPG — $110K in revenue, 1M+ downloads, 56K players, and a community pipeline spanning five years.",
 };
 
 
@@ -140,7 +140,7 @@ export default async function ShinobiStoryPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Shinobi Story</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A Roblox ninja action game — $110K in revenue, 68K registered users, 16.5K Discord members. I joined as customer support, shipped content weekly, and ended up mentoring the dev team.
+            A fan-built Naruto MMORPG on a modified WoTLK 3.3.5 engine — $110K in revenue, 1M+ downloads, 56K players, 16.5K Discord members. I joined as customer support, shipped content weekly, and ended up mentoring the dev team.
           </p>
         </header>
 
@@ -182,7 +182,7 @@ export default async function ShinobiStoryPage() {
                 <ul className="space-y-4 text-sm text-[var(--muted)]">
                   <li>
                     <span className="text-[var(--foreground)] font-medium block">Scale & Community:</span>
-                    68,000+ registered users and a 16,500+ member Discord community.
+                    1M+ downloads, 56,000 players, and a 16,500+ member Discord community.
                   </li>
                   <li>
                     <span className="text-[var(--foreground)] font-medium block">Commercial Success:</span>
@@ -199,7 +199,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Narrative</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Shinobi Story blends action combat, platforming, and narrative design with a cohesive content strategy.
+                Fan-built Naruto MMORPG running on a modified WoTLK 3.3.5 engine — action combat, open world exploration, and narrative design with a cohesive content strategy.
               </p>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
                 I started in customer support to learn the live community pulse, then transitioned into development and mentorship. Within a year, I was guiding new developers in scripting, level design, and debugging while shaping content rollouts and training resources.
