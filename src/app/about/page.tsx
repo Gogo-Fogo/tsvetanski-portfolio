@@ -49,7 +49,7 @@ export default function About() {
             <h3 className="text-3xl font-bold italic">Shinobi Story</h3>
             <p className="text-5xl font-black mt-3 tracking-tight">$110,000 REVENUE</p>
             <p className="mt-4 text-[var(--muted)] max-w-md">
-              Led development and systems design. Shipped weekly content updates, ran live events, and managed the community pipeline.
+              Contributed character and ability animations, shipped weekly content, ran live events, and managed the community pipeline on a fully custom Naruto MMORPG.
             </p>
           </div>
         </section>
