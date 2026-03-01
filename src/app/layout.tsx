@@ -42,21 +42,12 @@ export const metadata: Metadata = {
     description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
     url: "https://tsvetanski.com",
     siteName: "Georgi Tsvetanski Portfolio",
-    images: [
-      {
-        url: "/og-image.svg",
-        width: 1200,
-        height: 630,
-        alt: "Georgi Tsvetanski Portfolio"
-      }
-    ],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
     title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
     description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
-    images: ["/og-image.svg"]
   }
 };
 
