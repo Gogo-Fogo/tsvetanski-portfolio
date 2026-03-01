@@ -74,7 +74,7 @@ const projects: Project[] = [
   },
   {
     title: "VR Car Drift Simulator",
-    description: "High-fidelity spatial interaction and vehicle dynamics in a night city environment.",
+    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
     tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
     searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],

@@ -18,7 +18,7 @@ Updated: 2026-03-02
 - [x] 1B: Visual scan (all 20 pages: desktop dark, desktop light, mobile)
 - [x] 1C: Gap analysis → `CONTEXT/visual-audit.md` + `CONTEXT/gap-analysis.md`
 
-## Phase 2: Page Polish ⏳ WIP
+## Phase 2: Page Polish ✅ DONE
 
 ### Pre-Phase Blockers
 - **B1** ✅ RESOLVED: `/projects/virtual-lab` dead references removed from creative page + sitemap
