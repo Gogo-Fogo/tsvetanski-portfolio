@@ -1,5 +1,13 @@
 import Link from 'next/link';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Resume | Georgi Tsvetanski",
+  description: "Simulation engineer and XR prototyper. $110K revenue on Shinobi Story. B.S./M.S. candidate at University of Baltimore. Open to simulation, XR, and game production roles.",
+};
+
+
 const highlights = [
   "Spatial interaction prototyping across XR, simulation, and real-time systems.",
   "Multidisciplinary collaboration spanning design, engineering, and product strategy.",

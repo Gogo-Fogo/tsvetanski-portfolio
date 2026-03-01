@@ -1,6 +1,14 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "V4N GOGO Figurine Lab | Georgi Tsvetanski",
+  description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
+};
+
+
 const profileLinks = {
   instagram: 'https://www.instagram.com/v4n_gogo/',
   youtube: 'https://www.youtube.com/@v4n_gogo',

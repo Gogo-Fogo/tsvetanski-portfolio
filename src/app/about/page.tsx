@@ -2,6 +2,14 @@ import Link from 'next/link';
 import DegreeGraph from '@/components/degree-graph';
 import { MotionPage } from '@/components/motion-safe';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "About | Georgi Tsvetanski",
+  description: "T-Shaped Developer: Unity engineer, XR prototyper, and cinematic storyteller. B.S./M.S. candidate in Simulation & Game Design + Interaction Design at University of Baltimore.",
+};
+
+
 export default function About() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

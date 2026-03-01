@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "The Signal | Georgi Tsvetanski",
+  description: "Systems and narrative design for a sci-fi board game — modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.",
+};
+
+
 export default function TheSignalPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

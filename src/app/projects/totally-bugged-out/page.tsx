@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Totally Bugged Out | Georgi Tsvetanski",
+  description: "First-person bug survival prototype — universal throw system, multi-state roach AI, and swarming enemy behavior that traverses walls and ceilings.",
+};
+
+
 export default function TotallyBuggedOutPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

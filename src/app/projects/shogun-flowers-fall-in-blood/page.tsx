@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Shogun: Flowers Fall in Blood | Georgi Tsvetanski",
+  description: "Solo mobile tactical RPG prototype in Unity — grid-based combat, gesture-driven skills, gacha progression systems, and enemy AI.",
+};
+
+
 export default function ShogunFlowersFallInBloodPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

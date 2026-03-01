@@ -1,6 +1,14 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "The Last Paycheck | Georgi Tsvetanski",
+  description: "Narrative and systems design document for a dystopian 2050 board game — poverty, unstable jobs, inflation pressure, and player emotional engagement.",
+};
+
+
 export default function TheLastPaycheckPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

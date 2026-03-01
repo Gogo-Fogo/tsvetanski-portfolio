@@ -1,6 +1,14 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Guilty As Arrr | Georgi Tsvetanski",
+  description: "Real-time spatial audio deduction game in Unity with Photon Fusion — multi-user networked multiplayer with role-based social mechanics.",
+};
+
+
 const guiltyDocuments = [
   {
     href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-gdd-original.docx',

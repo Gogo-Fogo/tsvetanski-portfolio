@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video'; // Added import
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Trash Been | Georgi Tsvetanski",
+  description: "Cooperative game design project from Breda University of Applied Sciences — waste management mechanics, environmental storytelling, and player co-operation systems.",
+};
+
+
 export default function TrashBeenCaseStudy() {
   const trashBeenVideos = [
     {

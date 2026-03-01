@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "VR Interaction Lab | Georgi Tsvetanski",
+  description: "Physics-driven VR prototypes in Unity: a B-360 dirt bike safety simulator for accessible mobile headsets and a night-city drift driving experience.",
+};
+
+
 const driftDemo = {
   url: 'https://youtu.be/wYnWfsZomgk',
   embedUrl: 'https://www.youtube.com/embed/wYnWfsZomgk',

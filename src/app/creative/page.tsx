@@ -5,6 +5,14 @@ import LightboxVideo from '@/components/lightbox-video';
 import VideoCarousel, { type VideoCard } from './video-carousel';
 import { MotionPage } from '@/components/motion-safe';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Creative Work | Georgi Tsvetanski",
+  description: "Cinematic edits, recruitment trailers, event coverage, and interview production — storytelling across camera, post-production, and motion design.",
+};
+
+
 type VideoStats = {
   viewCount?: string;
   likeCount?: string;

@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Cranky: The Squirrel Annihilator | Georgi Tsvetanski",
+  description: "Solo expansion of the Cranky game jam prototype — first-person pug movement, reactive squirrel and rooster AI, full UI, and WebGL-ready deployment.",
+};
+
+
 export default function CrankySquirrelAnnihilatorPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

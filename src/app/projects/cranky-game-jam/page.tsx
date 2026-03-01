@@ -1,6 +1,14 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Cranky (Global Game Jam 2024) | Georgi Tsvetanski",
+  description: "Split-screen local multiplayer built in one week for Global Game Jam 2024 — chaotic pug-chases-squirrel action. Lead Animator and Co-Designer.",
+};
+
+
 export default function CrankyGameJamPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">

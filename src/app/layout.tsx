@@ -35,11 +35,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-  description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
+  description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
   metadataBase: new URL("https://tsvetanski.com"),
   openGraph: {
     title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
+    description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
     url: "https://tsvetanski.com",
     siteName: "Georgi Tsvetanski Portfolio",
     images: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "T-Shaped Developer bridging Technical Engineering and Human Factors. Specializing in high-fidelity VR safety simulations, networked multiplayer systems (Photon Fusion), and human-systems integration.",
+    description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
     images: ["/og-image.svg"]
   }
 };

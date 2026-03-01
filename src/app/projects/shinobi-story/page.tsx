@@ -2,6 +2,14 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import VideoCarousel, { type VideoCard } from '../../creative/video-carousel';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Shinobi Story | Georgi Tsvetanski",
+  description: "Led content strategy and live operations for a Roblox ninja RPG — $110K in revenue, weekly live events, and a community pipeline that scaled to thousands of players.",
+};
+
+
 type VideoStats = {
   viewCount?: string;
   likeCount?: string;

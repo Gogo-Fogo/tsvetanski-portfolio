@@ -1,6 +1,14 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Fallout Level Design | Georgi Tsvetanski",
+  description: "Third-floor lead on a team-built Fallout 4 interior level — interior production, merge stability, and visual optimization across a multi-person pipeline.",
+};
+
+
 const falloutDocuments = [
   {
     href: '/documents/projects/fallout-level-design/recruiter/fii-fallout-final-milestone-report.pdf',
