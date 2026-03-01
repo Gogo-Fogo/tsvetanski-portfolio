@@ -189,7 +189,7 @@ export default async function Creative() {
     const viewCount = formatCount(stats?.viewCount);
     const likeCount = formatCount(stats?.likeCount);
 
-    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : 'Stats unavailable';
+    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : null;
   };
 
   const getTitle = (embedUrl: string, fallbackTitle: string) => {
@@ -220,7 +220,7 @@ export default async function Creative() {
           />
           <h1 className="text-4xl font-bold tracking-tighter mt-4 text-[var(--foreground)]">Videography & Communication Work</h1>
           <p className="text-[var(--muted)] mt-3 max-w-xl text-base">
-            Video editing, interviews, and narrative communication projects aligned with technical and educational outcomes.
+            Video editing, interviews, and storytelling work — from game trailers to university recruitment campaigns.
           </p>
         </header>
 
@@ -233,12 +233,11 @@ export default async function Creative() {
                     <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
                     Featured Case Study
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Primary proof of professional impact</span>
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Paid professional role</span>
                 </div>
                 <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">CPSE Communication & Media</h2>
                 <p className="text-[var(--muted)] text-base max-w-3xl">
-                  Paid role delivering field capture, interviews, and storytelling for the UMD Cyber-Physical Systems Engineering program.
-                  Includes campaign execution, event media operations, and measurable outreach outcomes.
+                  Paid role: field capture, interviews, and storytelling for the UMD Cyber-Physical Systems Engineering program — including the summer video that drew a Nobel Prize–winning physicist.
                 </p>
                 <Link
                   href="/cpse"
@@ -266,7 +265,7 @@ export default async function Creative() {
                   {cpseHighlightVideo.title}
                 </a>
                 <p className="text-xs text-[var(--muted)]">{cpseHighlightVideo.note}</p>
-                <p className="text-xs text-[var(--muted)]">{getStatsText(cpseHighlightVideo.embedUrl)}</p>
+                {getStatsText(cpseHighlightVideo.embedUrl) ? <p className="text-xs text-[var(--muted)]">{getStatsText(cpseHighlightVideo.embedUrl)}</p> : null}
               </div>
             </div>
 
@@ -387,7 +386,7 @@ export default async function Creative() {
                   {getTitle(communicationLinks[0].embedUrl, communicationLinks[0].title)}
                 </a>
                 <p className="text-xs text-[var(--muted)]">{communicationLinks[0].note}</p>
-                <p className="text-xs text-[var(--muted)]">{getStatsText(communicationLinks[0].embedUrl)}</p>
+                {getStatsText(communicationLinks[0].embedUrl) ? <p className="text-xs text-[var(--muted)]">{getStatsText(communicationLinks[0].embedUrl)}</p> : null}
               </div>
             </div>
           </div>

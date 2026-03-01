@@ -18,7 +18,7 @@ const skills = [
 const projects = [
   {
     title: "Shinobi Story",
-    description: "Content strategy and marketing rollout highlighting new beats, community engagement, and performance gains.",
+    description: "Roblox ninja action game — $110K revenue, 68K registered users. Led content design, community, and marketing rollouts over three years.",
     href: "/projects/shinobi-story"
   },
   {
@@ -162,8 +162,8 @@ export default function Resume() {
           </Link>
           <h1 className="text-4xl font-bold tracking-tight mt-4">RESUME</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A multifaceted creator bridging spatial design, simulation engineering, and human-centered systems. My work blends
-            XR prototyping, research-driven interaction design, and production-focused development.
+            XR and simulation prototyper with a background in live-ops game development and university video production.
+            Built systems, shipped content, and grew a Roblox game to $110K in revenue.
           </p>
           <p className="text-[var(--muted)] mt-2 text-sm max-w-2xl">
             Targeting entry-level roles in Technical Design, XR Development, Gameplay Engineering, and Technical QA.
