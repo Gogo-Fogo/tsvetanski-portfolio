@@ -181,6 +181,10 @@ const sideProjects: SideProjectCard[] = [
       'Mobile tactical RPG prototype combining grid-based combat, gesture-driven skills, progression systems, enemy AI, and gacha simulation.',
     searchTerms: ['shogun', 'naruto', 'tactical rpg', 'gacha', 'mobile'],
     roles: 'Role: Solo Developer',
+    image: '/images/ShogunFlowersFallinBlood_banner.png',
+    imageAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
+    bannerWidth: 1600,
+    bannerHeight: 900,
     ctaLabel: 'View Case Study',
     href: '/projects/shogun-flowers-fall-in-blood'
   },
