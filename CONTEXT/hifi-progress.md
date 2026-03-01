@@ -62,3 +62,5 @@ Updated: 2026-03-02 (session 3)
 - 2026-03-02: OG image — opengraph-image.tsx created (next/og PNG, 1200×630); replaces /og-image.svg which was not renderable on social platforms
 - 2026-03-02: External link audit — all social, YouTube, itch.io, and academic links verified live (200 OK); all recruiter docs confirmed present on disk
 - 2026-03-02: Accessibility pass — proper landmarks, labeled buttons, descriptive alt text, breadcrumb nav, heading hierarchy confirmed clean on home + project pages
+- 2026-03-02: Shinobi Story — corrected platform (not Roblox), engine framing ("fully custom", "complete WoW 3.3.5 client overhaul"), stats (1M+ downloads, 56K players), animation credit added; fixed across shinobi-story/page.tsx, career/page.tsx, resume/page.tsx, about/page.tsx (6 files, ~10 instances)
+- 2026-03-02: Grep confirmed zero instances of "Roblox" remaining anywhere in codebase
