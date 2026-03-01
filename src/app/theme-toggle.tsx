@@ -60,7 +60,7 @@ export default function ThemeToggle() {
   return (
     <div className="group fixed right-4 top-4 z-50 flex items-center">
       <div className="flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)]/90 px-3 py-2 shadow-[var(--shadow-strong)] backdrop-blur">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[var(--foreground)]/80">
+        <span className="hidden sm:block text-[10px] font-semibold uppercase tracking-[0.35em] text-[var(--foreground)]/80">
           Theme
         </span>
         <button

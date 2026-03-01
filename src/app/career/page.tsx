@@ -54,7 +54,11 @@ const projects: Project[] = [
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering', 'xr'],
-    href: "/projects/repo-x"
+    href: "/projects/repo-x",
+    bannerImage: "/images/GuiltyAsArr_XProfile.png",
+    bannerAlt: "Guilty As Arrr community X profile banner",
+    bannerWidth: 2048,
+    bannerHeight: 893
   },
   {
     title: "VR Dirt Bike Game",

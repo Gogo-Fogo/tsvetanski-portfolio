@@ -1,6 +1,6 @@
 # High-Fidelity Progress Tracker
 
-Updated: 2026-02-28
+Updated: 2026-03-01
 
 ## Status Key
 - **not started** — no work done
@@ -20,9 +20,9 @@ Updated: 2026-02-28
 
 ## Phase 2: Page Polish ⏳ WIP
 
-### Pre-Phase Blockers (user action required)
-- **B1**: `/projects/virtual-lab` → 404 (no page built). All links must be removed or page built.
-- **B2**: Missing banner images: Guilty As Arrr + Fallout Mod → user must supply image files.
+### Pre-Phase Blockers
+- **B1** ✅ RESOLVED: `/projects/virtual-lab` dead references removed from creative page + sitemap
+- **B2** ✅ RESOLVED: Placeholder banners added — Guilty As Arrr (XProfile.png), Fallout (hall-of-idols)
 
 ### Pages
 
@@ -30,16 +30,24 @@ Updated: 2026-02-28
 |---|------|-------|--------|-------|
 | 1 | Home | `/` | done | Subtitle dual-track added, $110K surfaced, CTAs parallelized |
 | 2 | About | `/about` | done | Mobile order-swap (graph moves below card), "leveraging" removed, $110K copy cleaned |
-| 3 | Career Hub | `/career` | done | "innovative"/"robust" removed, $110K on Shinobi card, "Explore My Creations" removed |
+| 3 | Career Hub | `/career` | done | "innovative"/"robust" removed, $110K on Shinobi card, "Explore My Creations" removed; Guilty As Arrr banner added |
 | 4 | Shinobi Story | `/projects/shinobi-story` | done | Subtitle rewritten with numbers, section copy specific, stats fallback → null |
 | 5 | CPSE | `/cpse` | done | Nobel Prize in subtitle, stats fallback → null |
 | 6 | VR Interaction Lab | `/projects/vr-interaction-lab` | done | Outcome de-meta'd, UX specifics added |
-| 7 | Fallout Level Design | `/projects/fallout-level-design` | done | Copy already clean — no changes needed |
-| 8 | Creative | `/creative` | done | Stats fallback → null, subtitle specific, CPSE card copy cleaned |
+| 7 | Fallout Level Design | `/projects/fallout-level-design` | done | Copy already clean; placeholder hero banner added |
+| 8 | Creative | `/creative` | done | Stats fallback → null, subtitle specific, CPSE card copy cleaned; virtual-lab section removed |
 | 9 | Resume | `/resume` | done | Subtitle rewritten with specifics, Shinobi Story numbers added |
-| 10 | Remaining projects | `/projects/*` | not started | Blueprint pass — Last Paycheck dark mode hero fix is priority |
+| 10 | Remaining projects | `/projects/*` | done | Blueprint pass: Last Paycheck dark mode fix, subtitles rewritten, "leveraging" removed, duplicate section removed |
+
+## Phase 3: Mobile Pass ✅ DONE
+- [x] All priority pages scanned at 375px dark mode
+- [x] THEME toggle label hidden on mobile (`hidden sm:block`) — breadcrumbs no longer truncated
+- [x] Career Hub Guilty As Arrr card bannerImage added
+- Pages verified: Home, About, Career Hub, CPSE, Shinobi Story, Creative, Resume, VR Drift, Guilty As Arrr, Fallout Level Design
 
 ## Cleanup Log
 - 2026-02-28: Removed OWA browser-save junk from B360 web-captures (114 files)
 - 2026-02-28: Removed shonen-showdown xlsx (23MB), patapon docx (7MB), incomplete doc, leftover html
 - 2026-02-28: Committed Phase 2 polish for pages 1–9 (commits 8d491ff, 89b5c9b)
+- 2026-03-01: Remaining projects blueprint pass — dark mode fix, copy rewrites, banner adds (commits 4c10de6, 3448612, f2e2521)
+- 2026-03-01: Mobile pass — THEME toggle label hidden on mobile, Career Hub Guilty As Arrr banner fixed
