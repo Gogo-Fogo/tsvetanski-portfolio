@@ -3,15 +3,15 @@ import LightboxImage from '@/components/lightbox-image';
 
 const guiltyDocuments = [
   {
-    href: '/documents/_Guilty%20as%20Arrr%20GDD.docx',
+    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-gdd-original.docx',
     label: 'Original GDD',
   },
   {
-    href: '/documents/Guilty%20as%20Arrr!%20GDD%20(ReScoped).docx',
+    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-gdd-rescoped.docx',
     label: 'Rescoped GDD',
   },
   {
-    href: '/documents/Guilty%20as%20Arr%20DGC%20&%20Community.docx',
+    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-dgc-community.docx',
     label: 'DGC & Community Notes',
   },
 ];

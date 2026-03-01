@@ -89,6 +89,18 @@ const projects: Project[] = [
     href: "/projects/fallout-level-design"
   },
   {
+    title: "V4N GOGO Figurine Lab",
+    description: "Independent figurine-making practice documented with Instagram photos and higher-bitrate YouTube process videos.",
+    tags: ["Figurine Sculpting", "Concept Development", "Visual Storytelling"],
+    searchTerms: ["figurine", "figure making", "art channel", "instagram", "youtube", "v4n gogo", "concept track", "llc"],
+    facets: ['art-storytelling'],
+    href: "/projects/v4n-gogo-figurine-lab",
+    bannerImage: "/images/Art_3D.jpg",
+    bannerAlt: "V4N GOGO figurine art collage",
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
     title: "Shinobi Story",
     description: "Narrative action game with content strategy, marketing beats, and player engagement planning.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
@@ -210,6 +222,9 @@ const tagDescriptions: Record<string, string> = {
   'Content Strategy': 'Content planning, cadence, and message alignment for growth.',
   'Narrative Design': 'Story structure, beats, and player-facing narrative framing.',
   'Game Marketing': 'Audience positioning, campaign rollouts, and engagement planning.',
+  'Figurine Sculpting': 'Physical and digital character form development for collectible-scale figure concepts.',
+  'Concept Development': 'Turning early visual ideas into coherent style, shape language, and production-ready direction.',
+  'Visual Storytelling': 'Communicating narrative and personality through composition, form, and art direction.',
   '3D Multiplayer TCG': 'Card game mechanics translated into a networked 3D play space.',
   'Game Systems Design': 'Ruleset architecture, progression curves, and balance foundations.',
   Prototyping: 'Fast concept validation through iterative, playable experiments.',

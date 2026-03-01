@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "description": "AI/recruiter document map for portfolio projects.",
+  "readOrder": [
+    "ai",
+    "recruiter",
+    "source",
+    "supporting",
+    "archive"
+  ],
+  "projects": [
+    {
+      "slug": "b360",
+      "title": "B360 VR Microgames",
+      "folders": {
+        "ai": "projects/b360/ai",
+        "recruiter": "projects/b360/recruiter"
+      }
+    },
+    {
+      "slug": "drift-immersive",
+      "title": "VR Interaction Lab - Drift Immersive",
+      "folders": {
+        "ai": "projects/drift-immersive/ai",
+        "recruiter": "projects/drift-immersive/recruiter"
+      }
+    },
+    {
+      "slug": "fallout-level-design",
+      "title": "Fallout Level Design",
+      "folders": {
+        "ai": "projects/fallout-level-design/ai",
+        "recruiter": "projects/fallout-level-design/recruiter",
+        "supporting": "projects/fallout-level-design/supporting"
+      }
+    },
+    {
+      "slug": "guilty-as-arrr",
+      "title": "Guilty As Arrr",
+      "folders": {
+        "ai": "projects/guilty-as-arrr/ai",
+        "recruiter": "projects/guilty-as-arrr/recruiter"
+      }
+    },
+    {
+      "slug": "patapon-vr-the-first-beat",
+      "title": "Patapon VR - The First Beat",
+      "folders": {
+        "ai": "projects/patapon-vr-the-first-beat/ai",
+        "source": "projects/patapon-vr-the-first-beat/source"
+      }
+    },
+    {
+      "slug": "shonen-showdown",
+      "title": "Shonen Showdown",
+      "folders": {
+        "ai": "projects/shonen-showdown/ai",
+        "recruiter": "projects/shonen-showdown/recruiter",
+        "source": "projects/shonen-showdown/source"
+      }
+    }
+  ],
+  "archive": "archive/misc"
+}

@@ -3,20 +3,16 @@ import LightboxImage from '@/components/lightbox-image';
 
 const falloutDocuments = [
   {
-    href: '/documents/FII_FALLOUT_annotated-GAME37020Project20Milestone.docx.pdf',
+    href: '/documents/projects/fallout-level-design/recruiter/fii-fallout-final-milestone-report.pdf',
     label: 'FII Final Milestone Report',
   },
   {
-    href: '/documents/GAME 370 - Milestone One (1).pdf',
+    href: '/documents/projects/fallout-level-design/recruiter/game-370-milestone-one.pdf',
     label: 'GAME 370 Milestone One (Project Lead)',
   },
   {
-    href: '/documents/TsvetanskiGeorgi_GAME370_ FinalProjectRevisedDesign.pdf',
+    href: '/documents/projects/fallout-level-design/recruiter/game-370-final-project-revised-design.pdf',
     label: 'Revised Design: Hall of Idols',
-  },
-  {
-    href: '/documents/TheFloatingInstitute.esp',
-    label: 'TheFloatingInstitute.esp (Area Build)',
   },
 ];
 

@@ -43,6 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date()
     },
     {
+      url: 'https://tsvetanski.com/projects/v4n-gogo-figurine-lab',
+      lastModified: new Date()
+    },
+    {
       url: 'https://tsvetanski.com/projects/vr-microgames',
       lastModified: new Date()
     },

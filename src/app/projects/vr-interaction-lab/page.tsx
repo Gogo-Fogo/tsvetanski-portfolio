@@ -10,19 +10,19 @@ const driftDemo = {
 
 const driftDocuments = [
   {
-    href: '/documents/Tsvetanski_Georgi_GDD_Drift_Immersive.pdf',
+    href: '/documents/projects/drift-immersive/recruiter/drift-immersive-gdd.pdf',
     label: 'Game Design Document',
   },
   {
-    href: '/documents/Tsvetanski_Georgi_GameFunctionalityandUserInterfaceAnalysis_DriftImmersive.pdf',
+    href: '/documents/projects/drift-immersive/recruiter/drift-immersive-gameplay-ui-analysis.pdf',
     label: 'Gameplay & UI Analysis',
   },
   {
-    href: '/documents/Tsvetanski_Georgi_ProjectStructure_CodeQualityReport_DriftImmersive.pdf',
+    href: '/documents/projects/drift-immersive/recruiter/drift-immersive-code-quality-report.pdf',
     label: 'Code Quality Report',
   },
   {
-    href: '/documents/annotated-final_Drift-Immersive.pptx.pptx.pdf',
+    href: '/documents/projects/drift-immersive/recruiter/drift-immersive-annotated-deck.pdf',
     label: 'Annotated Deck',
   },
 ];

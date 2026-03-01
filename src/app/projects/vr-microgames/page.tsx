@@ -77,7 +77,7 @@ export default function VRMicrogamesCaseStudy() {
                 Read UBalt Story
               </a>
               <a
-                href="/documents/B360_EndOfSemester_Reflection.pdf"
+                href="/documents/projects/b360/recruiter/b360-end-of-semester-reflection.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
