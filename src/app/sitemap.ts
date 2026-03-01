@@ -49,10 +49,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: 'https://tsvetanski.com/projects/vr-microgames',
       lastModified: new Date()
-    },
-    {
-      url: 'https://tsvetanski.com/virtual-lab',
-      lastModified: new Date()
     }
   ];
 }

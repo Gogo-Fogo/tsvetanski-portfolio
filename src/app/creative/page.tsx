@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
-import VirtualLab3DModule from '@/components/virtual-lab-3d-module';
 import VideoCarousel, { type VideoCard } from './video-carousel';
 import { MotionPage } from '@/components/motion-safe';
 
@@ -486,16 +485,6 @@ export default async function Creative() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--accent-cyan)]/35 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow)] space-y-4">
-            <div className="space-y-2">
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Interactive Module</p>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">Virtual Lab 3D Preview</h2>
-              <p className="text-sm text-[var(--muted)] max-w-3xl">
-                Lightweight 3D interaction prototype embedded directly in Creative for fast exploration without leaving this section.
-              </p>
-            </div>
-            <VirtualLab3DModule />
-          </div>
         </section>
       </MotionPage>
     </main>

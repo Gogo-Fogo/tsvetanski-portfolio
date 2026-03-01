@@ -57,6 +57,20 @@ export default function RepoXCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          {/* Hero Banner */}
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="aspect-[21/9] w-full">
+              <LightboxImage
+                src="/images/GuiltyAsArr_XProfile.png"
+                alt="Guilty As Arrr project banner — community-facing X profile"
+                width={2048}
+                height={893}
+                className="h-full w-full object-cover"
+                roundedClassName="rounded-none"
+              />
+            </div>
+          </div>
+
           {/* Overview & Core Mechanic */}
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
