@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Shinobi Story | Georgi Tsvetanski",
-  description: "Led content strategy and live operations for a fan-built Naruto MMORPG — $110K in revenue, 1M+ downloads, 56K players, and a community pipeline spanning five years.",
+  description: "Led content strategy and live operations for a fully custom Naruto MMORPG — complete WoW 3.3.5 client overhaul, original animations, $110K in revenue, 1M+ downloads, 56K players.",
 };
 
 
@@ -140,7 +140,7 @@ export default async function ShinobiStoryPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Shinobi Story</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A fan-built Naruto MMORPG on a modified WoTLK 3.3.5 engine — $110K in revenue, 1M+ downloads, 56K players, 16.5K Discord members. I joined as customer support, shipped content weekly, and ended up mentoring the dev team.
+            A fully custom Naruto MMORPG — the WoW 3.3.5 client was completely overhauled with original character and ability animations, rebuilt systems, and custom gameplay. $110K in revenue, 1M+ downloads, 56K players, 16.5K Discord members. I joined as customer support, contributed animations, shipped content weekly, and ended up mentoring the dev team.
           </p>
         </header>
 
@@ -199,10 +199,10 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Narrative</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Fan-built Naruto MMORPG running on a modified WoTLK 3.3.5 engine — action combat, open world exploration, and narrative design with a cohesive content strategy.
+                Not a mod — the WoW 3.3.5 client was completely overhauled. Original character and ability animations, custom combat systems, and rebuilt gameplay infrastructure made it a fully original product.
               </p>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I started in customer support to learn the live community pulse, then transitioned into development and mentorship. Within a year, I was guiding new developers in scripting, level design, and debugging while shaping content rollouts and training resources.
+                I started in customer support to learn the live community pulse, then transitioned into development. I contributed character and ability animations, guided new developers in scripting, level design, and debugging, and shaped content rollouts and training resources.
               </p>
             </div>
           </div>

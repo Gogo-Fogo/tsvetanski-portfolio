@@ -26,7 +26,7 @@ const skills = [
 const projects = [
   {
     title: "Shinobi Story",
-    description: "Fan-built Naruto MMORPG — $110K revenue, 1M+ downloads, 56K players. Led content design, community, and marketing rollouts over five years.",
+    description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K revenue, 1M+ downloads, 56K players. Led content strategy, contributed animations, and drove community growth.",
     href: "/projects/shinobi-story"
   },
   {
@@ -171,7 +171,7 @@ export default function Resume() {
           <h1 className="text-4xl font-bold tracking-tight mt-4">RESUME</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
             XR and simulation prototyper with a background in live-ops game development and university video production.
-            Built systems, shipped content, and grew a fan-built Naruto MMORPG to $110K in revenue.
+            Contributed animations, shipped content, and grew a fully custom Naruto MMORPG to $110K in revenue.
           </p>
           <p className="text-[var(--muted)] mt-2 text-sm max-w-2xl">
             Targeting entry-level roles in Technical Design, XR Development, Gameplay Engineering, and Technical QA.

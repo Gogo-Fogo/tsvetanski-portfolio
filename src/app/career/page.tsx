@@ -110,7 +110,7 @@ const projects: Project[] = [
   },
   {
     title: "Shinobi Story",
-    description: "Fan-built Naruto MMORPG on a modified WoTLK engine — $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
+    description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
     searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
     facets: ['engineering', 'art-storytelling'],
