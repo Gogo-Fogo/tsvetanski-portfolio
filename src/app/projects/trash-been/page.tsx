@@ -42,7 +42,7 @@ export default function TrashBeenCaseStudy() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been: Urban Logistics</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A successful Breda application project: a platformer where cleaning a polluted city restores color, pace, and player momentum.
+            Built in one week as a Breda application project — a platformer where cleaning a polluted city restores color, pace, and player momentum.
           </p>
         </header>
 

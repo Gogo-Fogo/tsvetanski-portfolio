@@ -17,7 +17,7 @@ export default function TotallyBuggedOutPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">TOTALLY BUGGED OUT</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Prototype FPS · Unity · Solo Project
+            A solo FPS prototype in Unity — spray and throw household objects to clear a cockroach-infested house. Built to explore player-enemy interactions and reactive AI behaviors.
           </p>
         </header>
 
@@ -150,23 +150,13 @@ export default function TotallyBuggedOutPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Tools & Technologies</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Unity (player/enemy systems, WebGL build)</li>
-                <li>- Blender (retopology, prop edits from free Unity kits)</li>
-                <li>- C# (gameplay scripting)</li>
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overcoming Challenges</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Building a responsive throwing system and balancing it against reactive AI was the most complex part of development.
-                I iterated through multiple prototypes to reduce physics clipping and unintended player exploits. Optimizing for smooth
-                WebGL playtesting strengthened both my problem-solving process and technical design judgment.
-              </p>
-            </div>
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Tools & Technologies</h2>
+            <ul className="space-y-2 text-sm text-[var(--muted)]">
+              <li>- Unity (player/enemy systems, WebGL build)</li>
+              <li>- Blender (retopology, prop edits from free Unity kits)</li>
+              <li>- C# (gameplay scripting)</li>
+            </ul>
           </div>
 
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">

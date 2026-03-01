@@ -17,7 +17,7 @@ export default function CrankySquirrelAnnihilatorPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Cranky: The Squirrel Annihilator</h1>
           <p className="text-[var(--muted)] mt-3 max-w-3xl">
-            Prototype Indie Game · Solo Project · Unity
+            A solo Unity prototype — play as a pug chasing squirrels with analog paw controls and physics-driven humor. Rebuilt from the ground up after the 2024 game jam version.
           </p>
         </header>
 

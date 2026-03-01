@@ -23,7 +23,7 @@ export default function TheLastPaycheckPage() {
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="aspect-video w-full">
+            <div className="aspect-video w-full bg-white">
               <LightboxImage
                 src="/images/TheLastPaycheck_Banner.png"
                 alt="The Last Paycheck project banner"

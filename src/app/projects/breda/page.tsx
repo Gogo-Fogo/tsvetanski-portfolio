@@ -154,7 +154,7 @@ export default async function BredaProjectPage() {
                 The tight one-week timeline necessitated rapid scripting, debugging, and iterative playtesting. Observing player engagement during tests was key to shaping the final experience.
               </p>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>- Leveraged visual scripting and template reverse engineering for speed.</li>
+                <li>- Used visual scripting and template reverse engineering to ship faster.</li>
                 <li>- Focused on clear visual communication of gameplay mechanics.</li>
                 <li>- Next steps included leaderboards, procedural variation, and animated cinematics.</li>
               </ul>

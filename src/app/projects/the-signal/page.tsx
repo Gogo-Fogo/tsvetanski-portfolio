@@ -16,7 +16,7 @@ export default function TheSignalPage() {
             className="mb-4"
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">The Signal</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-3xl">TEAM PROJECT | BOARD GAME DESIGN</p>
+          <p className="text-[var(--muted)] mt-3 max-w-3xl">Sci-fi board game built with two teammates — FTL and Darkest Dungeon inspired exploration, procedural room layouts, and a narrative insight system.</p>
           <p className="text-[var(--muted)] mt-1 text-sm">Georgi Tsvetanski, Alex Jeffries, Zefran Jehle</p>
         </header>
 
@@ -243,8 +243,7 @@ export default function TheSignalPage() {
               <li>- Iterating visual communication (icons, cards, board layout) for clarity</li>
             </ul>
             <p className="text-sm text-[var(--muted)] leading-relaxed mt-4">
-              This project strengthened my collaborative problem-solving, systems balancing, iterative playtesting, and player
-              experience design workflow.
+              Built and playtested a complete physical board game from concept to final build within one semester.
             </p>
             <a
               href="https://docs.google.com/spreadsheets/d/1lhhB8pDsiwd-MkOLUejhbkQfkNkfXh6KfUYBQohW_Mk/edit?gid=0#gid=0"

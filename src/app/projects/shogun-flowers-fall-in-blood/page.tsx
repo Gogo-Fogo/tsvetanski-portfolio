@@ -17,7 +17,7 @@ export default function ShogunFlowersFallInBloodPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Shogun: Flowers Fall in Blood</h1>
           <p className="text-[var(--muted)] mt-3 max-w-3xl">
-            Solo Project — Mobile Tactical RPG Prototype — Unity
+            A mobile tactical RPG prototype built in Unity — grid-based combat inspired by Naruto Blazing and Ronin: The Last Samurai. Backed by a full studio-style GDD, systems audit, and playable prototype.
           </p>
         </header>
 
@@ -113,7 +113,7 @@ export default function ShogunFlowersFallInBloodPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Technical GDD</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-                I authored a studio-style Game Design Document that covers everything from LiveOps and monetization to combat loop class archetypes.
+                I authored a studio-style Game Design Document covering LiveOps structure, monetization models, and combat loop class archetypes.
               </p>
               <a
                 href="https://docs.google.com/document/d/1H1RVHiRcTWC9bKdPeEIab16GYU6gXJxJ2aQxmZIGaZg/edit?tab=t.0#heading=h.p4vrpp5ibll6"
