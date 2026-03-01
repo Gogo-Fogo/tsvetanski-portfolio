@@ -11,7 +11,7 @@ export type VideoCard = {
   embedUrl: string;
   thumbnailUrl: string;
   note: string;
-  statsText: string;
+  statsText: string | null;
   hoverClassName?: string;
   className?: string;
 };
@@ -120,7 +120,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
               {featured.title}
             </a>
             <p className="text-xs text-[var(--muted)] mt-1">{featured.note}</p>
-            <p className="mt-2 text-xs text-[var(--muted)]">{featured.statsText}</p>
+            {featured.statsText ? <p className="mt-2 text-xs text-[var(--muted)]">{featured.statsText}</p> : null}
           </div>
         </div>
       )}
@@ -196,7 +196,7 @@ export default function VideoCarousel({ items, featuredVariant = 'default' }: Vi
                     {video.title}
                   </a>
                   <span className="text-xs text-[var(--muted)] block">{video.note}</span>
-                  <span className="mt-2 block text-xs text-[var(--muted)]">{video.statsText}</span>
+                  {video.statsText ? <span className="mt-2 block text-xs text-[var(--muted)]">{video.statsText}</span> : null}
                 </div>
               </div>
             ))}

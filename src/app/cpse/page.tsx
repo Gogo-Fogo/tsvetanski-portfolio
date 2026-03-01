@@ -106,7 +106,7 @@ export default async function CpsePage() {
     const viewCount = formatCount(stats?.viewCount);
     const likeCount = formatCount(stats?.likeCount);
 
-    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : 'Stats unavailable';
+    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : null;
   };
 
   const getTitle = (embedUrl: string, fallbackTitle: string) => {
@@ -132,8 +132,7 @@ export default async function CpsePage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">UMD CPSE EXPERIENCE</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Highlights from two consecutive roles supporting the UMD Cyber-Physical Systems Engineering program, spanning content creation,
-            social strategy, and full-cycle video production.
+            Two consecutive roles at UMD CPSE — social media strategy, interview production, and a summer program video that brought in a Nobel Prize–winning physicist as a guest.
           </p>
         </header>
 
@@ -155,8 +154,7 @@ export default async function CpsePage() {
               <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Sep 2023 – May 2024</span>
             </div>
             <p className="text-sm text-[var(--muted)] mt-4">
-              Work included translating technical IoT/cyber-physical systems work into audience-friendly media, running social content pipelines,
-              and producing recruitment-oriented program narratives.
+              Work included translating technical IoT/cyber-physical systems research into audience-friendly media, running weekly social content pipelines, and producing recruitment videos for the program.
             </p>
           </div>
 
@@ -188,7 +186,7 @@ export default async function CpsePage() {
                     {featuredTitle}
                   </a>
                   <p className="text-sm text-[var(--muted)] mt-1">{featuredVideo.note}</p>
-                  <p className="text-xs text-[var(--muted)] mt-2">{getStatsText(featuredVideo.embedUrl)}</p>
+                  {getStatsText(featuredVideo.embedUrl) ? <p className="text-xs text-[var(--muted)] mt-2">{getStatsText(featuredVideo.embedUrl)}</p> : null}
                 </div>
               </div>
             </div>
@@ -257,7 +255,7 @@ export default async function CpsePage() {
                         {getTitle(video.embedUrl, video.title)}
                       </a>
                       <span className="text-xs text-[var(--muted)] block">{video.note}</span>
-                      <span className="text-xs text-[var(--muted)] block mt-1">{statsText}</span>
+                      {statsText ? <span className="text-xs text-[var(--muted)] block mt-1">{statsText}</span> : null}
                     </div>
                   </div>
                 );

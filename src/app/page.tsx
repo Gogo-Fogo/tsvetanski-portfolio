@@ -28,6 +28,7 @@ export default function Home() {
             </h1>
             <div className="text-base sm:text-lg text-[var(--muted)] max-w-2xl space-y-2">
               <p>Spatial interaction prototyper for XR + simulation.</p>
+              <p className="text-sm sm:text-base opacity-75">Cinematic storyteller on the side.</p>
             </div>
           </div>
         </div>
@@ -42,7 +43,7 @@ export default function Home() {
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
               <li>Spatial interaction systems</li>
               <li>Simulation and gameplay engineering</li>
-              <li>Technical project case studies</li>
+              <li>Shipped commercial work — $110K revenue</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
               View Projects →
@@ -59,10 +60,10 @@ export default function Home() {
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
               <li>Cinematic edits and trailers</li>
               <li>Interview and outreach media</li>
-              <li>Narrative communication work</li>
+              <li>Recruitment and event video production</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-              Explore Videography & Storytelling →
+              Explore Creative Work →
             </div>
             <span className="mt-6 block h-px w-14 bg-[var(--accent-orange)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>

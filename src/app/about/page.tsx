@@ -16,18 +16,16 @@ export default function About() {
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-            <div className="relative">
+            <div className="relative order-2 lg:order-1">
               <DegreeGraph
-                className="h-[300px] lg:h-[460px] w-full transition-all duration-300"
+                className="h-[220px] lg:h-[460px] w-full transition-all duration-300"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent lg:hidden pointer-events-none" />
             </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-8 shadow-[var(--shadow)]">
+            <div className="order-1 lg:order-2 border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-8 shadow-[var(--shadow)]">
               <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
               <p className="text-[var(--muted)] leading-relaxed">
                 Bridging the gap between <span className="text-[var(--foreground)] font-medium">Technical Engineering</span> and <span className="text-[var(--foreground)] font-medium">Human Factors</span>. 
-                I specialize in rapid, high-fidelity spatial interaction prototyping, leveraging AI-assisted development workflows to deliver 
-                simulation-grade results at startup speeds.
+                I specialize in rapid, high-fidelity spatial interaction prototyping. AI-assisted workflows let me move at startup speed without sacrificing engineering rigor.
               </p>
               <p className="text-[var(--muted)] leading-relaxed mt-3">
                 I build immersive systems and responsive gameplay in Unity (C#), from physics-driven prototypes to commercial outcomes,
@@ -41,9 +39,9 @@ export default function About() {
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Commercial Success</h2>
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl px-8 py-6 shadow-[var(--shadow)]">
             <h3 className="text-3xl font-bold italic">Shinobi Story</h3>
-            <p className="text-5xl font-black mt-3 tracking-tight">$110,000.00 REVENUE</p>
+            <p className="text-5xl font-black mt-3 tracking-tight">$110,000 REVENUE</p>
             <p className="mt-4 text-[var(--muted)] max-w-md">
-              Led development and systems design. Shipped and monetized a high-engagement interactive experience with sustained live-ops growth.
+              Led development and systems design. Shipped weekly content updates, ran live events, and managed the community pipeline.
             </p>
           </div>
         </section>
@@ -87,8 +85,7 @@ export default function About() {
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Core Identity</h2>
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-6 shadow-[var(--shadow)]">
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Focused on human-centered simulation systems that balance performance, clarity, and usability in spatial workflows.
-                Detailed skills and experience live in the Resume section.
+                The specifics are in the Resume. The work is in the projects.
               </p>
             </div>
 

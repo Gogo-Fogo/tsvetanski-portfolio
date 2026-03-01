@@ -100,7 +100,7 @@ export default async function ShinobiStoryPage() {
     const viewCount = formatCount(stats?.viewCount);
     const likeCount = formatCount(stats?.likeCount);
 
-    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : 'Stats unavailable';
+    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : null;
   };
 
   const getTitle = (embedUrl: string, fallbackTitle: string) => {
@@ -132,8 +132,7 @@ export default async function ShinobiStoryPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Shinobi Story</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A ninja-focused action game experience with a content strategy and marketing rollout that supported growth,
-            community engagement, and cinematic storytelling.
+            A Roblox ninja action game — $110K in revenue, 68K registered users, 16.5K Discord members. I joined as customer support, shipped content weekly, and ended up mentoring the dev team.
           </p>
         </header>
 
@@ -159,7 +158,7 @@ export default async function ShinobiStoryPage() {
                 Featured Video Highlight
               </h2>
               <p className="text-sm text-[var(--muted)]">
-                Personal highlight: this Shinobi Story video is the main showcase.
+                The main showcase video — start here.
               </p>
             </div>
             <div className="relative z-10">
@@ -217,7 +216,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Marketing Rollouts</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I designed marketing beats and promotional materials that aligned with major content drops, ensuring maximum community engagement and user retention during peak development cycles.
+                I built promo materials timed to major content drops — update trailers, event graphics, and community announcements designed around peak player activity windows.
               </p>
             </div>
           </div>
@@ -227,7 +226,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Content Planning</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Developed a new content strategy that mapped player progression to specific narrative beats. This ensured a steady flow of &quot;must-play&quot; content for both new users and the veteran community.
+                I mapped content drops to player progression milestones — quests, story beats, and seasonal events timed to keep both new players and 5-year veterans coming back.
               </p>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
@@ -261,7 +260,7 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual & Technical Polish</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Beyond content, I drove visual fidelity improvements across the game world. This &quot;before and after&quot; workflow became the standard for auditing community-created levels and official content alike.
+                I built a before/after audit workflow to standardize level quality — reviewing community-created areas against official content benchmarks.
               </p>
               <p className="text-sm text-[var(--muted)] leading-relaxed font-medium text-[var(--foreground)]">
                 Focus: Environmental lighting, asset density, and player pathfinding clarity.

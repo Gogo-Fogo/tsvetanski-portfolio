@@ -102,7 +102,7 @@ const projects: Project[] = [
   },
   {
     title: "Shinobi Story",
-    description: "Narrative action game with content strategy, marketing beats, and player engagement planning.",
+    description: "Roblox ninja action game. Led content strategy and community — grew it to $110K in revenue.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
     searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
     facets: ['engineering', 'art-storytelling'],
@@ -115,7 +115,7 @@ const projects: Project[] = [
   },
   {
     title: "Shonen TCG Game",
-    description: "Developing a robust 3D multiplayer trading card game prototype.",
+    description: "Building a 3D networked trading card game prototype with animated spell interactions.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Prototyping"],
     searchTerms: ["card game", "tcg", "anime", "prototype"],
     facets: ['engineering', 'art-storytelling'],
@@ -123,7 +123,7 @@ const projects: Project[] = [
   },
   {
     title: "VR Patapon Game",
-    description: "Conceptualizing an innovative VR rhythm-strategy game.",
+    description: "Designing a VR rhythm-strategy game based on Patapon — timing-based tactics in immersive space.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
@@ -467,11 +467,8 @@ function CareerContent() {
         <section className="mt-16 border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Side Projects</h2>
           <p className="text-sm text-[var(--muted)] max-w-3xl">
-            Experimental prototypes and independent builds that combine 3D art, game systems design, and rapid technical iteration.
-            These projects are where I test mechanics, interaction ideas, and production workflows before moving concepts into more formal case studies.
+            Experimental prototypes and independent builds — where I test mechanics, interaction ideas, and production workflows.
           </p>
-
-          <h3 className="mt-8 text-[10px] font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Explore My Creations</h3>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSideProjects.map((project) => (
               <article

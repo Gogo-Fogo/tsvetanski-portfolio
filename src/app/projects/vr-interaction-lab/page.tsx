@@ -117,7 +117,7 @@ export default function VRInteractionLabCaseStudy() {
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">UX Evaluation:</span>
-                  Analyzed game functionality and interface behavior to reduce friction and improve clarity.
+                  Documented interface behavior and control response — identifying friction points in cockpit layout, gear feedback, and camera comfort.
                 </li>
               </ul>
             </div>
@@ -180,7 +180,7 @@ export default function VRInteractionLabCaseStudy() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Outcome</h2>
             <p className="text-[var(--muted)] text-sm">
-              Delivered a playable drift simulation slice with documented design rationale, functionality analysis, and technical reporting to support future iteration and portfolio presentation.
+              Delivered a playable drift simulation with documented design rationale, functionality analysis, and code-quality reporting across four recruiter-ready PDFs.
             </p>
           </div>
 
