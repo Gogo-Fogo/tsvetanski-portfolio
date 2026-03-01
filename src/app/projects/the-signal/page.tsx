@@ -136,7 +136,7 @@ export default function TheSignalPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual Production</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-                I managed the visual asset pipeline, combining custom iconography with high-fidelity stock assets to create an oppressive, decaying sci-fi aesthetic.
+                I managed the visual asset pipeline, combining custom iconography with licensed stock assets to create an oppressive, decaying sci-fi aesthetic.
               </p>
               <ul className="space-y-2 text-sm text-[var(--muted)]">
                 <li>- Photoshop-driven board & tile creation</li>

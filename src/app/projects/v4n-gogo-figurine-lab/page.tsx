@@ -56,8 +56,8 @@ export default function V4NGogoFigurineLabPage() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">V4N GOGO Figurine Lab</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            Personal figurine-making and concept-art channel focused on character form, visual storytelling, and iterative craft.
-            Photos are published on Instagram, and videos are published on YouTube for better bitrate and playback quality.
+            Personal figurine-making and concept-art channel — character form, visual storytelling, iterative craft.
+            Photos on Instagram; process videos on YouTube.
           </p>
         </header>
 
