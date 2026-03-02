@@ -31,8 +31,8 @@ export default function CrankyGameJamPage() {
 
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="h-56 md:h-64 w-full overflow-hidden">
+          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
+            <div className="aspect-video w-full">
               <LightboxImage
                 src="/images/Cranky_GameJam_Banner_2024.jpg"
                 alt="Cranky Game Jam 2024 banner"
