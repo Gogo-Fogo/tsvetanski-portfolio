@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
+import CrankyPugViewer from '@/components/cranky-pug-viewer';
 
 import type { Metadata } from 'next';
 
@@ -32,7 +33,7 @@ export default function CrankySquirrelAnnihilatorPage() {
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="aspect-video w-full">
+            <div className="h-52 md:h-64 w-full">
               <LightboxImage
                 src="/images/CrankyTheSquirrelAnnihilator_banner.png"
                 alt="Cranky: The Squirrel Annihilator banner"
@@ -66,18 +67,7 @@ export default function CrankySquirrelAnnihilatorPage() {
               </a>
             </div>
 
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-square w-full">
-                <LightboxImage
-                  src="/images/Cranky_Face_2.png"
-                  alt="Cranky face close-up"
-                  width={1200}
-                  height={1200}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                />
-              </div>
-            </div>
+            <CrankyPugViewer />
           </div>
 
           {/* Gameplay Mechanics */}
