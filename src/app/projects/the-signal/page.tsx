@@ -31,7 +31,7 @@ export default function TheSignalPage() {
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="aspect-[2/1] md:aspect-[5/2] w-full">
+            <div className="h-56 md:h-64 w-full overflow-hidden">
               <LightboxImage
                 src="/images/Banner_TheSignal.jpg"
                 alt="The Signal board game banner"

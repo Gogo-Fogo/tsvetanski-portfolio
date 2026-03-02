@@ -74,7 +74,7 @@ export default function CrankyPugViewer() {
         ) : (
           <Canvas
             dpr={[1, 1.5]}
-            camera={{ position: [0, 1.5, 3.0], fov: 36 }}
+            camera={{ position: [0, 1.9, 3.8], fov: 36 }}
             frameloop={reducedMotion ? "demand" : "always"}
           >
             <color attach="background" args={["#0b1220"]} />
