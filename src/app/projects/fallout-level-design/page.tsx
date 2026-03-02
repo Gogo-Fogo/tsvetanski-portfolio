@@ -173,7 +173,7 @@ export default function FalloutLevelDesignCaseStudy() {
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="h-52 md:h-64 w-full">
+            <div className="aspect-[2/1] md:aspect-[5/2] w-full">
               <LightboxImage
                 src="/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png"
                 alt="Hall of Idols puzzle chamber — Fallout 4 level design"
