@@ -107,9 +107,10 @@ export default function CommandPalette() {
         className="fixed bottom-4 left-4 z-50 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-strong)]"
         aria-label="Open command palette"
       >
-        <span>Command</span>
+        <span className="hidden sm:inline">Command</span>
         <span className="rounded border border-[var(--border)] px-2 py-0.5 text-[10px] tracking-[0.1em] text-[var(--muted)]">
-          Ctrl/⌘ K
+          <span className="sm:hidden">⌘K</span>
+          <span className="hidden sm:inline">Ctrl/⌘ K</span>
         </span>
       </button>
 

@@ -32,14 +32,24 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
-        <div className="mt-5 sm:mt-6 lg:mt-8 grid w-full max-w-4xl gap-5 sm:gap-6 md:grid-cols-2">
+
+        <Link
+          href="/about"
+          className="group flex flex-col items-center gap-2"
+        >
+          <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 py-3 text-sm font-medium tracking-wide text-[var(--muted)] shadow-[var(--shadow)] transition-all duration-300 group-hover:text-[var(--foreground)] group-hover:-translate-y-0.5 group-hover:shadow-[var(--shadow-strong)]">
+            About &amp; Resume →
+          </span>
+          <span className="h-px w-8 bg-gradient-to-r from-[var(--accent-cyan)] to-[var(--accent-orange)] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-24" />
+        </Link>
+
+        <div className="grid w-full max-w-4xl gap-5 sm:gap-6 md:grid-cols-2">
           <Link
             href="/career"
-            className="group rounded-3xl border border-transparent bg-[var(--surface)] p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
+            className="group rounded-3xl border border-transparent bg-[var(--surface)] p-5 sm:p-7 lg:p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
           >
             <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Primary Focus</p>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">XR Simulation Engineering</h2>
+            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">XR Simulation Engineering</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
               <li>Spatial interaction systems</li>
               <li>Simulation and gameplay engineering</li>
@@ -53,10 +63,10 @@ export default function Home() {
 
           <Link
             href="/creative"
-            className="group rounded-3xl border border-transparent bg-[var(--surface)] p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
+            className="group rounded-3xl border border-transparent bg-[var(--surface)] p-5 sm:p-7 lg:p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
           >
             <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Secondary Focus</p>
-            <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Storytelling</h2>
+            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Storytelling</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
               <li>Cinematic edits and trailers</li>
               <li>Interview and outreach media</li>
@@ -68,13 +78,6 @@ export default function Home() {
             <span className="mt-6 block h-px w-14 bg-[var(--accent-orange)] opacity-40 transition group-hover:opacity-90"></span>
           </Link>
         </div>
-
-        <nav className="flex flex-wrap justify-center gap-6 sm:gap-7 pt-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
-          <Link href="/about" className="group flex flex-col items-center">
-            <span className="transition-colors group-hover:text-[var(--foreground)]">About</span>
-            <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
-          </Link>
-        </nav>
 
         <section className="mt-5 sm:mt-6 lg:mt-8 w-full max-w-3xl border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-6 lg:p-7 shadow-[var(--shadow)]">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4 text-center">Connect</h2>

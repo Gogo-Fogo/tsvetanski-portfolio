@@ -167,9 +167,9 @@ export default function About() {
         {/* ── Commercial Success ── */}
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Commercial Success</h2>
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl px-8 py-6 shadow-[var(--shadow)]">
-            <h3 className="text-3xl font-bold italic">Shinobi Story</h3>
-            <p className="text-5xl font-black mt-3 tracking-tight">$110,000 REVENUE</p>
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl px-5 py-5 sm:px-8 sm:py-6 shadow-[var(--shadow)]">
+            <h3 className="text-2xl sm:text-3xl font-bold italic">Shinobi Story</h3>
+            <p className="text-4xl sm:text-5xl font-black mt-3 tracking-tight">$110,000 REVENUE</p>
             <p className="mt-4 text-[var(--muted)] max-w-md">
               Contributed character and ability animations, shipped weekly content, ran live events, and managed the community pipeline on a fully custom Naruto MMORPG.
             </p>
@@ -210,15 +210,15 @@ export default function About() {
         {/* ── Experience ── */}
         <section className="mb-16">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Experience</h2>
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-8 shadow-[var(--shadow)]">
             <div className="space-y-6 text-sm text-[var(--muted)]">
               {experience.map((item) => (
                 <div key={`${item.role}-${item.period}`}>
-                  <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-start justify-between gap-1">
                     <p className="font-semibold text-[var(--foreground)]">{item.role}</p>
-                    <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">{item.period}</span>
+                    <span className="text-xs font-mono uppercase tracking-[0.15em] text-[var(--muted)] shrink-0">{item.period}</span>
                   </div>
-                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--muted)]">{item.org}</p>
+                  <p className="text-xs font-mono uppercase tracking-[0.1em] sm:tracking-[0.2em] text-[var(--muted)]">{item.org}</p>
                   <ul className="mt-2 space-y-1">
                     {item.highlights.map((point) => (
                       <li key={point}>- {point}</li>
@@ -309,7 +309,7 @@ export default function About() {
 
         {/* ── Certifications & Honors ── */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Certifications</h2>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
               <li>- Design Powered by Data: Getting Started with UX Web Analytics (LinkedIn, Dec 2024)</li>
@@ -322,7 +322,7 @@ export default function About() {
               <li>- Bulgarian Language Proficiency (CEFR Level B2) (Sofia University St. Kliment Ohridski, May 2019)</li>
             </ul>
           </div>
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Honors & Awards</h2>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
               <li>- Dean&apos;s List – Honors (College of Public Affairs / Yale Gordon College of Arts and Sciences, Jan 2026)</li>
