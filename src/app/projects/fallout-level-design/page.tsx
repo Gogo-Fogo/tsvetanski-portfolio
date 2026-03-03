@@ -40,6 +40,13 @@ const falloutEvidenceImages = [
     caption: 'Technique summary section including Creation Kit implementation notes and integration workflow.',
   },
   {
+    src: '/images/projects/fallout/fallout-page-03.png',
+    alt: 'Milestone report page with peer challenge notes and team problem-solving',
+    width: 1224,
+    height: 1584,
+    caption: 'Team challenges section — peer accounts of merge conflicts, visual bugs, and shared debugging.',
+  },
+  {
     src: '/images/projects/fallout/fallout-page-04.png',
     alt: 'Milestone report page focused on technical challenges and project reflection',
     width: 1224,
@@ -57,11 +64,11 @@ const falloutEvidenceImages = [
 
 const milestoneOneImages = [
   {
-    src: '/images/projects/fallout/milestone-one/milestone-one-p02-img01.png',
-    alt: 'Creation Kit editor view for Ashen Vale Hall of Idols puzzle space',
-    width: 1717,
-    height: 1388,
-    caption: 'Creation Kit editor workflow for the Hall of Idols puzzle room in Milestone One.',
+    src: '/images/projects/fallout/initial-design/initial-design-p02-img01.png',
+    alt: 'Sun Chamber top-down design layout with platform positions and puzzle flow',
+    width: 1534,
+    height: 993,
+    caption: 'Sun Chamber layout diagram: platforms, trap zones, retrieval objective, and collapse trigger after idol is taken.',
   },
   {
     src: '/images/projects/fallout/milestone-one/milestone-one-p01-img01.png',
@@ -231,11 +238,12 @@ export default function FalloutLevelDesignCaseStudy() {
             </div>
           </div>
 
+          {/* Technical Workflow — text + editor screenshot side by side */}
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Technical Workflow</h2>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div>
-                <p className="mb-4 text-sm leading-relaxed text-[var(--muted)]">
+              <div className="flex flex-col gap-6">
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
                   I used Blender, NifSkope, and B.A.E. (Bethesda Archive Extractor) to understand mesh and collision edits, then implemented
                   and tested the level in Creation Kit with load doors and XMarkerHeading markers for reliable inter-cell traversal.
                 </p>
@@ -243,9 +251,7 @@ export default function FalloutLevelDesignCaseStudy() {
                   For testing and iteration, I used in-engine commands like <span className="font-medium text-[var(--foreground)]">coc</span> and{' '}
                   <span className="font-medium text-[var(--foreground)]">tgm</span> to quickly jump through cells and isolate visual and runtime issues.
                 </p>
-              </div>
-              <div>
-                <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <ul className="space-y-1.5 text-sm text-[var(--muted)]">
                   <li>- Fallout 4 Creation Kit</li>
                   <li>- Blender</li>
                   <li>- NifSkope</li>
@@ -253,6 +259,17 @@ export default function FalloutLevelDesignCaseStudy() {
                   <li>- Load doors + XMarkerHeading for cell continuity</li>
                   <li>- Room bounds and portals for render scope control</li>
                 </ul>
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+                <LightboxImage
+                  src="/images/projects/fallout/milestone-one/milestone-one-p02-img01.png"
+                  alt="Creation Kit editor view for Ashen Vale Hall of Idols puzzle space"
+                  width={1717}
+                  height={1388}
+                  className="h-full w-full object-cover"
+                  popupCaption="Creation Kit editor workflow for the Hall of Idols puzzle room — object placement, door links, and room bound setup."
+                  roundedClassName="rounded-none"
+                />
               </div>
             </div>
           </div>
