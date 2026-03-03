@@ -42,7 +42,7 @@ type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
 
 const filterOptions: { value: ProjectFilter; label: string }[] = [
   { value: 'all', label: 'All Projects' },
-  { value: 'engineering', label: 'Technical Implementation' },
+  { value: 'engineering', label: 'Game Engineering' },
   { value: 'xr', label: 'VR/XR Interaction' },
   { value: 'art-storytelling', label: 'Design & Storytelling' },
 ];
@@ -135,6 +135,7 @@ const projects: Project[] = [
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
+    href: '/projects/patapon-vr-the-first-beat',
     type: 'prototype'
   }
 ];
