@@ -180,18 +180,6 @@ const projects: Project[] = [
     bannerHeight: 900
   },
   {
-    title: "V4N GOGO Figurine Lab",
-    description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
-    tags: ["Figurine Sculpting", "Concept Development", "Visual Storytelling"],
-    searchTerms: ["figurine", "figure making", "art channel", "instagram", "youtube", "v4n gogo", "concept track", "llc"],
-    facets: ['art-storytelling'],
-    href: "/projects/v4n-gogo-figurine-lab",
-    bannerImage: "/images/Art_3D.jpg",
-    bannerAlt: "V4N GOGO figurine art collage",
-    bannerWidth: 1600,
-    bannerHeight: 900
-  },
-  {
     title: "VR Patapon Game",
     description: "Designing a VR rhythm-strategy game based on Patapon — timing-based tactics in immersive space.",
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],

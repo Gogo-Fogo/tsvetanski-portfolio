@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/components/breadcrumbs';
+import InstagramGrid from '@/components/instagram-grid';
 
 import type { Metadata } from 'next';
 
@@ -13,6 +14,22 @@ const profileLinks = {
   youtube: 'https://www.youtube.com/@v4n_gogo',
   conceptTrackFaq: 'https://shadygrove.usmd.edu/academics/faq',
 };
+
+const youtubeShorts = [
+  'rR83laKg7MM',
+  'IJKsUegf6xo',
+  'CxWfmaZat_g',
+  'APO4Cfk-8G0',
+  'UAwoRD7nFaY',
+  'MEPPntSmgoE',
+  '0Agb3PO1sgs',
+];
+
+const instagramPosts = [
+  'https://www.instagram.com/p/DMbttH9RBed/',
+  'https://www.instagram.com/p/DFh7DlAxUNC/',
+  'https://www.instagram.com/p/DEdgZLMRETF/',
+];
 
 
 export default function V4NGogoFigurineLabPage() {
@@ -40,6 +57,68 @@ export default function V4NGogoFigurineLabPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          {/* Videos — lead with media */}
+          <div>
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Videos</h2>
+                <p className="mt-1.5 text-sm text-[var(--muted)]">
+                  Process clips and figure demos from{' '}
+                  <span className="text-[var(--foreground)]">@v4n_gogo</span> on YouTube.
+                </p>
+              </div>
+              <a
+                href={profileLinks.youtube}
+                target="_blank"
+                rel="noreferrer"
+                className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+              >
+                Full channel →
+              </a>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {youtubeShorts.map((id) => (
+                <div
+                  key={id}
+                  className="overflow-hidden rounded-xl bg-black"
+                  style={{ aspectRatio: '9/16' }}
+                >
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${id}`}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                    title="YouTube Short"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent Work — Instagram */}
+          <div>
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Recent Work</h2>
+                <p className="mt-1.5 text-sm text-[var(--muted)]">
+                  Figure stills and WIP captures from{' '}
+                  <span className="text-[var(--foreground)]">@v4n_gogo</span> on Instagram.
+                </p>
+              </div>
+              <a
+                href={profileLinks.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+              >
+                @v4n_gogo →
+              </a>
+            </div>
+            <InstagramGrid permalinks={instagramPosts} />
+          </div>
+
+          {/* Context */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">How It Started</h2>
@@ -63,51 +142,18 @@ export default function V4NGogoFigurineLabPage() {
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Where To Follow</h2>
-              <div className="space-y-4">
-                <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Photos</p>
-                  <p className="mt-2 text-sm text-[var(--muted)]">Instagram archive for stills, WIP captures, and finished figure shots.</p>
-                  <a
-                    href={profileLinks.instagram}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-3 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
-                  >
-                    Open Instagram
-                  </a>
-                </div>
-                <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Videos</p>
-                  <p className="mt-2 text-sm text-[var(--muted)]">
-                    YouTube uploads for process clips and motion demos with better bitrate than social reposts.
-                  </p>
-                  <a
-                    href={profileLinks.youtube}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-3 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
-                  >
-                    Open YouTube
-                  </a>
-                </div>
-              </div>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What I Make</h2>
+              <ul className="space-y-2 text-sm text-[var(--muted)]">
+                <li>— Statuette design and 3D printing (FDM & resin)</li>
+                <li>— Hand painting and finishing (priming, layering, weathering)</li>
+                <li>— LED integration — lighting rigs embedded directly in figures</li>
+                <li>— Custom button and electronics systems for interactive pieces</li>
+                <li>— Ongoing publishing cadence through Instagram + YouTube</li>
+              </ul>
             </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What I Make</h2>
-            <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>— Statuette design and 3D printing (FDM & resin)</li>
-              <li>— Hand painting and finishing (priming, layering, weathering)</li>
-              <li>— LED integration — lighting rigs embedded directly in figures</li>
-              <li>— Custom button and electronics systems for interactive pieces</li>
-              <li>— Ongoing publishing cadence through Instagram + YouTube</li>
-            </ul>
           </div>
         </section>
       </div>
     </main>
   );
 }
-

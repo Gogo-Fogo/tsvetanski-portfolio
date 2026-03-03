@@ -1,5 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import DocViewer from '@/components/doc-viewer';
+import type { DocPage, DocOutlineItem } from '@/components/doc-viewer';
 
 import type { Metadata } from 'next';
 
@@ -129,6 +131,14 @@ const hallOfIdolsRevisedImages = [
     height: 1085,
     caption: 'Interactive statue placeholder tuned for rotate-on-activation behavior and readability.',
   },
+];
+
+const falloutEvidenceOutline: DocOutlineItem[] = [
+  { heading: 'Team Contributions', pageIndex: 0 },
+  { heading: 'Required Techniques', pageIndex: 1 },
+  { heading: 'Team Challenges', pageIndex: 2 },
+  { heading: 'My Challenges', pageIndex: 3 },
+  { heading: 'Runtime Strategy', pageIndex: 4 },
 ];
 
 const falloutLearningReferences = [
@@ -362,29 +372,18 @@ export default function FalloutLevelDesignCaseStudy() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Milestone Evidence</h2>
-            <p className="mb-6 text-sm text-[var(--muted)]">
+          {/* Milestone Evidence — document viewer */}
+          <div>
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Milestone Evidence</h2>
+            <p className="mb-5 text-sm text-[var(--muted)]">
               Excerpts from the FII final milestone submission documenting role ownership, technical decisions, and runtime-control strategy.
             </p>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {falloutEvidenceImages.map((image) => (
-                <div
-                  key={image.src}
-                  className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]"
-                >
-                  <LightboxImage
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    className="h-auto w-full object-cover"
-                    popupCaption={image.caption}
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-              ))}
-            </div>
+            <DocViewer
+              title="FII Final Milestone Report"
+              description="Role ownership, technical decisions, and runtime-control strategy — excerpts from the final team submission."
+              pages={falloutEvidenceImages as DocPage[]}
+              outline={falloutEvidenceOutline}
+            />
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
@@ -425,6 +424,7 @@ export default function FalloutLevelDesignCaseStudy() {
               ))}
             </ul>
           </div>
+
         </section>
       </div>
     </main>
