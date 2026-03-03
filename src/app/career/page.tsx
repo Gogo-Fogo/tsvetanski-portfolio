@@ -49,39 +49,15 @@ const projects: Project[] = [
   },
   {
     title: "Guilty As Arrr",
-    description: "Led VR multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
+    description: "Led multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering'],
     href: "/projects/repo-x",
-    bannerImage: "/images/projects/guilty-as-arr/captain-title.png",
-    bannerAlt: "Guilty As Arrr — first-person ship deck",
+    bannerImage: "/images/GuiltyAsArr_Playtest.png",
+    bannerAlt: "Guilty As Arrr — playtest highlight image",
     bannerWidth: 2705,
     bannerHeight: 1097
-  },
-  {
-    title: "Shonen Showdown",
-    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
-    tags: ["3D Multiplayer TCG", "Game Systems Design", "Photon Fusion 2"],
-    searchTerms: ["card game", "tcg", "anime", "prototype", "shonen", "unity", "networking"],
-    facets: ['engineering', 'art-storytelling'],
-    href: "/projects/shonen-showdown",
-    bannerImage: "/images/projects/shonen-showdown/duel-fp-01.png",
-    bannerAlt: "Shonen Showdown — first-person duel view",
-    bannerWidth: 1705,
-    bannerHeight: 691
-  },
-  {
-    title: "VR Car Drift Simulator",
-    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
-    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
-    searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
-    facets: ['engineering', 'xr'],
-    href: "/projects/vr-interaction-lab",
-    bannerImage: "/images/drift-immersive-banner.jpg",
-    bannerAlt: "Close-up yellow sports car drifting through a night tunnel environment",
-    bannerWidth: 738,
-    bannerHeight: 351
   },
   {
     title: "VR Dirt Bike Game",
@@ -94,6 +70,30 @@ const projects: Project[] = [
     bannerAlt: "B-360 VR dirt bike simulator preview",
     bannerWidth: 1600,
     bannerHeight: 900
+  },
+  {
+    title: "VR Car Drift Simulator",
+    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
+    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
+    facets: ['engineering', 'xr'],
+    href: "/projects/vr-interaction-lab",
+    bannerImage: "/images/DriftImmersive_Banner.png",
+    bannerAlt: "Chase-camera drift shot on a lit city expressway",
+    bannerWidth: 1366,
+    bannerHeight: 768
+  },
+  {
+    title: "Shonen Showdown",
+    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
+    tags: ["3D Multiplayer TCG", "Game Systems Design", "Photon Fusion 2"],
+    searchTerms: ["card game", "tcg", "anime", "prototype", "shonen", "unity", "networking"],
+    facets: ['engineering', 'art-storytelling'],
+    href: "/projects/shonen-showdown",
+    bannerImage: "/images/projects/shonen-showdown/duel-fp-01.png",
+    bannerAlt: "Shonen Showdown — first-person duel view",
+    bannerWidth: 1705,
+    bannerHeight: 691
   },
   {
     title: "Fallout Mod (Level Design)",

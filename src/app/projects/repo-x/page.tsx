@@ -60,24 +60,24 @@ export default function RepoXCaseStudy() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Guilty As Arrr</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Multiplayer VR pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.
+            Multiplayer pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          {/* Hero — game view */}
+          {/* Hero — playtest highlight */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="relative aspect-video w-full">
               <LightboxImage
-                src="/images/projects/guilty-as-arr/captain-title.png"
-                alt="First-person view on the ship deck — YOU ARE THE CAPTAIN title screen"
+                src={guiltyPlaytestImage.src}
+                alt={guiltyPlaytestImage.alt}
                 fill
                 sizes="100vw"
-                width={2705}
-                height={1097}
-                className="object-cover"
+                width={guiltyPlaytestImage.width}
+                height={guiltyPlaytestImage.height}
+                className="object-cover object-top"
                 roundedClassName="rounded-none"
-                popupCaption="Opening game view — first-person perspective on the ship deck. Low-poly art style with spatial audio driving the social deduction loop."
+                popupCaption="Playtest highlight — a tester pushed traversal and collision boundaries, revealing useful movement edge-cases."
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function RepoXCaseStudy() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Guilty As Arrr is a multiplayer VR pirate social deduction prototype. The core gameplay revolves around
+              Guilty As Arrr is a multiplayer pirate social deduction prototype. The core gameplay revolves around
               <span className="text-[var(--foreground)] font-medium"> spatial audio attenuation</span>, where physical distance
               and orientation directly impact the social deduction loop, forcing players to manage their proximity for critical conversations.
             </p>
@@ -245,7 +245,7 @@ export default function RepoXCaseStudy() {
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Spatial UX Cues:</span>
-                  Balanced visual and audio feedback to support player reads in chaotic, fast-paced VR environments.
+                  Balanced visual and audio feedback to support player reads in chaotic, fast-paced multiplayer rounds.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Scope & Delivery Management:</span>
@@ -263,7 +263,7 @@ export default function RepoXCaseStudy() {
                 <li>- Unity (URP)</li>
                 <li>- Photon Fusion (Networking)</li>
                 <li>- Photon Voice 2 (Spatial Audio)</li>
-                <li>- Meta Interaction SDK</li>
+                <li>- Gameplay Input & Interaction Systems</li>
               </ul>
             </div>
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">

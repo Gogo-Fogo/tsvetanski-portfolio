@@ -31,7 +31,7 @@ const projects = [
   },
   {
     title: "Guilty As Arrr",
-    description: "Multiplayer VR pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.",
+    description: "Multiplayer pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.",
     href: "/projects/repo-x"
   },
   {

@@ -75,7 +75,7 @@ export default function PataponVRCaseStudy() {
                 <li><span className="font-medium text-[var(--foreground)]">Genre:</span> VR Rhythm-Action / Roguelite Strategy</li>
                 <li><span className="font-medium text-[var(--foreground)]">Platform:</span> Meta Quest 3 (Standalone) & PCVR</li>
                 <li><span className="font-medium text-[var(--foreground)]">Engine:</span> Unity (OpenXR)</li>
-                <li><span className="font-medium text-[var(--foreground)]">Visual Style:</span> Low Poly Stylized — "Living Vinyl Toys"</li>
+                <li><span className="font-medium text-[var(--foreground)]">Visual Style:</span> Low Poly Stylized — &quot;Living Vinyl Toys&quot;</li>
                 <li><span className="font-medium text-[var(--foreground)]">Setting:</span> The Golden Age (Patapon prequel era)</li>
                 <li><span className="font-medium text-[var(--foreground)]">GDD Version:</span> 1.0 (Final Concept Lock, Dec 2025)</li>
               </ul>
@@ -152,8 +152,8 @@ export default function PataponVRCaseStudy() {
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">VR Comfort Design</h2>
               <p className="mb-4 text-sm leading-relaxed text-[var(--muted)]">
-                The Chariot never walks or jumps — it glides using a SmoothDamp follow behind the army's jerky beat-driven movement.
-                This "Tow Rope" system keeps the player's reference frame stable while the action unfolds ahead.
+                The Chariot never walks or jumps — it glides using a SmoothDamp follow behind the army&apos;s jerky beat-driven movement.
+                This &quot;Tow Rope&quot; system keeps the player&apos;s reference frame stable while the action unfolds ahead.
               </p>
               <ul className="space-y-2 text-sm text-[var(--muted)]">
                 <li>- Kinematic Chariot (script-driven, no physics bounce)</li>
@@ -168,7 +168,7 @@ export default function PataponVRCaseStudy() {
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Enemy Faction: The Archfiends (Seven Sins)</h2>
             <p className="mb-6 text-sm leading-relaxed text-[var(--muted)]">
               Seven Archfiends — the Seven Deadly Sins made manifest — are the final bosses of each act. They cannot be killed; they must be
-              Sealed. The player must break the boss's host body, expose the Black Spirit within, and capture it into the Chariot's Vessel.
+              Sealed. The player must break the boss&apos;s host body, expose the Black Spirit within, and capture it into the Chariot&apos;s Vessel.
               Each captured Sin sets up the lore of Patapon 3.
             </p>
             <div className="overflow-hidden rounded-xl border border-[var(--border)]">

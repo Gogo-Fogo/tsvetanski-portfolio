@@ -40,6 +40,8 @@ const gallery = [
   },
 ];
 
+const [simulatorImage, devImage, budgetImage, ridersImage, menuImage, volunteeringImage] = gallery;
+
 export default function VRMicrogamesCaseStudy() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
@@ -60,111 +62,197 @@ export default function VRMicrogamesCaseStudy() {
           </p>
         </header>
 
-        <section className="flex flex-col gap-12 md:gap-16">
+        <section className="grid gap-10">
           <div className="rounded-2xl border border-[var(--foreground)]/30 bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Featured Coverage</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight">Published by University of Baltimore Newsroom</h2>
-            <p className="mt-3 max-w-3xl text-sm text-[var(--muted)]">
-              This project was selected for official UBalt coverage highlighting community impact through game design and XR prototyping with B-360.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="https://www.ubalt.edu/about/newsroom/ubalt-stories-community-game-design.cfm"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-              >
-                Read UBalt Story
-              </a>
-              <a
-                href="/documents/projects/b360/recruiter/b360-end-of-semester-reflection.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                Reflection PDF
-              </a>
+            <div className="grid gap-8 md:grid-cols-2 md:items-start">
+              <div>
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Featured Case Study</h2>
+                <p className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
+                  University of Baltimore Newsroom Coverage
+                </p>
+                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
+                  This project was selected for official UBalt coverage highlighting community impact through game design and XR prototyping with B-360.
+                </p>
+                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
+                  <li>- Community-centered design focus rather than pure class-demo scope.</li>
+                  <li>- Public playtest framing tied to real partner outcomes.</li>
+                  <li>- Accessibility emphasis through low-cost hardware constraints.</li>
+                </ul>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="https://www.ubalt.edu/about/newsroom/ubalt-stories-community-game-design.cfm"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
+                  >
+                    Read UBalt Story
+                  </a>
+                  <a
+                    href="/documents/projects/b360/recruiter/b360-end-of-semester-reflection.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+                  >
+                    Reflection PDF
+                  </a>
+                </div>
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+                <div className="relative aspect-video w-full">
+                  <LightboxImage
+                    src={ridersImage.src}
+                    alt={ridersImage.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    width={ridersImage.width}
+                    height={ridersImage.height}
+                    className="object-cover"
+                    roundedClassName="rounded-none"
+                    popupCaption="B-360 youth riders and program context in Baltimore — community backdrop for the prototype."
+                  />
+                </div>
+                <div className="border-t border-[var(--border)] px-4 py-3">
+                  <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Source: University of Baltimore Newsroom</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="relative aspect-video w-full">
-              <LightboxImage
-                src={gallery[0].src}
-                alt={gallery[0].alt}
-                fill
-                sizes="100vw"
-                width={gallery[0].width}
-                height={gallery[0].height}
-                className="object-cover"
-                roundedClassName="rounded-none"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Context</h2>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Community-First Project Framing</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Client & Mission</span>
-                  Designed for B-360 to help support safer riding habits and youth engagement through interactive simulation.
+                  Designed for B-360 to support safer riding habits and youth engagement through interactive simulation.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Academic Setting</span>
                   Built in Dr. Elka Cahn&apos;s class with teammates Zefran Jehle and Lewis Plested.
                 </li>
                 <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Role</span>
-                  Led technical implementation and comfort-focused iteration for XR interaction and gameplay systems.
+                  <span className="text-[var(--foreground)] font-medium block mb-1">My Role</span>
+                  Led technical implementation and comfort-focused iteration across gameplay systems and UX tuning.
                 </li>
               </ul>
             </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={simulatorImage.src}
+                  alt={simulatorImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={simulatorImage.width}
+                  height={simulatorImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="In-simulator riding view used during iteration of road readability and obstacle awareness."
+                />
+              </div>
+            </div>
+          </div>
 
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={budgetImage.src}
+                  alt={budgetImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={budgetImage.width}
+                  height={budgetImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Low-cost mobile VR setup selected to keep deployment practical and accessible."
+                />
+              </div>
+            </div>
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Design Constraints</h2>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Constraint-Led Design</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
                 <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Accessibility</span>
-                  Optimized for low-cost mobile VR headsets (around $18) instead of expensive hardware.
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Accessibility Target</span>
+                  Optimized for low-cost mobile VR headsets (around $18) instead of high-end devices.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Comfort First</span>
-                  Prioritized stability and movement tuning to reduce motion sickness risk.
+                  Prioritized stable movement and camera behavior to reduce motion sickness risk.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Practical Outcome</span>
-                  Built as a useful training and outreach artifact, not only an entertainment prototype.
+                  Built as a usable training and outreach artifact, not only an entertainment demo.
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {gallery.slice(1).map((image) => (
-              <div
-                key={image.src}
-                className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-              >
-                <div className="relative aspect-video w-full">
-                  <LightboxImage
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    width={image.width}
-                    height={image.height}
-                    className="object-cover"
-                    roundedClassName="rounded-none"
-                  />
-                </div>
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Development Workflow</h2>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">
+                Iteration happened across desktop and mobile test loops, with frequent build checks to validate frame stability, interaction feel, and reliability before external playtests.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
+                <li>- Rapid prototype updates between class reviews and team syncs.</li>
+                <li>- UI and input adjustments based on clarity and ease-of-use.</li>
+                <li>- Continuous tuning for onboarding-first playtest sessions.</li>
+              </ul>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={devImage.src}
+                  alt={devImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={devImage.width}
+                  height={devImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Development setup showing device testing and iterative build checks during implementation."
+                />
               </div>
-            ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={menuImage.src}
+                  alt={menuImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={menuImage.width}
+                  height={menuImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Main menu pass used to keep first-time onboarding and control flow clear."
+                />
+              </div>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={volunteeringImage.src}
+                  alt={volunteeringImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={volunteeringImage.width}
+                  height={volunteeringImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Team and community collaboration context during B-360 outreach and event support."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Playtest Outcome</h2>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Playtest Outcomes</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
                 <li>- Final prototype delivered by end of semester.</li>
                 <li>- B-360 representatives tested the build at the Universities at Shady Grove.</li>
@@ -172,7 +260,6 @@ export default function VRMicrogamesCaseStudy() {
                 <li>- No motion sickness reported during the hosted playtest session.</li>
               </ul>
             </div>
-
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Reflection Highlights</h2>
               <blockquote className="text-sm text-[var(--muted)] leading-relaxed border-l-2 border-[var(--border)] pl-4">

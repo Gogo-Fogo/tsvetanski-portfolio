@@ -11,23 +11,23 @@ function PugModel() {
   const { fixedScene, offset } = useMemo(() => {
     const meshBox = new THREE.Box3();
 
-    scene.traverse((child: any) => {
-      if (!child.isMesh) return;
+    scene.traverse((child: THREE.Object3D) => {
+      if (!(child instanceof THREE.Mesh)) return;
 
       // Expand bounding box using mesh geometry only (excludes armature bones)
       meshBox.expandByObject(child);
 
       // Fix x-ray: force depth writing on all materials
-      const mats = Array.isArray(child.material) ? child.material : [child.material];
-      mats.forEach((mat: any) => {
-        mat.depthWrite = true;
-        mat.depthTest = true;
-        if (mat.opacity <= 0) mat.opacity = 1;
-        if (mat.opacity >= 0.95) {
-          mat.transparent = false;
-          mat.opacity = 1;
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      materials.forEach((material) => {
+        material.depthWrite = true;
+        material.depthTest = true;
+        if (material.opacity <= 0) material.opacity = 1;
+        if (material.opacity >= 0.95) {
+          material.transparent = false;
+          material.opacity = 1;
         }
-        mat.needsUpdate = true;
+        material.needsUpdate = true;
       });
     });
 

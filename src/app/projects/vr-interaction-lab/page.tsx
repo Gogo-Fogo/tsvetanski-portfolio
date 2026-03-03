@@ -16,6 +16,20 @@ const driftDemo = {
   thumbnailUrl: '/images/drift-immersive-banner.jpg',
 };
 
+const driftGameplayPOVImage = {
+  src: '/images/drift-immersive-banner.jpg',
+  alt: 'First-person drift view with yellow sports car entering a city highway curve at night',
+  width: 766,
+  height: 351,
+};
+
+const driftGameplayChaseImage = {
+  src: '/images/DriftImmersive_Banner.png',
+  alt: 'Third-person chase camera view of yellow sports car drifting on a lit city expressway',
+  width: 1366,
+  height: 768,
+};
+
 const driftDocuments = [
   {
     href: '/documents/projects/drift-immersive/recruiter/drift-immersive-gdd.pdf',
@@ -50,10 +64,10 @@ const driftSpeedometerImage = {
 };
 
 const driftCityCollisionSetupImage = {
-  src: '/images/DriftImmersive_CityCollisionSetup.png',
-  alt: 'Unity scene setup for city layout and collision-safe road boundaries in Drift Immersive',
-  width: 2260,
-  height: 585,
+  src: '/images/projects/drift-immersive/city-layout-from-gdd.png',
+  alt: 'Night city street layout from Drift Immersive GDD used for road-boundary and collision-planning reference',
+  width: 706,
+  height: 282,
 };
 
 export default function VRInteractionLabCaseStudy() {
@@ -77,6 +91,59 @@ export default function VRInteractionLabCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+            <div className="grid gap-8 md:grid-cols-2 md:items-start">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-cyan)]/50 bg-[var(--surface)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]">
+                  <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
+                  Featured Case Study
+                </span>
+                <h2 className="mt-4 text-2xl font-semibold tracking-tight">Drift Immersive: Prototype to Technical Case Pack</h2>
+                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
+                  A complete case bundle combining playable drift behavior, debugging evidence, and formal documentation for implementation quality and design rationale.
+                </p>
+                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
+                  <li>- Playable drift loop with handling and cockpit feedback tuning.</li>
+                  <li>- Structured technical breakdown across debugging and UI analysis.</li>
+                  <li>- Recruiter-ready artifacts: GDD, analysis report, code quality report, annotated deck.</li>
+                </ul>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href={driftDemo.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
+                  >
+                    Watch Demo
+                  </a>
+                  <a
+                    href="/documents/projects/drift-immersive/recruiter/drift-immersive-annotated-deck.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+                  >
+                    Open Annotated Deck
+                  </a>
+                </div>
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+                <div className="relative aspect-video w-full">
+                  <LightboxImage
+                    src={driftGameplayChaseImage.src}
+                    alt={driftGameplayChaseImage.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    width={driftGameplayChaseImage.width}
+                    height={driftGameplayChaseImage.height}
+                    className="object-cover"
+                    roundedClassName="rounded-none"
+                    popupCaption="Featured Drift Immersive gameplay still used in the case study overview."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
@@ -104,6 +171,23 @@ export default function VRInteractionLabCaseStudy() {
                   roundedClassName="rounded-none"
                 />
               </div>
+            </div>
+          </div>
+
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Gameplay Stills</h2>
+            <p className="text-sm text-[var(--muted)] mb-6">
+              Additional in-engine driving shot from the drift test environment, used to review car stability and curve entry behavior.
+            </p>
+            <div className="grid grid-cols-1 gap-6">
+              <LightboxImage
+                src={driftGameplayChaseImage.src}
+                alt={driftGameplayChaseImage.alt}
+                width={driftGameplayChaseImage.width}
+                height={driftGameplayChaseImage.height}
+                className="h-full w-full rounded-xl object-cover"
+                popupCaption="Chase-camera shot used to review car stability and curve entry behavior."
+              />
             </div>
           </div>
 
@@ -173,7 +257,7 @@ export default function VRInteractionLabCaseStudy() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">City Setup: High-Speed Collision Safety</h2>
             <p className="text-sm text-[var(--muted)] mb-6">
-              Environment assembly and collision-boundary validation pass to keep high-speed driving stable, prevent wall clipping, and preserve consistent lane behavior through long curves.
+              City-environment planning reference from the project documentation, used to validate lane spacing, road boundaries, and high-speed collision behavior.
             </p>
             <LightboxImage
               src={driftCityCollisionSetupImage.src}
@@ -181,7 +265,7 @@ export default function VRInteractionLabCaseStudy() {
               width={driftCityCollisionSetupImage.width}
               height={driftCityCollisionSetupImage.height}
               className="h-auto w-full object-cover"
-              popupCaption="City-level setup view used to validate road collider placement and ensure collision behavior stays reliable at higher vehicle speeds."
+              popupCaption="City-layout frame extracted from Drift Immersive documentation and used as a road-boundary/collision-planning reference."
             />
           </div>
 
@@ -210,6 +294,21 @@ export default function VRInteractionLabCaseStudy() {
                 </a>
               ))}
             </div>
+          </div>
+
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">POV Drift Readability Shot</h2>
+            <p className="text-sm text-[var(--muted)] mb-6">
+              POV shot used to evaluate lane readability and drift sensation at speed.
+            </p>
+            <LightboxImage
+              src={driftGameplayPOVImage.src}
+              alt={driftGameplayPOVImage.alt}
+              width={driftGameplayPOVImage.width}
+              height={driftGameplayPOVImage.height}
+              className="h-auto w-full rounded-xl object-cover"
+              popupCaption="POV shot used to evaluate lane readability and drift sensation at speed."
+            />
           </div>
         </section>
       </div>
