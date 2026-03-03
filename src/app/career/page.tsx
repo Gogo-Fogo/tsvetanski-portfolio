@@ -35,66 +35,6 @@ const filterOptions: { value: ProjectFilter; label: string }[] = [
 
 const projects: Project[] = [
   {
-    title: "Guilty As Arrr",
-    description: "Led VR multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
-    tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
-    searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
-    facets: ['engineering', 'xr'],
-    href: "/projects/repo-x",
-    bannerImage: "/images/projects/guilty-as-arr/captain-title.png",
-    bannerAlt: "Guilty As Arrr — first-person ship deck",
-    bannerWidth: 2705,
-    bannerHeight: 1097
-  },
-  {
-    title: "VR Dirt Bike Game",
-    description: "Community-focused VR safety prototype for B-360, optimized for accessible mobile headsets.",
-    tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
-    searchTerms: ["dirt bike", "safety training", "education", "riding"],
-    facets: ['engineering', 'xr'],
-    href: "/projects/vr-microgames",
-    bannerImage: "/images/B360_bike_simulator.png",
-    bannerAlt: "B-360 VR dirt bike simulator preview",
-    bannerWidth: 1600,
-    bannerHeight: 900
-  },
-  {
-    title: "VR Car Drift Simulator",
-    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
-    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
-    searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
-    facets: ['engineering', 'xr'],
-    href: "/projects/vr-interaction-lab",
-    bannerImage: "/images/drift-immersive-banner.jpg",
-    bannerAlt: "Close-up yellow sports car drifting through a night tunnel environment",
-    bannerWidth: 738,
-    bannerHeight: 351
-  },
-  {
-    title: "Fallout Mod (Level Design)",
-    description: "Team-built Fallout 4 interior level — joined mid-project as third-floor lead, handling interior production, merge stability, and visual optimization.",
-    tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
-    searchTerms: ["fallout", "modding", "level overhaul", "world building"],
-    facets: ['art-storytelling'],
-    href: "/projects/fallout-level-design",
-    bannerImage: "/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png",
-    bannerAlt: "Hall of Idols puzzle chamber — Fallout 4 level design",
-    bannerWidth: 2048,
-    bannerHeight: 959
-  },
-  {
-    title: "V4N GOGO Figurine Lab",
-    description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
-    tags: ["Figurine Sculpting", "Concept Development", "Visual Storytelling"],
-    searchTerms: ["figurine", "figure making", "art channel", "instagram", "youtube", "v4n gogo", "concept track", "llc"],
-    facets: ['art-storytelling'],
-    href: "/projects/v4n-gogo-figurine-lab",
-    bannerImage: "/images/Art_3D.jpg",
-    bannerAlt: "V4N GOGO figurine art collage",
-    bannerWidth: 1600,
-    bannerHeight: 900
-  },
-  {
     title: "Shinobi Story",
     description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
@@ -106,6 +46,18 @@ const projects: Project[] = [
     bannerWidth: 1600,
     bannerHeight: 900,
     bannerBorderClass: "border-2 border-[#D8B33C]"
+  },
+  {
+    title: "Guilty As Arrr",
+    description: "Led VR multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
+    tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
+    searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
+    facets: ['engineering', 'xr'],
+    href: "/projects/repo-x",
+    bannerImage: "/images/projects/guilty-as-arr/captain-title.png",
+    bannerAlt: "Guilty As Arrr — first-person ship deck",
+    bannerWidth: 2705,
+    bannerHeight: 1097
   },
   {
     title: "Shonen Showdown",
@@ -120,13 +72,40 @@ const projects: Project[] = [
     bannerHeight: 691
   },
   {
-    title: "VR Patapon Game",
-    description: "Designing a VR rhythm-strategy game based on Patapon — timing-based tactics in immersive space.",
-    tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
-    searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
-    facets: ['xr', 'art-storytelling'],
-    href: '/projects/patapon-vr-the-first-beat',
-    type: 'prototype'
+    title: "VR Car Drift Simulator",
+    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
+    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
+    facets: ['engineering', 'xr'],
+    href: "/projects/vr-interaction-lab",
+    bannerImage: "/images/drift-immersive-banner.jpg",
+    bannerAlt: "Close-up yellow sports car drifting through a night tunnel environment",
+    bannerWidth: 738,
+    bannerHeight: 351
+  },
+  {
+    title: "VR Dirt Bike Game",
+    description: "Community-focused VR safety prototype for B-360, optimized for accessible mobile headsets.",
+    tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
+    searchTerms: ["dirt bike", "safety training", "education", "riding"],
+    facets: ['engineering', 'xr'],
+    href: "/projects/vr-microgames",
+    bannerImage: "/images/B360_bike_simulator.png",
+    bannerAlt: "B-360 VR dirt bike simulator preview",
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "Fallout Mod (Level Design)",
+    description: "Team-built Fallout 4 interior level — joined mid-project as third-floor lead, handling interior production, merge stability, and visual optimization.",
+    tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
+    searchTerms: ["fallout", "modding", "level overhaul", "world building"],
+    facets: ['art-storytelling'],
+    href: "/projects/fallout-level-design",
+    bannerImage: "/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png",
+    bannerAlt: "Hall of Idols puzzle chamber — Fallout 4 level design",
+    bannerWidth: 2048,
+    bannerHeight: 959
   },
   {
     title: "Totally Bugged Out",
@@ -137,6 +116,18 @@ const projects: Project[] = [
     href: '/projects/totally-bugged-out',
     bannerImage: '/images/Totally Bugged Out_banner.png',
     bannerAlt: 'Totally Bugged Out project banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "Shogun: Flowers Fall in Blood",
+    description: "Mobile tactical RPG prototype — grid-based combat, gesture-driven skills, progression, enemy AI, and gacha simulation.",
+    tags: ["Tactical RPG", "Gacha Systems", "Mobile"],
+    searchTerms: ["shogun", "naruto", "tactical rpg", "gacha", "mobile"],
+    facets: ['art-storytelling', 'engineering'],
+    href: '/projects/shogun-flowers-fall-in-blood',
+    bannerImage: '/images/ShogunFlowersFallinBlood_banner.png',
+    bannerAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
     bannerWidth: 1600,
     bannerHeight: 900
   },
@@ -165,18 +156,6 @@ const projects: Project[] = [
     bannerHeight: 900
   },
   {
-    title: "Shogun: Flowers Fall in Blood",
-    description: "Mobile tactical RPG prototype — grid-based combat, gesture-driven skills, progression, enemy AI, and gacha simulation.",
-    tags: ["Tactical RPG", "Gacha Systems", "Mobile"],
-    searchTerms: ["shogun", "naruto", "tactical rpg", "gacha", "mobile"],
-    facets: ['art-storytelling', 'engineering'],
-    href: '/projects/shogun-flowers-fall-in-blood',
-    bannerImage: '/images/ShogunFlowersFallinBlood_banner.png',
-    bannerAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
-    bannerWidth: 1600,
-    bannerHeight: 900
-  },
-  {
     title: "The Signal",
     description: "Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and co-op/competitive win paths.",
     tags: ["Board Game Design", "Systems Design", "Co-op"],
@@ -199,7 +178,28 @@ const projects: Project[] = [
     bannerAlt: 'The Last Paycheck banner',
     bannerWidth: 1600,
     bannerHeight: 900
-  }
+  },
+  {
+    title: "V4N GOGO Figurine Lab",
+    description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
+    tags: ["Figurine Sculpting", "Concept Development", "Visual Storytelling"],
+    searchTerms: ["figurine", "figure making", "art channel", "instagram", "youtube", "v4n gogo", "concept track", "llc"],
+    facets: ['art-storytelling'],
+    href: "/projects/v4n-gogo-figurine-lab",
+    bannerImage: "/images/Art_3D.jpg",
+    bannerAlt: "V4N GOGO figurine art collage",
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "VR Patapon Game",
+    description: "Designing a VR rhythm-strategy game based on Patapon — timing-based tactics in immersive space.",
+    tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
+    searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
+    facets: ['xr', 'art-storytelling'],
+    href: '/projects/patapon-vr-the-first-beat',
+    type: 'prototype'
+  },
 ];
 
 const tagDescriptions: Record<string, string> = {
