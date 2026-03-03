@@ -65,16 +65,19 @@ export default function RepoXCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          {/* Hero Banner */}
+          {/* Hero — game view */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="aspect-[21/9] w-full">
+            <div className="relative aspect-video w-full">
               <LightboxImage
-                src="/images/GuiltyAsArr_XProfile.png"
-                alt="Guilty As Arrr project banner — community-facing X profile"
-                width={2048}
-                height={893}
-                className="h-full w-full object-cover"
+                src="/images/projects/guilty-as-arr/captain-title.png"
+                alt="First-person view on the ship deck — YOU ARE THE CAPTAIN title screen"
+                fill
+                sizes="100vw"
+                width={2705}
+                height={1097}
+                className="object-cover"
                 roundedClassName="rounded-none"
+                popupCaption="Opening game view — first-person perspective on the ship deck. Low-poly art style with spatial audio driving the social deduction loop."
               />
             </div>
           </div>
@@ -87,6 +90,40 @@ export default function RepoXCaseStudy() {
               <span className="text-[var(--foreground)] font-medium"> spatial audio attenuation</span>, where physical distance
               and orientation directly impact the social deduction loop, forcing players to manage their proximity for critical conversations.
             </p>
+          </div>
+
+          {/* In-game screenshots */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src="/images/projects/guilty-as-arr/deck-helm.png"
+                  alt="Ship deck with helm — first-person view, tropical island in background"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={2231}
+                  height={957}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Ship deck — the helm and open ocean. Low-poly environment with colorful tropical backdrop."
+                />
+              </div>
+            </div>
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src="/images/projects/guilty-as-arr/ship-interior.png"
+                  alt="Ship interior hold — cannonballs stacked, round enemy on deck, amber light through windows"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={2242}
+                  height={945}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Ship hold interior — warm amber lighting, stacked cannonballs, and traversable geometry that players used in unexpected ways during playtests."
+                />
+              </div>
+            </div>
           </div>
 
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
@@ -143,6 +180,40 @@ export default function RepoXCaseStudy() {
                 className="h-auto w-full rounded-xl object-cover"
                 popupCaption="Community-facing X profile used for the Guilty As Arrr project."
               />
+            </div>
+          </div>
+
+          {/* Editor screenshots */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src="/images/projects/guilty-as-arr/ship-editor.png"
+                  alt="Unity editor — detailed pirate ship scene with foliage, ropes, and treasure chest selected"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={3608}
+                  height={1394}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Unity editor — ship deck scene. Detailed low-poly geometry with foliage, rigging, and interactive props."
+                />
+              </div>
+            </div>
+            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src="/images/projects/guilty-as-arr/level-ocean.png"
+                  alt="Unity editor — ocean level with floating dark rock formations and volcanic background"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={4417}
+                  height={1393}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Ocean level in the Unity editor — floating rock formations and lava backdrop. The ship traverses this environment during gameplay."
+                />
+              </div>
             </div>
           </div>
 

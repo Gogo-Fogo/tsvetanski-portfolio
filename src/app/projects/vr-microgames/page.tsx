@@ -88,13 +88,15 @@ export default function VRMicrogamesCaseStudy() {
           </div>
 
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="aspect-video w-full">
+            <div className="relative aspect-video w-full">
               <LightboxImage
                 src={gallery[0].src}
                 alt={gallery[0].alt}
+                fill
+                sizes="100vw"
                 width={gallery[0].width}
                 height={gallery[0].height}
-                className="h-full w-full object-cover"
+                className="object-cover"
                 roundedClassName="rounded-none"
               />
             </div>
@@ -144,13 +146,15 @@ export default function VRMicrogamesCaseStudy() {
                 key={image.src}
                 className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
               >
-                <div className="aspect-video w-full">
+                <div className="relative aspect-video w-full">
                   <LightboxImage
                     src={image.src}
                     alt={image.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     width={image.width}
                     height={image.height}
-                    className="h-full w-full object-cover"
+                    className="object-cover"
                     roundedClassName="rounded-none"
                   />
                 </div>

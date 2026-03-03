@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import VideoCarousel, { type VideoCard } from '../../creative/video-carousel';
@@ -146,17 +147,14 @@ export default async function ShinobiStoryPage() {
 
         <section className="flex flex-col gap-12 md:gap-16">
           {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="aspect-video w-full">
-              <LightboxImage
-                src="/images/ShinobiStoryBanner.jpg"
-                alt="Shinobi Story banner"
-                width={1600}
-                height={900}
-                className="h-full w-full object-cover"
-                roundedClassName="rounded-none"
-              />
-            </div>
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] max-w-2xl mx-auto border-2 border-[#D8B33C]">
+            <Image
+              src="/images/ShinobiStoryBanner.jpg"
+              alt="Shinobi Story banner"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover rounded-2xl"
+            />
           </div>
 
           {/* Featured Video Highlight */}
@@ -210,13 +208,15 @@ export default async function ShinobiStoryPage() {
           {/* Marketing & Content Strategy */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-video w-full">
+              <div className="relative aspect-video w-full">
                 <LightboxImage
                   src="/images/SS_MarketingCampaign.png"
                   alt="Shinobi Story marketing campaign"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   width={1200}
                   height={900}
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                   roundedClassName="rounded-none"
                 />
               </div>
@@ -238,13 +238,15 @@ export default async function ShinobiStoryPage() {
               </p>
             </div>
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
-              <div className="aspect-video w-full">
+              <div className="relative aspect-video w-full">
                 <LightboxImage
                   src="/images/SS_NewContentStrategy.png"
                   alt="Shinobi Story new content strategy"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   width={1200}
                   height={900}
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                   roundedClassName="rounded-none"
                 />
               </div>
@@ -254,13 +256,15 @@ export default async function ShinobiStoryPage() {
           {/* Technical Optimization / Quality */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-video w-full">
+              <div className="relative aspect-video w-full">
                 <LightboxImage
                   src="/images/SS_BeforeAndAfter.png"
                   alt="Shinobi Story before and after visual optimization"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   width={1200}
                   height={900}
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                   roundedClassName="rounded-none"
                 />
               </div>

@@ -1,11 +1,10 @@
 import Breadcrumbs from '@/components/breadcrumbs';
-import LightboxImage from '@/components/lightbox-image';
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "V4N GOGO Figurine Lab | Georgi Tsvetanski",
-  description: "Independent figurine-making and concept-art practice — character form, silhouette studies, and iterative craft. Photos on Instagram, process videos on YouTube.",
+  description: "Statuette creation practice — 3D printing, hand painting, LED integration, and custom button systems. Documented at @v4n_gogo on Instagram and YouTube.",
 };
 
 
@@ -15,36 +14,6 @@ const profileLinks = {
   conceptTrackFaq: 'https://shadygrove.usmd.edu/academics/faq',
 };
 
-const galleryImages = [
-  {
-    src: '/images/Art_3D.jpg',
-    alt: 'Figurine and character art collage - 3D work',
-    width: 1600,
-    height: 900,
-    caption: 'Selection of figure-focused 3D and concept work documented in the channel archive.',
-  },
-  {
-    src: '/images/Art_3D_2.jpg',
-    alt: 'Additional 3D and figurine concept collage',
-    width: 1600,
-    height: 900,
-    caption: 'Follow-up exploration of stylized forms, material ideas, and production-ready shapes.',
-  },
-  {
-    src: '/images/Art_Traditional_Charcoal_Pencil_etc.jpg',
-    alt: 'Traditional study sheet with expressive eye sketches',
-    width: 1600,
-    height: 900,
-    caption: 'Traditional studies that feed into figurine expression, silhouette, and personality.',
-  },
-  {
-    src: '/images/Art_Traditional_Charcoal_Pencil_etc_2.jpg',
-    alt: 'Additional traditional art studies',
-    width: 1600,
-    height: 900,
-    caption: 'Analog sketch passes used before digital cleanup or physical iteration.',
-  },
-];
 
 export default function V4NGogoFigurineLabPage() {
   return (
@@ -60,12 +29,13 @@ export default function V4NGogoFigurineLabPage() {
             className="mb-4"
           />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            Independent Art Practice - Figurine Making
+            Independent Art Practice — Statuette Creation
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">V4N GOGO Figurine Lab</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            Personal figurine-making and concept-art channel — character form, visual storytelling, iterative craft.
-            Photos on Instagram; process videos on YouTube.
+            Statuette creation practice under <span className="text-[var(--foreground)] font-medium">@v4n_gogo</span> — 3D printing,
+            hand painting, LED integration, and custom button/electronics systems.
+            Work documented through Instagram and YouTube.
           </p>
         </header>
 
@@ -126,34 +96,14 @@ export default function V4NGogoFigurineLabPage() {
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Focus</h2>
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What I Make</h2>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>- Character silhouette exploration and expression studies</li>
-              <li>- Figurine concept ideation and small-batch refinement</li>
-              <li>- Ongoing publishing cadence through Instagram + YouTube</li>
-              <li>- Scaled practice model while balancing academic workload</li>
+              <li>— Statuette design and 3D printing (FDM & resin)</li>
+              <li>— Hand painting and finishing (priming, layering, weathering)</li>
+              <li>— LED integration — lighting rigs embedded directly in figures</li>
+              <li>— Custom button and electronics systems for interactive pieces</li>
+              <li>— Ongoing publishing cadence through Instagram + YouTube</li>
             </ul>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Selected Gallery</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {galleryImages.map((image) => (
-                <div key={image.src} className="overflow-hidden rounded-xl border border-[var(--border)]">
-                  <div className="aspect-video w-full">
-                    <LightboxImage
-                      src={image.src}
-                      alt={image.alt}
-                      width={image.width}
-                      height={image.height}
-                      className="h-full w-full object-cover"
-                      roundedClassName="rounded-none"
-                      popupCaption={image.caption}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
       </div>
