@@ -2,7 +2,7 @@
 
 import LightboxImage from '@/components/lightbox-image';
 import Breadcrumbs from '@/components/breadcrumbs';
-import { HoverCard, Tooltip } from '@/components/floating-ui-primitives';
+import { HoverCard } from '@/components/floating-ui-primitives';
 import { MotionPage } from '@/components/motion-safe';
 import Link from 'next/link';
 import { Suspense, useMemo } from 'react';
@@ -22,20 +22,6 @@ interface Project {
   bannerWidth?: number;
   bannerHeight?: number;
   bannerBorderClass?: string;
-}
-
-interface SideProjectCard {
-  title: string;
-  subtitle: string;
-  description: string;
-  searchTerms?: string[];
-  roles?: string;
-  image?: string;
-  imageAlt?: string;
-  ctaLabel?: string;
-  href?: string;
-  bannerWidth?: number;
-  bannerHeight?: number;
 }
 
 type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
@@ -137,80 +123,78 @@ const projects: Project[] = [
     facets: ['xr', 'art-storytelling'],
     href: '/projects/patapon-vr-the-first-beat',
     type: 'prototype'
-  }
-];
-
-const sideProjects: SideProjectCard[] = [
-  {
-    title: 'Totally Bugged Out',
-    subtitle: 'Solo Project — First-Person Bug Survival Game',
-    description:
-      'Set in a bug-infested Balkan house, this prototype uses a universal throw system and swarming enemy behavior that can traverse walls and ceilings.',
-    searchTerms: ['bugs', 'survival', 'first-person', 'balkan', 'swarm ai'],
-    image: '/images/Totally Bugged Out_banner.png',
-    imageAlt: 'Totally Bugged Out project banner',
-    ctaLabel: 'View Case Study',
-    href: '/projects/totally-bugged-out'
   },
   {
-    title: 'Cranky (Game Jam 2024)',
-    subtitle: 'Prototype / Local Multiplayer — Unity (1 Week)',
-    description:
-      'Built for Global Game Jam as a chaotic split-screen experience where two pugs chase squirrels in fast, goofy matches.',
-    searchTerms: ['cranky', 'pug', 'squirrels', 'global game jam', 'local multiplayer'],
-    roles: 'Roles: Lead Animator, Co-Designer',
-    image: '/images/Cranky_GameJam_Banner_2024.jpg',
-    imageAlt: 'Cranky Game Jam 2024 banner',
-    ctaLabel: 'View Case Study',
-    href: '/projects/cranky-game-jam'
-  },
-  {
-    title: 'Cranky: The Squirrel Annihilator',
-    subtitle: 'Solo Project — First-Person Dog Chase Game',
-    description:
-      'A solo expansion of the jam concept with first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL-ready deployment.',
-    searchTerms: ['cranky', 'squirrel annihilator', 'dog chase', 'webgl', 'ai'],
-    image: '/images/CrankyTheSquirrelAnnihilator_banner.png',
-    imageAlt: 'Cranky The Squirrel Annihilator banner',
-    ctaLabel: 'View Case Study',
-    href: '/projects/cranky-squirrel-annihilator'
-  },
-  {
-    title: 'Shogun: Flowers Fall in Blood',
-    subtitle: 'Solo Project — Tactical RPG / Unity',
-    description:
-      'Mobile tactical RPG prototype combining grid-based combat, gesture-driven skills, progression systems, enemy AI, and gacha simulation.',
-    searchTerms: ['shogun', 'naruto', 'tactical rpg', 'gacha', 'mobile'],
-    roles: 'Role: Solo Developer',
-    image: '/images/ShogunFlowersFallinBlood_banner.png',
-    imageAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
+    title: "Totally Bugged Out",
+    description: "First-person bug survival prototype — universal throw system and swarming enemy AI that traverses walls and ceilings.",
+    tags: ["Swarm AI", "First-Person Combat", "Unity"],
+    searchTerms: ["bugs", "survival", "first-person", "balkan", "swarm ai"],
+    facets: ['art-storytelling', 'engineering'],
+    href: '/projects/totally-bugged-out',
+    bannerImage: '/images/Totally Bugged Out_banner.png',
+    bannerAlt: 'Totally Bugged Out project banner',
     bannerWidth: 1600,
-    bannerHeight: 900,
-    ctaLabel: 'View Case Study',
-    href: '/projects/shogun-flowers-fall-in-blood'
+    bannerHeight: 900
   },
   {
-    title: 'The Signal',
-    subtitle: 'Team Project — Narrative Board Game Design',
-    description:
-      'Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.',
-    searchTerms: ['board game', 'sci-fi', 'co-op', 'class customization', 'modular exploration'],
-    roles: 'Team Roles: Design, Systems, Lore Writing, Visual Assets',
-    image: '/images/Banner_TheSignal.jpg',
-    imageAlt: 'The Signal board game banner',
-    ctaLabel: 'View Case Study',
-    href: '/projects/the-signal'
+    title: "Cranky (Game Jam 2024)",
+    description: "Chaotic split-screen local multiplayer where two pugs chase squirrels — built in one week for Global Game Jam.",
+    tags: ["Local Multiplayer", "Game Jam", "Unity"],
+    searchTerms: ["cranky", "pug", "squirrels", "global game jam", "local multiplayer"],
+    facets: ['engineering', 'art-storytelling'],
+    href: '/projects/cranky-game-jam',
+    bannerImage: '/images/Cranky_GameJam_Banner_2024.jpg',
+    bannerAlt: 'Cranky Game Jam 2024 banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
   },
   {
-    title: 'The Last Paycheck',
-    subtitle: 'Solo Project — Narrative + Systems Design',
-    description:
-      'A dystopian 2050 design document focused on poverty, survival, unstable jobs, inflation pressure, and player emotional engagement.',
-    searchTerms: ['dystopian', '2050', 'poverty', 'survival', 'systems design'],
-    image: '/images/TheLastPaycheck_Banner.png',
-    imageAlt: 'The Last Paycheck banner',
-    ctaLabel: 'View Case Study',
-    href: '/projects/the-last-paycheck'
+    title: "Cranky: The Squirrel Annihilator",
+    description: "Solo expansion of the jam — first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL deployment.",
+    tags: ["Enemy AI", "WebGL", "Solo Build"],
+    searchTerms: ["cranky", "squirrel annihilator", "dog chase", "webgl", "ai"],
+    facets: ['engineering'],
+    href: '/projects/cranky-squirrel-annihilator',
+    bannerImage: '/images/CrankyTheSquirrelAnnihilator_banner.png',
+    bannerAlt: 'Cranky The Squirrel Annihilator banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "Shogun: Flowers Fall in Blood",
+    description: "Mobile tactical RPG prototype — grid-based combat, gesture-driven skills, progression, enemy AI, and gacha simulation.",
+    tags: ["Tactical RPG", "Gacha Systems", "Mobile"],
+    searchTerms: ["shogun", "naruto", "tactical rpg", "gacha", "mobile"],
+    facets: ['art-storytelling', 'engineering'],
+    href: '/projects/shogun-flowers-fall-in-blood',
+    bannerImage: '/images/ShogunFlowersFallinBlood_banner.png',
+    bannerAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "The Signal",
+    description: "Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and co-op/competitive win paths.",
+    tags: ["Board Game Design", "Systems Design", "Co-op"],
+    searchTerms: ["board game", "sci-fi", "co-op", "class customization", "modular exploration"],
+    facets: ['art-storytelling'],
+    href: '/projects/the-signal',
+    bannerImage: '/images/Banner_TheSignal.jpg',
+    bannerAlt: 'The Signal board game banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "The Last Paycheck",
+    description: "Dystopian 2050 design document — poverty, survival, unstable jobs, and inflation pressure as player emotional engagement.",
+    tags: ["Narrative Design", "Systems Design", "Design Document"],
+    searchTerms: ["dystopian", "2050", "poverty", "survival", "systems design"],
+    facets: ['art-storytelling'],
+    href: '/projects/the-last-paycheck',
+    bannerImage: '/images/TheLastPaycheck_Banner.png',
+    bannerAlt: 'The Last Paycheck banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
   }
 ];
 
@@ -307,26 +291,6 @@ function CareerContent() {
     });
   }, [resolvedFilter, searchQuery]);
 
-  const filteredSideProjects = useMemo(() => {
-    const normalizedQuery = (searchQuery ?? '').trim();
-
-    if (normalizedQuery.length === 0) {
-      return sideProjects;
-    }
-
-    return sideProjects.filter((project) => {
-      const haystack = [
-        project.title,
-        project.subtitle,
-        project.description,
-        project.roles ?? '',
-        project.searchTerms?.join(' ') ?? '',
-        project.href ?? '',
-      ].join(' ');
-
-      return matchesSearch(haystack, normalizedQuery);
-    });
-  }, [searchQuery]);
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
       <MotionPage className="max-w-6xl mx-auto">
@@ -479,64 +443,6 @@ function CareerContent() {
         {filteredProjects.length === 0 ? (
           <p className="mt-10 text-sm text-[var(--muted)]">No projects in this filter yet. Try another category.</p>
         ) : null}
-
-        <section className="mt-16 border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-4">Side Projects</h2>
-          <p className="text-sm text-[var(--muted)] max-w-3xl">
-            Experimental prototypes and independent builds — where I test mechanics, interaction ideas, and production workflows.
-          </p>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredSideProjects.map((project) => (
-              <article
-                key={project.title}
-                className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-              >
-                <div className="mb-4 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                  {project.image ? (
-                    <LightboxImage
-                      src={project.image}
-                      alt={project.imageAlt ?? `${project.title} banner`}
-                      width={project.bannerWidth ?? 1600}
-                      height={project.bannerHeight ?? 900}
-                      className="h-auto w-full object-cover"
-                      roundedClassName="rounded-none"
-                    />
-                  ) : (
-                    <div className="flex h-28 items-center justify-center text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
-                      Banner coming soon
-                    </div>
-                  )}
-                </div>
-
-                <h4 className="text-base font-semibold tracking-tight text-[var(--foreground)]">{project.title}</h4>
-                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{project.subtitle}</p>
-                <p className="mt-3 text-sm text-[var(--muted)]">{project.description}</p>
-                {project.roles ? <p className="mt-3 text-xs text-[var(--muted)]">{project.roles}</p> : null}
-
-                {project.href ? (
-                  <Tooltip label="Open full case study">
-                    <Link
-                      href={project.href}
-                      className="mt-4 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
-                    >
-                      {project.ctaLabel ?? 'View'}
-                    </Link>
-                  </Tooltip>
-                ) : (
-                  <Tooltip label="Work in progress; case study coming soon">
-                    <span className="mt-4 inline-flex items-center rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--foreground)]">
-                      {project.ctaLabel ?? 'Details soon'}
-                    </span>
-                  </Tooltip>
-                )}
-              </article>
-            ))}
-          </div>
-
-          {filteredSideProjects.length === 0 ? (
-            <p className="mt-6 text-sm text-[var(--muted)]">No side projects match this search yet.</p>
-          ) : null}
-        </section>
 
       </MotionPage>
     </main>
