@@ -52,7 +52,7 @@ const projects: Project[] = [
     description: "Led VR multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
-    facets: ['engineering', 'xr'],
+    facets: ['engineering'],
     href: "/projects/repo-x",
     bannerImage: "/images/projects/guilty-as-arr/captain-title.png",
     bannerAlt: "Guilty As Arrr — first-person ship deck",
