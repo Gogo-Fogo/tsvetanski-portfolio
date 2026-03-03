@@ -339,7 +339,7 @@ function CareerContent() {
           />
           <div className="mt-8">
             <h1 className="text-4xl font-bold tracking-tight">XR & Game Project Portfolio</h1>
-            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Technical Implementation · VR/XR Interaction · Design & Storytelling</p>
+            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Game Engineering · VR/XR Interaction · Design & Storytelling</p>
             <p className="text-[var(--muted)] mt-2 text-sm">Browse by discipline to find work faster.</p>
           </div>
 
