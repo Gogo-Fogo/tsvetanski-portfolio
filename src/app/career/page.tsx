@@ -386,13 +386,22 @@ function CareerContent() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
             <div key={project.title}>
-              {project.href && project.type !== 'prototype' ? (
+              {project.href ? (
                 <Link
                   href={project.href}
                   target={project.external ? "_blank" : undefined}
                   rel={project.external ? "noreferrer noopener" : undefined}
-                  className="group block h-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] flex flex-col justify-between"
+                  className={`group relative block h-full rounded-2xl border bg-[var(--surface)] p-8 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] flex flex-col justify-between ${
+                    project.type === 'prototype'
+                      ? 'border-dashed border-[var(--border)] opacity-85'
+                      : 'border-[var(--border)]'
+                  }`}
                 >
+                  {project.type === 'prototype' ? (
+                    <span className="absolute right-6 top-6 rounded-full border border-[var(--border)]/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+                      Concept
+                    </span>
+                  ) : null}
                   <div>
                     <div className="mb-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
                       {project.bannerImage ? (
@@ -425,13 +434,7 @@ function CareerContent() {
                   </div>
                 </Link>
               ) : (
-                <div
-                  className={`group relative p-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] flex flex-col justify-between ${
-                    project.type === 'prototype'
-                      ? 'border-dashed opacity-85 cursor-default'
-                      : ''
-                  }`}
-                >
+                <div className="group relative p-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] flex flex-col justify-between opacity-85 cursor-default">
                   {project.type === 'prototype' ? (
                     <span className="absolute right-6 top-6 rounded-full border border-[var(--border)]/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
                       Concept
