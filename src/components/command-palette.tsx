@@ -54,14 +54,6 @@ export default function CommandPalette() {
         run: () => router.push("/about"),
       },
       {
-        id: "nav-resume",
-        label: "Go to Resume",
-        section: "Navigate",
-        shortcut: "G R",
-        keywords: "cv resume",
-        run: () => router.push("/resume"),
-      },
-      {
         id: "quick-copy-email",
         label: "Copy email address",
         section: "Quick Actions",

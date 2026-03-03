@@ -74,10 +74,6 @@ export default function Home() {
             <span className="transition-colors group-hover:text-[var(--foreground)]">About</span>
             <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
           </Link>
-          <Link href="/resume" className="group flex flex-col items-center">
-            <span className="transition-colors group-hover:text-[var(--foreground)]">Resume</span>
-            <span className="mt-2 h-px w-4 bg-[var(--foreground)]/40 transition-all duration-300 group-hover:w-full group-hover:bg-[var(--foreground)]"></span>
-          </Link>
         </nav>
 
         <section className="mt-5 sm:mt-6 lg:mt-8 w-full max-w-3xl border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-5 sm:p-6 lg:p-7 shadow-[var(--shadow)]">
