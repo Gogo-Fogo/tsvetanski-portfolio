@@ -132,6 +132,42 @@ const projects: Project[] = [
     bannerHeight: 900
   },
   {
+    title: "Ami",
+    description: "Local-first research companion built for my mother — grounded source retrieval, personal-record support, Codex-backed synthesis, and portable macOS delivery.",
+    tags: ["Local-First AI", "Healthcare UX", "Cross-Platform Packaging"],
+    searchTerms: ["ami", "research companion", "mom", "medical research", "codex", "mac app", "local-first", "evidence retrieval"],
+    facets: ['engineering'],
+    href: '/projects/ami-research-companion',
+    bannerImage: '/images/projects/ami/ami-banner.png',
+    bannerAlt: 'Ami research companion banner',
+    bannerWidth: 1600,
+    bannerHeight: 900
+  },
+  {
+    title: "FEH Barracks Manager",
+    description: "Solo-built Fire Emblem Heroes companion app with synced barracks, custom hero-data scraping, AI export, and a portable launcher fed by GitHub release bundles.",
+    tags: ["Live-Service Tooling", "Data Pipeline", "Release Engineering"],
+    searchTerms: ["feh", "fire emblem heroes", "barracks", "manager", "supabase", "scraper", "launcher", "release bundles", "live-service", "collection manager"],
+    facets: ['engineering'],
+    href: '/projects/feh-barracks-manager',
+    bannerImage: '/images/projects/feh-barracks/feh-login-screen.png',
+    bannerAlt: 'FEH Barracks Manager login and presentation screen',
+    bannerWidth: 1024,
+    bannerHeight: 768
+  },
+  {
+    title: "Prince of Persia: Warrior Within Mod",
+    description: "Solo Slay the Spire 2 character mod in Godot/C# with Dagger of Time rewinds, Sand economy, Dahaka pursuit, and custom Warrior Within audio/presentation.",
+    tags: ["Game Modding", "Combat Systems", "Reverse Engineering"],
+    searchTerms: ["prince of persia", "warrior within", "slay the spire 2", "mod", "godot", "c#", "harmony", "baselib", "dahaka", "rewind", "sand", "character mod"],
+    facets: ['engineering', 'art-storytelling'],
+    href: '/projects/prince-of-persia-warrior-within-mod',
+    bannerImage: '/images/projects/prince-of-persia-warrior-within-mod/prince-banner.png',
+    bannerAlt: 'Prince of Persia Warrior Within mod banner',
+    bannerWidth: 1536,
+    bannerHeight: 828
+  },
+  {
     title: "Cranky (Game Jam 2024)",
     description: "Chaotic split-screen local multiplayer where two pugs chase squirrels — built in one week for Global Game Jam.",
     tags: ["Local Multiplayer", "Game Jam", "Unity"],
@@ -220,6 +256,15 @@ const tagDescriptions: Record<string, string> = {
   'VR GDD': 'Concept planning and technical scoping for VR-first gameplay.',
   'Rhythm Interaction': 'Timing-based inputs and feedback for expressive play.',
   Strategy: 'Decision-heavy loops emphasizing planning, tradeoffs, and adaptation.',
+  'Local-First AI': 'AI workflow built around local files, local indexing, and grounded evidence instead of cloud-only dependency.',
+  'Healthcare UX': 'Calm interaction design for stressful, evidence-heavy health research and record review.',
+  'Cross-Platform Packaging': 'Turning development code into a portable end-user app that can be handed off and used outside the dev machine.',
+  'Live-Service Tooling': 'Tooling and product work built around a game that keeps changing underneath the app.',
+  'Data Pipeline': 'Scraping, normalization, reconciliation, and import flows that keep the product data usable.',
+  'Release Engineering': 'Packaging, deployment, asset-bundle management, and update delivery for real users.',
+  'Game Modding': 'Building new characters, systems, and content inside an existing game without control over the full engine surface.',
+  'Combat Systems': 'Designing and implementing readable combat loops, resources, encounter pressure, and player decision flow.',
+  'Reverse Engineering': 'Working from engine behavior, runtime constraints, and decompiled references when official abstractions are incomplete.',
 };
 
 const normalizeForSearch = (value: string) =>
@@ -456,6 +501,8 @@ export default function Career() {
     </Suspense>
   );
 }
+
+
 
 
 
