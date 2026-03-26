@@ -6,45 +6,13 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About | Georgi Tsvetanski',
-  description: 'Technical designer working across XR, gameplay systems, interaction design, and storytelling.',
+  description: 'T-shaped developer working across XR, gameplay systems, interaction design, and storytelling.',
 };
 
-const focusAreas = [
-  {
-    title: 'XR + Simulation',
-    description: 'Spatial interaction prototypes, immersive systems, and training-oriented thinking.',
-  },
-  {
-    title: 'Games + Tools',
-    description: 'Gameplay systems, vertical slices, solo products, and rapid iteration.',
-  },
-  {
-    title: 'Storytelling',
-    description: 'Animation, capture, media production, and clearer presentation of complex work.',
-  },
-];
-
-const quickFacts = [
-  {
-    label: 'Commercial Outcome',
-    value: '$110K',
-    detail: 'Shinobi Story contribution across content, animation, live events, and pipeline support.',
-  },
-  {
-    label: 'Current Degree Path',
-    value: 'B.S./M.S.',
-    detail: 'Simulation & Game Design plus Interaction Design at University of Baltimore.',
-  },
-  {
-    label: 'Current Focus',
-    value: 'XR + systems',
-    detail: 'Spatial interaction, gameplay prototypes, and interactive tools with stronger case-study evidence.',
-  },
-  {
-    label: 'Supporting Strength',
-    value: 'Media craft',
-    detail: 'Videography, communication, and visual storytelling that improve how technical work lands.',
-  },
+const highlights = [
+  'Spatial interaction prototyping across XR, simulation, and real-time systems.',
+  'Gameplay systems, rapid iteration, and usability-minded design decisions.',
+  'Media, animation, and communication experience that strengthens presentation and storytelling.',
 ];
 
 const featuredProjects = [
@@ -140,42 +108,49 @@ export default function About() {
           <h1 className="text-4xl font-bold tracking-tight mt-4">ABOUT</h1>
         </header>
 
-        <section className="mb-12">
+        <section className="mb-14">
           <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Profile</h2>
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
             <div className="relative order-2 lg:order-1">
-              <DegreeGraph className="h-[220px] lg:h-[420px] w-full transition-all duration-300" />
+              <DegreeGraph className="h-[220px] lg:h-[460px] w-full transition-all duration-300" />
             </div>
-            <div className="order-1 lg:order-2 border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-6 sm:p-7 shadow-[var(--shadow)]">
-              <h3 className="text-2xl font-bold tracking-tight mb-4">Technical Designer</h3>
+            <div className="order-1 lg:order-2 border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h3 className="text-2xl font-bold tracking-tight mb-4">T-Shaped Developer</h3>
               <p className="text-[var(--muted)] leading-relaxed">
-                I work across XR, gameplay prototyping, interaction design, and presentation, with a focus on making systems feel clearer, more usable, and more believable.
+                Bridging technical implementation, design thinking, and human factors through spatial interaction, gameplay prototyping, and XR work.
               </p>
               <p className="text-[var(--muted)] leading-relaxed mt-3">
-                My background in simulation, animation, communication, and media production helps me move between structure, feel, and storytelling instead of treating them as separate jobs.
+                I build immersive systems and responsive gameplay in Unity, and my background in simulation, animation, communication, and media production helps me move between structure, feel, and storytelling without treating them as separate jobs.
               </p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                {focusAreas.map((item) => (
-                  <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-4 shadow-sm">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--muted)]">{item.title}</p>
-                    <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">{item.description}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">At A Glance</h2>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {quickFacts.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-3 text-2xl font-bold tracking-tight text-[var(--foreground)]">{item.value}</p>
-                <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed">{item.detail}</p>
-              </div>
-            ))}
+        <section className="mb-14">
+          <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Commercial Success</h2>
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl px-5 py-5 sm:px-8 sm:py-6 shadow-[var(--shadow)]">
+            <h3 className="text-2xl sm:text-3xl font-bold italic">Shinobi Story</h3>
+            <p className="text-4xl sm:text-5xl font-black mt-3 tracking-tight">$110,000 REVENUE</p>
+            <p className="mt-4 text-[var(--muted)] max-w-md leading-relaxed">
+              Contributed character and ability animations, shipped weekly content, ran live events, and supported the community-facing pipeline on a fully custom Naruto MMORPG.
+            </p>
+            <Link
+              href="/projects/shinobi-story"
+              className="mt-5 inline-flex items-center rounded-full border border-[var(--border)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
+            >
+              View Shinobi Story →
+            </Link>
+          </div>
+        </section>
+
+        <section className="mb-14">
+          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Highlights</h2>
+            <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+              {highlights.map((item) => (
+                <li key={item}>- {item}</li>
+              ))}
+            </ul>
           </div>
         </section>
 

@@ -42,6 +42,75 @@ const gallery = [
 
 const [simulatorImage, devImage, budgetImage, ridersImage, menuImage, volunteeringImage] = gallery;
 
+const snapshot = [
+  {
+    title: 'Client & Mission',
+    description:
+      'Built with B-360, a Baltimore nonprofit that uses dirt bike culture to connect youth with STEM learning, mentorship, and community support.',
+  },
+  {
+    title: 'Team',
+    description:
+      'Developed in Dr. Elka Cahn\'s community-focused game design class with teammates Zefran Jehle and Lewis Plested.',
+  },
+  {
+    title: 'My Role',
+    description:
+      'I handled technical implementation, VR interaction flow, gameplay feel, and comfort-focused iteration across the prototype.',
+  },
+];
+
+const prototypeLoop = [
+  'Inspect a dirt bike in a workshop to learn parts and placement.',
+  'Answer short quiz prompts tied to safety and bike knowledge.',
+  'Test ride the bike in first-person instead of stopping at a static learning scene.',
+  'Keep the experience useful for outreach and workshop discussion, not just impressive on first glance.',
+];
+
+const constraints = [
+  {
+    title: 'Affordable VR Target',
+    description:
+      'The prototype was built around Google Cardboard-style mobile VR instead of expensive headset setups.',
+  },
+  {
+    title: 'Comfort First',
+    description:
+      'Camera behavior, movement, and pacing were tuned to reduce sickness risk for first-time VR users.',
+  },
+  {
+    title: 'Real-World Use',
+    description:
+      'The goal was to give B-360 something they could imagine using in workshops and outreach, not just a class demo.',
+  },
+];
+
+const developmentNotes = [
+  'Frequent class reviews and team syncs kept the prototype grounded in feedback instead of drifting into over-scope ideas.',
+  'Desktop and mobile test loops helped us catch comfort, clarity, and stability problems early.',
+  'UI, onboarding, and interaction changes were made around readability and ease-of-use for new players.',
+];
+
+const feedbackPoints = [
+  'We showed B-360 a working prototype during our final in-person meeting and gathered direct reactions while they playtested it.',
+  'That session helped us understand how the project might fit real workshops instead of only classroom expectations.',
+  'The hosted playtest ended with strong engagement and no reported motion sickness during the session.',
+  'The project felt more serious because the feedback came from people who could actually use it.',
+];
+
+const continuationPlan = [
+  'The semester ended before the final cross-platform version was finished.',
+  'As of March 2026, Zefran and I plan to keep developing the project through Summer 2026.',
+  'The current target is a cleaner build for PC, Android phones, and Meta Quest headsets.',
+  'The next pass is focused on quality-of-life improvements, onboarding, polish, and broader device support.',
+];
+
+const takeaways = [
+  'This project pushed me away from designing for novelty alone and toward work that felt useful, accessible, and meaningful to the people being served.',
+  'It gave me much better experience with clients, community organizations, and real constraints than a normal classroom-only game project could.',
+  'It also reinforced how much I care about XR when it is tied to actual people, actual goals, and actual practical limits.',
+];
+
 export default function VRMicrogamesCaseStudy() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
@@ -51,14 +120,14 @@ export default function VRMicrogamesCaseStudy() {
             items={[
               { label: 'Home', href: '/' },
               { label: 'Projects', href: '/career' },
-              { label: 'VR Dirt Bike Game (B-360)' },
+              { label: 'Shift Culture VR (B-360)' },
             ]}
             className="mb-4"
           />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Community XR Collaboration</p>
-          <h1 className="text-4xl font-bold tracking-tight mt-4">B-360 VR Dirt Bike Safety Prototype</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-3xl text-base">
-            A student-led XR project built to support B-360&apos;s mission through an accessible, comfort-first riding simulation.
+          <h1 className="text-4xl font-bold tracking-tight mt-4">Shift Culture VR</h1>
+          <p className="text-[var(--muted)] mt-3 max-w-3xl text-base leading-relaxed">
+            A B-360 dirt bike safety and outreach prototype built in VR under real client, hardware, and accessibility constraints.
           </p>
         </header>
 
@@ -66,17 +135,17 @@ export default function VRMicrogamesCaseStudy() {
           <div className="rounded-2xl border border-[var(--foreground)]/30 bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <div className="grid gap-8 md:grid-cols-2 md:items-start">
               <div>
-                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Featured Case Study</h2>
+                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Why This Project Matters</h2>
                 <p className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
-                  University of Baltimore Newsroom Coverage
+                  Featured by the University of Baltimore Newsroom on January 30, 2026
                 </p>
                 <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
-                  This project was selected for official UBalt coverage highlighting community impact through game design and XR prototyping with B-360.
+                  This project went beyond a normal class exercise. It had to reflect B-360&apos;s mission, work on affordable mobile VR hardware, and make sense for real outreach and workshop use.
                 </p>
-                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
-                  <li>- Community-centered design focus rather than pure class-demo scope.</li>
-                  <li>- Public playtest framing tied to real partner outcomes.</li>
-                  <li>- Accessibility emphasis through low-cost hardware constraints.</li>
+                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)] leading-relaxed">
+                  <li>- Built with a real Baltimore nonprofit instead of an imaginary assignment brief.</li>
+                  <li>- Designed around Google Cardboard-style accessibility instead of high-end headset assumptions.</li>
+                  <li>- Strengthened by direct B-360 feedback during in-person prototype review and playtesting.</li>
                 </ul>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
@@ -88,12 +157,12 @@ export default function VRMicrogamesCaseStudy() {
                     Read UBalt Story
                   </a>
                   <a
-                    href="/documents/projects/b360/recruiter/b360-end-of-semester-reflection.pdf"
+                    href="https://b360baltimore.org/"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
                   >
-                    Reflection PDF
+                    Visit B-360
                   </a>
                 </div>
               </div>
@@ -108,7 +177,7 @@ export default function VRMicrogamesCaseStudy() {
                     height={ridersImage.height}
                     className="object-cover"
                     roundedClassName="rounded-none"
-                    popupCaption="B-360 youth riders and program context in Baltimore — community backdrop for the prototype."
+                    popupCaption="B-360 youth riders and program context in Baltimore, the real community backdrop for the prototype."
                   />
                 </div>
                 <div className="border-t border-[var(--border)] px-4 py-3">
@@ -120,20 +189,14 @@ export default function VRMicrogamesCaseStudy() {
 
           <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Community-First Project Framing</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Client & Mission</span>
-                  Designed for B-360 to support safer riding habits and youth engagement through interactive simulation.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Academic Setting</span>
-                  Built in Dr. Elka Cahn&apos;s class with teammates Zefran Jehle and Lewis Plested.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">My Role</span>
-                  Led technical implementation and comfort-focused iteration across gameplay systems and UX tuning.
-                </li>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Snapshot</h2>
+              <ul className="space-y-4 text-sm text-[var(--muted)] leading-relaxed">
+                {snapshot.map((item) => (
+                  <li key={item.title}>
+                    <span className="text-[var(--foreground)] font-medium block mb-1">{item.title}</span>
+                    {item.description}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
@@ -147,7 +210,33 @@ export default function VRMicrogamesCaseStudy() {
                   height={simulatorImage.height}
                   className="object-cover"
                   roundedClassName="rounded-none"
-                  popupCaption="In-simulator riding view used during iteration of road readability and obstacle awareness."
+                  popupCaption="In-simulator riding view used while testing road readability, obstacle awareness, and overall first-person comfort."
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">What The Prototype Actually Did</h2>
+              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+                {prototypeLoop.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <div className="relative aspect-video w-full">
+                <LightboxImage
+                  src={menuImage.src}
+                  alt={menuImage.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  width={menuImage.width}
+                  height={menuImage.height}
+                  className="object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Menu and onboarding pass designed to keep first-time players oriented before entering the workshop and riding sections."
                 />
               </div>
             </div>
@@ -165,25 +254,19 @@ export default function VRMicrogamesCaseStudy() {
                   height={budgetImage.height}
                   className="object-cover"
                   roundedClassName="rounded-none"
-                  popupCaption="Low-cost mobile VR setup selected to keep deployment practical and accessible."
+                  popupCaption="Low-cost mobile VR setup chosen so the project aligned with practical access instead of expensive hardware expectations."
                 />
               </div>
             </div>
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Constraint-Led Design</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Accessibility Target</span>
-                  Optimized for low-cost mobile VR headsets (around $18) instead of high-end devices.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Comfort First</span>
-                  Prioritized stable movement and camera behavior to reduce motion sickness risk.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Practical Outcome</span>
-                  Built as a usable training and outreach artifact, not only an entertainment demo.
-                </li>
+              <ul className="space-y-4 text-sm text-[var(--muted)] leading-relaxed">
+                {constraints.map((item) => (
+                  <li key={item.title}>
+                    <span className="text-[var(--foreground)] font-medium block mb-1">{item.title}</span>
+                    {item.description}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -191,13 +274,10 @@ export default function VRMicrogamesCaseStudy() {
           <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Development Workflow</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Iteration happened across desktop and mobile test loops, with frequent build checks to validate frame stability, interaction feel, and reliability before external playtests.
-              </p>
-              <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
-                <li>- Rapid prototype updates between class reviews and team syncs.</li>
-                <li>- UI and input adjustments based on clarity and ease-of-use.</li>
-                <li>- Continuous tuning for onboarding-first playtest sessions.</li>
+              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+                {developmentNotes.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
               </ul>
             </div>
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
@@ -211,28 +291,32 @@ export default function VRMicrogamesCaseStudy() {
                   height={devImage.height}
                   className="object-cover"
                   roundedClassName="rounded-none"
-                  popupCaption="Development setup showing device testing and iterative build checks during implementation."
+                  popupCaption="Development setup showing iterative build checks and team testing while the prototype was still being shaped."
                 />
               </div>
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={menuImage.src}
-                  alt={menuImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={menuImage.width}
-                  height={menuImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Main menu pass used to keep first-time onboarding and control flow clear."
-                />
-              </div>
+          <div className="grid gap-8 md:grid-cols-2 md:items-start">
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Partner Feedback & Playtest Value</h2>
+              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+                {feedbackPoints.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
             </div>
+            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">What Happened Next</h2>
+              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+                {continuationPlan.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
               <div className="relative aspect-video w-full">
                 <LightboxImage
@@ -244,38 +328,18 @@ export default function VRMicrogamesCaseStudy() {
                   height={volunteeringImage.height}
                   className="object-cover"
                   roundedClassName="rounded-none"
-                  popupCaption="Team and community collaboration context during B-360 outreach and event support."
+                  popupCaption="Community event context that helped ground the project in actual people and actual outreach needs."
                 />
               </div>
             </div>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Playtest Outcomes</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>- Final prototype delivered by end of semester.</li>
-                <li>- B-360 representatives tested the build at the Universities at Shady Grove.</li>
-                <li>- Team observed strong engagement from first-time VR users.</li>
-                <li>- No motion sickness reported during the hosted playtest session.</li>
+              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">What I Took From It</h2>
+              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
+                {takeaways.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
               </ul>
             </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Reflection Highlights</h2>
-              <blockquote className="text-sm text-[var(--muted)] leading-relaxed border-l-2 border-[var(--border)] pl-4">
-                &quot;It&apos;s not just about what is fun, it&apos;s about what is useful, accessible, and meaningful for the group you are serving, while still being fun.&quot;
-              </blockquote>
-              <blockquote className="mt-4 text-sm text-[var(--muted)] leading-relaxed border-l-2 border-[var(--border)] pl-4">
-                &quot;Their excitement when they first playtested it motivated our team and reminded us that our hard work can make a difference.&quot;
-              </blockquote>
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Supporting Notes</h2>
-            <p className="text-sm text-[var(--muted)]">
-              Additional process detail is available in the end-of-semester reflection document.
-            </p>
           </div>
         </section>
       </div>

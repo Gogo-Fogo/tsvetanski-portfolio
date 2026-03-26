@@ -28,7 +28,7 @@ export default function Home() {
             </h1>
             <div className="text-base sm:text-lg text-[var(--muted)] max-w-2xl space-y-2">
               <p>Technical design for XR, games, and interactive tools.</p>
-              <p className="text-sm sm:text-base opacity-75">Spatial interaction prototyping with a cinematic eye.</p>
+              <p className="text-sm sm:text-base opacity-75">Spatial interaction prototyping with a focus on feel, clarity, and presentation.</p>
             </div>
           </div>
         </div>
@@ -113,5 +113,6 @@ export default function Home() {
     </main>
   );
 }
+
 
 

@@ -39,7 +39,7 @@ const nodesData: GraphNode[] = [
     group: "degree",
     color: "#f97316",
     position: { x: 200, y: 160 },
-    description: "Foundation in visual storytelling and digital content creation techniques."
+    description: "Foundation in visual storytelling, traditional animation, and 2D/3D production workflows."
   },
   {
     id: "degree-ba",
@@ -71,49 +71,49 @@ const nodesData: GraphNode[] = [
   },
   { 
     id: "sub-aa-2", 
-    label: "Cinematic Sequencing", 
+    label: "2D / 3D Pipelines", 
     group: "sub", 
     color: "#fdba74", 
     parentId: "degree-aa", 
     position: { x: 120, y: 160 },
-    description: "Mastering the art of scene composition and timing."
+    description: "Working across traditional, 2D, and 3D animation workflows from planning through polish."
   },
   { 
     id: "sub-aa-3", 
-    label: "World Atmosphere", 
+    label: "Animation Principles", 
     group: "sub", 
     color: "#fdba74", 
     parentId: "degree-aa", 
     position: { x: 140, y: 230 },
-    description: "Creating immersive environments through visual elements."
+    description: "Applying timing, spacing, follow-through, and other core animation principles to motion."
   },
 
   { 
     id: "sub-ba-1", 
-    label: "Rhetoric & Persuasion", 
+    label: "Strategic Communication", 
     group: "sub", 
     color: "#fde68a", 
     parentId: "degree-ba", 
     position: { x: 540, y: 90 },
-    description: "Understanding and applying effective communication strategies."
+    description: "Shaping messages clearly across audiences, platforms, and goals."
   },
   { 
     id: "sub-ba-2", 
-    label: "Empathy Signals", 
+    label: "Rhetorics", 
     group: "sub", 
     color: "#fde68a", 
     parentId: "degree-ba", 
     position: { x: 560, y: 160 },
-    description: "Recognizing and responding to user emotional cues."
+    description: "Studying argument, framing, and how language shapes interpretation."
   },
   { 
     id: "sub-ba-3", 
-    label: "Team Alignment", 
+    label: "Media Analysis", 
     group: "sub", 
     color: "#fde68a", 
     parentId: "degree-ba", 
     position: { x: 540, y: 230 },
-    description: "Facilitating effective cross-functional collaboration."
+    description: "Reading media critically and understanding how messages are built and received."
   },
 
   { 
@@ -146,30 +146,30 @@ const nodesData: GraphNode[] = [
 
   { 
     id: "sub-core-1", 
-    label: "Human-Centered Flow", 
+    label: "User Flow", 
     group: "sub", 
     color: "#c4b5fd", 
     parentId: "core-ms", 
     position: { x: 260, y: 90 },
-    description: "Designing intuitive user journeys and interactions."
+    description: "Structuring interactions so people can move through a system more naturally."
   },
   { 
     id: "sub-core-2", 
-    label: "Frictionless UX", 
+    label: "Usability", 
     group: "sub", 
     color: "#c4b5fd", 
     parentId: "core-ms", 
     position: { x: 340, y: 60 },
-    description: "Minimizing cognitive load in user interfaces."
+    description: "Improving usability so interfaces feel easier to read and use."
   },
   { 
     id: "sub-core-3", 
-    label: "Complexity Clarity", 
+    label: "Information Architecture", 
     group: "sub", 
     color: "#c4b5fd", 
     parentId: "core-ms", 
     position: { x: 420, y: 90 },
-    description: "Making complex systems understandable and manageable."
+    description: "Structuring information so complex systems are easier to navigate, understand, and use."
   },
 ];
 
@@ -2503,3 +2503,8 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     </div>
   );
 }
+
+
+
+
+
