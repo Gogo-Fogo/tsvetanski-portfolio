@@ -30,6 +30,49 @@ const snapshotItems = [
   },
 ];
 
+const productScreens = [
+  {
+    src: '/images/projects/feh-barracks/feh-hero-library.png',
+    alt: 'FEH Barracks My Heroes library showing owned units, merges, dupes, and build summaries',
+    width: 1328,
+    height: 1213,
+    title: 'My Heroes Library',
+    caption: 'Owned units stay searchable and sortable, with merges, dupes, tags, and build-state summaries readable in one pass.',
+    popupCaption:
+      'Current My Heroes capture showing the owned-library grid, filter row, and the build-management direction for each synced barracks entry.',
+  },
+  {
+    src: '/images/projects/feh-barracks/feh-tavern.png',
+    alt: 'FEH Barracks Tavern screen with social panel, stage avatars, and friends list',
+    width: 1240,
+    height: 1436,
+    title: 'Tavern Social Surface',
+    caption: 'The Tavern pushes the product past plain CRUD by giving the collection app a social lounge, avatar stage, and friend-state layer.',
+    popupCaption:
+      'Current Tavern capture showing the stage presentation, friend management panel, and the side-surface work that makes the app feel more like a real product.',
+  },
+  {
+    src: '/images/projects/feh-barracks/feh-aether-resort.png',
+    alt: 'FEH Barracks Aether Resort prototype with mini sprites roaming a map',
+    width: 1200,
+    height: 1250,
+    title: 'Aether Resort Prototype',
+    caption: 'Local mini sprites, slot selection, and saved background preferences turn collection data into a playful companion surface.',
+    popupCaption:
+      'Current Aether Resort capture showing the selected hero slots, background selection, and roaming mini-sprite prototype built on top of the FEH data set.',
+  },
+  {
+    src: '/images/projects/feh-barracks/feh-login-screen.png',
+    alt: 'FEH Barracks login screen with account form and FEH presentation art',
+    width: 1600,
+    height: 1265,
+    title: 'Synced Entry Surface',
+    caption: 'The account entry flow frames the tool as a synced multi-device product instead of a local-only prototype.',
+    popupCaption:
+      'Current FEH Barracks login surface: account entry on the left, FEH presentation art on the right, and the project framed as a synced multi-device product.',
+  },
+];
+
 const productItems = [
   'Account-based barracks with synced favorites, notes, team comps, and profile preferences.',
   'Hero browser, owned-library management, and direct entry editing for merges, dupes, blessings, and tracked build inventory.',
@@ -139,12 +182,12 @@ export default function FehBarracksManagerCaseStudy() {
         <section className="flex flex-col gap-12 md:gap-16">
           <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
-              src="/images/projects/feh-barracks/feh-login-screen.png"
-              alt="FEH Barracks Manager login screen with FEH character art and account entry flow"
-              width={1024}
-              height={768}
+              src="/images/projects/feh-barracks/feh-barracks-dashboard.png"
+              alt="FEH Barracks dashboard showing add flow, favorites, team builder, and synced account shell"
+              width={1200}
+              height={1376}
               className="h-auto w-full object-cover"
-              popupCaption="Current FEH Barracks login surface: account entry on the left, FEH presentation art on the right, and the project already framed as a synced multi-device product."
+              popupCaption="Current FEH Barracks dashboard capture showing the synced account shell, quick hero-add flow, favorites, and team builder surfaces together."
               roundedClassName="rounded-none"
             />
           </div>
@@ -156,6 +199,36 @@ export default function FehBarracksManagerCaseStudy() {
                 <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
               </div>
             ))}
+          </div>
+
+          <div>
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Product Screens</h2>
+            <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
+              These current local captures show the parts of the app that matter most on a portfolio page: the synced barracks shell, the owned-library grid,
+              the Tavern social layer, and the Aether Resort prototype that turns roster data into something more playful.
+            </p>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              {productScreens.map((screen) => (
+                <article
+                  key={screen.src}
+                  className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_24px_var(--accent-cyan)]"
+                >
+                  <LightboxImage
+                    src={screen.src}
+                    alt={screen.alt}
+                    width={screen.width}
+                    height={screen.height}
+                    className="h-[320px] w-full object-cover object-top"
+                    popupCaption={screen.popupCaption}
+                    roundedClassName="rounded-none"
+                  />
+                  <div className="p-5">
+                    <p className="text-sm font-semibold text-[var(--foreground)]">{screen.title}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{screen.caption}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">

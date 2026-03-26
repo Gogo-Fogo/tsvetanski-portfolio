@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import DocViewer from '@/components/doc-viewer';
 import type { DocOutlineItem, DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
+import LightboxLocalVideo from '@/components/lightbox-local-video';
 
 import type { Metadata } from 'next';
 
@@ -29,6 +30,13 @@ const snapshotItems = [
     value: '10 Prince combat-start lines, 11 Dahaka quotes, and 21 routed music/theme tracks',
   },
 ];
+
+const latestPrototypeVideo = {
+  src: '/videos/projects/prince-of-persia-warrior-within-mod/prince-latest-prototype-2026-03-21.mp4',
+  title: 'March 21, 2026 Prince of Persia latest prototype capture',
+  popupCaption:
+    'March 21, 2026 gameplay capture from the current local build showing live Prince combat, card flow, Warrior Within audio, and room-facing presentation inside the Slay the Spire 2 mod.',
+};
 
 const currentBuildItems = [
   'Custom Prince character slot with its own starter deck, reward pool, rest/shop/combat art hooks, and Neow dialogue.',
@@ -129,16 +137,30 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <LightboxImage
-              src="/images/projects/prince-of-persia-warrior-within-mod/prince-banner.png"
-              alt="Prince of Persia Warrior Within mod banner showing the Prince in the custom Slay the Spire 2 mod"
-              width={1536}
-              height={828}
-              className="h-auto w-full object-cover"
-              popupCaption="Current Prince banner art used for the mod's character-facing presentation. The tone is already locked on Warrior Within: severe, mobile, and under pressure."
-              roundedClassName="rounded-none"
-            />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-start">
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+              <LightboxLocalVideo
+                src={latestPrototypeVideo.src}
+                title={latestPrototypeVideo.title}
+                popupCaption={latestPrototypeVideo.popupCaption}
+                className="aspect-[43/18] w-full object-cover"
+                roundedClassName="rounded-none"
+              />
+            </div>
+
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+              <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Latest Prototype</p>
+              <h2 className="mt-4 text-2xl font-semibold tracking-tight">March 21, 2026 Gameplay Capture</h2>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                This is the strongest proof on the page right now. The current local build is already running real Prince combat, time tools, music,
+                voice, and room-facing presentation inside Slay the Spire 2 rather than living only in docs or mockups.
+              </p>
+              <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
+                <li>- Live combat flow from the current mod build.</li>
+                <li>- Warrior Within audio and presentation layered into the deckbuilder loop.</li>
+                <li>- A clearer read on pacing, feedback, and class identity than static art alone can give.</li>
+              </ul>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -208,6 +230,10 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
                 Some surfaces are still beta or placeholder, and I am fine being direct about that. What matters right now is that the class identity is
                 already coherent and the live build is carrying real system weight underneath the visuals.
+              </p>
+              <p className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm leading-relaxed text-[var(--muted)]">
+                Current portfolio visuals on this page use AI-generated placeholder art to establish tone and character direction. The mod systems, design,
+                engineering, audio routing, and gameplay presentation work are my own.
               </p>
             </div>
           </div>
