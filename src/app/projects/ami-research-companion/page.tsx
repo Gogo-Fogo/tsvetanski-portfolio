@@ -1,4 +1,4 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+﻿import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 
 import type { Metadata } from 'next';
@@ -39,7 +39,7 @@ const shippedItems = [
   'A local evidence vault that can ingest PDF, EPUB, TXT, Markdown, and quick note-style status updates.',
   'A retrieval pipeline that packages grounded evidence, page previews, and Codex-ready prompt bundles instead of raw chunk dumps.',
   'A personal-record path that keeps mom-specific notes and medical files separate while still allowing careful cross-reference in answers.',
-  'A chat-style UI with collapsed source cards, saved history, settings persistence, file import, and page preview support.',
+  'A chat interface with saved folders, document previews, practical next-step blocks, and helpful-image support when the answer benefits from it.',
   'A portable macOS delivery model built around Ami.app plus an adjacent AmiData folder so the tool can travel as one bundle.',
 ];
 
@@ -75,14 +75,14 @@ export default function AmiResearchCompanionCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/projects/ami/ami-banner.png"
-              alt="Ami research companion banner with app icon and in-app screenshot"
-              width={1600}
-              height={900}
+              alt="Ami interface showing the real product state with saved chats, grounded answer text, and an evidence preview card"
+              width={2048}
+              height={1280}
               className="h-auto w-full object-cover"
-              popupCaption="Ami: local-first research companion built for my mother, combining portable Mac delivery with grounded evidence retrieval and a calm chat interface."
+              popupCaption="Current Ami build: real saved chats, grounded answer layout, document preview rail, and the calmer visual design shaped around my mother's actual use."
               roundedClassName="rounded-none"
             />
           </div>
@@ -120,7 +120,7 @@ export default function AmiResearchCompanionCaseStudy() {
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-start">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
               <div>
                 <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Build</h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
@@ -135,14 +135,59 @@ export default function AmiResearchCompanionCaseStudy() {
               </div>
               <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
                 <LightboxImage
-                  src="/images/projects/ami/ami-ui-home.png"
-                  alt="Ami chat interface with local conversation history and grounded answer layout"
-                  width={1024}
-                  height={768}
+                  src="/images/projects/ami/ami-chat-followup.png"
+                  alt="Ami follow-up answer showing practical next steps and a helpful tick image reference"
+                  width={1800}
+                  height={1200}
                   className="h-auto w-full object-cover"
-                  popupCaption="Live Ami interface showing the local chat surface, saved chats, answer block, and low-friction composer built for real everyday use."
+                  popupCaption="Ami follow-up answer with practical next steps, careful wording when the library has no direct match, and a helpful reference image on the side rail."
                   roundedClassName="rounded-none"
                 />
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Product Screens</h2>
+            <p className="mb-6 max-w-3xl text-sm text-[var(--muted)]">
+              These are real captures from the current Ami build, not polished mockups. They show the product state that matters: saved chats, grounded answer
+              blocks, document previews, helpful-image support, and the options panel that lets the app remember how my mother actually uses it.
+            </p>
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+              <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
+                <LightboxImage
+                  src="/images/projects/ami/ami-chat-evidence.png"
+                  alt="Ami answer view with saved folders, grounded response text, and document evidence preview cards"
+                  width={1800}
+                  height={1200}
+                  className="h-auto w-full object-cover"
+                  popupCaption="Evidence-heavy Ami answer state: saved folders on the left, grounded answer copy in the center, and document preview cards on the right."
+                  roundedClassName="rounded-none"
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-6">
+                <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
+                  <LightboxImage
+                    src="/images/projects/ami/ami-chat-followup.png"
+                    alt="Ami follow-up answer with helpful image rail"
+                    width={1800}
+                    height={1200}
+                    className="h-auto w-full object-cover"
+                    popupCaption="Follow-up answer state: Ami can stay calm and useful even when the library has no direct match, then offer practical next steps and a helpful visual instead of bluffing certainty."
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
+                  <LightboxImage
+                    src="/images/projects/ami/ami-settings-panel.png"
+                    alt="Ami options panel showing current account, model, reasoning, storage root, and saved defaults"
+                    width={1600}
+                    height={1500}
+                    className="h-auto w-full object-cover"
+                    popupCaption="Options and defaults panel: connected account, model/reasoning, storage root, library paths, and chat-image preferences all visible in the product itself."
+                    roundedClassName="rounded-none"
+                  />
+                </div>
               </div>
             </div>
           </div>

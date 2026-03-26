@@ -34,20 +34,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-  description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
-  metadataBase: new URL("https://tsvetanski.com"),
+  title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
+  description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
+  metadataBase: new URL("https://www.tsvetanski.com"),
   openGraph: {
-    title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
-    url: "https://tsvetanski.com",
+    title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
+    description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
+    url: "https://www.tsvetanski.com",
     siteName: "Georgi Tsvetanski Portfolio",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Georgi Tsvetanski | Spatial Interaction Prototyper & Simulation Engineer",
-    description: "Unity engineer and XR prototyper specializing in spatial interaction systems, networked multiplayer (Photon Fusion), and simulation. $110K commercial outcome on Shinobi Story.",
+    title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
+    description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
   }
 };
 

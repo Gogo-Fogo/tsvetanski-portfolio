@@ -27,8 +27,8 @@ export default function Home() {
               Georgi Tsvetanski
             </h1>
             <div className="text-base sm:text-lg text-[var(--muted)] max-w-2xl space-y-2">
-              <p>Spatial interaction prototyper for XR + simulation.</p>
-              <p className="text-sm sm:text-base opacity-75">Cinematic storyteller on the side.</p>
+              <p>Technical design for XR, games, and interactive tools.</p>
+              <p className="text-sm sm:text-base opacity-75">Spatial interaction prototyping with a cinematic eye.</p>
             </div>
           </div>
         </div>
@@ -49,11 +49,11 @@ export default function Home() {
             className="group rounded-3xl border border-transparent bg-[var(--surface)] p-5 sm:p-7 lg:p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
           >
             <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Primary Focus</p>
-            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">XR Simulation Engineering</h2>
+            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">XR, Games &amp; Interactive Systems</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
-              <li>Spatial interaction systems</li>
-              <li>Simulation and gameplay engineering</li>
-              <li>Shipped commercial work — $110K revenue</li>
+              <li>Spatial interaction and simulation prototypes</li>
+              <li>Gameplay systems, tools, and vertical slices</li>
+              <li>Commercial and solo work grounded in real builds</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
               View Projects →
@@ -66,11 +66,11 @@ export default function Home() {
             className="group rounded-3xl border border-transparent bg-[var(--surface)] p-5 sm:p-7 lg:p-8 text-left shadow-[var(--shadow)] transition-all duration-300 hover:bg-[var(--surface)] hover:shadow-[var(--shadow-strong)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
           >
             <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Secondary Focus</p>
-            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Storytelling</h2>
+            <h2 className="mt-4 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--foreground)]">Storytelling, Media &amp; Presentation</h2>
             <ul className="mt-3 list-disc pl-5 text-base text-[var(--muted)] space-y-2">
-              <li>Cinematic edits and trailers</li>
-              <li>Interview and outreach media</li>
-              <li>Recruitment and event video production</li>
+              <li>Trailers, edits, and cinematic capture</li>
+              <li>Interview, outreach, and documentary-style media</li>
+              <li>Clearer presentation for complex technical work</li>
             </ul>
             <div className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
               Explore Creative Work →

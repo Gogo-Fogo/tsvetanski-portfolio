@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import LightboxImage from '@/components/lightbox-image';
 import Breadcrumbs from '@/components/breadcrumbs';
@@ -43,8 +43,8 @@ const projects: Project[] = [
     href: "/projects/shinobi-story",
     bannerImage: "/images/ShinobiStoryBanner.jpg",
     bannerAlt: "Shinobi Story banner",
-    bannerWidth: 1600,
-    bannerHeight: 900,
+    bannerWidth: 2048,
+    bannerHeight: 1280,
     bannerBorderClass: "border-2 border-[#D8B33C]"
   },
   {
@@ -68,8 +68,8 @@ const projects: Project[] = [
     href: "/projects/vr-microgames",
     bannerImage: "/images/B360_bike_simulator.png",
     bannerAlt: "B-360 VR dirt bike simulator preview",
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "VR Car Drift Simulator",
@@ -84,8 +84,33 @@ const projects: Project[] = [
     bannerHeight: 768
   },
   {
-    title: "Shonen Showdown",
-    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
+    title: "MUMOSA Crisis Response VR Study",
+    description: "Graduate client project for DEVCOM Army Research Laboratory / MUMOSA — multimodal situational-awareness research, crisis-response heuristics, and an in-progress VR evidence-review prototype direction.",
+    tags: ["Defense Research", "Crisis Response UX", "VR Prototyping"],
+    searchTerms: ["mumosa", "army research laboratory", "devcom", "crisis response", "situational awareness", "forensic training", "schema graph", "3d reconstruction", "vr evidence review"],
+    facets: ['engineering', 'xr'],
+    href: "/projects/mumosa-crisis-response-vr",
+    bannerImage: "/images/projects/mumosa-crisis-response-vr/mumosa-banner.png",
+    bannerAlt: "MUMOSA dashboard figure showing multimodal question answering, evidence panels, schema graphs, and simulation evidence",
+    bannerWidth: 995,
+    bannerHeight: 645,
+    type: 'prototype'
+  },
+  {
+    title: "Birdwatching",
+    description: "Upcoming student VR exploration game set in a post-nuclear woodland — photograph birds, feed them safely, and fill a bingo-style field journal while keeping the first prototype tightly scoped.",
+    tags: ["Spatial Interaction", "Prototyping", "Visual Storytelling"],
+    searchTerms: ["birdwatching", "vr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "felix", "talulla"],
+    facets: ['xr', 'art-storytelling'],
+    href: "/projects/birdwatching",
+    bannerImage: "/images/projects/birdwatching/birdwatching-banner.png",
+    bannerAlt: "Birdwatching planning deck cover showing the VR wildlife exploration concept",
+    bannerWidth: 2880,
+    bannerHeight: 1620,
+    type: 'prototype'
+  },
+  {
+    title: "Shonen Showdown",    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
     tags: ["3D Multiplayer TCG", "Game Systems Design", "Photon Fusion 2"],
     searchTerms: ["card game", "tcg", "anime", "prototype", "shonen", "unity", "networking"],
     facets: ['engineering', 'art-storytelling'],
@@ -116,8 +141,8 @@ const projects: Project[] = [
     href: '/projects/totally-bugged-out',
     bannerImage: '/images/Totally Bugged Out_banner.png',
     bannerAlt: 'Totally Bugged Out project banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "Shogun: Flowers Fall in Blood",
@@ -128,8 +153,8 @@ const projects: Project[] = [
     href: '/projects/shogun-flowers-fall-in-blood',
     bannerImage: '/images/ShogunFlowersFallinBlood_banner.png',
     bannerAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "Ami",
@@ -139,9 +164,9 @@ const projects: Project[] = [
     facets: ['engineering'],
     href: '/projects/ami-research-companion',
     bannerImage: '/images/projects/ami/ami-banner.png',
-    bannerAlt: 'Ami research companion banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerAlt: 'Ami interface showing grounded answer layout, saved chats, and document preview card',
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "FEH Barracks Manager",
@@ -176,8 +201,8 @@ const projects: Project[] = [
     href: '/projects/cranky-game-jam',
     bannerImage: '/images/Cranky_GameJam_Banner_2024.jpg',
     bannerAlt: 'Cranky Game Jam 2024 banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "Cranky: The Squirrel Annihilator",
@@ -188,8 +213,8 @@ const projects: Project[] = [
     href: '/projects/cranky-squirrel-annihilator',
     bannerImage: '/images/CrankyTheSquirrelAnnihilator_banner.png',
     bannerAlt: 'Cranky The Squirrel Annihilator banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "The Signal",
@@ -200,8 +225,8 @@ const projects: Project[] = [
     href: '/projects/the-signal',
     bannerImage: '/images/Banner_TheSignal.jpg',
     bannerAlt: 'The Signal board game banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "The Last Paycheck",
@@ -212,8 +237,8 @@ const projects: Project[] = [
     href: '/projects/the-last-paycheck',
     bannerImage: '/images/TheLastPaycheck_Banner.png',
     bannerAlt: 'The Last Paycheck banner',
-    bannerWidth: 1600,
-    bannerHeight: 900
+    bannerWidth: 2048,
+    bannerHeight: 1280
   },
   {
     title: "VR Patapon Game",
@@ -501,6 +526,8 @@ export default function Career() {
     </Suspense>
   );
 }
+
+
 
 
 
