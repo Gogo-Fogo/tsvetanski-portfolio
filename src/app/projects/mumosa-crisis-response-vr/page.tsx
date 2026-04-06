@@ -8,66 +8,158 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'MUMOSA Crisis Response VR Study | Georgi Tsvetanski',
   description:
-    'Graduate client project tied to DEVCOM Army Research Laboratory and MUMOSA, focused on multimodal situational awareness, crisis-response heuristics, and an in-progress VR evidence-review direction.',
+    'Graduate client project tied to DEVCOM Army Research Laboratory and MUMOSA, featuring a finished low-fidelity VR paper prototype built around a single-sheet 360 scene, grounded AI evidence cards, and a dashboard-to-VR handoff.',
 };
 
 const snapshotItems = [
   {
     label: 'Role',
-    value: "Individual lit-review author and current owner of the team's VR direction and early prototype framing",
+    value: "Literature-review author and VR paper-prototype owner for the team's redesign",
   },
   {
     label: 'Team',
     value: 'Three-person graduate team: Georgi Tsvetanski, Kelly Ehrlich, and Kamilah S.',
   },
   {
-    label: 'Client Context',
-    value: 'DEVCOM Army Research Laboratory / MUMOSA, a multimodal situational-awareness dashboard for crisis analysis and training',
+    label: 'Current Artifact',
+    value: 'Finished low-fidelity prototype covering both the VR lane and the flatscreen dashboard direction',
   },
   {
-    label: 'Current Stage',
-    value: 'Lit review complete; heuristics presentation, paper prototype, testing, and a basic VR proof-of-concept in progress',
+    label: 'Next Digital Split',
+    value: 'Axure with the team for flatscreen, Unity on my side for VR',
   },
 ];
 
 const researchItems = [
   {
-    title: 'Cognitive Load Comes First',
-    body: 'My lit review kept returning to the same problem: responders and investigators are already overloaded. The interface has to reduce fragmentation, not add another noisy control room.',
+    title: 'Reduce Cognitive Load',
+    body: 'The interface should help users make sense of a crisis scene, not add another layer of clutter during a high-stakes review task.',
   },
   {
-    title: 'Trust Needs Grounding',
-    body: 'The strongest heuristic in the MUMOSA paper is still the right one for our coursework too: every AI summary needs a visible path back to the source evidence.',
+    title: 'Ground AI In Evidence',
+    body: 'Every summary needs an obvious path back to a source so investigators can verify claims instead of trusting the model blindly.',
   },
   {
-    title: 'Resolve Phase Is The Best Fit',
-    body: 'Right now the most believable use case is post-crisis reconstruction and training. That is where schema graphs, grounded documents, and 3D evidence review become most useful.',
+    title: 'Focus On Resolve-Phase Review',
+    body: 'The most believable use case is post-crisis reconstruction and training, where users need to inspect context carefully rather than react in real time.',
   },
 ];
 
-const deliverableItems = [
+const prototypeOverviewItems = [
   {
-    label: 'Completed',
-    title: 'Individual Literature Review',
-    body: 'I wrote the research pass grounding the project in user groups, crisis-response heuristics, multimodal interface design, and the resolve-phase framing.',
+    title: 'Web-First Handoff',
+    body: 'The planning board framed VR as a power tool inside a web-first ecosystem, reached through a deliberate View in VR/360 action from the dashboard.',
   },
   {
-    label: 'In Progress',
-    title: 'Group Heuristics Presentation',
-    body: 'The current team work is translating research into concrete interaction decisions for the final prototype direction.',
+    title: 'Frozen Scene Review',
+    body: 'The VR lane is meant for revisiting hazardous sites after the event, preserving a scene in time for later forensic review and training.',
   },
   {
-    label: 'Next',
-    title: 'Paper + Electronic Prototype',
-    body: 'The immediate target is a paper prototype, testing notes, a clickable prototype, and a small VR proof that communicates the spatial-review concept clearly.',
+    title: 'Grounded 3D Evidence',
+    body: 'The board pushed toward spatially pinned body-cam, drone, and thermal feeds so AI summaries stay anchored to the exact place they came from.',
   },
 ];
 
-const currentScopeItems = [
-  'Use VR as a second-pass evidence surface so investigators can re-walk a hazardous scene without physical risk.',
-  'Tie spatial review back to source reports, imagery, and event structure instead of treating 3D space as a disconnected demo.',
-  'Keep the scope honest: basic prototype first, not a claim of a finished LiDAR or field-ready defense product.',
-  'Frame the concept around forensic review and training now, with real-time response only as a future possibility.',
+const planningBoardItems = [
+  {
+    title: 'VR As A Power Tool',
+    body: 'The strongest planning-board decision was to keep the main system web-first and use VR only when an investigator needs deeper spatial review.',
+  },
+  {
+    title: 'Believable Capture Pipeline',
+    body: 'Photogrammetry, Gaussian splatting, LiDAR, and autonomous scouts gave the concept a credible way to reconstruct dangerous scenes without sending people in first.',
+  },
+  {
+    title: 'Pinned Source Feeds',
+    body: 'Instead of floating generic summaries, the board imagined 2D body-cam and drone evidence pinned back into 3D space as verifiable source material.',
+  },
+];
+
+const paperMethodItems = [
+  'The crisis scene lives in one centered 11 x 3 inch strip on the page.',
+  'A 2.75 x 3 inch cardboard viewport simulates the headset field of view and slides left or right across the strip.',
+  'I only used the middle strip, leaving the top and bottom blank so popup cards could sit outside the scene.',
+  'The first street-level scenario includes a basketball-court incident, a central car crash with skid marks, and a burning building.',
+];
+
+const controllerItems = [
+  'Right trigger selects a point of interest and opens the matching AI card.',
+  'A reveals the source evidence, such as body-cam, drone, thermal, or text material.',
+  'B stands in for the LiDAR measurement tool, especially around the crash scene.',
+  'Left joystick teleports between zones, while X filters noise and Y exits back to the dashboard.',
+];
+
+const aiPopupItems = [
+  {
+    title: 'Critical Event: Civilian Casualty',
+    time: '14:02:11 EST',
+    summary:
+      'VLM extraction from officer body-cam confirms one fallen individual. Bystander audio suggests a loud altercation immediately preceded the event.',
+    action: 'Show Source: Body-Cam #4 Video and Transcript',
+  },
+  {
+    title: 'Collision And Scene Evidence',
+    time: '14:15:33 EST',
+    summary:
+      'Drone photogrammetry detected major vehicular impact and prompts investigators to use LiDAR measurement on the skid marks for velocity analysis.',
+    action: 'Show Source: Drone Video Feed',
+  },
+  {
+    title: 'Structural Hazard: Active Fire',
+    time: '14:45:00 EST',
+    summary:
+      'Quadruped robot thermal sensors indicate temperatures above 800 C and a high probability of structural collapse on the east wall.',
+    action: 'Show Source: Spot Thermal Sensor Log',
+  },
+];
+
+const teamDashboardItems = [
+  {
+    title: 'View In VR/360 Entry',
+    body: 'VR is treated as a power tool reached from the dashboard, not as a replacement for the main workflow.',
+  },
+  {
+    title: 'Role-Based Views',
+    body: 'The flatscreen direction reduces overload by giving responders, investigators, and other users different starting views.',
+  },
+  {
+    title: 'Timeline And Schema Cleanup',
+    body: 'The team pushed toward clearer timeline wayfinding, better schema legibility, and stronger source linkage.',
+  },
+  {
+    title: 'Investigator Notes',
+    body: 'The dashboard lane also explored saved notes and annotations so findings can persist across deeper review sessions.',
+  },
+];
+
+const testingItems = [
+  {
+    title: 'Moderator Setup',
+    body: 'Participants are told we are testing the design, not them, and asked to think out loud throughout the session.',
+  },
+  {
+    title: 'Task Flow',
+    body: 'The test moves from first orientation, to timeline reconstruction, to deeper evidence review and VR discovery.',
+  },
+  {
+    title: 'What We Watch',
+    body: 'We look for confusion around entry points, timeline discovery, and whether the Show Source path builds trust in the AI summaries.',
+  },
+];
+
+const nextStepItems = [
+  {
+    title: 'Axure Flatscreen Prototype',
+    body: 'The shared digital dashboard prototype will move into Axure with my teammates.',
+  },
+  {
+    title: 'Unity VR Prototype',
+    body: 'I will carry the VR lane into Unity, translating the paper controller logic and scene handoff into a real interactive slice.',
+  },
+  {
+    title: 'Keep What Worked',
+    body: 'The digital version should preserve the strongest low-fi ideas: orientation, clear points of interest, and one-step access back to source evidence.',
+  },
 ];
 
 const litReviewPages: DocPage[] = Array.from({ length: 10 }, (_, index) => ({
@@ -112,66 +204,44 @@ export default function MumosaCrisisResponseVrCaseStudy() {
             className="mb-4"
           />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            Graduate Client Project · Army Research Laboratory Context · In Progress
+            Graduate Client Project · Army Research Laboratory Context · Low-Fidelity Prototype Complete
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight">MUMOSA Crisis Response VR Study</h1>
-          <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            This is an in-progress graduate project built around the Army Research Laboratory's MUMOSA dashboard. The immediate job is not to pretend I have
-            already shipped a defense product. It is to turn real client research, interaction-design heuristics, and a still-evolving team concept into a
-            believable prototype direction, with my current focus on the VR section.
-          </p>
-        </header>
-
-        <section className="flex flex-col gap-12 md:gap-16">
-          <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-cyan)]/50 bg-[var(--surface)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
-                  MUMOSA / DEVCOM ARL
-                </span>
-                <h2 className="mt-4 text-2xl font-semibold tracking-tight">Research-Grounded VR Direction for Multimodal Crisis Review</h2>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                  The published MUMOSA work combines question answering, textual evidence, visual evidence, schema graphs, and simulation views into one
-                  crisis-analysis interface. My contribution so far is grounding the project in research and pushing a VR direction that could help users review
-                  complex scenes spatially during post-crisis investigation and training.
-                </p>
-                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
-                  <li>- Real client context from the ARL / MUMOSA paper.</li>
-                  <li>- Individual literature review already completed.</li>
-                  <li>- Team concepting now focused on heuristics, paper prototyping, and a small VR proof.</li>
-                </ul>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="/documents/projects/mumosa-crisis-response-vr/mumosa-client-paper.pdf"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-                  >
-                    Open Client Paper
-                  </a>
-                  <a
-                    href="#lit-review"
-                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                  >
-                    View Lit Review
-                  </a>
-                </div>
-              </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-banner.png"
-                  alt="MUMOSA dashboard figure showing question answering, evidence panels, schema graphs, and simulation evidence"
-                  width={995}
-                  height={645}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Client-paper dashboard figure: MUMOSA brings interactive Q/A together with textual evidence, visual evidence, schema graphs, and simulation evidence inside one crisis-analysis surface."
-                />
+          <div className="mt-6 grid gap-8 md:grid-cols-[1.08fr_0.92fr] md:items-start">
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight">MUMOSA Crisis Response VR Study</h1>
+              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+                This page now focuses on the finished low-fidelity phase of our MUMOSA project. My contribution centered on the VR paper prototype for spatial scene review, while my teammates pushed the flatscreen dashboard direction. The next digital split follows that same structure: Axure for the shared dashboard and Unity for my VR lane.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href="#paper-prototype"
+                  className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
+                >
+                  View Paper Prototype
+                </a>
+                <a
+                  href="#lit-review"
+                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+                >
+                  View Lit Review
+                </a>
               </div>
             </div>
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <LightboxImage
+                src="/images/projects/mumosa-crisis-response-vr/mumosa-planning-board-vr-cluster.png"
+                alt="Focused VR planning section from the MUMOSA FigJam board showing rationale, reconstruction references, and risk notes"
+                width={1215}
+                height={1022}
+                className="h-auto w-full object-cover"
+                roundedClassName="rounded-none"
+                popupCaption="Focused VR-planning cluster from our FigJam board: system rationale, reconstruction references, practical risks, and the web-first positioning of VR as a specialized review mode."
+              />
+            </div>
           </div>
+        </header>
 
+        <section className="flex flex-col gap-8 md:gap-12">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             {snapshotItems.map((item) => (
               <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
@@ -181,153 +251,241 @@ export default function MumosaCrisisResponseVrCaseStudy() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.08fr_0.92fr] md:items-start">
+          <div className="grid gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-start">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What MUMOSA Is</h2>
+              <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project Context</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                MUMOSA is a multimodal situational-awareness dashboard. The core idea is to stop treating crisis evidence as separate silos and instead connect
-                reports, images, extracted events, schema graphs, and 3D scene views inside one interface that can support investigation, training, and, later,
-                potentially real-time response.
+                MUMOSA is a multimodal crisis-analysis concept that pulls together reports, extracted events, visual evidence, schema relationships, and simulation views. What mattered most in my lane was making that ecosystem easier to inspect spatially without losing trust in the underlying evidence.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                What makes it interesting to me is that it sits directly in the space I care about most: human factors, high-stakes information flow, and
-                spatial interfaces that help users understand a scene rather than only read about it.
+                The planning board also clarified an important system rule: VR should stay a specialized investigative mode inside a web-first workflow, not become the whole product. That made the paper phase useful for testing orientation, source verification, and the dashboard-to-VR handoff before building anything in Unity.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">My Role On The Team</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                I am not presenting this as if I already built the full MUMOSA system myself. My actual work so far is narrower and more honest: I completed the
-                individual literature review, I am helping shape the interaction-design direction with my teammates, and my current lane is the VR side of the
-                concept together with the framing for a basic prototype.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                That means I am thinking about how a reconstructed scene could help investigators revisit a hazardous site, inspect context spatially, and connect
-                what they see back to grounded evidence rather than making a disconnected 3D tech demo.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Research Findings That Shaped The Direction</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-3">
               {researchItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <div key={item.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
                   <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-start">
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/mumosa-crisis-response-vr/mumosa-simulation-evidence.png"
-                alt="MUMOSA simulation evidence example with annotated hazard regions in a reconstructed crisis scene"
-                width={450}
-                height={230}
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">From The Planning Board</h2>
+            <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              Revisiting the FigJam board helped pull forward the most useful system-level ideas behind the prototype, especially the parts that make the VR lane feel believable rather than decorative.
+            </p>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {planningBoardItems.map((item) => (
+                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 mx-auto max-w-[42rem] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+              <img
+                src="/images/projects/mumosa-crisis-response-vr/mumosa-3d-gaussian-splatting-reference.gif"
+                alt="3D Gaussian splatting reconstruction reference used in the MUMOSA VR planning board"
                 className="h-auto w-full object-cover"
-                roundedClassName="rounded-none"
-                popupCaption="Simulation evidence from the client paper: a reconstructed scene with semantic annotations showing how spatial review can support post-crisis understanding."
               />
             </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current VR Direction</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                The strongest VR use case right now is not replacing the whole dashboard. It is acting as a spatial review layer for the resolve phase: after the
-                immediate danger, when investigators or trainees need to understand what happened, where it happened, and how separate pieces of evidence fit the
-                physical scene.
-              </p>
-              <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-                {currentScopeItems.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Course Deliverables And Project Plan</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {deliverableItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                  <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+          <div id="paper-prototype" className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">VR Paper Prototype</h2>
+            <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              The prototype treats VR as a deliberate second step. Investigators would first encounter a scene in the dashboard, then choose a focused View in VR/360 mode when they need to inspect spatial evidence more closely.
+            </p>
+            <div className="mt-6 mx-auto max-w-[36rem] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+              <LightboxImage
+                src="/images/projects/mumosa-crisis-response-vr/mumosa-prototype-scene-sketch.png"
+                alt="Paper prototype base scene sketch showing a city street, basketball court incident, car crash, and burning building"
+                width={598}
+                height={403}
+                className="h-auto w-full object-cover"
+                roundedClassName="rounded-none"
+                popupCaption="Base scene sketch for the VR paper prototype: one continuous street-level scene with a basketball-court incident, central crash, and active fire zone."
+              />
+            </div>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {prototypeOverviewItems.map((item) => (
+                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div id="lit-review" className="grid grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">My Literature Review</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                This is the authored research document that grounds my part of the project. It covers user groups, heuristics, multimodal crisis-response design,
-                and the reasoning behind the current resolve-phase and VR framing.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                The ARL / MUMOSA paper still matters as client context, but it is not my work and it should not be the main portfolio evidence block here. The
-                focus below is my literature review, plus one current note page showing where the team's VR lane is headed.
-              </p>
-              <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Current VR Direction Note</p>
-                <div className="mt-3 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-                  <LightboxImage
-                    src="/images/projects/mumosa-crisis-response-vr/mumosa-doc-05-vr-direction.png"
-                    alt="Current MUMOSA VR direction note page used by the team"
-                    width={1224}
-                    height={1584}
-                    className="h-auto w-full object-cover object-top"
-                    roundedClassName="rounded-none"
-                    popupCaption="Current team note page for the VR lane: safe scene re-walk, evidence linkage, and a deliberately modest prototype scope."
-                  />
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Prototype Mechanics</h2>
+            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+              <LightboxImage
+                src="/images/projects/mumosa-crisis-response-vr/mumosa-prototype-headset-view.png"
+                alt="Cardboard headset-style frame over the 360 paper scene with controller mappings drawn on each side"
+                width={598}
+                height={337}
+                className="h-auto w-full object-cover"
+                roundedClassName="rounded-none"
+                popupCaption="Single-sheet VR paper prototype with a sliding viewport and hand-drawn controller mappings."
+              />
+            </div>
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+                <h3 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">How The Paper Prototype Worked</h3>
+                <ul className="space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+                  {paperMethodItems.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+                <h3 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Interaction Mapping</h3>
+                <ul className="space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+                  {controllerItems.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-start">
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Grounded AI Evidence</h2>
+                <p className="max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+                  The strongest part of the low-fi concept is that each AI summary stays tied to a place, a time, and a source action. The planning board pushed this further by imagining body-cam, drone, and thermal feeds pinned back into 3D space instead of floating as detached evidence panels.
+                </p>
+                <div className="mt-6 mx-auto grid max-w-[28rem] gap-4">
+                  <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                    <LightboxImage
+                      src="/images/projects/mumosa-crisis-response-vr/mumosa-prototype-fire-evidence.png"
+                      alt="Paper VR prototype showing the active fire evidence card near the burning structure"
+                      width={599}
+                      height={439}
+                      className="h-auto w-full object-cover"
+                      roundedClassName="rounded-none"
+                      popupCaption="Active-fire evidence in context, shown beside the scene rather than detached in a separate dashboard panel."
+                    />
+                  </div>
+                  <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                    <LightboxImage
+                      src="/images/projects/mumosa-crisis-response-vr/mumosa-prototype-evidence-sticky-notes.png"
+                      alt="Paper prototype scene with sticky-note evidence cards for casualty, crash, and fire"
+                      width={819}
+                      height={438}
+                      className="h-auto w-full object-cover"
+                      roundedClassName="rounded-none"
+                      popupCaption="Evidence cards used during testing to simulate AI findings tied to the scene."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">AI Popup Cards</h2>
+                <div className="grid gap-4">
+                  {aiPopupItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.time}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.summary}</p>
+                      <p className="mt-3 text-sm font-medium text-[var(--foreground)]">{item.action}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+          </div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <div className="grid gap-8 xl:grid-cols-[1.05fr_0.95fr_0.95fr] xl:items-start">
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Flatscreen Dashboard Direction</h2>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
+                  My teammates carried more of the dashboard lane, but it still matters here because the VR mode only works when the web workflow is clear first. The board direction moves toward a calmer entry point, better filtering, and stronger links between summaries and supporting evidence.
+                </p>
+                <div className="mt-6 grid gap-4">
+                  {teamDashboardItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-            <div>
-              <DocViewer
-                title="My MUMOSA Literature Review"
-                description="10-page authored literature review covering user groups, heuristics, multimodal crisis-response design, and implications for the team's prototype direction."
-                pages={litReviewPages}
-              />
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Testing Plan</h2>
+                <div className="grid gap-4">
+                  {testingItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Next Digital Step</h2>
+                <div className="grid gap-4">
+                  {nextStepItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reference Documents</h2>
-            <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              These links are here for context and coursework documentation. The client paper is supporting reference, not presented as my authored portfolio work.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {referenceLinks.map((document) => (
-                <a
-                  key={document.href}
-                  href={document.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                >
-                  {document.label}
-                </a>
-              ))}
-            </div>
-          </div>
+          <div id="lit-review" className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <div className="grid gap-8 md:grid-cols-[0.88fr_1.12fr] md:items-start">
+              <div>
+                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Research Grounding</h2>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
+                  I also authored the literature review that grounded the redesign in cognitive load, trust, and multimodal crisis-response design. It is included here as the research layer behind the prototype decisions shown above.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {referenceLinks.map((document) => (
+                    <a
+                      key={document.href}
+                      href={document.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
+                    >
+                      {document.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome So Far</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              What is already real here is the design research, the client context, and the prototype direction. The next milestone is not a huge technical claim.
-              It is to finish the assignment well: clear heuristics, tested paper and electronic prototypes, and a basic VR slice strong enough to communicate why
-              spatial review could matter in MUMOSA's post-crisis workflow.
-            </p>
+              <div>
+                <DocViewer
+                  title="My MUMOSA Literature Review"
+                  description="10-page authored literature review covering user groups, heuristics, multimodal crisis-response design, and implications for the prototype direction."
+                  pages={litReviewPages}
+                />
+              </div>
+            </div>
           </div>
         </section>
       </div>
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
