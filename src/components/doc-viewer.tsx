@@ -90,7 +90,7 @@ export default function DocViewer({ title, description, pages, outline }: DocVie
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface)] via-transparent to-transparent" />
             <span className="absolute top-3 right-3 rounded-full bg-black/55 backdrop-blur-sm px-2.5 py-1 font-mono text-[10px] text-white/65">
-              {pages.length} pages
+              {pages.length} {pages.length === 1 ? 'page' : 'pages'}
             </span>
           </div>
 

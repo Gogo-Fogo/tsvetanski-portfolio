@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+  <rect width="1400" height="1000" fill="#eef4e8"/>
+  <rect x="72" y="66" width="1256" height="868" rx="24" fill="#fbf8ee" stroke="#9daf8a" stroke-width="3"/>
+  <text x="118" y="128" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#6a7b55">CURRENT BUILD SNAPSHOT</text>
+  <text x="118" y="196" font-family="Arial, sans-serif" font-size="58" font-weight="800" fill="#203120">Birdwatching VR</text>
+  <text x="118" y="248" font-family="Arial, sans-serif" font-size="27" fill="#40513b">Playable Unity 6 XR prototype, no longer just a planning deck.</text>
+  <line x1="118" y1="292" x2="1280" y2="292" stroke="#c5cdb7" stroke-width="3"/>
+  <text x="118" y="356" font-family="Arial, sans-serif" font-size="32" font-weight="800" fill="#263626">What is implemented</text>
+  <text x="150" y="418" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">- Physical VR camera with live preview, trigger capture, zoom, and shutter feedback.</text>
+  <text x="150" y="472" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">- Bird detection and 1-4 star photo scoring from runtime camera data.</text>
+  <text x="150" y="526" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">- Bingo field guide with saved photos, names, scientific names, and locked slots.</text>
+  <text x="150" y="580" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">- Backpack inventory, feeding stick landing loop, comfort settings, and credits menu.</text>
+  <text x="118" y="670" font-family="Arial, sans-serif" font-size="32" font-weight="800" fill="#263626">Stack</text>
+  <text x="150" y="732" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">Unity 6000.3.10f1 · URP 17.3 · XR Interaction Toolkit 3.3.1 · OpenXR 1.16.1</text>
+  <text x="150" y="786" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">XR Hands 1.7.3 · Oculus XR 4.5.2 · Dynamic Photo Camera Mini integration</text>
+  <text x="118" y="872" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#6a7b55">Source: Unity project, Exhibit Q&amp;A, asset credits, and Georgi development logs.</text>
+</svg>

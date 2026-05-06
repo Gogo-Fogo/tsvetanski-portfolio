@@ -98,15 +98,15 @@ const projects: Project[] = [
   },
   {
     title: "Birdwatching",
-    description: "Upcoming student VR exploration game set in a post-nuclear woodland — photograph birds, feed them safely, and fill a bingo-style field journal while keeping the first prototype tightly scoped.",
-    tags: ["Spatial Interaction", "Prototyping", "Visual Storytelling"],
-    searchTerms: ["birdwatching", "vr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "felix", "talulla"],
-    facets: ['xr', 'art-storytelling'],
+    description: "Unity 6 XR prototype with a physical camera, bird detection, star-rated photo scoring, persistent bingo-book progress, backpack tools, feeding-stick interaction, and comfort settings.",
+    tags: ["Unity XR Prototype", "Camera & Collection Systems", "VR Interaction"],
+    searchTerms: ["birdwatching", "vr", "unity", "unity 6", "xr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "camera capture", "quest", "openxr", "felix", "talulla"],
+    facets: ['xr', 'engineering'],
     href: "/projects/birdwatching",
-    bannerImage: "/images/projects/birdwatching/birdwatching-banner.png",
-    bannerAlt: "Birdwatching planning deck cover showing the VR wildlife exploration concept",
-    bannerWidth: 2880,
-    bannerHeight: 1620,
+    bannerImage: "/images/projects/birdwatching/birdwatching-bingo-book-footage-20260415-poster.png",
+    bannerAlt: "Birdwatching VR current Unity bingo book prototype footage",
+    bannerWidth: 1557,
+    bannerHeight: 876,
     type: 'prototype'
   },
   {
@@ -182,15 +182,15 @@ const projects: Project[] = [
   },
   {
     title: "Prince of Persia: Warrior Within Mod",
-    description: "Solo Slay the Spire 2 character mod in Godot/C# with Dagger of Time rewinds, Sand economy, Dahaka pursuit, and custom Warrior Within audio/presentation.",
+    description: "Solo Slay the Spire 2 character mod in Godot/C# with Medallion of Time rewinds, Sand economy, Dahaka escape pressure, and custom Warrior Within audio/presentation.",
     tags: ["Game Modding", "Combat Systems", "Reverse Engineering"],
     searchTerms: ["prince of persia", "warrior within", "slay the spire 2", "mod", "godot", "c#", "harmony", "baselib", "dahaka", "rewind", "sand", "character mod"],
     facets: ['engineering', 'art-storytelling'],
     href: '/projects/prince-of-persia-warrior-within-mod',
-    bannerImage: '/images/projects/prince-of-persia-warrior-within-mod/prince-banner.png',
-    bannerAlt: 'Prince of Persia Warrior Within mod banner',
-    bannerWidth: 1536,
-    bannerHeight: 828
+    bannerImage: '/images/projects/prince-of-persia-warrior-within-mod/prince-character-select-current-20260505.png',
+    bannerAlt: 'Current Prince of Persia Warrior Within mod character select screen',
+    bannerWidth: 1920,
+    bannerHeight: 1080
   },
   {
     title: "Cranky (Game Jam 2024)",

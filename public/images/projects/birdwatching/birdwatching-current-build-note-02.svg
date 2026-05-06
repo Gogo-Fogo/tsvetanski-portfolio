@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+  <rect width="1400" height="1000" fill="#edf4f5"/>
+  <rect x="72" y="66" width="1256" height="868" rx="24" fill="#fbf8ee" stroke="#83a8aa" stroke-width="3"/>
+  <text x="118" y="128" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#587f82">CAMERA AND BINGO SYSTEM</text>
+  <text x="118" y="196" font-family="Arial, sans-serif" font-size="52" font-weight="800" fill="#203120">Runtime photo capture loop</text>
+  <text x="118" y="246" font-family="Arial, sans-serif" font-size="26" fill="#40513b">The camera is the spine of the prototype: it turns looking into progression.</text>
+  <line x1="118" y1="292" x2="1280" y2="292" stroke="#bfd0d0" stroke-width="3"/>
+  <text x="118" y="358" font-family="Arial, sans-serif" font-size="31" font-weight="800" fill="#263626">Pipeline</text>
+  <text x="150" y="418" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">01 Grab camera and render a live preview to the in-world screen.</text>
+  <text x="150" y="472" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">02 Capture the current view as a PNG in persistent storage.</text>
+  <text x="150" y="526" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">03 Ray/sample bird subjects through the capture frame and viewport bounds.</text>
+  <text x="150" y="580" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">04 Score hit ratio, frame fill, visibility, centeredness, occlusion, and distance.</text>
+  <text x="150" y="634" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">05 Save latest/best photo metadata, star rating, capture count, and timestamp.</text>
+  <text x="150" y="688" font-family="Arial, sans-serif" font-size="27" fill="#2e3f2d">06 Refresh the bingo book with the photo, display name, scientific name, and stars.</text>
+  <rect x="118" y="760" width="1162" height="92" rx="14" fill="#e4ede2" stroke="#b8c6b2"/>
+  <text x="150" y="815" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#263626">Portfolio value: connecting camera rendering, physics/raycast detection, save data, and world-space UI.</text>
+  <text x="118" y="904" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#587f82">Source files: PhotoCameraShutter.cs, BingoProgressManager.cs, BingoBookPhotoDisplay.cs.</text>
+</svg>

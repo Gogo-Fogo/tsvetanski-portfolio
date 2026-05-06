@@ -1,6 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import DocViewer from '@/components/doc-viewer';
-import type { DocOutlineItem, DocPage } from '@/components/doc-viewer';
+import type { DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxLocalVideo from '@/components/lightbox-local-video';
 
@@ -9,161 +9,284 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Prince of Persia: Warrior Within Mod | Georgi Tsvetanski',
   description:
-    'Solo Slay the Spire 2 character mod in Godot/C# with Dagger of Time rewinds, Sand economy, persistent Dahaka pursuit, and custom Warrior Within audio/presentation.',
+    'Solo Slay the Spire 2 character mod in Godot/C# with Medallion of Time rewinds, Sand economy, Dahaka escape pressure, custom audio, and runtime presentation systems.',
 };
+
+const imageBase = '/images/projects/prince-of-persia-warrior-within-mod';
 
 const snapshotItems = [
   {
     label: 'Role',
-    value: 'Solo designer, gameplay engineer, mod integrator, and presentation builder',
+    value: 'Solo designer, gameplay engineer, mod integrator, art-pipeline builder, and presentation owner',
   },
   {
-    label: 'Stack',
-    value: 'Godot 4.5.1, C#/.NET 9, Harmony patches, BaseLib, Slay the Spire 2 v0.99.1',
+    label: 'Current Stack',
+    value: 'STS2 v0.103.2, BaseLib v3.1.0, Godot 4.5.1, C#/.NET 9, Harmony patches',
   },
   {
-    label: 'Current Build',
-    value: '26 authored Prince cards, 3 generated combat utility cards, custom relic flow, and a live Dahaka escape encounter',
+    label: 'Playable Core',
+    value: 'Custom Prince character, Medallion of Time starter relic, Sand HUD, Wind Back rewinds, and Dahaka escape takeover',
   },
   {
-    label: 'Audio Layer',
-    value: '10 Prince combat-start lines, 11 Dahaka quotes, and 21 routed music/theme tracks',
+    label: 'Content Direction',
+    value: 'Registered runtime pool plus authored/pre-release card families targeting a 32-card first public slice',
+  },
+  {
+    label: 'Presentation Layer',
+    value: 'Puppet idle rigs, room music, combat voice, Dahaka voice, SFX, loading videos, and contextual game-over overlays',
   },
 ];
 
-const latestPrototypeVideo = {
-  src: '/videos/projects/prince-of-persia-warrior-within-mod/prince-latest-prototype-2026-03-21.mp4',
-  title: 'March 21, 2026 Prince of Persia latest prototype capture',
+const currentGameplayVideo = {
+  src: '/videos/projects/prince-of-persia-warrior-within-mod/prince-current-gameplay-2026-05-05.mp4',
+  poster: `${imageBase}/prince-current-gameplay-20260505-poster.png`,
+  title: 'May 5, 2026 current Prince mod gameplay capture',
   popupCaption:
-    'March 21, 2026 gameplay capture from the current local build showing live Prince combat, card flow, Warrior Within audio, and room-facing presentation inside the Slay the Spire 2 mod.',
+    'Current May 5, 2026 gameplay capture supplied from the active mod build. It is the page evidence for Sand HUD, Wind Back rewind play, Dahaka pressure, and the newer puppet/presentation work.',
 };
 
 const currentBuildItems = [
-  'Custom Prince character slot with its own starter deck, reward pool, rest/shop/combat art hooks, and Neow dialogue.',
-  'Dagger of Time starter relic with Sand carryover, Wind Back generation, and lethal rewind handling.',
-  'Combat rewind that restores piles, relic runtime fields, enemy roster changes, move state, and UI state instead of faking a partial undo.',
-  'Persistent Dahaka chase that carries between combats and can replace a normal fight with a dedicated escape sequence.',
-  'Custom presentation work across combat-start voice bubbles, music routing, rewind SFX, sword impacts, and room-facing art swaps.',
+  'Selectable Prince character with custom starter deck, Medallion of Time starter relic, reward/shop card hooks, rest/shop/combat visuals, and 25 Prince-facing Neow lines.',
+  'Sand resource loop with carryover, enemy-kill gain, Medallion HUD sockets, hover tips, Sand spend validation, and generated Wind Back access.',
+  'Snapshot rewind that restores card piles, powers, relic runtime fields, generated combat cards, enemy rosters, monster move state, and live combat UI.',
+  'Persistent Dahaka chase that can turn a normal fight into a dedicated escape encounter with distance tracking, escape cards, widgets, and staged presentation.',
+  'Room-aware Warrior Within audio across combat, chase, menu, rest, shop, events, treasure, Prince voice, Dahaka voice, sword impacts, rewind SFX, and Sand feedback.',
+  'Art/presentation pipeline covering card portrait bakes, relic/UI bakes, Prince and Dahaka puppet rigs, loading overlays, and contextual game-over videos.',
 ];
 
-const systemItems = [
+const signatureSystemItems = [
   {
-    title: 'Character Foundation',
-    body: 'The Prince is not a skin over a vanilla character. He has a custom slot, his own starter deck, starter relic, reward pool, combat language, and room/presentation hooks shaped around Warrior Within.',
+    title: 'Combat Snapshots',
+    body: 'Rewind stores turn-start and combat-start checkpoints instead of only undoing HP. The restored timeline has to land on a coherent combat model.',
   },
   {
-    title: 'Rewind Engineering',
-    body: 'The hard part is making time travel land cleanly inside STS2 combat flow. The rewind path has to restore state, rebuild valid combat surfaces, and avoid leaving the engine in a broken future timeline.',
+    title: 'Pile Repair',
+    body: 'Cards move back into hand, draw, discard, and exhaust while generated utility cards are recreated through valid combat-card registration paths.',
   },
   {
-    title: 'Dahaka Pursuit',
-    body: 'Time use has a cost. Sand spending pushes a real chase meter, and once it tops out the mod can turn the current fight into a Dahaka escape encounter with distance tracking and encounter-specific presentation.',
+    title: 'Power And Relic State',
+    body: 'Mutable runtime fields matter. Powers, relic counters, temporary flags, and owner bindings have to be cloned or restored carefully.',
+  },
+  {
+    title: 'Enemy Roster Repair',
+    body: 'Summons, splits, deaths, missing enemies, and monster move machines can all drift away from the snapshot unless they are reconciled.',
+  },
+  {
+    title: 'Hand UI Repair',
+    body: 'The live STS2 hand can keep stale card holders and drag state after rewind, so the mod rebuilds holders and bindings without leaving floating cards.',
+  },
+  {
+    title: 'Replay Divergence',
+    body: 'STS2 replay/state-divergence hooks can keep recording the wrong future, so rewind has to clean up engine-side action and visual residue.',
   },
 ];
 
-const presentationItems = [
-  'Warrior Within music and combat themes are routed across menu, event, combat, chase, rest, shop, and Dahaka moments.',
-  'Prince combat-start audio uses real voiced lines and speech-bubble presentation instead of a silent card-only shell.',
-  'Dahaka has his own quotes, sounds, chase presentation, and escape-state UI instead of being reduced to a lore reference.',
-  'Some surfaces are still visibly beta or placeholder, but the tone and system intent are already locked in and playable.',
+const dahakaLoopItems = [
+  {
+    step: '01',
+    title: 'Earn Sand',
+    body: 'Enemy kills and Sand-focused cards build charges that carry through the Medallion rather than resetting every room.',
+  },
+  {
+    step: '02',
+    title: 'Spend Time',
+    body: 'Wind Back turns Sand into a 1/2/3-turn rewind choice. The stronger the rewind, the louder the cost.',
+  },
+  {
+    step: '03',
+    title: 'Advance Chase',
+    body: 'Rewind pressure feeds the persistent Dahaka meter, so survival creates a second strategic threat.',
+  },
+  {
+    step: '04',
+    title: 'Escape Takeover',
+    body: 'When the meter fills, Dahaka can replace the normal fight flow with a distance-based escape encounter.',
+  },
+  {
+    step: '05',
+    title: 'Escape Or Fall',
+    body: 'Escape cards push distance up; Dahaka pressure pulls it down. Rewind is clamped inside the chase once the encounter begins.',
+  },
+];
+
+const cardFamilyItems = [
+  {
+    family: 'Dual-Blade Flow',
+    status: 'Authored/pre-release family evidence',
+    body: 'Movement and blade sequencing are meant to make the Prince feel fast and dangerous, not like a planted blocker.',
+    cards: [
+      {
+        src: `${imageBase}/hook-kick.png`,
+        alt: 'Hook Kick card art from the Prince of Persia Warrior Within Slay the Spire 2 mod',
+        title: 'Hook Kick',
+        caption: 'Movement payoff that turns positioning into weak application and extra block.',
+      },
+    ],
+  },
+  {
+    family: 'Deflect / Counter',
+    status: 'Authored/pre-release family evidence',
+    body: 'Defense should read as slipping, catching, and punishing commitment rather than walling off the turn.',
+    cards: [
+      {
+        src: `${imageBase}/blade-catch.png`,
+        alt: 'Blade Catch card art from the Prince of Persia Warrior Within Slay the Spire 2 mod',
+        title: 'Blade Catch',
+        caption: 'Reactive defense that rewards attacking first instead of hiding behind passive block.',
+      },
+      {
+        src: `${imageBase}/dead-angle.png`,
+        alt: 'Dead Angle card art from the Prince of Persia Warrior Within Slay the Spire 2 mod',
+        title: 'Dead Angle',
+        caption: 'Rare payoff for exploiting Weak or Vulnerable windows after the enemy overcommits.',
+      },
+    ],
+  },
+  {
+    family: 'Time Predator',
+    status: 'Authored/pre-release family evidence',
+    body: 'The time lane makes rewind proactive: Sand generation, second-pass advantages, and pressure that grows more dangerous with use.',
+    cards: [
+      {
+        src: `${imageBase}/borrowed-breath.png`,
+        alt: 'Borrowed Breath card art from the Prince of Persia Warrior Within Slay the Spire 2 mod',
+        title: 'Borrowed Breath',
+        caption: 'Sand economy and post-rewind draw, keeping time manipulation tied to a resource loop.',
+      },
+      {
+        src: `${imageBase}/wind-of-fate.png`,
+        alt: 'Wind of Fate card art from the Prince of Persia Warrior Within Slay the Spire 2 mod',
+        title: 'Wind of Fate',
+        caption: 'All-enemy pressure that feeds Sand while keeping the table under threat.',
+      },
+    ],
+  },
+];
+
+const pipelineItems = [
+  'ComfyUI is used honestly as a concept/lookdev and image-generation aid, not as the portfolio claim by itself.',
+  'Production work is the integration pipeline: selecting usable assets, cutting sprites, cleaning mattes, baking card/relic/UI images, and wiring them into STS2/Godot surfaces.',
+  'Prince combat proof now shows the actual full combat sprite plus the v15_fullcanvas layer cuts used for runtime puppet work.',
+  'Dahaka proof now uses the current mod-folder sprite and puppet contact sheet, with Silhouette Mask ML / Matte Assist shown as matte-cleanup evidence.',
+  'Sand medallion UI, loading videos, game-over overlays, music, voice, and SFX are tied back to live gameplay state instead of sitting as static mockups.',
 ];
 
 const evidencePages: DocPage[] = [
   {
-    src: '/images/projects/prince-of-persia-warrior-within-mod/pop-doc-01.png',
-    alt: 'Prince of Persia Warrior Within mod project snapshot evidence page',
+    src: `${imageBase}/pop-doc-20260505-01.png`,
+    alt: 'Prince of Persia Warrior Within mod current project snapshot evidence page',
     width: 1224,
     height: 1584,
-    caption: 'Project snapshot page built from the live mod state, design direction, and March 2026 implementation notes.',
+    caption: 'Updated project snapshot synced to STS2 v0.103.2, BaseLib v3.1.0, Medallion naming, and the current portfolio framing.',
   },
   {
-    src: '/images/projects/prince-of-persia-warrior-within-mod/pop-doc-02.png',
-    alt: 'Prince of Persia Warrior Within mod systems evidence page',
+    src: `${imageBase}/pop-doc-20260505-02.png`,
+    alt: 'Prince of Persia Warrior Within mod rewind and Dahaka systems evidence page',
     width: 1224,
     height: 1584,
-    caption: 'Current systems page covering rewind, Sand economy, and the Dahaka pursuit loop that makes the mod distinct.',
+    caption: 'Updated systems evidence covering rewind repair, Sand economy, and the Dahaka pressure loop.',
   },
   {
-    src: '/images/projects/prince-of-persia-warrior-within-mod/pop-doc-03.png',
-    alt: 'Prince of Persia Warrior Within mod engineering and presentation evidence page',
+    src: `${imageBase}/pop-doc-20260505-03.png`,
+    alt: 'Prince of Persia Warrior Within mod art pipeline and presentation evidence page',
     width: 1224,
     height: 1584,
-    caption: 'Engineering and presentation page showing why this project is more than a character art swap or card pack.',
+    caption: 'Updated engineering and presentation evidence for the current puppet, UI, audio, and video-overlay pipeline.',
   },
 ];
 
-const evidenceOutline: DocOutlineItem[] = [
-  { heading: 'Project Snapshot', pageIndex: 0 },
-  { heading: 'Core Systems', pageIndex: 1 },
-  { heading: 'Engineering & Mood', pageIndex: 2 },
-];
-
-const documentLinks = [
+const reviewerDocuments = [
   {
-    href: '/documents/projects/prince-of-persia-warrior-within-mod/design-gdd.md',
-    label: 'Working GDD',
+    title: 'Build Snapshot',
+    description: 'What the playable slice contains, what is current, and what is still pre-release.',
+    pages: [evidencePages[0]],
+    outline: [{ heading: 'Build Snapshot', pageIndex: 0 }],
   },
   {
-    href: '/documents/projects/prince-of-persia-warrior-within-mod/implementation-roadmap.md',
-    label: 'Implementation Roadmap',
+    title: 'Rewind And Dahaka Systems',
+    description: 'Combat rewind repair, Sand cost, chase pressure, and the escape takeover loop.',
+    pages: [evidencePages[1]],
+    outline: [{ heading: 'Systems', pageIndex: 0 }],
   },
   {
-    href: '/documents/projects/prince-of-persia-warrior-within-mod/dahaka-development-plan.md',
-    label: 'Dahaka Plan',
+    title: 'Art And UI Pipeline',
+    description: 'Sprite cuts, matte cleanup, ComfyUI disclosure, UI bakes, audio, and video presentation.',
+    pages: [evidencePages[2]],
+    outline: [{ heading: 'Pipeline', pageIndex: 0 }],
   },
 ];
 
 export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
   return (
-    <main className="min-h-screen bg-[var(--background)] p-8 font-sans text-[var(--foreground)] md:p-24">
+    <main className="min-h-screen overflow-x-hidden bg-[var(--background)] px-5 py-8 font-sans text-[var(--foreground)] sm:p-8 md:p-24">
       <div className="mx-auto max-w-5xl">
         <header className="mb-16">
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
               { label: 'Projects', href: '/career' },
-              { label: 'Prince of Persia: Warrior Within Mod' },
+              { label: 'Prince' },
             ]}
             className="mb-4"
           />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            Solo Project · Slay the Spire 2 Character Mod
+            Solo Project / Slay the Spire 2 Character Mod
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight">Prince of Persia: Warrior Within Mod</h1>
-          <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            This is my Slay the Spire 2 character mod built in Godot and C#. The job is not to paste Prince art over an existing class. It is to make
-            Warrior Within feel right inside a deckbuilder: fast, hunted, aggressive, and built around using time at a cost.
+          <h1 className="mt-4 max-w-full text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+            Prince of Persia: Warrior Within Mod
+          </h1>
+          <p className="mt-4 max-w-4xl text-lg leading-relaxed text-[var(--foreground)]">
+            A playable character mod that turns time travel into a risky deckbuilder resource: earn Sand, use the Medallion of Time to rewind bad
+            futures, and accept that every stolen second brings the Dahaka closer.
+          </p>
+          <p className="mt-4 max-w-4xl text-sm leading-relaxed text-[var(--muted)]">
+            The value of the project is not only the crossover fantasy. It is the engineering needed to make a custom character, rewind system, pursuit
+            encounter, audio layer, and presentation pipeline behave inside an early-access moddable combat engine.
           </p>
         </header>
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-start">
+        <section className="flex flex-col gap-10 md:gap-12">
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <LightboxImage
+              src={`${imageBase}/prince-character-select-current-20260505.png`}
+              alt="Current Prince character select screen from the Warrior Within Slay the Spire 2 mod"
+              width={2405}
+              height={1357}
+              className="h-auto w-full object-cover"
+              popupCaption="Current May 5, 2026 character-select screenshot from the active mod build, showing the Prince, Medallion of Time starter relic copy, Sand-gold fantasy framing, and STS2 character-select integration."
+              roundedClassName="rounded-none"
+              priority
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
               <LightboxLocalVideo
-                src={latestPrototypeVideo.src}
-                title={latestPrototypeVideo.title}
-                popupCaption={latestPrototypeVideo.popupCaption}
+                src={currentGameplayVideo.src}
+                poster={currentGameplayVideo.poster}
+                title={currentGameplayVideo.title}
+                popupCaption={currentGameplayVideo.popupCaption}
+                popupCtaHref={currentGameplayVideo.src}
+                popupCtaLabel="Open MP4 Directly"
                 className="aspect-[43/18] w-full object-cover"
                 roundedClassName="rounded-none"
               />
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Latest Prototype</p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight">March 21, 2026 Gameplay Capture</h2>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                This is the strongest proof on the page right now. The current local build is already running real Prince combat, time tools, music,
-                voice, and room-facing presentation inside Slay the Spire 2 rather than living only in docs or mockups.
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
+              <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Gameplay Capture</p>
+              <h2 className="mt-3 text-xl font-semibold tracking-tight">Watch the current systems in motion.</h2>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                This May 5 capture is the current gameplay reference for Sand, Wind Back, Dahaka pressure, and the Prince combat presentation.
               </p>
-              <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-                <li>- Live combat flow from the current mod build.</li>
-                <li>- Warrior Within audio and presentation layered into the deckbuilder loop.</li>
-                <li>- A clearer read on pacing, feedback, and class identity than static art alone can give.</li>
+              <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
+                <li>- Current STS2 v0.103.2 / BaseLib v3.1.0 build.</li>
+                <li>- Poster frame captured from the gameplay video, not character-select art.</li>
               </ul>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
             {snapshotItems.map((item) => (
               <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
@@ -172,21 +295,22 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Why I Built It This Way</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Why This Is A Strong Portfolio Project</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                The source fantasy only works if the Prince is more than a sword icon. He needs dual-blade tempo, risky second chances, and the Dahaka as
-                real pressure instead of lore text sitting beside normal deckbuilder combat.
+                Warrior Within only works in a deckbuilder if the Prince feels mobile, violent, hunted, and dangerous to himself. That pushed the mod past
+                a card pack into custom resource state, generated combat cards, boss takeover logic, UI repair, audio routing, animation systems, and
+                engine-specific compatibility patches.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                That pushed the mod into deeper systems work very quickly. I had to build a real card pool, Dagger of Time state, Sand resource UI, audio
-                routing, room art hooks, Neow dialogue, and a pursuit encounter that can interrupt normal combat without breaking the run.
+                The implementation keeps the fantasy legible: Sand buys second chances, the Medallion rewinds combat, and the Dahaka turns repeated time
+                theft into pressure the player has to answer.
               </p>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What The Current Build Already Does</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What The Current Build Covers</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
                 {currentBuildItems.map((item) => (
                   <li key={item}>- {item}</li>
@@ -196,101 +320,196 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">System Split</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {systemItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Signature System</h2>
+            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              Rewind is the centerpiece because it touches almost every fragile part of combat. A partial undo would be easier, but it would not survive
+              real STS2 fights with generated cards, powers, relic counters, changing enemy rosters, and a live hand UI.
+            </p>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {signatureSystemItems.map((item) => (
+                <article key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
                   <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
                   <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
+                </article>
               ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Dahaka Pressure Loop</h2>
+            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              The Dahaka makes time travel emotionally expensive. Rewind helps the Prince survive the present fight, but it also pushes a persistent
+              pursuit state toward a dedicated escape encounter.
+            </p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+              {dahakaLoopItems.map((item) => (
+                <article key={item.step} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">{item.step}</p>
+                  <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Card Family Evidence</h2>
+            <p className="mb-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              The gallery shows design-family evidence from the local project. Some cards are in the registered playable runtime pool, while newer cards
+              are authored/pre-release assets and code direction. I am separating those claims so the page does not overstate public runtime coverage.
+            </p>
+            <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-3">
+              {cardFamilyItems.map((family) => (
+                <article key={family.family} className="h-fit rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{family.status}</p>
+                  <h3 className="mt-2 text-lg font-semibold tracking-tight">{family.family}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{family.body}</p>
+                  <div className="mt-5 grid grid-cols-1 gap-4">
+                    {family.cards.map((card) => (
+                      <div key={card.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                        <LightboxImage
+                          src={card.src}
+                          alt={card.alt}
+                          width={1000}
+                          height={760}
+                          className="h-44 w-full object-cover"
+                          popupCaption={card.caption}
+                          roundedClassName="rounded-none"
+                        />
+                        <div className="p-4">
+                          <p className="text-sm font-semibold text-[var(--foreground)]">{card.title}</p>
+                          <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{card.caption}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Art And Presentation Pipeline</h2>
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+                The art direction is still beta and uses ComfyUI-assisted concept output in places, so the honest portfolio value is the production
+                pass around it: asset selection, sprite cleanup, matte work, layer cuts, UI bakes, and runtime integration.
+              </p>
+              <ul className="space-y-3 text-sm text-[var(--muted)]">
+                {pipelineItems.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-6 grid grid-cols-1 items-start gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(180deg,rgba(34,22,14,0.92),rgba(9,12,18,0.98))] p-4">
+                <LightboxImage
+                  src={`${imageBase}/prince-actual-combat-sprite.png`}
+                  alt="Actual Prince combat sprite from the Warrior Within mod folder"
+                  width={1313}
+                  height={1563}
+                  className="mx-auto h-64 w-auto object-contain"
+                  popupCaption="Actual Prince combat sprite copied from the live Godot mod folder at art/combat/prince_puppet_parts/full_character.png. This replaces the softer verification render in the portfolio evidence."
+                  roundedClassName="rounded-none"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src={`${imageBase}/prince-puppet-v15-layer-contact-sheet.png`}
+                  alt="Prince puppet v15 layer contact sheet from the live Godot mod folder"
+                  width={1500}
+                  height={1100}
+                  className="h-64 w-full object-contain"
+                  popupCaption="Fresh contact sheet generated from art/combat/prince_puppet_parts_v15_fullcanvas in the live Godot mod folder. It documents the current base body, hair, weapon arms, and sash layers."
+                  roundedClassName="rounded-none"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(180deg,rgba(13,16,22,0.96),rgba(2,4,8,0.98))] p-4">
+                <LightboxImage
+                  src={`${imageBase}/dahaka-current-sprite.png`}
+                  alt="Current Dahaka sprite from the Warrior Within mod folder"
+                  width={1093}
+                  height={1223}
+                  className="mx-auto h-64 w-auto object-contain"
+                  popupCaption="Current Dahaka sprite copied from the live Godot mod folder at art/dahaka_character.png. This is the sprite used for the chase/escape presentation evidence."
+                  roundedClassName="rounded-none"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src={`${imageBase}/dahaka-puppet-contact-sheet-current.png`}
+                  alt="Current Dahaka puppet contact sheet from the Warrior Within mod folder"
+                  width={1140}
+                  height={1028}
+                  className="h-64 w-full object-contain"
+                  popupCaption="Current Dahaka puppet contact sheet copied from art/combat/dahaka_puppet_parts in the live Godot mod folder, showing the separated underpaint and tentacle layers."
+                  roundedClassName="rounded-none"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(180deg,rgba(34,22,14,0.92),rgba(9,12,18,0.98))] p-4">
+                <LightboxImage
+                  src={`${imageBase}/sand-medallion.png`}
+                  alt="Sand medallion UI art from the Warrior Within mod"
+                  width={1024}
+                  height={1024}
+                  className="mx-auto h-48 w-auto object-contain"
+                  popupCaption="Sand medallion UI art used by the combat HUD. Filled pips are procedural so the UI can respond to live resource state."
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] sm:col-span-2 xl:col-span-3">
+                <LightboxImage
+                  src={`${imageBase}/dahaka-silhouette-mask-pipeline-20260505.png`}
+                  alt="Silhouette Mask ML matte setup for Dahaka art separation"
+                  width={1713}
+                  height={1374}
+                  className="h-auto max-h-[28rem] w-full object-contain"
+                  popupCaption="Silhouette production screenshot for Dahaka matte extraction and cleanup. It documents the Mask ML / Matte Assist workflow used after ComfyUI-assisted source generation to turn source creature art into usable staged presentation assets."
+                  roundedClassName="rounded-none"
+                />
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
               <LightboxImage
-                src="/images/projects/prince-of-persia-warrior-within-mod/ravages-of-time.png"
+                src={`${imageBase}/ravages-of-time.png`}
                 alt="Ravages of Time card art from the Prince of Persia Warrior Within Slay the Spire 2 mod"
                 width={1417}
                 height={944}
                 className="h-auto w-full object-cover"
-                popupCaption="One of the current Prince card-art pieces. The mod is not only mechanical; it is also trying to carry Warrior Within's tone, violence, and time-bending pressure into the card presentation."
+                popupCaption="A Sand-cost attack card from the Prince mod direction. The card presentation is part of making the Warrior Within tone readable inside STS2."
                 roundedClassName="rounded-none"
               />
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Art Direction And Adaptation</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Adaptation Choices</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                I am treating this as an adaptation problem, not only a programming problem. Warrior Within has a very specific tone: harsh, restless,
-                confrontational, and built around motion under threat. The mod works better when the cards, voice, relics, and encounter pressure all point
-                in the same direction.
+                I am treating this as an adaptation problem, not only a programming task. Warrior Within has a harsh, restless tone, so the cards, audio,
+                relics, resource pressure, and encounter staging all need to point toward the same feeling.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                Some surfaces are still beta or placeholder, and I am fine being direct about that. What matters right now is that the class identity is
-                already coherent and the live build is carrying real system weight underneath the visuals.
+                The guardrail is simple: the Prince should survive through motion, timing, and dangerous second chances. He should not drift into a stealth
+                assassin, shield tank, serene time mage, or passive stall-counter class.
               </p>
-              <p className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm leading-relaxed text-[var(--muted)]">
-                Current portfolio visuals on this page use AI-generated placeholder art to establish tone and character direction. The mod systems, design,
-                engineering, audio routing, and gameplay presentation work are my own.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[linear-gradient(180deg,rgba(34,22,14,0.96),rgba(9,12,18,0.98))] p-6 shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/prince-of-persia-warrior-within-mod/dahaka-character.png"
-                alt="Dahaka character art used in the Prince of Persia Warrior Within Slay the Spire 2 mod"
-                width={480}
-                height={720}
-                className="mx-auto h-auto max-h-[26rem] w-auto object-contain"
-                popupCaption="The Dahaka is already more than a reference. He has his own chase state, encounter flow, quotes, sounds, and escape presentation in the current build."
-              />
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Audio And Presentation</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                This project is already doing more presentation work than most early character mods. It has its own voice, music routing, combat-start
-                attitude, and pursuit framing. That matters because the class fantasy falls apart if the systems say Warrior Within but the room feels mute.
-              </p>
-              <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-                {presentationItems.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
             </div>
           </div>
 
           <div>
-            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project Evidence</h2>
-            <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              I wanted this page backed by the real working notes, not just retrospective copy. This evidence pack was built from the current GDD, the
-              active roadmap, and the Dahaka development handoff so the page shows the actual scope and thinking already inside the project.
+            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reviewer Docs</h2>
+            <p className="mb-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+              Three short notes for different reviewers: current build scope, the hard systems work, and how the visual/audio pipeline is being produced.
             </p>
-            <DocViewer
-              title="Prince Mod Evidence Pack"
-              description="Current snapshot, systems summary, and engineering/presentation notes derived from the live Warrior Within mod docs."
-              pages={evidencePages}
-              outline={evidenceOutline}
-            />
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Notes & Documents</h2>
-            <div className="flex flex-wrap gap-3">
-              {documentLinks.map((document) => (
-                <a
-                  key={document.href}
-                  href={document.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                >
-                  {document.label}
-                </a>
+            <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-3">
+              {reviewerDocuments.map((document) => (
+                <DocViewer
+                  key={document.title}
+                  title={document.title}
+                  description={document.description}
+                  pages={document.pages}
+                  outline={document.outline}
+                />
               ))}
             </div>
           </div>
@@ -298,8 +517,9 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome</h2>
             <p className="text-sm leading-relaxed text-[var(--muted)]">
-              This is already a serious mod project, not a trailer shell. Fresh gameplay capture and the first public trailer are next, but the important
-              part is already here: the systems, the implementation burden, and a clear Warrior Within identity inside a deckbuilder.
+              The page now presents the mod as a serious systems and presentation project: a playable STS2 character mod with a risky time resource,
+              a real pursuit loop, engine-level rewind repair work, current gameplay capture, and a visible production pipeline that separates system
+              ownership from ComfyUI-assisted visual lookdev.
             </p>
           </div>
         </section>

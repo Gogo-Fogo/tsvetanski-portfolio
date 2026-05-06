@@ -6,9 +6,11 @@ import * as Dialog from '@radix-ui/react-dialog';
 type LightboxLocalVideoProps = {
   src: string;
   title: string;
+  poster?: string;
   popupCaption?: string;
   popupCtaHref?: string;
   popupCtaLabel?: string;
+  triggerLabel?: string;
   className?: string;
   roundedClassName?: string;
 };
@@ -16,9 +18,11 @@ type LightboxLocalVideoProps = {
 export default function LightboxLocalVideo({
   src,
   title,
+  poster,
   popupCaption,
   popupCtaHref,
   popupCtaLabel,
+  triggerLabel = 'Play Gameplay Video',
   className,
   roundedClassName = 'rounded-2xl'
 }: LightboxLocalVideoProps) {
@@ -75,6 +79,7 @@ export default function LightboxLocalVideo({
         >
           <video
             src={src}
+            poster={poster}
             muted
             playsInline
             preload="metadata"
@@ -90,6 +95,9 @@ export default function LightboxLocalVideo({
             className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-black/55 shadow-[0_0_28px_rgba(0,0,0,0.5)] transition-all duration-200 group-hover:scale-105 group-hover:bg-black/65"
           >
             <span className="ml-1 block h-0 w-0 border-y-[10px] border-y-transparent border-l-[16px] border-l-white" />
+          </span>
+          <span className="pointer-events-none absolute bottom-4 left-4 z-20 rounded-full border border-white/25 bg-black/60 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/85 shadow-[0_0_18px_rgba(0,0,0,0.35)]">
+            {triggerLabel}
           </span>
           <span className="sr-only">Open video in lightbox</span>
         </button>
@@ -113,7 +121,7 @@ export default function LightboxLocalVideo({
               className="video-ambient-glow pointer-events-none absolute inset-[-7%] -z-10 rounded-[2rem]"
             />
             <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
-              <video ref={modalVideoRef} src={src} className="h-full w-full bg-black object-contain" controls playsInline preload="metadata" autoPlay />
+              <video ref={modalVideoRef} src={src} poster={poster} className="h-full w-full bg-black object-contain" controls playsInline preload="metadata" autoPlay />
             </div>
             {hasCaption ? (
               <div className="mt-3 rounded-xl border border-white/10 bg-black/55 px-4 py-3 text-sm text-white/85 backdrop-blur-sm">
