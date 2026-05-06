@@ -14,20 +14,20 @@ export const metadata: Metadata = {
 
 const snapshotItems = [
   {
-    label: 'Role',
-    value: 'Technical development, VR interaction systems, tool workflow, camera/bingo integration, comfort menu, and build support on a three-person student team.',
+    label: 'Georgi Tsvetanski',
+    value: 'VR systems: camera capture, bird detection/scoring, bingo book integration, backpack tools, comfort menu, and builds.',
   },
   {
-    label: 'Team',
-    value: 'Felix Chughtai, Talulla Allen, and Georgi Tsvetanski.',
+    label: 'Felix Chughtai',
+    value: 'Main level scene, outdoor layout, world dressing, and environment pass.',
   },
   {
-    label: 'Current Stage',
-    value: 'Playable Unity/XR prototype with PCVR support and Quest standalone build pipeline work.',
+    label: 'Talulla Allen',
+    value: 'Team design support, presentation material, playtest/demo support, and project framing.',
   },
   {
-    label: 'Core Loop',
-    value: 'Explore the forest, lure birds, photograph species, earn a 1-4 star shot rating, and fill a physical bingo-style field guide.',
+    label: 'Build Status',
+    value: 'Playable Unity/XR prototype with PCVR support and Quest standalone build work.',
   },
 ];
 
@@ -41,37 +41,37 @@ const stackItems = [
 const systemCards = [
   {
     title: 'VR Camera Capture',
-    body: 'A physical grabbable camera renders a live preview, supports trigger capture, zoom, shutter feedback, preview repair, and writes photos to persistent storage.',
+    body: 'Held camera with live preview, trigger capture, zoom, shutter feedback, saved PNGs, and preview repair.',
   },
   {
     title: 'Bird Detection And Scoring',
-    body: 'Capture rays and viewport bounds identify the photographed species, then score framing, fill, visibility, centeredness, occlusion, and distance into a 1-4 star rating.',
+    body: 'Camera rays identify the bird, then score framing, visibility, distance, and center/fill into a 1-4 star photo rating.',
   },
   {
     title: 'Bingo Field Guide',
-    body: 'The book opens in-hand, turns pages, loads saved PNGs back into world-space slots, shows bird names, scientific names, lock states, and best/latest star ratings.',
+    body: 'In-hand field guide with page turning, saved photos, species names, lock states, and best/latest stars.',
   },
   {
     title: 'Tool Handling',
-    body: 'Camera, bingo book, and feeding stick are managed through a backpack inventory with shoulder retrieval, stow anchors, delayed returns, haptics, and outline feedback.',
+    body: 'Backpack inventory for camera, book, and feeding stick with shoulder retrieval, stow anchors, haptics, and outlines.',
   },
   {
     title: 'Feeding Stick',
-    body: 'When the stick is held upright and steady, one bird can land on its perch, peck for a timed window, then fly away before a cooldown allows the next landing.',
+    body: 'Held perch that can attract one bird, hold it briefly, then release it before a cooldown.',
   },
   {
     title: 'Comfort Runtime',
-    body: 'An in-headset settings panel switches teleport/smooth movement, snap/smooth turn, vignette, credits, and FPS display without leaving VR.',
+    body: 'In-headset menu for movement, turning, vignette, credits, and FPS display.',
   },
 ];
 
 const cameraPipeline = [
-  'Grab the physical camera and render a live preview to its screen.',
-  'Press trigger to capture the current camera view as a PNG.',
-  'Sample rays and visible bounds to find the strongest bird candidate.',
-  'Score shot quality from hit ratio, frame fill, visibility, centeredness, occlusion, and distance.',
-  'Register the species in persistent bingo progress and update latest/best photo metadata.',
-  'Load the saved photo into the field guide slot with name, scientific name, and stars.',
+  'Hold the camera and render a live preview.',
+  'Trigger saves the view as a PNG.',
+  'Rays find the strongest visible bird candidate.',
+  'Shot quality becomes a 1-4 star score.',
+  'Species progress is saved to disk.',
+  'The field guide updates with photo, name, and stars.',
 ];
 
 const bingoBookFootage = {
@@ -83,25 +83,56 @@ const bingoBookFootage = {
 };
 
 const implementedSlice = [
-  'Seven bird species are represented: Robin, Blue Jay, Cardinal, Chickadee, Sparrow, Gold Finch, and Crow.',
-  'The bingo book tracks nine slots, including female Cardinal and female Gold Finch variants where the source bird art supports a distinct appearance.',
-  'Progress and captured photos are saved to disk, with migration support for older progress data.',
-  'The forest scene uses baked lighting, low-poly nature assets, wind shaders, grabbable outlines, and a runtime credits page for asset attribution.',
-  'Known rough edges are still documented honestly, including bird material/shader issues and remaining backpack/camera alignment tuning.',
+  'Seven species represented: Robin, Blue Jay, Cardinal, Chickadee, Sparrow, Gold Finch, and Crow.',
+  'Nine bingo-book slots, including variant slots where the source art supports them.',
+  'Saved photo/progress data with migration support for older saves.',
+  'Low-poly forest scene with baked lighting, wind shaders, outlines, and runtime credits.',
+  'Still rough in places: bird materials/shaders and some backpack/camera alignment tuning.',
 ];
 
 const interactionPolish = [
   {
     title: 'Backpack Retrieval',
-    body: 'The backpack shifted from “find the mesh and grab it” toward shoulder zones, haptics, hidden/stowed state, and direct right-shoulder camera summon.',
+    body: 'Shoulder zones, stow state, haptics, delayed returns, and a right-shoulder camera summon.',
   },
   {
     title: 'Controller And Hands',
-    body: 'Controller play remains the primary path, with a hand-tracking fallback layer for pinch/grasp assisted grabbing and teleport aiming.',
+    body: 'Controller play is primary, with a hand-tracking fallback for pinch/grab and teleport aiming.',
   },
   {
     title: 'Comfort First',
-    body: 'The runtime menu applies locomotion and vignette settings across loaded scenes and temporarily locks movement while the menu is open.',
+    body: 'Runtime locomotion and vignette settings apply in headset without leaving the build.',
+  },
+  {
+    title: 'Behavior Guardrails',
+    body: 'Very early QA proved that if the birds felt grabbable, people tried to grab them. We tightened flags and boundaries.',
+  },
+];
+
+const devLogItems = [
+  {
+    log: 'Dev Log 04',
+    title: 'Camera And Field Guide',
+    body: 'Camera capture, species ID, photo scoring, saved PNGs, and bingo-book progress.',
+    href: '/documents/projects/birdwatching/dev-logs/georgi-devlog-04-photo-camera-and-bingo-book.pdf',
+  },
+  {
+    log: 'Dev Log 05',
+    title: 'Controllers, Hands, Comfort',
+    body: 'Controller input, hand fallback, locomotion choices, vignette, and VR settings.',
+    href: '/documents/projects/birdwatching/dev-logs/georgi-devlog-05-controller-hands-and-comfort.pdf',
+  },
+  {
+    log: 'Dev Log 06',
+    title: 'Backpack Prototype',
+    body: 'Backpack slots, stow/retrieve behavior, delayed returns, and tuning notes.',
+    href: '/documents/projects/birdwatching/dev-logs/georgi-devlog-06-backpack-inventory-prototype.pdf',
+  },
+  {
+    log: 'Dev Log 08',
+    title: 'Summon And Polish Pass',
+    body: 'Camera summon, outlines, backpack cleanup, and late polish.',
+    href: '/documents/projects/birdwatching/dev-logs/georgi-devlog-08-camera-summon-outlines-and-backpack-polish.pdf',
   },
 ];
 
@@ -109,11 +140,15 @@ const showcasePhotos = [
   {
     src: '/images/projects/birdwatching/birdwatching-igda-showcase-demo-01.jpeg',
     alt: 'Birdwatching VR demo at the IGDA Baltimore showcase at the University of Baltimore',
+    width: 1024,
+    height: 768,
     caption: 'Live headset demo of Birdwatching VR during the IGDA® Baltimore showcase at the University of Baltimore.',
   },
   {
     src: '/images/projects/birdwatching/birdwatching-igda-showcase-demo-02.jpeg',
     alt: 'Birdwatching VR team demonstration area at the IGDA Baltimore showcase',
+    width: 1024,
+    height: 768,
     caption: 'Team demo area with attendees watching and trying student projects during the showcase.',
   },
 ];
@@ -249,10 +284,9 @@ export default function BirdwatchingCaseStudy() {
             Student Team Project · Unity 6 XR Prototype · PCVR / Quest Build Work
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">Birdwatching VR</h1>
-          <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            What started as a planning deck is now a working VR prototype: a quiet wildlife game where the player explores a low-poly forest, uses a physical
-            camera to photograph birds, and fills a star-rated field guide. My strongest contribution is the technical layer that turns the pitch into a playable
-            loop: camera capture, species detection, bingo progress, backpack tools, feeding interactions, comfort settings, and headset build support.
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+            A Unity XR prototype about exploring a low-poly forest, photographing birds, and filling a star-rated field guide. I owned the main systems work:
+            camera capture, bird detection, photo scoring, bingo-book progress, backpack tools, comfort settings, and builds.
           </p>
         </header>
 
@@ -264,10 +298,9 @@ export default function BirdwatchingCaseStudy() {
                   <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
                   Current Unity Prototype
                 </span>
-                <h2 className="mt-4 text-2xl font-semibold tracking-tight">A calm VR bird-photography game with a real camera-to-journal loop.</h2>
+                <h2 className="mt-4 text-xl font-semibold tracking-tight">A VR camera-to-field-guide loop.</h2>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                  The portfolio value is no longer just the concept. The prototype now has the runtime systems layer: a camera that sees the world, a system that
-                  decides which bird was photographed, a score for how good the shot was, and a physical field guide that reflects saved progress.
+                  The player takes a photo, the game identifies the bird, scores the shot, saves progress, and updates the physical book in VR.
                 </p>
                 <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
                   <li>- Physical camera, bingo book, feeding stick, and backpack tools.</li>
@@ -275,17 +308,17 @@ export default function BirdwatchingCaseStudy() {
                   <li>- Comfort controls, hand-tracking fallback work, and Quest/PCVR build setup.</li>
                 </ul>
               </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/birdwatching/birdwatching-current-build-note-01.svg"
-                  alt="Birdwatching VR current build note"
-                  width={1400}
-                  height={1000}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Current build note summarizing the playable Unity/XR prototype. The original pitch deck is kept separately in the reviewer notes."
-                />
-              </div>
+                <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+                  <LightboxImage
+                    src="/images/projects/birdwatching/birdwatching-bird-closeup-qa-20260505.png"
+                    alt="Close-up bird model from the Birdwatching VR Unity prototype"
+                    width={1009}
+                    height={706}
+                    className="h-auto w-full object-cover"
+                    roundedClassName="rounded-none"
+                    popupCaption="Close-up bird model from the playable Unity/XR prototype. The build note lives further down with the reviewer documents."
+                  />
+                </div>
             </div>
           </div>
 
@@ -298,7 +331,7 @@ export default function BirdwatchingCaseStudy() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr] md:items-start">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.9fr_1fr_0.9fr] lg:items-start">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Stack</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
@@ -316,11 +349,29 @@ export default function BirdwatchingCaseStudy() {
                 ))}
               </ul>
             </div>
+
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+              <LightboxImage
+                src="/images/projects/birdwatching/birdwatching-current-build-note-02.svg"
+                alt="Birdwatching VR system note covering camera and bingo-book flow"
+                width={1400}
+                height={1000}
+                className="h-auto w-full object-cover"
+                roundedClassName="rounded-none"
+                popupCaption="Current build note showing the camera capture, bird detection, scoring, persistence, and bingo-book loop."
+              />
+              <div className="border-t border-[var(--border)] p-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Current Build Note</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                  A quick systems snapshot from the current prototype, kept here so the page does not turn into one long wall of copy.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Built Systems</h2>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               {systemCards.map((item) => (
                 <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
                   <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
@@ -358,7 +409,7 @@ export default function BirdwatchingCaseStudy() {
               <div className="border-t border-[var(--border)] p-5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Current Prototype Footage</p>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                  This clip is from the live Unity project, not the old planning deck. It shows the field-guide object setup behind the bingo-book loop.
+                  Live Unity footage of the in-hand field-guide setup.
                 </p>
               </div>
             </div>
@@ -391,34 +442,63 @@ export default function BirdwatchingCaseStudy() {
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
-                <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Public Demo</p>
-                <h2 className="mt-4 text-2xl font-semibold tracking-tight">Shown at the IGDA® Baltimore showcase at the University of Baltimore.</h2>
+                <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Development Logs</p>
+                <h2 className="mt-4 text-xl font-semibold tracking-tight">Dev diaries from the build.</h2>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                  Felix, Talulla, and I demonstrated Birdwatching VR at an International Game Developers Association (IGDA®) showcase hosted at the University of
-                  Baltimore. The project was shown alongside other student work, giving us a real playtest setting for onboarding, controls, headset comfort,
-                  and the moment-to-moment feedback loop.
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                  A professor&apos;s post specifically called out the Interaction Design lens: flow, onboarding, controls, and feedback. That matters for this case
-                  study because the hard part is not only making a camera, book, and feeding stick exist in Unity. It is making them understandable to someone
-                  trying the prototype in a noisy showcase room.
+                  Short PDFs showing how the camera, field guide, backpack, and comfort work came together across the semester.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {showcasePhotos.map((photo) => (
-                  <div key={photo.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
-                    <LightboxImage
-                      src={photo.src}
-                      alt={photo.alt}
-                      width={1024}
-                      height={768}
-                      className="aspect-[4/3] h-auto w-full object-cover"
-                      roundedClassName="rounded-none"
-                      popupCaption={photo.caption}
-                    />
+                {devLogItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group rounded-xl border border-[var(--border)] bg-[var(--background)] p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[var(--accent-cyan)]/60"
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">{item.log}</p>
+                    <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)] transition-colors group-hover:text-[var(--foreground)]">
+                      Open PDF
+                    </p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+              <div>
+                <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Public Demo</p>
+                <h2 className="mt-4 text-xl font-semibold tracking-tight">Shown at the IGDA® Baltimore showcase.</h2>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                  We demonstrated Birdwatching VR at the University of Baltimore alongside other student projects. It was a useful test for onboarding, controls,
+                  comfort, and whether people understood what to do without us hovering over them.
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                  Earlier tests were less graceful: a few people tried to grab birds or bonk them with the book. Funny, but useful. We tightened grabbable flags so
+                  the game reads as observation, not bird harassment.
+                </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {showcasePhotos.map((photo) => (
+                    <div key={photo.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                      <LightboxImage
+                        src={photo.src}
+                        alt={photo.alt}
+                        width={photo.width}
+                        height={photo.height}
+                        className="aspect-[4/3] h-auto w-full object-cover"
+                        roundedClassName="rounded-none"
+                        popupCaption={photo.caption}
+                      />
                     <p className="border-t border-[var(--border)] p-4 text-xs leading-relaxed text-[var(--muted)]">{photo.caption}</p>
                   </div>
                 ))}
@@ -429,8 +509,7 @@ export default function BirdwatchingCaseStudy() {
           <div>
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reviewer Notes</h2>
             <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              These notes are compiled from the current Unity source, Exhibit Q&A, asset credits, and Georgi development logs. They separate what is implemented
-              from the original planning material.
+              Three quick references: current build notes, original pitch deck, and the written planning doc.
             </p>
             <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-3">
               <DocViewer
@@ -454,14 +533,6 @@ export default function BirdwatchingCaseStudy() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What This Shows</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              The project is a good portfolio case because it shows the unglamorous work that makes VR prototypes survive play: adapting third-party systems,
-              keeping tool interactions stable, making comfort settings accessible inside the headset, preserving user progress, and connecting a simple game
-              fantasy to real runtime state. It is still a student prototype, but it is no longer just a pitch.
-            </p>
-          </div>
         </section>
       </div>
     </main>

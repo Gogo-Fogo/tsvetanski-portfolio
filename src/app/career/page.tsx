@@ -97,16 +97,16 @@ const projects: Project[] = [
     type: 'prototype'
   },
   {
-    title: "Birdwatching",
+    title: "Birdwatching VR",
     description: "Unity 6 XR prototype with a physical camera, bird detection, star-rated photo scoring, persistent bingo-book progress, backpack tools, feeding-stick interaction, and comfort settings.",
     tags: ["Unity XR Prototype", "Camera & Collection Systems", "VR Interaction"],
     searchTerms: ["birdwatching", "vr", "unity", "unity 6", "xr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "camera capture", "quest", "openxr", "felix", "talulla"],
     facets: ['xr', 'engineering'],
     href: "/projects/birdwatching",
-    bannerImage: "/images/projects/birdwatching/birdwatching-bingo-book-footage-20260415-poster.png",
-    bannerAlt: "Birdwatching VR current Unity bingo book prototype footage",
-    bannerWidth: 1557,
-    bannerHeight: 876,
+    bannerImage: "/images/projects/birdwatching/birdwatching-bird-closeup-qa-20260505.png",
+    bannerAlt: "Close-up bird model from the Birdwatching VR Unity prototype",
+    bannerWidth: 1009,
+    bannerHeight: 706,
     type: 'prototype'
   },
   {
