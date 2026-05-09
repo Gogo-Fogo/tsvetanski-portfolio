@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1620" viewBox="0 0 1920 1620" role="img" aria-labelledby="title desc">
+  <title id="title">MUMOSA Team Mind Map</title>
+  <desc id="desc">Left-to-right alignment map showing the client now, future direction, prototype focus, and items to avoid for the MUMOSA project.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 11 5.5 L 0 11 z" fill="#64748b" />
+    </marker>
+    <style>
+      .title { font: 700 34px "Aptos", "Segoe UI", Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 500 17px "Aptos", "Segoe UI", Arial, sans-serif; fill: #4b5563; }
+      .lane-label { font: 700 15px "Aptos", "Segoe UI", Arial, sans-serif; letter-spacing: 0.12em; fill: #6b7280; text-transform: uppercase; }
+      .group-title { font: 700 27px "Aptos", "Segoe UI", Arial, sans-serif; fill: #111827; }
+      .group-sub { font: 500 18px "Aptos", "Segoe UI", Arial, sans-serif; fill: #334155; }
+      .detail-main { font: 700 22px "Aptos", "Segoe UI", Arial, sans-serif; fill: #1f2937; }
+      .detail-sub { font: 500 18px "Aptos", "Segoe UI", Arial, sans-serif; fill: #334155; }
+      .root-text { font: 700 30px "Aptos", "Segoe UI", Arial, sans-serif; fill: #ffffff; }
+      .line { fill: none; stroke: #64748b; stroke-width: 3; marker-end: url(#arrow); }
+      .lane { stroke: rgba(148, 163, 184, 0.35); stroke-width: 1.5; stroke-dasharray: 8 10; }
+      .root { fill: #111827; }
+      .group-now { fill: #dbeafe; stroke: #60a5fa; }
+      .group-future { fill: #ccfbf1; stroke: #2dd4bf; }
+      .group-focus { fill: #fef3c7; stroke: #f59e0b; }
+      .group-avoid { fill: #fee2e2; stroke: #f87171; }
+      .detail-now { fill: #eff6ff; stroke: #93c5fd; }
+      .detail-future { fill: #f0fdfa; stroke: #5eead4; }
+      .detail-focus { fill: #fffbeb; stroke: #fbbf24; }
+      .detail-avoid { fill: #fef2f2; stroke: #fca5a5; }
+      .group-box, .detail-box { stroke-width: 2.5; rx: 22; ry: 22; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1620" fill="#ffffff" />
+
+  <text x="40" y="52" class="title">MUMOSA Team Alignment</text>
+  <text x="40" y="82" class="subtitle">Left-to-right map for discussing the client, the prototype, and scope decisions without the branches colliding.</text>
+
+  <!-- Lanes -->
+  <line x1="320" y1="195" x2="1860" y2="195" class="lane" />
+  <line x1="320" y1="525" x2="1860" y2="525" class="lane" />
+  <line x1="320" y1="905" x2="1860" y2="905" class="lane" />
+  <line x1="320" y1="1285" x2="1860" y2="1285" class="lane" />
+
+  <text x="330" y="118" class="lane-label">Current Client Reality</text>
+  <text x="330" y="448" class="lane-label">Future Client Direction</text>
+  <text x="330" y="828" class="lane-label">What We Should Build</text>
+  <text x="330" y="1208" class="lane-label">What To Avoid</text>
+
+  <!-- Root -->
+  <rect x="40" y="700" width="240" height="170" rx="26" ry="26" class="root" />
+  <text x="160" y="756" text-anchor="middle" class="root-text">MUMOSA</text>
+  <text x="160" y="807" text-anchor="middle" class="root-text">Team</text>
+  <text x="160" y="858" text-anchor="middle" class="root-text">Alignment</text>
+
+  <!-- Group boxes -->
+  <rect x="330" y="140" width="280" height="110" class="group-box group-now" />
+  <text x="470" y="186" text-anchor="middle" class="group-title">Client Now</text>
+  <text x="470" y="219" text-anchor="middle" class="group-sub">what MUMOSA is today</text>
+
+  <rect x="330" y="470" width="280" height="110" class="group-box group-future" />
+  <text x="470" y="516" text-anchor="middle" class="group-title">Client Future</text>
+  <text x="470" y="549" text-anchor="middle" class="group-sub">where MUMOSA wants to go</text>
+
+  <rect x="330" y="850" width="280" height="110" class="group-box group-focus" />
+  <text x="470" y="896" text-anchor="middle" class="group-title">Prototype Focus</text>
+  <text x="470" y="929" text-anchor="middle" class="group-sub">what we should build now</text>
+
+  <rect x="330" y="1230" width="280" height="110" class="group-box group-avoid" />
+  <text x="470" y="1276" text-anchor="middle" class="group-title">Avoid</text>
+  <text x="470" y="1309" text-anchor="middle" class="group-sub">what can derail the project</text>
+
+  <!-- Root connectors -->
+  <path d="M 280 728 C 308 640, 314 275, 330 195" class="line" />
+  <path d="M 280 770 C 308 705, 314 575, 330 525" class="line" />
+  <path d="M 280 812 C 308 838, 314 892, 330 905" class="line" />
+  <path d="M 280 854 C 308 940, 314 1205, 330 1285" class="line" />
+
+  <!-- Client now details -->
+  <rect x="690" y="110" width="390" height="58" class="detail-box detail-now" />
+  <text x="885" y="146" text-anchor="middle" class="detail-main">Forensic / post-crisis focus</text>
+
+  <rect x="690" y="190" width="390" height="58" class="detail-box detail-now" />
+  <text x="885" y="226" text-anchor="middle" class="detail-main">Investigation + training</text>
+
+  <rect x="690" y="270" width="390" height="58" class="detail-box detail-now" />
+  <text x="885" y="306" text-anchor="middle" class="detail-main">Text + images + schema + simulation</text>
+
+  <rect x="690" y="350" width="390" height="58" class="detail-box detail-now" />
+  <text x="885" y="386" text-anchor="middle" class="detail-main">Source-grounded Q/A</text>
+
+  <path d="M 610 195 L 690 139" class="line" />
+  <path d="M 610 195 L 690 219" class="line" />
+  <path d="M 610 195 L 690 299" class="line" />
+  <path d="M 610 195 L 690 379" class="line" />
+
+  <!-- Client future details -->
+  <rect x="690" y="430" width="390" height="58" class="detail-box detail-future" />
+  <text x="885" y="466" text-anchor="middle" class="detail-main">Real-time response support</text>
+
+  <rect x="690" y="510" width="390" height="58" class="detail-box detail-future" />
+  <text x="885" y="546" text-anchor="middle" class="detail-main">Timeline / time slider</text>
+
+  <rect x="690" y="590" width="390" height="58" class="detail-box detail-future" />
+  <text x="885" y="626" text-anchor="middle" class="detail-main">Danger highlighting</text>
+
+  <rect x="690" y="670" width="390" height="58" class="detail-box detail-future" />
+  <text x="885" y="706" text-anchor="middle" class="detail-main">Scenario planning + what-if analysis</text>
+
+  <rect x="690" y="750" width="390" height="58" class="detail-box detail-future" />
+  <text x="885" y="786" text-anchor="middle" class="detail-main">Agent-like guidance</text>
+
+  <path d="M 610 525 L 690 459" class="line" />
+  <path d="M 610 525 L 690 539" class="line" />
+  <path d="M 610 525 L 690 619" class="line" />
+  <path d="M 610 525 L 690 699" class="line" />
+  <path d="M 610 525 L 690 779" class="line" />
+
+  <!-- Prototype focus details -->
+  <rect x="690" y="845" width="420" height="78" class="detail-box detail-focus" />
+  <text x="900" y="879" text-anchor="middle" class="detail-main">Primary user:</text>
+  <text x="900" y="907" text-anchor="middle" class="detail-sub">post-crisis investigator</text>
+
+  <rect x="690" y="945" width="420" height="90" class="detail-box detail-focus" />
+  <text x="900" y="980" text-anchor="middle" class="detail-main">Primary task:</text>
+  <text x="900" y="1008" text-anchor="middle" class="detail-sub">understand what happened + verify evidence</text>
+
+  <rect x="1200" y="835" width="560" height="82" class="detail-box detail-focus" />
+  <text x="1480" y="870" text-anchor="middle" class="detail-main">Dashboard role:</text>
+  <text x="1480" y="898" text-anchor="middle" class="detail-sub">search, sources, chronology, event overview</text>
+
+  <rect x="1200" y="945" width="560" height="82" class="detail-box detail-focus" />
+  <text x="1480" y="980" text-anchor="middle" class="detail-main">VR role:</text>
+  <text x="1480" y="1008" text-anchor="middle" class="detail-sub">spatial review, hazards, scene context, training support</text>
+
+  <rect x="1200" y="1055" width="560" height="100" class="detail-box detail-focus" />
+  <text x="1480" y="1091" text-anchor="middle" class="detail-main">Key screens:</text>
+  <text x="1480" y="1120" text-anchor="middle" class="detail-sub">entry, overview, evidence, timeline,</text>
+  <text x="1480" y="1147" text-anchor="middle" class="detail-sub">optional VR handoff</text>
+
+  <path d="M 610 905 L 690 884" class="line" />
+  <path d="M 610 905 L 690 990" class="line" />
+  <path d="M 1110 884 L 1200 876" class="line" />
+  <path d="M 1110 990 L 1200 986" class="line" />
+  <path d="M 1110 990 C 1160 1005, 1165 1080, 1200 1105" class="line" />
+
+  <!-- Avoid details -->
+  <rect x="690" y="1210" width="500" height="60" class="detail-box detail-avoid" />
+  <text x="940" y="1248" text-anchor="middle" class="detail-main">No hard profession gate before entry</text>
+
+  <rect x="690" y="1290" width="500" height="60" class="detail-box detail-avoid" />
+  <text x="940" y="1328" text-anchor="middle" class="detail-main">No separate full journeys for every role</text>
+
+  <rect x="690" y="1370" width="500" height="60" class="detail-box detail-avoid" />
+  <text x="940" y="1408" text-anchor="middle" class="detail-main">No full real-time system build this semester</text>
+
+  <rect x="690" y="1450" width="500" height="60" class="detail-box detail-avoid" />
+  <text x="940" y="1488" text-anchor="middle" class="detail-main">VR should not replace the dashboard</text>
+
+  <path d="M 610 1285 L 690 1240" class="line" />
+  <path d="M 610 1285 L 690 1320" class="line" />
+  <path d="M 610 1285 L 690 1400" class="line" />
+  <path d="M 610 1285 L 690 1480" class="line" />
+</svg>
