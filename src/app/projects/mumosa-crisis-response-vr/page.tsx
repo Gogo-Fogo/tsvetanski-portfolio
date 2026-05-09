@@ -540,10 +540,45 @@ export default function MumosaCrisisResponseVrCaseStudy() {
                     <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
                   </div>
                 ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Evidence Capture Pipeline</h2>
+            <p className="mb-6 text-sm leading-relaxed text-[var(--muted)]">
+              The spatial review prototype is backed by a realistic data pipeline. Drones, robots, and body cameras capture the scene; AI processes it into
+              grounded evidence; and Nanite renders raw photogrammetry without costly retopology. The result is an end-to-end workflow from crisis site to
+              clickable spatial evidence.
+            </p>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Fidelity Tiers</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                  Active response needs answers in minutes — low-fidelity Gaussian splatting (~5-15 min) shows danger zones and blocked routes immediately.
+                  Post-crisis investigation uses full photogrammetry (~30 min - 2+ hrs) for forensic-grade detail. The prototype proves the review layer; the
+                  processing speed is an engineering curve, not a research question.
+                </p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Nanite &amp; Raw Scans</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                  Photogrammetry produces messy scans with holes and artifacts. Nanite renders the raw mesh at full detail — no retopology needed for static
+                  evidence review. Key objects (railcar, ignition zone) can get AI-assisted cleanup; everything else renders directly. The prototype uses
+                  photoscanned Megascans debris to demonstrate the visual quality the pipeline would produce.
+                </p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Query &amp; AI Integration</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                  The user asks a natural-language question through the dashboard. The AI (local or API) queries the evidence store, determines relevant
+                  markers, highlights them in the Unreal scene via the MCP bridge, and populates the source panel. The prototype mocks this with structured
+                  JSON data — the same shape a real AI query would return — so the interaction model is proven regardless of backend.
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Planned Usability Test</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
                 The FigJam board also already includes a paper-prototype usability script. That matters because the low-fidelity phase is not just a sketch dump; it
