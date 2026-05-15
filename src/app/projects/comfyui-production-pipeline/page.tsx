@@ -287,7 +287,7 @@ export default function ComfyUiProductionPipelinePage() {
                   alt={example.alt}
                   width={example.width}
                   height={example.height}
-                  className="h-96 w-full object-cover"
+                  className="h-[34rem] w-full bg-[#050608] object-contain"
                   roundedClassName="rounded-none"
                   popupCaption={example.caption}
                 />
