@@ -14,6 +14,7 @@ interface Project {
   tags: string[];
   searchTerms?: string[];
   facets: ProjectFilter[];
+  rank?: Partial<Record<ProjectFilter, number>>;
   type?: 'commercial' | 'prototype';
   href?: string;
   external?: boolean;
@@ -24,22 +25,38 @@ interface Project {
   bannerBorderClass?: string;
 }
 
-type ProjectFilter = 'all' | 'engineering' | 'xr' | 'art-storytelling';
+type ProjectFilter = 'all' | 'engineering' | 'xr' | 'ai-product' | 'art-storytelling';
 
 const filterOptions: { value: ProjectFilter; label: string }[] = [
   { value: 'all', label: 'All Projects' },
-  { value: 'engineering', label: 'Game Engineering' },
-  { value: 'xr', label: 'VR/XR Interaction' },
+  { value: 'engineering', label: 'Engineering & Systems' },
+  { value: 'xr', label: 'VR & Spatial Projects' },
+  { value: 'ai-product', label: 'AI & Product Tools' },
   { value: 'art-storytelling', label: 'Design & Storytelling' },
 ];
 
 const projects: Project[] = [
   {
+    title: "ComfyUI Production Pipeline",
+    description: "Cross-project local AI media pipeline — ComfyUI workflow routing, demo-safe asset boundaries, dark fantasy lookdev, and downstream game-asset cleanup.",
+    tags: ["ComfyUI", "AI Art Pipeline", "Asset Workflow"],
+    searchTerms: ["comfyui", "comfy", "ai art", "workflow", "image generation", "black dice", "prince of persia", "asset cleanup", "local media"],
+    facets: ['ai-product', 'art-storytelling', 'engineering'],
+    rank: { all: 7, 'ai-product': 3, 'art-storytelling': 4, engineering: 12 },
+    href: "/projects/comfyui-production-pipeline",
+    bannerImage: "/images/projects/comfyui-production-pipeline/workflow-local-image-edit-rmbg-graph.png",
+    bannerAlt: "ComfyUI local image-edit and RMBG workflow graph",
+    bannerWidth: 1920,
+    bannerHeight: 1080,
+    type: 'prototype'
+  },
+  {
     title: "Black Dice Engine",
     description: "Local-first AI Game Master engine for dark collaborative TTRPG campaigns — GM dashboard, player companion, deterministic state tools, memory, and local media routing.",
-    tags: ["Local-First AI", "Rules Engine", "System Design"],
+    tags: ["Local-First AI", "Runtime Architecture", "Rules Engine"],
     searchTerms: ["black dice", "dice engine", "ai game master", "ttrpg", "tabletop", "rpg", "gm dashboard", "player companion", "campaign memory", "comfyui", "local first"],
-    facets: ['engineering'],
+    facets: ['ai-product', 'engineering'],
+    rank: { all: 2, 'ai-product': 1, engineering: 2 },
     href: "/projects/black-dice-engine",
     bannerImage: "/images/projects/black-dice-engine/black-dice-engine-banner.png",
     bannerAlt: "Black Dice Engine banner showing dark fantasy character and dice branding",
@@ -50,9 +67,10 @@ const projects: Project[] = [
   {
     title: "Shinobi Story",
     description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
-    tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
+    tags: ["Live Game Operations", "Community Growth", "Content Strategy"],
     searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
     facets: ['engineering', 'art-storytelling'],
+    rank: { all: 1, engineering: 6, 'art-storytelling': 1 },
     href: "/projects/shinobi-story",
     bannerImage: "/images/ShinobiStoryBanner.jpg",
     bannerAlt: "Shinobi Story banner",
@@ -66,6 +84,7 @@ const projects: Project[] = [
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering'],
+    rank: { all: 8, engineering: 5 },
     href: "/projects/repo-x",
     bannerImage: "/images/GuiltyAsArr_Playtest.png",
     bannerAlt: "Guilty As Arrr — playtest highlight image",
@@ -75,9 +94,10 @@ const projects: Project[] = [
   {
     title: "VR Dirt Bike Game",
     description: "Community-focused VR safety prototype for B-360, optimized for accessible mobile headsets.",
-    tags: ["VR Safety Simulation", "Educational VR", "Human Factors"],
+    tags: ["VR Safety Simulation", "Community UX", "Human Factors"],
     searchTerms: ["dirt bike", "safety training", "education", "riding"],
     facets: ['engineering', 'xr'],
+    rank: { all: 12, engineering: 11, xr: 4 },
     href: "/projects/vr-microgames",
     bannerImage: "/images/B360_bike_simulator.png",
     bannerAlt: "B-360 VR dirt bike simulator preview",
@@ -87,9 +107,10 @@ const projects: Project[] = [
   {
     title: "VR Car Drift Simulator",
     description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
-    tags: ["VR Driving Simulation", "Vehicle Physics", "Spatial Interaction"],
+    tags: ["Vehicle Physics", "VR Driving Simulation", "Spatial Interaction"],
     searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],
+    rank: { all: 13, engineering: 10, xr: 5 },
     href: "/projects/vr-interaction-lab",
     bannerImage: "/images/DriftImmersive_Banner.png",
     bannerAlt: "Chase-camera drift shot on a lit city expressway",
@@ -98,10 +119,11 @@ const projects: Project[] = [
   },
   {
     title: "MUMOSA Crisis Response VR Study",
-    description: "Graduate client project for DEVCOM Army Research Laboratory / MUMOSA — multimodal situational-awareness research, crisis-response heuristics, and an in-progress VR evidence-review prototype direction.",
-    tags: ["Defense Research", "Crisis Response UX", "VR Prototyping"],
+    description: "Graduate client project for DEVCOM Army Research Laboratory / MUMOSA — multimodal situation-awareness research, crisis-response heuristics, client report, and Unreal spatial-review proof of concept.",
+    tags: ["Defense Research", "Crisis Response UX", "Spatial Evidence Review"],
     searchTerms: ["mumosa", "army research laboratory", "devcom", "crisis response", "situational awareness", "forensic training", "schema graph", "3d reconstruction", "vr evidence review"],
-    facets: ['engineering', 'xr'],
+    facets: ['ai-product', 'engineering', 'xr'],
+    rank: { all: 3, 'ai-product': 3, engineering: 7, xr: 1 },
     href: "/projects/mumosa-crisis-response-vr",
     bannerImage: "/images/projects/mumosa-crisis-response-vr/mumosa-banner.png",
     bannerAlt: "MUMOSA dashboard figure showing multimodal question answering, evidence panels, schema graphs, and simulation evidence",
@@ -112,9 +134,10 @@ const projects: Project[] = [
   {
     title: "Birdwatching VR",
     description: "Unity 6 XR prototype with a physical camera, bird detection, star-rated photo scoring, persistent bingo-book progress, backpack tools, feeding-stick interaction, and comfort settings.",
-    tags: ["Unity XR Prototype", "Camera & Collection Systems", "VR Interaction"],
+    tags: ["Unity XR Prototype", "Camera Systems", "Comfort Design"],
     searchTerms: ["birdwatching", "vr", "unity", "unity 6", "xr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "camera capture", "quest", "openxr", "felix", "talulla"],
     facets: ['xr', 'engineering'],
+    rank: { all: 10, engineering: 9, xr: 2 },
     href: "/projects/birdwatching",
     bannerImage: "/images/projects/birdwatching/birdwatching-bird-closeup-qa-20260505.png",
     bannerAlt: "Close-up bird model from the Birdwatching VR Unity prototype",
@@ -124,9 +147,10 @@ const projects: Project[] = [
   },
   {
     title: "Shonen Showdown",    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
-    tags: ["3D Multiplayer TCG", "Game Systems Design", "Photon Fusion 2"],
+    tags: ["Rules Engine", "Photon Fusion 2", "ScriptableObject Data"],
     searchTerms: ["card game", "tcg", "anime", "prototype", "shonen", "unity", "networking"],
     facets: ['engineering', 'art-storytelling'],
+    rank: { all: 6, engineering: 4, 'art-storytelling': 7 },
     href: "/projects/shonen-showdown",
     bannerImage: "/images/projects/shonen-showdown/duel-fp-01.png",
     bannerAlt: "Shonen Showdown — first-person duel view",
@@ -139,6 +163,7 @@ const projects: Project[] = [
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
     searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
+    rank: { all: 14, 'art-storytelling': 5 },
     href: "/projects/fallout-level-design",
     bannerImage: "/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png",
     bannerAlt: "Hall of Idols puzzle chamber — Fallout 4 level design",
@@ -148,9 +173,10 @@ const projects: Project[] = [
   {
     title: "Totally Bugged Out",
     description: "First-person bug survival prototype — universal throw system and swarming enemy AI that traverses walls and ceilings.",
-    tags: ["Swarm AI", "First-Person Combat", "Unity"],
+    tags: ["Enemy AI", "First-Person Combat", "Unity"],
     searchTerms: ["bugs", "survival", "first-person", "balkan", "swarm ai"],
     facets: ['art-storytelling', 'engineering'],
+    rank: { all: 15, engineering: 13, 'art-storytelling': 8 },
     href: '/projects/totally-bugged-out',
     bannerImage: '/images/Totally Bugged Out_banner.png',
     bannerAlt: 'Totally Bugged Out project banner',
@@ -160,9 +186,10 @@ const projects: Project[] = [
   {
     title: "Shogun: Flowers Fall in Blood",
     description: "Mobile tactical RPG prototype — grid-based combat, gesture-driven skills, progression, enemy AI, and gacha simulation.",
-    tags: ["Tactical RPG", "Gacha Systems", "Mobile"],
+    tags: ["Tactical RPG", "Mobile Systems", "Gacha Simulation"],
     searchTerms: ["shogun", "naruto", "tactical rpg", "gacha", "mobile"],
     facets: ['art-storytelling', 'engineering'],
+    rank: { all: 11, engineering: 8, 'art-storytelling': 3 },
     href: '/projects/shogun-flowers-fall-in-blood',
     bannerImage: '/images/ShogunFlowersFallinBlood_banner.png',
     bannerAlt: 'Shogun: Flowers Fall in Blood — samurai character art',
@@ -174,7 +201,8 @@ const projects: Project[] = [
     description: "Local-first research companion built for my mother — grounded source retrieval, personal-record support, Codex-backed synthesis, and portable macOS delivery.",
     tags: ["Local-First AI", "Healthcare UX", "Cross-Platform Packaging"],
     searchTerms: ["ami", "research companion", "mom", "medical research", "codex", "mac app", "local-first", "evidence retrieval"],
-    facets: ['engineering'],
+    facets: ['ai-product', 'engineering'],
+    rank: { all: 4, 'ai-product': 2, engineering: 3 },
     href: '/projects/ami-research-companion',
     bannerImage: '/images/projects/ami/ami-banner.png',
     bannerAlt: 'Ami interface showing grounded answer layout, saved chats, and document preview card',
@@ -186,7 +214,8 @@ const projects: Project[] = [
     description: "Solo-built Fire Emblem Heroes companion app with synced barracks, custom hero-data scraping, AI export, and a portable launcher fed by GitHub release bundles.",
     tags: ["Live-Service Tooling", "Data Pipeline", "Release Engineering"],
     searchTerms: ["feh", "fire emblem heroes", "barracks", "manager", "supabase", "scraper", "launcher", "release bundles", "live-service", "collection manager"],
-    facets: ['engineering'],
+    facets: ['ai-product', 'engineering'],
+    rank: { all: 5, 'ai-product': 4, engineering: 1 },
     href: '/projects/feh-barracks-manager',
     bannerImage: '/images/projects/feh-barracks/feh-login-screen.png',
     bannerAlt: 'FEH Barracks Manager login and presentation screen',
@@ -199,6 +228,7 @@ const projects: Project[] = [
     tags: ["Game Modding", "Combat Systems", "Reverse Engineering"],
     searchTerms: ["prince of persia", "warrior within", "slay the spire 2", "mod", "godot", "c#", "harmony", "baselib", "dahaka", "rewind", "sand", "character mod"],
     facets: ['engineering', 'art-storytelling'],
+    rank: { all: 9, engineering: 6, 'art-storytelling': 2 },
     href: '/projects/prince-of-persia-warrior-within-mod',
     bannerImage: '/images/projects/prince-of-persia-warrior-within-mod/prince-character-select-current-20260505.png',
     bannerAlt: 'Current Prince of Persia Warrior Within mod character select screen',
@@ -208,9 +238,10 @@ const projects: Project[] = [
   {
     title: "Cranky (Game Jam 2024)",
     description: "Chaotic split-screen local multiplayer where two pugs chase squirrels — built in one week for Global Game Jam.",
-    tags: ["Local Multiplayer", "Game Jam", "Unity"],
+    tags: ["Local Multiplayer", "Rapid Prototyping", "Unity"],
     searchTerms: ["cranky", "pug", "squirrels", "global game jam", "local multiplayer"],
     facets: ['engineering', 'art-storytelling'],
+    rank: { all: 18, engineering: 15, 'art-storytelling': 10 },
     href: '/projects/cranky-game-jam',
     bannerImage: '/images/Cranky_GameJam_Banner_2024.jpg',
     bannerAlt: 'Cranky Game Jam 2024 banner',
@@ -220,9 +251,10 @@ const projects: Project[] = [
   {
     title: "Cranky: The Squirrel Annihilator",
     description: "Solo expansion of the jam — first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL deployment.",
-    tags: ["Enemy AI", "WebGL", "Solo Build"],
+    tags: ["Enemy AI", "WebGL Deployment", "Solo Build"],
     searchTerms: ["cranky", "squirrel annihilator", "dog chase", "webgl", "ai"],
     facets: ['engineering'],
+    rank: { all: 17, engineering: 14 },
     href: '/projects/cranky-squirrel-annihilator',
     bannerImage: '/images/CrankyTheSquirrelAnnihilator_banner.png',
     bannerAlt: 'Cranky The Squirrel Annihilator banner',
@@ -232,9 +264,10 @@ const projects: Project[] = [
   {
     title: "The Signal",
     description: "Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and co-op/competitive win paths.",
-    tags: ["Board Game Design", "Systems Design", "Co-op"],
+    tags: ["Board Game Design", "Systems Design", "Co-op Design"],
     searchTerms: ["board game", "sci-fi", "co-op", "class customization", "modular exploration"],
     facets: ['art-storytelling'],
+    rank: { all: 16, 'art-storytelling': 6 },
     href: '/projects/the-signal',
     bannerImage: '/images/Banner_TheSignal.jpg',
     bannerAlt: 'The Signal board game banner',
@@ -247,6 +280,7 @@ const projects: Project[] = [
     tags: ["Narrative Design", "Systems Design", "Design Document"],
     searchTerms: ["dystopian", "2050", "poverty", "survival", "systems design"],
     facets: ['art-storytelling'],
+    rank: { all: 20, 'art-storytelling': 11 },
     href: '/projects/the-last-paycheck',
     bannerImage: '/images/TheLastPaycheck_Banner.png',
     bannerAlt: 'The Last Paycheck banner',
@@ -259,7 +293,12 @@ const projects: Project[] = [
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
+    rank: { all: 19, xr: 3, 'art-storytelling': 9 },
     href: '/projects/patapon-vr-the-first-beat',
+    bannerImage: '/images/projects/patapon-vr/patapon-boss-battle.png',
+    bannerAlt: 'Patapon VR boss battle concept art',
+    bannerWidth: 799,
+    bannerHeight: 421,
     type: 'prototype'
   },
 ];
@@ -270,10 +309,17 @@ const tagDescriptions: Record<string, string> = {
   'Spatial Audio': 'Positional voice/sound cues that reinforce proximity and game tension.',
   'Logistics Simulation': 'System modeling focused on routing, throughput, and constraint balancing.',
   'System Design': 'Designing mechanics and rules that create clear, replayable player loops.',
+  'Runtime Architecture': 'Coordinating services, health checks, permissions, and recovery paths in a running local app.',
+  ComfyUI: 'Node-based local image/video generation system used for controlled creative workflows and media jobs.',
+  'AI Art Pipeline': 'A production workflow around generated imagery: prompts, references, approvals, metadata, cleanup, and disclosure.',
+  'Asset Workflow': 'Steps that turn concept or generated source material into organized, usable game/UI/presentation assets.',
   Unity: 'Primary game engine used for rapid prototyping and iteration.',
   'VR Safety Simulation': 'XR scenarios focused on safe habits and behavior transfer.',
+  'Community UX': 'Interaction design shaped around a real partner, learner group, or public-service context.',
   'Educational VR': 'Immersive modules designed for guided learning outcomes.',
   'Human Factors': 'Interaction decisions informed by user behavior and ergonomics.',
+  'Defense Research': 'Client-facing research and prototype work for defense, crisis response, or high-stakes analysis contexts.',
+  'Crisis Response UX': 'Interface design for emergency response, investigation, training, and complex-event sensemaking.',
   'Community Game Design': 'Design process grounded in local partner needs and real-world deployment constraints.',
   'Public Impact': 'Work focused on measurable value for communities and partner organizations.',
   'VR Driving Simulation': 'Vehicle handling and drift-focused training in immersive contexts.',
@@ -284,13 +330,18 @@ const tagDescriptions: Record<string, string> = {
   'Team Collaboration': 'Cross-discipline workflow with shared ownership and iteration.',
   'Content Strategy': 'Content planning, cadence, and message alignment for growth.',
   'Narrative Design': 'Story structure, beats, and player-facing narrative framing.',
+  'Live Game Operations': 'Running and evolving a live game/community over time: content, players, updates, and communication.',
+  'Community Growth': 'Building player trust, audience momentum, and long-term participation around a project.',
   'Game Marketing': 'Audience positioning, campaign rollouts, and engagement planning.',
   'Figurine Sculpting': 'Physical and digital character form development for collectible-scale figure concepts.',
   'Concept Development': 'Turning early visual ideas into coherent style, shape language, and production-ready direction.',
   'Visual Storytelling': 'Communicating narrative and personality through composition, form, and art direction.',
   '3D Multiplayer TCG': 'Card game mechanics translated into a networked 3D play space.',
   'Game Systems Design': 'Ruleset architecture, progression curves, and balance foundations.',
+  'Unity XR Prototype': 'Unity-based XR work focused on interaction loops, comfort, and fast spatial prototyping.',
+  'Photon Fusion 2': 'Realtime multiplayer networking for synchronized Unity gameplay and shared game state.',
   'Rules Engine': 'Reusable gameplay logic for resolving actions, modifiers, turn flow, and outcomes consistently.',
+  'ScriptableObject Data': 'Unity data-authoring workflow where designers can create and tune content without code edits.',
   'Deterministic Simulation': 'Systems structured so the same inputs produce inspectable, repeatable outcomes.',
   Prototyping: 'Fast concept validation through iterative, playable experiments.',
   'VR GDD': 'Concept planning and technical scoping for VR-first gameplay.',
@@ -304,8 +355,36 @@ const tagDescriptions: Record<string, string> = {
   'Release Engineering': 'Packaging, deployment, asset-bundle management, and update delivery for real users.',
   'Game Modding': 'Building new characters, systems, and content inside an existing game without control over the full engine surface.',
   'Combat Systems': 'Designing and implementing readable combat loops, resources, encounter pressure, and player decision flow.',
+  'First-Person Combat': 'Combat interactions built around embodied player perspective, aim, timing, and readable feedback.',
   'Reverse Engineering': 'Working from engine behavior, runtime constraints, and decompiled references when official abstractions are incomplete.',
+  'Spatial Evidence Review': 'Using 3D/spatial context to inspect evidence, hazards, timelines, and source-grounded claims.',
+  'Camera Systems': 'Capture, scoring, feedback, and collection mechanics built around in-game photography.',
+  'Comfort Design': 'XR interaction choices that reduce disorientation, fatigue, and motion discomfort.',
+  'Enemy AI': 'Behavior systems for adversaries, swarms, targeting, movement, and reactive encounters.',
+  'Tactical RPG': 'Grid, turn, unit, ability, and progression systems designed for tactical decision-making.',
+  'Mobile Systems': 'Gameplay and UI systems designed around mobile constraints, session length, and touch-first play.',
+  'Gacha Simulation': 'Progression and acquisition systems modeled around rarity, collection, and live-game economy patterns.',
+  'Rapid Prototyping': 'Fast playable iteration with clear scope control and quick learning loops.',
+  'Local Multiplayer': 'Same-device multiplayer systems built around shared-screen play, controller flow, and quick social readability.',
+  'WebGL Deployment': 'Packaging and shipping playable browser builds with web runtime constraints.',
+  'Solo Build': 'End-to-end implementation, design, UI, and deployment owned by one developer.',
+  'Board Game Design': 'Physical or tabletop rules design focused on turns, roles, components, pacing, and group decisions.',
+  'Systems Design': 'Interlocking mechanics, economies, constraints, and feedback loops that shape player decisions.',
+  'Co-op Design': 'Shared-goal systems that coordinate player roles, tension, and group decision-making.',
+  'Design Document': 'A structured concept document that communicates setting, mechanics, player experience, and production direction.',
 };
+
+const sortProjectsForFilter = (items: Project[], filter: ProjectFilter) =>
+  [...items].sort((first, second) => {
+    const firstRank = first.rank?.[filter] ?? first.rank?.all ?? Number.MAX_SAFE_INTEGER;
+    const secondRank = second.rank?.[filter] ?? second.rank?.all ?? Number.MAX_SAFE_INTEGER;
+
+    if (firstRank !== secondRank) {
+      return firstRank - secondRank;
+    }
+
+    return first.title.localeCompare(second.title);
+  });
 
 const normalizeForSearch = (value: string) =>
   value
@@ -330,7 +409,7 @@ const matchesSearch = (haystack: string, query: string) => {
 function CareerContent() {
   const [activeFilter, setActiveFilter] = useQueryState(
     'filter',
-    parseAsStringLiteral<ProjectFilter>(['all', 'engineering', 'xr', 'art-storytelling']).withDefault('all')
+    parseAsStringLiteral<ProjectFilter>(['all', 'engineering', 'xr', 'ai-product', 'art-storytelling']).withDefault('all')
   );
   const [searchQuery, setSearchQuery] = useQueryState(
     'q',
@@ -349,12 +428,13 @@ function CareerContent() {
       resolvedFilter === 'all'
         ? projects
         : projects.filter((project) => project.facets.includes(resolvedFilter));
+    const rankedList = sortProjectsForFilter(baseList, resolvedFilter);
 
     if (normalizedQuery.length === 0) {
-      return baseList;
+      return rankedList;
     }
 
-    return baseList.filter((project) => {
+    return rankedList.filter((project) => {
       const haystack = [
         project.title,
         project.description,
@@ -380,7 +460,7 @@ function CareerContent() {
           />
           <div className="mt-8">
             <h1 className="text-4xl font-bold tracking-tight">XR & Game Project Portfolio</h1>
-            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Game Engineering · VR/XR Interaction · Design & Storytelling</p>
+            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Engineering · VR Projects · AI Tools · Design & Storytelling</p>
             <p className="text-[var(--muted)] mt-2 text-sm">Browse by discipline to find work faster.</p>
           </div>
 
