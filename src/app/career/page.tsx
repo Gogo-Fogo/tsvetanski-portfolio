@@ -35,6 +35,19 @@ const filterOptions: { value: ProjectFilter; label: string }[] = [
 
 const projects: Project[] = [
   {
+    title: "Black Dice Engine",
+    description: "Local-first AI Game Master engine for dark collaborative TTRPG campaigns — GM dashboard, player companion, deterministic state tools, memory, and local media routing.",
+    tags: ["Local-First AI", "Rules Engine", "System Design"],
+    searchTerms: ["black dice", "dice engine", "ai game master", "ttrpg", "tabletop", "rpg", "gm dashboard", "player companion", "campaign memory", "comfyui", "local first"],
+    facets: ['engineering'],
+    href: "/projects/black-dice-engine",
+    bannerImage: "/images/projects/black-dice-engine/black-dice-engine-banner.png",
+    bannerAlt: "Black Dice Engine banner showing dark fantasy character and dice branding",
+    bannerWidth: 1672,
+    bannerHeight: 941,
+    type: 'prototype'
+  },
+  {
     title: "Shinobi Story",
     description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
     tags: ["Narrative Design", "Content Strategy", "Game Marketing"],
@@ -277,6 +290,8 @@ const tagDescriptions: Record<string, string> = {
   'Visual Storytelling': 'Communicating narrative and personality through composition, form, and art direction.',
   '3D Multiplayer TCG': 'Card game mechanics translated into a networked 3D play space.',
   'Game Systems Design': 'Ruleset architecture, progression curves, and balance foundations.',
+  'Rules Engine': 'Reusable gameplay logic for resolving actions, modifiers, turn flow, and outcomes consistently.',
+  'Deterministic Simulation': 'Systems structured so the same inputs produce inspectable, repeatable outcomes.',
   Prototyping: 'Fast concept validation through iterative, playable experiments.',
   'VR GDD': 'Concept planning and technical scoping for VR-first gameplay.',
   'Rhythm Interaction': 'Timing-based inputs and feedback for expressive play.',
