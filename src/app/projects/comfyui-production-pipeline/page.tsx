@@ -45,15 +45,6 @@ const pipelineItems = [
 
 const workflowFamilies = [
   {
-    title: 'Local Image Edit + RMBG',
-    src: '/images/projects/comfyui-production-pipeline/workflow-local-image-edit-rmbg-graph.png',
-    alt: 'ComfyUI workflow screenshot for local image editing with RMBG background removal',
-    caption:
-      'A local image-edit graph combining prompt conditioning, sampling, decode, and RMBG cleanup so outputs can become cutouts instead of loose renders.',
-    width: 1920,
-    height: 1080,
-  },
-  {
     title: 'Ronin Identity Workflow',
     src: '/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png',
     alt: 'ComfyUI workflow screenshot for Ronin identity-lock character iteration',
@@ -139,22 +130,31 @@ const cleanupStages = [
 
 const supportingExamples = [
   {
-    title: 'Character Output Check',
-    src: '/images/projects/comfyui-production-pipeline/ronin-action-variant.png',
-    alt: 'Ronin action variant generated from a local image-edit workflow',
+    title: 'Shogun Character Reference',
+    src: '/images/projects/comfyui-production-pipeline/shogun-ronin-footman-portrait.png',
+    alt: 'Ronin Footman character portrait from the Shogun production folder',
     caption:
-      'Output checks sit beside the graph screenshots to show what a workflow can produce, without making the final render the whole portfolio claim.',
-    width: 2048,
-    height: 3072,
+      'A cleaner Shogun production asset used as the kind of source/reference material that can move through local ComfyUI cleanup and variant workflows.',
+    width: 832,
+    height: 1248,
   },
   {
-    title: 'Material Detail Pass',
-    src: '/images/projects/comfyui-production-pipeline/darkmetal-scratches-normal.png',
-    alt: 'Dark metal scratches normal map used for material experiments',
+    title: 'Shogun Environment Source',
+    src: '/images/projects/comfyui-production-pipeline/shogun-courtyard-bamboo.png',
+    alt: 'Bamboo courtyard background from the Shogun production folder',
     caption:
-      'Material tests are less flashy than character art, but they matter for game-feel: surface noise, scratches, normals, and bake cleanup.',
+      'Environment art from the Shogun folder gives the page a real production context beyond character-only examples.',
     width: 1024,
-    height: 1024,
+    height: 1792,
+  },
+  {
+    title: 'Shogun Sprite Cleanup Target',
+    src: '/images/projects/comfyui-production-pipeline/shogun-ronin-footman-attack.png',
+    alt: 'Ronin Footman attack sprite from the Shogun production folder',
+    caption:
+      'Sprite/action material is where the pipeline becomes practical: alpha, consistency, scale, and downstream implementation matter more than one flashy render.',
+    width: 2048,
+    height: 3072,
   },
 ];
 
@@ -185,13 +185,13 @@ export default function ComfyUiProductionPipelinePage() {
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-strong)]">
               <LightboxImage
-                src="/images/projects/comfyui-production-pipeline/workflow-local-image-edit-rmbg-graph.png"
-                alt="ComfyUI local image edit and RMBG workflow screenshot"
+                src="/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png"
+                alt="ComfyUI Ronin identity workflow screenshot"
                 width={1920}
                 height={1080}
                 className="h-auto w-full object-contain"
                 roundedClassName="rounded-none"
-                popupCaption="Local image-edit and RMBG workflow captured from ComfyUI: prompt conditioning, sampling, decode, and background removal."
+                popupCaption="Ronin identity workflow captured from ComfyUI: references, prompt conditioning, sampling, cleanup, and export structure without a broken-node warning in frame."
               />
             </div>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">

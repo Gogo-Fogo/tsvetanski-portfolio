@@ -44,8 +44,8 @@ const projects: Project[] = [
     facets: ['ai-product', 'art-storytelling', 'engineering'],
     rank: { all: 7, 'ai-product': 3, 'art-storytelling': 4, engineering: 12 },
     href: "/projects/comfyui-production-pipeline",
-    bannerImage: "/images/projects/comfyui-production-pipeline/workflow-local-image-edit-rmbg-graph.png",
-    bannerAlt: "ComfyUI local image-edit and RMBG workflow graph",
+    bannerImage: "/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png",
+    bannerAlt: "ComfyUI character workflow graph for Shogun-style asset iteration",
     bannerWidth: 1920,
     bannerHeight: 1080,
     type: 'prototype'
