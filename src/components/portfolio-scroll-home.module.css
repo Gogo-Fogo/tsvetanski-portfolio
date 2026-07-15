@@ -477,6 +477,178 @@
   }
 }
 
+@media (min-width: 701px) and (max-height: 900px) {
+  .header {
+    min-height: 5.4rem;
+    padding-block: 0.4rem;
+  }
+
+  .portrait {
+    width: 4.35rem;
+    height: 4.1rem;
+  }
+
+  .identity {
+    gap: 0.78rem;
+  }
+
+  .identity strong {
+    font-size: clamp(0.9rem, 1.25vw, 1.15rem);
+  }
+
+  .identity small {
+    margin-top: 0.24rem;
+    font-size: clamp(0.68rem, 0.85vw, 0.8rem);
+  }
+
+  .aboutLink {
+    min-width: 8.8rem;
+    min-height: 3rem;
+    font-size: 0.94rem;
+  }
+
+  .referenceLayout {
+    grid-template-columns: 6.7rem minmax(0, 1fr);
+    gap: clamp(2.75rem, 5vw, 5rem);
+    width: min(94vw, 106rem);
+    margin-top: 1.55rem;
+  }
+
+  .nodeRail {
+    top: 1rem;
+  }
+
+  .nodeList {
+    gap: 0.9rem;
+  }
+
+  .node,
+  .nodeActive {
+    width: 6.6rem;
+    height: 5.45rem;
+    gap: 0.4rem;
+    border-radius: 0.82rem;
+  }
+
+  .node svg,
+  .nodeActive svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .node span,
+  .nodeActive span {
+    font-size: 0.67rem;
+  }
+
+  .projectPanel {
+    padding-bottom: 4rem;
+  }
+
+  .projectStack {
+    gap: 1.25rem;
+  }
+
+  .featureCard {
+    grid-template-columns: minmax(15rem, 0.88fr) minmax(0, 1.12fr);
+    min-height: 25rem;
+  }
+
+  .secondaryCard {
+    grid-template-columns: minmax(14rem, 0.88fr) minmax(0, 1.12fr);
+    min-height: 16rem;
+  }
+
+  .featureCopy {
+    padding: clamp(1.6rem, 2.5vw, 2.7rem);
+  }
+
+  .secondaryCopy {
+    padding: clamp(1.35rem, 2.2vw, 2.3rem);
+  }
+
+  .featureKicker {
+    font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+  }
+
+  .cardTitleRow {
+    margin-top: 1.25rem;
+  }
+
+  .cardTitleRow h3 {
+    font-size: clamp(2.25rem, 2.65vw, 3.15rem);
+    line-height: 1;
+  }
+
+  .secondaryCard .cardTitleRow h3 {
+    font-size: clamp(1.8rem, 2.4vw, 2.65rem);
+  }
+
+  .cardSummary {
+    margin-top: 1.05rem;
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    line-height: 1.42;
+  }
+
+  .secondaryCard .cardSummary {
+    margin-top: 0.8rem;
+    font-size: clamp(0.84rem, 0.92vw, 0.94rem);
+  }
+
+  .viewProject {
+    min-height: 2.8rem;
+    margin-top: 1.25rem;
+    padding-inline: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .viewAllLink {
+    min-height: 3.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .featureCard[href="/projects/shinobi-story"] .cardImage {
+    transform: scale(1.4);
+  }
+
+  .featureCard[href="/projects/shinobi-story"]:hover .cardImage,
+  .featureCard[href="/projects/shinobi-story"]:focus-visible .cardImage {
+    transform: scale(1.44);
+  }
+}
+
+@media (min-width: 701px) and (max-height: 700px) {
+  .header {
+    min-height: 4.8rem;
+  }
+
+  .portrait {
+    width: 3.85rem;
+    height: 3.65rem;
+  }
+
+  .referenceLayout {
+    margin-top: 1rem;
+  }
+
+  .nodeList {
+    gap: 0.6rem;
+  }
+
+  .node,
+  .nodeActive {
+    height: 4.65rem;
+  }
+
+  .featureCard {
+    min-height: 21.5rem;
+  }
+
+  .secondaryCard {
+    min-height: 13.5rem;
+  }
+}
+
 @media (max-width: 700px) {
   .header {
     min-height: 5.9rem;
