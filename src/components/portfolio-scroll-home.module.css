@@ -913,3 +913,62 @@
     height: 0;
   }
 }
+
+@keyframes portfolio-connector-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes portfolio-connector-glow {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+
+@keyframes portfolio-node-breathe {
+  0%,
+  100% {
+    opacity: 0.86;
+    filter: drop-shadow(0 0 0.2rem color-mix(in srgb, var(--portfolio-orange) 28%, transparent));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 0.58rem color-mix(in srgb, var(--portfolio-orange) 68%, transparent));
+  }
+}
+
+.connectorPath {
+  animation: portfolio-connector-breathe 3.6s ease-in-out infinite;
+}
+
+.connectorPathGlow {
+  animation: portfolio-connector-glow 3.6s ease-in-out infinite;
+}
+
+.connectorStart,
+.connectorEnd {
+  animation: portfolio-node-breathe 3.6s ease-in-out infinite;
+}
+
+.nodeActive {
+  animation: portfolio-node-breathe 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connectorPath,
+  .connectorPathGlow,
+  .connectorStart,
+  .connectorEnd,
+  .nodeActive {
+    animation: none;
+  }
+}
