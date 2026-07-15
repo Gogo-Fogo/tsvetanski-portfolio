@@ -125,15 +125,14 @@ const categories: readonly ProjectCategory[] = [
 
 interface ProjectCardProps {
   project: FeaturedProject;
-  featured?: boolean;
   index: number;
 }
 
-function ProjectCard({ project, featured = false, index }: ProjectCardProps) {
+function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <Link
       href={project.href}
-      className={`${styles.projectCard} ${featured ? styles.projectCardFeatured : ''}`}
+      className={styles.projectCard}
       aria-label={`View ${project.title} case study`}
     >
       <div className={styles.projectImage}>
@@ -141,12 +140,11 @@ function ProjectCard({ project, featured = false, index }: ProjectCardProps) {
           src={project.image}
           alt={project.imageAlt}
           fill
-          sizes={featured ? '(min-width: 1100px) 65vw, 100vw' : '(min-width: 900px) 32vw, 100vw'}
+          sizes="(min-width: 1100px) 42vw, 88vw"
           className={styles.projectImageAsset}
           priority={index === 0}
         />
         <div className={styles.projectShade} />
-        <span className={styles.projectIndex}>0{index + 1}</span>
       </div>
       <div className={styles.projectCopy}>
         <p className={styles.projectEvidence}>{project.evidence}</p>
@@ -222,9 +220,31 @@ export default function PortfolioScrollHome() {
       </header>
 
       <section className={styles.intro} aria-labelledby="home-heading">
-        <p className={styles.eyebrow}>Selected work · 2021–2026</p>
-        <h1 id="home-heading">Systems built to be felt, played, and used.</h1>
-        <p className={styles.introLine}>XR <span>·</span> Games <span>·</span> Tools</p>
+        <div className={styles.introCopy}>
+          <p className={styles.eyebrow}>Georgi Tsvetanski · Selected work</p>
+          <h1 id="home-heading">Technical design for XR, games, and tools.</h1>
+          <p className={styles.introLine}>Spatial interaction · Gameplay systems · Useful software</p>
+          <div className={styles.introActions}>
+            <a href="#xr" className={styles.primaryAction}>Browse projects <span aria-hidden="true">↓</span></a>
+            <Link href="/about" className={styles.secondaryAction}>About me <span aria-hidden="true">↗</span></Link>
+          </div>
+        </div>
+        <div className={styles.introPortrait}>
+          <div className={styles.introPortraitFrame}>
+            <Image
+              src="/images/Tsvetanski_Georgi_Headshot.jpeg"
+              alt="Georgi Tsvetanski"
+              fill
+              sizes="(min-width: 900px) 26vw, 55vw"
+              className={styles.introPortraitImage}
+              priority
+            />
+          </div>
+          <div className={styles.introPortraitMeta}>
+            <span>Simulation-minded</span>
+            <span>Human-centered</span>
+          </div>
+        </div>
       </section>
 
       <div className={styles.workLayout}>
@@ -240,7 +260,6 @@ export default function PortfolioScrollHome() {
                   className={active ? styles.categoryLinkActive : styles.categoryLink}
                   aria-current={active ? 'location' : undefined}
                 >
-                  <span>{category.number}</span>
                   <strong>{category.label}</strong>
                 </a>
               );
@@ -261,19 +280,19 @@ export default function PortfolioScrollHome() {
               aria-labelledby={`${category.id}-heading`}
             >
               <div className={styles.categoryHeading}>
-                <p>{category.number} / 03</p>
                 <div>
                   <h2 id={`${category.id}-heading`}>{category.label}</h2>
                   <p>{category.kicker}</p>
                 </div>
               </div>
 
-              <ProjectCard project={category.projects[0]} featured index={0} />
-
-              <div className={styles.secondaryGrid}>
-                <ProjectCard project={category.projects[1]} index={1} />
-                <ProjectCard project={category.projects[2]} index={2} />
+              <div className={styles.projectRail}>
+                {category.projects.map((project, index) => (
+                  <ProjectCard key={project.title} project={project} index={index} />
+                ))}
               </div>
+
+              <p className={styles.scrollHint}>Scroll to browse <span aria-hidden="true">→</span></p>
 
               <Link href={`/career?filter=${category.id}`} className={styles.viewAllLink}>
                 View all {category.label} projects <span aria-hidden="true">→</span>
