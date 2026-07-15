@@ -194,10 +194,9 @@ function LensNode({ lens, active, onSelect, nodeRef }: LensNodeProps) {
   );
 }
 
-interface ConnectorGeometry {
+interface ConnectorFrame {
   width: number;
   height: number;
-  path: string;
   startX: number;
   startY: number;
   endX: number;
@@ -207,10 +206,16 @@ interface ConnectorGeometry {
 export default function PortfolioScrollHome() {
   const [activeLens, setActiveLens] = useState<LensId>('simulation');
   const [activeProject, setActiveProject] = useState(0);
-  const [connector, setConnector] = useState<ConnectorGeometry | null>(null);
   const layoutRef = useRef<HTMLDivElement | null>(null);
   const projectPanelRef = useRef<HTMLElement | null>(null);
   const projectRefs = useRef<Array<HTMLElement | null>>([]);
+  const connectorLayerRef = useRef<SVGSVGElement | null>(null);
+  const connectorGlowRef = useRef<SVGPathElement | null>(null);
+  const connectorPathRef = useRef<SVGPathElement | null>(null);
+  const connectorStartRef = useRef<SVGCircleElement | null>(null);
+  const connectorEndRef = useRef<SVGCircleElement | null>(null);
+  const connectorTargetRef = useRef<ConnectorFrame | null>(null);
+  const activeProjectRef = useRef(0);
   const nodeRefs = useRef<Record<LensId, HTMLButtonElement | null>>({
     xr: null,
     simulation: null,
@@ -224,69 +229,126 @@ export default function PortfolioScrollHome() {
   useEffect(() => {
     let animationFrame = 0;
 
-    const measure = () => {
+    const drawConnector = (frame: ConnectorFrame) => {
+      const layer = connectorLayerRef.current;
+      const glow = connectorGlowRef.current;
+      const path = connectorPathRef.current;
+      const startDot = connectorStartRef.current;
+      const endDot = connectorEndRef.current;
+      if (!layer || !glow || !path || !startDot || !endDot) return;
+
+      const curveReach = Math.max(74, (frame.endX - frame.startX) * 0.48);
+      const pathData = 'M ' + frame.startX + ' ' + frame.startY + ' C ' + (frame.startX + curveReach) + ' ' + frame.startY + ', ' + (frame.endX - curveReach) + ' ' + frame.endY + ', ' + frame.endX + ' ' + frame.endY;
+
+      layer.setAttribute('width', String(frame.width));
+      layer.setAttribute('height', String(frame.height));
+      layer.setAttribute('viewBox', '0 0 ' + frame.width + ' ' + frame.height);
+      layer.style.opacity = '1';
+      glow.setAttribute('d', pathData);
+      path.setAttribute('d', pathData);
+      startDot.setAttribute('cx', String(frame.startX));
+      startDot.setAttribute('cy', String(frame.startY));
+      endDot.setAttribute('cx', String(frame.endX));
+      endDot.setAttribute('cy', String(frame.endY));
+    };
+
+    const animate = () => {
       animationFrame = 0;
+      const target = connectorTargetRef.current;
+      if (target) drawConnector(target);
+    };
+
+    const measure = () => {
       const layout = layoutRef.current;
       const node = nodeRefs.current[activeLens];
       const cards = projectRefs.current.filter((card): card is HTMLElement => card !== null);
 
       if (!layout || !node || cards.length === 0 || window.innerWidth <= 700) {
-        setConnector(null);
+        connectorTargetRef.current = null;
+        if (connectorLayerRef.current) connectorLayerRef.current.style.opacity = '0';
         return;
       }
 
       const focusY = Math.min(window.innerHeight * 0.42, 460);
-      const closestProject = cards.reduce((closest, card, index) => {
+      const layoutRect = layout.getBoundingClientRect();
+      const nodeRect = node.getBoundingClientRect();
+      const projectAnchors = cards.map((card) => {
         const rect = card.getBoundingClientRect();
-        const anchorY = rect.top + Math.min(rect.height * 0.32, 190);
-        const distance = Math.abs(anchorY - focusY);
+        const viewportY = rect.top + Math.min(rect.height * 0.32, 190);
+        return {
+          x: rect.left - layoutRect.left,
+          y: viewportY - layoutRect.top,
+          viewportY,
+        };
+      });
+      const closestProject = projectAnchors.reduce((closest, anchor, index) => {
+        const distance = Math.abs(anchor.viewportY - focusY);
         return distance < closest.distance ? { index, distance } : closest;
       }, { index: 0, distance: Number.POSITIVE_INFINITY });
 
-      setActiveProject((current) => current === closestProject.index ? current : closestProject.index);
+      if (activeProjectRef.current !== closestProject.index) {
+        activeProjectRef.current = closestProject.index;
+        setActiveProject(closestProject.index);
+      }
 
-      const activeCard = cards[closestProject.index];
-      const layoutRect = layout.getBoundingClientRect();
-      const nodeRect = node.getBoundingClientRect();
-      const cardRect = activeCard.getBoundingClientRect();
+      const focusLayoutY = focusY - layoutRect.top;
+      let endX = projectAnchors[0].x;
+      let endY = projectAnchors[0].y;
+
+      for (let index = 0; index < projectAnchors.length - 1; index += 1) {
+        const from = projectAnchors[index];
+        const to = projectAnchors[index + 1];
+        const gap = to.y - from.y;
+        const transitionStart = from.y + gap * 0.1;
+        const transitionEnd = from.y + gap * 0.9;
+
+        if (focusLayoutY >= transitionEnd) {
+          endX = to.x;
+          endY = to.y;
+          continue;
+        }
+
+        if (focusLayoutY > transitionStart) {
+          const progress = (focusLayoutY - transitionStart) / (transitionEnd - transitionStart);
+          const smoothProgress = progress * progress * (3 - 2 * progress);
+          endX = from.x + (to.x - from.x) * smoothProgress;
+          endY = from.y + (to.y - from.y) * smoothProgress;
+        }
+        break;
+      }
+
       const startX = nodeRect.right - layoutRect.left + 8;
       const startY = nodeRect.top + nodeRect.height / 2 - layoutRect.top;
-      const endX = cardRect.left - layoutRect.left;
-      const endY = cardRect.top + Math.min(cardRect.height * 0.32, 190) - layoutRect.top;
-      const curveReach = Math.max(74, (endX - startX) * 0.48);
 
-      setConnector({
+      connectorTargetRef.current = {
         width: layout.clientWidth,
         height: layout.scrollHeight,
-        path: 'M ' + startX + ' ' + startY + ' C ' + (startX + curveReach) + ' ' + startY + ', ' + (endX - curveReach) + ' ' + endY + ', ' + endX + ' ' + endY,
         startX,
         startY,
         endX,
         endY,
-      });
-    };
+      };
 
-    const scheduleMeasure = () => {
       if (animationFrame === 0) {
-        animationFrame = window.requestAnimationFrame(measure);
+        animationFrame = window.requestAnimationFrame(animate);
       }
     };
 
-    const resizeObserver = new ResizeObserver(scheduleMeasure);
+    const resizeObserver = new ResizeObserver(measure);
     if (layoutRef.current) resizeObserver.observe(layoutRef.current);
     projectRefs.current.forEach((card) => {
       if (card) resizeObserver.observe(card);
     });
 
-    window.addEventListener('scroll', scheduleMeasure, { passive: true });
-    window.addEventListener('resize', scheduleMeasure);
-    scheduleMeasure();
+    window.addEventListener('scroll', measure, { passive: true });
+    window.addEventListener('resize', measure);
+    measure();
 
     return () => {
       if (animationFrame !== 0) window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
-      window.removeEventListener('scroll', scheduleMeasure);
-      window.removeEventListener('resize', scheduleMeasure);
+      window.removeEventListener('scroll', measure);
+      window.removeEventListener('resize', measure);
     };
   }, [activeLens]);
 
@@ -294,6 +356,7 @@ export default function PortfolioScrollHome() {
     if (id !== activeLens) {
       setActiveLens(id);
       setActiveProject(0);
+      activeProjectRef.current = 0;
     }
     window.history.replaceState(null, '', '#lens-' + id);
     window.requestAnimationFrame(() => {
@@ -328,21 +391,17 @@ export default function PortfolioScrollHome() {
       </header>
 
       <div ref={layoutRef} className={styles.referenceLayout}>
-        {connector ? (
-          <svg
-            className={styles.connectorLayer}
-            width={connector.width}
-            height={connector.height}
-            viewBox={'0 0 ' + connector.width + ' ' + connector.height}
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path className={styles.connectorPathGlow} d={connector.path} />
-            <path className={styles.connectorPath} d={connector.path} />
-            <circle className={styles.connectorStart} cx={connector.startX} cy={connector.startY} r="4" />
-            <circle className={styles.connectorEnd} cx={connector.endX} cy={connector.endY} r="7" />
-          </svg>
-        ) : null}
+        <svg
+          ref={connectorLayerRef}
+          className={styles.connectorLayer}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path ref={connectorGlowRef} className={styles.connectorPathGlow} />
+          <path ref={connectorPathRef} className={styles.connectorPath} />
+          <circle ref={connectorStartRef} className={styles.connectorStart} r="4" />
+          <circle ref={connectorEndRef} className={styles.connectorEnd} r="7" />
+        </svg>
 
         <aside className={styles.nodeRail} aria-label="Explore work">
           <nav className={styles.nodeList}>

@@ -171,6 +171,9 @@
   z-index: 5;
   overflow: visible;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  shape-rendering: geometricPrecision;
 }
 
 .connectorPath,
@@ -200,22 +203,7 @@
   fill: var(--portfolio-ink);
   stroke: var(--portfolio-orange);
   stroke-width: 2.5;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: connectorPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes connectorPulse {
-  0%,
-  100% {
-    transform: scale(0.82);
-    filter: drop-shadow(0 0 0 color-mix(in srgb, var(--portfolio-orange) 0%, transparent));
-  }
-
-  50% {
-    transform: scale(1.12);
-    filter: drop-shadow(0 0 0.55rem color-mix(in srgb, var(--portfolio-orange) 86%, transparent));
-  }
+  filter: drop-shadow(0 0 0.4rem color-mix(in srgb, var(--portfolio-orange) 72%, transparent));
 }
 
 .projectPanel {
@@ -658,7 +646,4 @@
     transition: none;
   }
 
-  .connectorEnd {
-    animation: none;
-  }
 }
