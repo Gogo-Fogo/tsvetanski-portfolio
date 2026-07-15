@@ -988,51 +988,51 @@
 .vrIcon {
   position: relative;
   display: inline-block;
-  width: 2rem;
+  width: 2.55rem;
   height: 1.35rem;
-  border: 1.8px solid currentColor;
-  border-radius: 0.28rem;
+  border: 1.9px solid currentColor;
+  border-radius: 0.52rem 0.52rem 0.34rem 0.34rem;
 }
 
 .vrIcon::before,
 .vrIcon::after {
   position: absolute;
-  top: 0.28rem;
-  width: 0.34rem;
-  height: 0.72rem;
-  border: 1.5px solid currentColor;
-  content: "";
+  top: 0.33rem;
+  width: 0.4rem;
+  height: 0.58rem;
+  border: 1.6px solid currentColor;
+  content: '';
 }
 
 .vrIcon::before {
-  left: -0.42rem;
+  left: -0.46rem;
   border-right: 0;
-  border-radius: 0.35rem 0 0 0.35rem;
+  border-radius: 0.58rem 0 0 0.58rem;
 }
 
 .vrIcon::after {
-  right: -0.42rem;
+  right: -0.46rem;
   border-left: 0;
-  border-radius: 0 0.35rem 0.35rem 0;
+  border-radius: 0 0.58rem 0.58rem 0;
 }
 
 .vrIconLens {
   position: absolute;
-  inset: 0.27rem 0.38rem;
-  border: 1px solid currentColor;
-  border-radius: 0.17rem;
-  opacity: 0.72;
+  inset: 0.22rem 0.46rem;
+  border: 1.15px solid currentColor;
+  border-radius: 0.25rem;
+  opacity: 0.92;
 }
 
 .vrIconLens::before,
 .vrIconLens::after {
   position: absolute;
   top: 0.14rem;
-  width: 0.38rem;
-  height: 0.38rem;
-  border: 1px solid currentColor;
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 1.35px solid currentColor;
   border-radius: 50%;
-  content: "";
+  content: '';
 }
 
 .vrIconLens::before {
