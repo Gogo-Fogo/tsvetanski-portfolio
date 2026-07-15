@@ -37,7 +37,6 @@
   height: 5.25rem;
   flex: 0 0 auto;
   overflow: hidden;
-  border: 0;
   border-radius: 0.2rem;
   background: transparent;
   mask-image: radial-gradient(ellipse 48% 62% at 50% 42%, #000 0 66%, transparent 100%);
@@ -50,10 +49,7 @@
   mix-blend-mode: screen;
 }
 
-.identityWords {
-  display: block;
-}
-
+.identityWords,
 .identity strong,
 .identity small {
   display: block;
@@ -78,46 +74,38 @@
 .headerNav {
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 2.8vw, 3rem);
-  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
 }
 
-.headerNav > a:first-child {
-  color: color-mix(in srgb, var(--foreground) 84%, var(--muted));
-  transition: color 180ms ease;
-}
-
-.headerNav > a:first-child:hover,
-.headerNav > a:first-child:focus-visible {
-  color: var(--foreground);
-}
-
-.allWorkLink {
+.aboutLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  min-width: 11.3rem;
+  min-width: 10.6rem;
   min-height: 3.55rem;
   padding: 0 1.2rem;
   border: 1px solid var(--portfolio-orange);
   border-radius: 0.72rem;
   color: var(--portfolio-orange);
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
   font-weight: 560;
   transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
-.allWorkLink:hover,
-.allWorkLink:focus-visible {
+.aboutLink:hover,
+.aboutLink:focus-visible {
   background: var(--portfolio-orange);
   color: #07101a;
   transform: translateY(-2px);
 }
 
 .referenceLayout {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: 8.2rem minmax(0, 1fr);
-  gap: clamp(3rem, 5.5vw, 6rem);
+  align-items: start;
+  gap: clamp(4.5rem, 7vw, 8.4rem);
   width: min(91vw, 106rem);
   margin: 2.9rem auto 0;
 }
@@ -125,8 +113,8 @@
 .nodeRail {
   position: sticky;
   top: 2.2rem;
+  z-index: 6;
   align-self: start;
-  z-index: 4;
 }
 
 .nodeList {
@@ -143,11 +131,15 @@
   gap: 0.58rem;
   width: 8rem;
   height: 7.45rem;
+  padding: 0;
   border: 1px solid color-mix(in srgb, var(--border) 90%, var(--foreground));
   border-radius: 1rem;
+  background: color-mix(in srgb, var(--portfolio-ink) 92%, transparent);
   color: var(--portfolio-cyan);
+  font: inherit;
   text-align: center;
-  transition: border-color 180ms ease, color 180ms ease, background 180ms ease, transform 180ms ease;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .node span,
@@ -161,88 +153,88 @@
 .node:hover,
 .node:focus-visible {
   border-color: var(--portfolio-cyan);
-  background: color-mix(in srgb, var(--portfolio-cyan) 7%, transparent);
+  background: color-mix(in srgb, var(--portfolio-cyan) 7%, var(--portfolio-ink));
   transform: translateX(0.15rem);
 }
 
 .nodeActive {
   border-color: var(--portfolio-orange);
+  background: color-mix(in srgb, var(--portfolio-orange) 5%, var(--portfolio-ink));
   color: var(--portfolio-orange);
-  background: color-mix(in srgb, var(--portfolio-orange) 4%, transparent);
-  box-shadow: 0 0 1.8rem color-mix(in srgb, var(--portfolio-orange) 12%, transparent);
+  box-shadow: 0 0 1.8rem color-mix(in srgb, var(--portfolio-orange) 14%, transparent);
 }
 
-.nodeActive:hover,
-.nodeActive:focus-visible {
-  background: color-mix(in srgb, var(--portfolio-orange) 9%, transparent);
-}
-
-.lensStack {
-  min-width: 0;
-}
-
-.lensSection {
-  min-width: 0;
-  padding-bottom: clamp(5.4rem, 9vw, 9rem);
-  scroll-margin-top: 2.2rem;
-}
-
-.featureWrap {
-  position: relative;
-}
-
-.featureWrapActive::before,
-.featureWrap::before {
+.connectorLayer {
   position: absolute;
-  left: -8.8rem;
-  top: 11.15rem;
-  width: 8.8rem;
-  height: 4.2rem;
-  border-top: 2px solid var(--portfolio-cyan);
-  border-right: 2px solid var(--portfolio-cyan);
-  border-top-right-radius: 4.2rem;
-  content: '';
-  opacity: 0.58;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  overflow: visible;
   pointer-events: none;
 }
 
-.featureWrapActive::before {
-  border-color: var(--portfolio-orange);
-  opacity: 1;
+.connectorPath,
+.connectorPathGlow {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
-.connectorDot {
-  position: absolute;
-  left: -0.43rem;
-  top: 11.2rem;
-  z-index: 2;
-  width: 0.82rem;
-  height: 0.82rem;
-  border: 2px solid var(--portfolio-cyan);
-  border-radius: 999px;
-  background: var(--portfolio-ink);
-  transform: translate(-50%, -50%);
+.connectorPathGlow {
+  stroke: var(--portfolio-orange);
+  stroke-width: 10;
+  opacity: 0.11;
 }
 
-.featureWrapActive .connectorDot {
-  border-color: var(--portfolio-orange);
+.connectorPath {
+  stroke: var(--portfolio-orange);
+  stroke-width: 2.25;
 }
 
-.connectorCurve {
-  position: absolute;
-  left: -8.9rem;
-  top: 15.3rem;
-  width: 0.9rem;
-  height: 0.9rem;
-  border-radius: 999px;
-  background: var(--portfolio-cyan);
-  transform: translate(-50%, -50%);
-  opacity: 0.7;
+.connectorStart {
+  fill: var(--portfolio-orange);
+  filter: drop-shadow(0 0 0.45rem color-mix(in srgb, var(--portfolio-orange) 80%, transparent));
 }
 
-.featureWrapActive .connectorCurve {
-  background: var(--portfolio-orange);
-  opacity: 1;
+.connectorEnd {
+  fill: var(--portfolio-ink);
+  stroke: var(--portfolio-orange);
+  stroke-width: 2.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: connectorPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes connectorPulse {
+  0%,
+  100% {
+    transform: scale(0.82);
+    filter: drop-shadow(0 0 0 color-mix(in srgb, var(--portfolio-orange) 0%, transparent));
+  }
+
+  50% {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 0.55rem color-mix(in srgb, var(--portfolio-orange) 86%, transparent));
+  }
+}
+
+.projectPanel {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+  padding-bottom: clamp(5.4rem, 8vw, 8rem);
+  scroll-margin-top: 2rem;
+}
+
+.projectStack {
+  display: grid;
+  gap: 2rem;
+}
+
+.projectTrackItem,
+.projectTrackItemActive {
+  position: relative;
+  min-width: 0;
 }
 
 .featureCard,
@@ -250,21 +242,31 @@
   position: relative;
   display: grid;
   overflow: hidden;
+  border: 2px solid var(--portfolio-cyan);
+  border-radius: 1.45rem;
   background: color-mix(in srgb, var(--surface) 88%, transparent);
-  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+  box-shadow: 0 0 2.1rem color-mix(in srgb, var(--portfolio-cyan) 5%, transparent);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease, opacity 220ms ease;
+}
+
+.projectTrackItem > a {
+  opacity: 0.84;
+}
+
+.projectTrackItemActive > a {
+  border-color: var(--portfolio-orange);
+  opacity: 1;
+  box-shadow: 0 0 2.6rem color-mix(in srgb, var(--portfolio-orange) 11%, transparent);
 }
 
 .featureCard {
   grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
   min-height: 35rem;
-  border: 2px solid var(--portfolio-orange);
-  border-radius: 1.45rem;
-  box-shadow: 0 0 2.4rem color-mix(in srgb, var(--portfolio-orange) 8%, transparent);
 }
 
-.featureWrap:not(.featureWrapActive) .featureCard {
-  border-color: var(--portfolio-cyan);
-  box-shadow: 0 0 2.4rem color-mix(in srgb, var(--portfolio-cyan) 7%, transparent);
+.secondaryCard {
+  grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.22fr);
+  min-height: 22rem;
 }
 
 .featureCard:hover,
@@ -272,14 +274,9 @@
 .secondaryCard:hover,
 .secondaryCard:focus-visible {
   transform: translateY(-0.25rem);
-  box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--portfolio-cyan) 12%, transparent);
-}
-
-.featureCard:hover,
-.featureCard:focus-visible,
-.featureWrapActive .featureCard:hover,
-.featureWrapActive .featureCard:focus-visible {
+  opacity: 1;
   border-color: var(--portfolio-orange);
+  box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--portfolio-cyan) 12%, transparent);
 }
 
 .featureCopy,
@@ -292,6 +289,10 @@
 
 .featureCopy {
   padding: clamp(2rem, 4.3vw, 4.6rem);
+}
+
+.secondaryCopy {
+  padding: clamp(1.6rem, 3.3vw, 3.4rem);
 }
 
 .featureKicker {
@@ -314,14 +315,23 @@
   font-size: clamp(2.7rem, 3.15vw, 3.8rem);
   font-weight: 530;
   letter-spacing: -0.065em;
-  line-height: 0.94;
+  line-height: 0.96;
+}
+
+.secondaryCard .cardTitleRow {
+  margin-top: 0;
+}
+
+.secondaryCard .cardTitleRow h3 {
+  max-width: 13ch;
+  font-size: clamp(2rem, 4vw, 4rem);
 }
 
 .cardTitleRow > svg {
   flex: 0 0 auto;
   margin-top: 0.35rem;
-  color: var(--portfolio-orange);
-  opacity: 0;
+  color: var(--portfolio-cyan);
+  opacity: 0.7;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
@@ -339,6 +349,12 @@
   color: color-mix(in srgb, var(--foreground) 76%, var(--muted));
   font-size: clamp(0.95rem, 1.4vw, 1.22rem);
   line-height: 1.5;
+}
+
+.secondaryCard .cardSummary {
+  max-width: 27rem;
+  margin-top: 1.2rem;
+  font-size: clamp(0.9rem, 1.25vw, 1.08rem);
 }
 
 .viewProject {
@@ -377,62 +393,29 @@
   transform: scale(1.025);
 }
 
-.secondaryStack {
-  display: grid;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.secondaryCard {
-  grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.22fr);
-  min-height: 22rem;
-  border: 2px solid var(--portfolio-cyan);
-  border-radius: 1.45rem;
-  box-shadow: 0 0 2.1rem color-mix(in srgb, var(--portfolio-cyan) 6%, transparent);
-}
-
-.secondaryCopy {
-  padding: clamp(1.6rem, 3.3vw, 3.4rem);
-}
-
-.secondaryCard .cardTitleRow {
-  margin-top: 0;
-}
-
-.secondaryCard .cardTitleRow h3 {
-  max-width: 13ch;
-  font-size: clamp(2rem, 4vw, 4rem);
-}
-
-.secondaryCard .cardSummary {
-  max-width: 27rem;
-  margin-top: 1.2rem;
-  font-size: clamp(0.9rem, 1.25vw, 1.08rem);
-}
-
-.secondaryCard .cardTitleRow > svg {
-  color: var(--portfolio-cyan);
-}
-
 .viewAllLink {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.8rem;
-  margin-top: 2rem;
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--portfolio-orange) 70%, var(--border));
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100%, 30rem);
+  min-height: 4.25rem;
+  margin: 2.5rem 0 0 auto;
+  padding: 0 1.5rem;
+  border: 1px solid var(--portfolio-orange);
+  border-radius: 0.8rem;
   color: var(--portfolio-orange);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   letter-spacing: 0.03em;
-  transition: gap 180ms ease, color 180ms ease, border-color 180ms ease;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .viewAllLink:hover,
 .viewAllLink:focus-visible {
-  gap: 1.15rem;
-  color: var(--portfolio-cyan);
-  border-color: var(--portfolio-cyan);
+  background: var(--portfolio-orange);
+  color: #07101a;
+  transform: translateY(-2px);
 }
 
 .footer {
@@ -469,11 +452,29 @@
   border: 0;
 }
 
+.featureCard[href="/projects/shinobi-story"] .cardImage {
+  object-position: 18% 0%;
+  transform: scale(1.65);
+}
+
+.featureCard[href="/projects/shinobi-story"]:hover .cardImage,
+.featureCard[href="/projects/shinobi-story"]:focus-visible .cardImage {
+  transform: scale(1.7);
+}
+
+.featureCard[href="/projects/shinobi-story"] .featureImage::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 42%, color-mix(in srgb, var(--portfolio-ink) 46%, transparent) 58%, color-mix(in srgb, var(--portfolio-ink) 98%, transparent) 72%);
+  content: "";
+  pointer-events: none;
+}
+
 @media (max-width: 900px) {
   .referenceLayout {
     grid-template-columns: 7rem minmax(0, 1fr);
-    gap: 2.5rem;
-    width: min(93vw, 58rem);
+    gap: 3.5rem;
+    width: min(94vw, 58rem);
   }
 
   .node,
@@ -485,16 +486,6 @@
   .featureCard {
     grid-template-columns: minmax(14rem, 0.82fr) minmax(0, 1.18fr);
     min-height: 31rem;
-  }
-
-  .featureWrap::before,
-  .featureWrapActive::before {
-    left: -7.4rem;
-    width: 7.4rem;
-  }
-
-  .connectorCurve {
-    left: -7.5rem;
   }
 }
 
@@ -522,22 +513,22 @@
     display: none;
   }
 
-  .headerNav {
-    gap: 0.55rem;
-    font-size: 0.86rem;
-  }
-
-  .allWorkLink {
+  .aboutLink {
     min-width: auto;
     min-height: 2.75rem;
     padding: 0 0.8rem;
     gap: 0.35rem;
+    font-size: 0.86rem;
   }
 
   .referenceLayout {
     display: block;
     width: 100%;
     margin-top: 0;
+  }
+
+  .connectorLayer {
+    display: none;
   }
 
   .nodeRail {
@@ -554,6 +545,13 @@
     display: flex;
     gap: 0.55rem;
     width: max-content;
+    max-width: calc(100vw - 2rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nodeList::-webkit-scrollbar {
+    display: none;
   }
 
   .node,
@@ -578,21 +576,15 @@
     font-size: 0.68rem;
   }
 
-  .lensStack {
+  .projectPanel {
     width: min(92vw, 48rem);
     margin: 0 auto;
-  }
-
-  .lensSection {
     padding: 2rem 0 5.5rem;
     scroll-margin-top: 5rem;
   }
 
-  .featureWrap::before,
-  .featureWrapActive::before,
-  .connectorDot,
-  .connectorCurve {
-    display: none;
+  .projectStack {
+    gap: 1.15rem;
   }
 
   .featureCard,
@@ -614,7 +606,8 @@
     padding: 1.35rem 1.25rem 1.55rem;
   }
 
-  .cardTitleRow {
+  .cardTitleRow,
+  .secondaryCard .cardTitleRow {
     margin-top: 1.1rem;
   }
 
@@ -637,19 +630,11 @@
     font-size: 0.86rem;
   }
 
-  .secondaryStack {
-    gap: 1.15rem;
-    margin-top: 1.15rem;
-  }
-
-  .secondaryCard .cardTitleRow > svg,
-  .featureCard .cardTitleRow > svg {
-    opacity: 1;
-  }
-
   .viewAllLink {
-    margin-top: 1.35rem;
-    font-size: 0.75rem;
+    width: 100%;
+    min-height: 3.65rem;
+    margin-top: 1.5rem;
+    font-size: 0.76rem;
   }
 
   .footer {
@@ -663,32 +648,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .allWorkLink,
+  .aboutLink,
   .node,
   .nodeActive,
   .featureCard,
   .secondaryCard,
   .cardImage,
-  .cardTitleRow > svg,
   .viewAllLink {
     transition: none;
   }
-}
 
-.featureCard[href="/projects/shinobi-story"] .cardImage {
-  object-position: 18% 0%;
-  transform: scale(1.65);
-}
-
-.featureCard[href="/projects/shinobi-story"]:hover .cardImage,
-.featureCard[href="/projects/shinobi-story"]:focus-visible .cardImage {
-  transform: scale(1.7);
-}
-
-.featureCard[href="/projects/shinobi-story"] .featureImage::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 42%, color-mix(in srgb, var(--portfolio-ink) 46%, transparent) 58%, color-mix(in srgb, var(--portfolio-ink) 98%, transparent) 72%);
-  content: "";
-  pointer-events: none;
+  .connectorEnd {
+    animation: none;
+  }
 }

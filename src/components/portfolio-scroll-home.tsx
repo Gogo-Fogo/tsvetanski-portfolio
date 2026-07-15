@@ -132,8 +132,6 @@ const lenses: readonly Lens[] = [
   },
 ];
 
-const lensStackOrder: readonly LensId[] = ['simulation', 'xr', 'gameplay', 'tools'];
-
 interface ProjectCardProps {
   project: Project;
   featured?: boolean;
@@ -177,55 +175,131 @@ interface LensNodeProps {
   lens: Lens;
   active: boolean;
   onSelect: (id: LensId) => void;
+  nodeRef: (element: HTMLButtonElement | null) => void;
 }
 
-function LensNode({ lens, active, onSelect }: LensNodeProps) {
+function LensNode({ lens, active, onSelect, nodeRef }: LensNodeProps) {
   const Icon = lens.icon;
   return (
-    <a
-      href={'#lens-' + lens.id}
+    <button
+      ref={nodeRef}
+      type="button"
       className={active ? styles.nodeActive : styles.node}
-      aria-current={active ? 'location' : undefined}
+      aria-pressed={active}
       onClick={() => onSelect(lens.id)}
     >
       <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
       <span>{lens.label}</span>
-    </a>
+    </button>
   );
+}
+
+interface ConnectorGeometry {
+  width: number;
+  height: number;
+  path: string;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
 }
 
 export default function PortfolioScrollHome() {
   const [activeLens, setActiveLens] = useState<LensId>('simulation');
-  const lensElements = useRef<Record<LensId, HTMLElement | null>>({
+  const [activeProject, setActiveProject] = useState(0);
+  const [connector, setConnector] = useState<ConnectorGeometry | null>(null);
+  const layoutRef = useRef<HTMLDivElement | null>(null);
+  const projectPanelRef = useRef<HTMLElement | null>(null);
+  const projectRefs = useRef<Array<HTMLElement | null>>([]);
+  const nodeRefs = useRef<Record<LensId, HTMLButtonElement | null>>({
     xr: null,
     simulation: null,
     gameplay: null,
     tools: null,
   });
 
+
+  const selectedLens = lenses.find((lens) => lens.id === activeLens) as Lens;
+
   useEffect(() => {
-    const elements = lensStackOrder
-      .map((id) => lensElements.current[id])
-      .filter((element): element is HTMLElement => element !== null);
+    let animationFrame = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+    const measure = () => {
+      animationFrame = 0;
+      const layout = layoutRef.current;
+      const node = nodeRefs.current[activeLens];
+      const cards = projectRefs.current.filter((card): card is HTMLElement => card !== null);
 
-        if (visibleEntry) {
-          setActiveLens(visibleEntry.target.id.replace('lens-', '') as LensId);
-        }
-      },
-      { rootMargin: '-18% 0px -62% 0px', threshold: [0.1, 0.3, 0.55] },
-    );
+      if (!layout || !node || cards.length === 0 || window.innerWidth <= 700) {
+        setConnector(null);
+        return;
+      }
 
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
+      const focusY = Math.min(window.innerHeight * 0.42, 460);
+      const closestProject = cards.reduce((closest, card, index) => {
+        const rect = card.getBoundingClientRect();
+        const anchorY = rect.top + Math.min(rect.height * 0.32, 190);
+        const distance = Math.abs(anchorY - focusY);
+        return distance < closest.distance ? { index, distance } : closest;
+      }, { index: 0, distance: Number.POSITIVE_INFINITY });
 
-  const orderedLenses = lensStackOrder.map((id) => lenses.find((lens) => lens.id === id) as Lens);
+      setActiveProject((current) => current === closestProject.index ? current : closestProject.index);
+
+      const activeCard = cards[closestProject.index];
+      const layoutRect = layout.getBoundingClientRect();
+      const nodeRect = node.getBoundingClientRect();
+      const cardRect = activeCard.getBoundingClientRect();
+      const startX = nodeRect.right - layoutRect.left + 8;
+      const startY = nodeRect.top + nodeRect.height / 2 - layoutRect.top;
+      const endX = cardRect.left - layoutRect.left;
+      const endY = cardRect.top + Math.min(cardRect.height * 0.32, 190) - layoutRect.top;
+      const curveReach = Math.max(74, (endX - startX) * 0.48);
+
+      setConnector({
+        width: layout.clientWidth,
+        height: layout.scrollHeight,
+        path: 'M ' + startX + ' ' + startY + ' C ' + (startX + curveReach) + ' ' + startY + ', ' + (endX - curveReach) + ' ' + endY + ', ' + endX + ' ' + endY,
+        startX,
+        startY,
+        endX,
+        endY,
+      });
+    };
+
+    const scheduleMeasure = () => {
+      if (animationFrame === 0) {
+        animationFrame = window.requestAnimationFrame(measure);
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(scheduleMeasure);
+    if (layoutRef.current) resizeObserver.observe(layoutRef.current);
+    projectRefs.current.forEach((card) => {
+      if (card) resizeObserver.observe(card);
+    });
+
+    window.addEventListener('scroll', scheduleMeasure, { passive: true });
+    window.addEventListener('resize', scheduleMeasure);
+    scheduleMeasure();
+
+    return () => {
+      if (animationFrame !== 0) window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      window.removeEventListener('scroll', scheduleMeasure);
+      window.removeEventListener('resize', scheduleMeasure);
+    };
+  }, [activeLens]);
+
+  const selectLens = (id: LensId) => {
+    if (id !== activeLens) {
+      setActiveLens(id);
+      setActiveProject(0);
+    }
+    window.history.replaceState(null, '', '#lens-' + id);
+    window.requestAnimationFrame(() => {
+      projectPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
 
   return (
     <main className={styles.page}>
@@ -249,44 +323,64 @@ export default function PortfolioScrollHome() {
         </Link>
 
         <nav className={styles.headerNav} aria-label="Primary navigation">
-          <Link href="/about">About</Link>
-          <Link href="/career" className={styles.allWorkLink}>All work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} /></Link>
+          <Link href="/about" className={styles.aboutLink}>About <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} /></Link>
         </nav>
       </header>
 
-      <div className={styles.referenceLayout}>
+      <div ref={layoutRef} className={styles.referenceLayout}>
+        {connector ? (
+          <svg
+            className={styles.connectorLayer}
+            width={connector.width}
+            height={connector.height}
+            viewBox={'0 0 ' + connector.width + ' ' + connector.height}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path className={styles.connectorPathGlow} d={connector.path} />
+            <path className={styles.connectorPath} d={connector.path} />
+            <circle className={styles.connectorStart} cx={connector.startX} cy={connector.startY} r="4" />
+            <circle className={styles.connectorEnd} cx={connector.endX} cy={connector.endY} r="7" />
+          </svg>
+        ) : null}
+
         <aside className={styles.nodeRail} aria-label="Explore work">
           <nav className={styles.nodeList}>
-            {lenses.map((lens) => <LensNode key={lens.id} lens={lens} active={activeLens === lens.id} onSelect={setActiveLens} />)}
+            {lenses.map((lens) => (
+              <LensNode
+                key={lens.id}
+                lens={lens}
+                active={activeLens === lens.id}
+                onSelect={selectLens}
+                nodeRef={(element) => { nodeRefs.current[lens.id] = element; }}
+              />
+            ))}
           </nav>
         </aside>
 
-        <div className={styles.lensStack}>
-          {orderedLenses.map((lens) => (
-            <section
-              key={lens.id}
-              id={'lens-' + lens.id}
-              ref={(element) => { lensElements.current[lens.id] = element; }}
-              className={styles.lensSection}
-              aria-labelledby={'lens-heading-' + lens.id}
-            >
-              <h2 id={'lens-heading-' + lens.id} className={styles.srOnly}>{lens.label} projects</h2>
-              <div className={activeLens === lens.id ? styles.featureWrapActive : styles.featureWrap}>
-                <span className={styles.connectorDot} aria-hidden="true" />
-                <span className={styles.connectorCurve} aria-hidden="true" />
-                <ProjectCard project={lens.projects[0]} featured priority={lens.id === 'simulation'} />
-              </div>
-              <div className={styles.secondaryStack}>
-                {lens.projects.slice(1).map((project) => (
-                  <ProjectCard key={project.title} project={project} />
-                ))}
-              </div>
-              <Link href={'/career?filter=' + lens.viewFilter} className={styles.viewAllLink}>
-                View all {lens.label} work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} />
-              </Link>
-            </section>
-          ))}
-        </div>
+        <section
+          key={selectedLens.id}
+          id={'lens-' + selectedLens.id}
+          ref={projectPanelRef}
+          className={styles.projectPanel}
+          aria-labelledby="selected-lens-heading"
+        >
+          <h2 id="selected-lens-heading" className={styles.srOnly}>{selectedLens.label} projects</h2>
+          <div className={styles.projectStack}>
+            {selectedLens.projects.map((project, index) => (
+              <article
+                key={project.title}
+                ref={(element) => { projectRefs.current[index] = element; }}
+                className={index === activeProject ? styles.projectTrackItemActive : styles.projectTrackItem}
+              >
+                <ProjectCard project={project} featured={index === 0} priority={index === 0} />
+              </article>
+            ))}
+          </div>
+          <Link href={'/career?filter=' + selectedLens.viewFilter} className={styles.viewAllLink}>
+            View all {selectedLens.label} work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} />
+          </Link>
+        </section>
       </div>
 
       <footer className={styles.footer}>
