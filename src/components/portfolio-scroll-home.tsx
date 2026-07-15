@@ -228,6 +228,7 @@ export default function PortfolioScrollHome() {
 
   useEffect(() => {
     let animationFrame = 0;
+    let renderedFrame: ConnectorFrame | null = null;
 
     const drawConnector = (frame: ConnectorFrame) => {
       const layer = connectorLayerRef.current;
@@ -253,9 +254,41 @@ export default function PortfolioScrollHome() {
     };
 
     const animate = () => {
-      animationFrame = 0;
       const target = connectorTargetRef.current;
-      if (target) drawConnector(target);
+      if (!target) {
+        animationFrame = 0;
+        return;
+      }
+
+      if (!renderedFrame) renderedFrame = target;
+
+      // Keep the connector visually attached while the browser reports a
+      // large wheel delta in one frame. The target can jump; the rendered
+      // frame eases toward it so the curve glides between project centers.
+      const smoothing = 0.2;
+      const nextFrame: ConnectorFrame = {
+        width: renderedFrame.width + (target.width - renderedFrame.width) * smoothing,
+        height: renderedFrame.height + (target.height - renderedFrame.height) * smoothing,
+        startX: renderedFrame.startX + (target.startX - renderedFrame.startX) * smoothing,
+        startY: renderedFrame.startY + (target.startY - renderedFrame.startY) * smoothing,
+        endX: renderedFrame.endX + (target.endX - renderedFrame.endX) * smoothing,
+        endY: renderedFrame.endY + (target.endY - renderedFrame.endY) * smoothing,
+      };
+      const settled = Math.abs(target.endY - nextFrame.endY) < 0.5
+        && Math.abs(target.endX - nextFrame.endX) < 0.5
+        && Math.abs(target.startY - nextFrame.startY) < 0.5;
+      renderedFrame = settled ? target : nextFrame;
+      drawConnector(renderedFrame);
+
+      if (settled) {
+        animationFrame = 0;
+      } else {
+        animationFrame = window.requestAnimationFrame(animate);
+      }
+    };
+
+    const scheduleAnimation = () => {
+      if (animationFrame === 0) animationFrame = window.requestAnimationFrame(animate);
     };
 
     const measure = () => {
@@ -274,7 +307,7 @@ export default function PortfolioScrollHome() {
       const nodeRect = node.getBoundingClientRect();
       const projectAnchors = cards.map((card) => {
         const rect = card.getBoundingClientRect();
-        const viewportY = rect.top + Math.min(rect.height * 0.32, 190);
+        const viewportY = rect.top + rect.height / 2;
         return {
           x: rect.left - layoutRect.left,
           y: viewportY - layoutRect.top,
@@ -291,31 +324,10 @@ export default function PortfolioScrollHome() {
         setActiveProject(closestProject.index);
       }
 
-      const focusLayoutY = focusY - layoutRect.top;
-      let endX = projectAnchors[0].x;
-      let endY = projectAnchors[0].y;
-
-      for (let index = 0; index < projectAnchors.length - 1; index += 1) {
-        const from = projectAnchors[index];
-        const to = projectAnchors[index + 1];
-        const gap = to.y - from.y;
-        const transitionStart = from.y + gap * 0.1;
-        const transitionEnd = from.y + gap * 0.9;
-
-        if (focusLayoutY >= transitionEnd) {
-          endX = to.x;
-          endY = to.y;
-          continue;
-        }
-
-        if (focusLayoutY > transitionStart) {
-          const progress = (focusLayoutY - transitionStart) / (transitionEnd - transitionStart);
-          const smoothProgress = progress * progress * (3 - 2 * progress);
-          endX = from.x + (to.x - from.x) * smoothProgress;
-          endY = from.y + (to.y - from.y) * smoothProgress;
-        }
-        break;
-      }
+      // Anchor to the center of the project currently under the focus line.
+      // The animation above eases this target when a wheel tick changes cards.
+      const endX = projectAnchors[closestProject.index].x;
+      const endY = projectAnchors[closestProject.index].y;
 
       const startX = nodeRect.right - layoutRect.left + 8;
       const startY = nodeRect.top + nodeRect.height / 2 - layoutRect.top;
@@ -329,9 +341,7 @@ export default function PortfolioScrollHome() {
         endY,
       };
 
-      if (animationFrame === 0) {
-        animationFrame = window.requestAnimationFrame(animate);
-      }
+      scheduleAnimation();
     };
 
     const resizeObserver = new ResizeObserver(measure);
