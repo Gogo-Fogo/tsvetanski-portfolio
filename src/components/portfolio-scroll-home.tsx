@@ -2,12 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowRight, Box, Gamepad2, Headset, Wrench } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './portfolio-scroll-home.module.css';
 
-type CategoryId = 'xr' | 'games' | 'tools';
+type LensId = 'xr' | 'simulation' | 'gameplay' | 'tools';
 
-interface FeaturedProject {
+interface Project {
   title: string;
   href: string;
   image: string;
@@ -16,159 +18,194 @@ interface FeaturedProject {
   summary: string;
 }
 
-interface ProjectCategory {
-  id: CategoryId;
-  number: string;
+interface Lens {
+  id: LensId;
   label: string;
-  kicker: string;
-  projects: readonly [FeaturedProject, FeaturedProject, FeaturedProject];
+  icon: LucideIcon;
+  viewFilter: string;
+  projects: readonly [Project, Project, Project];
 }
 
-const categories: readonly ProjectCategory[] = [
+const projects = {
+  birdwatching: {
+    title: 'Birdwatching VR',
+    href: '/projects/birdwatching',
+    image: '/images/projects/birdwatching/birdwatching-igda-showcase-demo-01.jpeg',
+    imageAlt: 'Player wearing a VR headset in the Birdwatching VR prototype',
+    evidence: 'Unity 6 · PCVR / Quest',
+    summary: 'A camera-to-field-guide loop with scoring, tools, comfort settings, and persistent progress.',
+  },
+  mumosa: {
+    title: 'MUMOSA Crisis Response',
+    href: '/projects/mumosa-crisis-response-vr',
+    image: '/images/projects/mumosa-crisis-response-vr/mumosa-banner.png',
+    imageAlt: 'MUMOSA crisis-response interface and spatial evidence prototype',
+    evidence: 'Client research · Unreal',
+    summary: 'A spatial evidence-review direction grounded in crisis-response research and a client-facing prototype.',
+  },
+  shift: {
+    title: 'Shift Culture VR',
+    href: '/projects/vr-microgames',
+    image: '/images/B360_bike_simulator.png',
+    imageAlt: 'B-360 dirt bike safety simulator prototype',
+    evidence: 'Community UX · Mobile VR',
+    summary: 'An accessible dirt-bike safety experience designed for inexpensive hardware and first-time VR users.',
+  },
+  shinobi: {
+    title: 'Shinobi Story',
+    href: '/projects/shinobi-story',
+    image: '/images/ShinobiStoryBanner.jpg',
+    imageAlt: 'Shinobi Story project banner',
+    evidence: 'Live game · 5 years',
+    summary: 'Long-term work across implementation, content, animation, events, community, and live operations.',
+  },
+  shonen: {
+    title: 'Shonen Showdown',
+    href: '/projects/shonen-showdown',
+    image: '/images/projects/shonen-showdown/duel-fp-01.png',
+    imageAlt: 'First-person duel view from Shonen Showdown',
+    evidence: 'Unity 6 · Photon Fusion 2',
+    summary: 'A networked first-person card game built around a reusable rules engine and data-driven content.',
+  },
+  prince: {
+    title: 'Prince of Persia Mod',
+    href: '/projects/prince-of-persia-warrior-within-mod',
+    image: '/images/projects/prince-of-persia-warrior-within-mod/prince-character-select-current-20260505.png',
+    imageAlt: 'Prince of Persia Warrior Within character mod selection screen',
+    evidence: 'Godot / C# · Solo mod',
+    summary: 'A complete character mod with rewind mechanics, a custom resource economy, combat, and presentation.',
+  },
+  blackDice: {
+    title: 'Black Dice Engine',
+    href: '/projects/black-dice-engine',
+    image: '/images/projects/black-dice-engine/black-dice-engine-banner.png',
+    imageAlt: 'Black Dice Engine dark fantasy banner',
+    evidence: 'Local-first AI · Runtime tools',
+    summary: 'A local game-master engine coordinating campaign state, rules, memory, media, and player tools.',
+  },
+  ami: {
+    title: 'Ami',
+    href: '/projects/ami-research-companion',
+    image: '/images/projects/ami/ami-banner.png',
+    imageAlt: 'Ami research companion interface',
+    evidence: 'Grounded research · macOS',
+    summary: 'A calm research companion built for a real user, with source-grounded answers and portable delivery.',
+  },
+  feh: {
+    title: 'FEH Barracks Manager',
+    href: '/projects/feh-barracks-manager',
+    image: '/images/projects/feh-barracks/feh-login-screen.png',
+    imageAlt: 'FEH Barracks Manager application screen',
+    evidence: 'Data pipeline · Release tooling',
+    summary: 'A solo companion app with scraping, reconciliation, synced collections, exports, and release bundles.',
+  },
+} satisfies Record<string, Project>;
+
+const lenses: readonly Lens[] = [
   {
     id: 'xr',
-    number: '01',
     label: 'XR',
-    kicker: 'Spatial interaction, embodied controls, and real-world constraints.',
-    projects: [
-      {
-        title: 'Birdwatching VR',
-        href: '/projects/birdwatching',
-        image: '/images/projects/birdwatching/birdwatching-bird-closeup-qa-20260505.png',
-        imageAlt: 'Close-up bird model from the playable Birdwatching VR prototype',
-        evidence: 'Unity 6 · PCVR / Quest',
-        summary: 'A physical camera-to-field-guide loop with scoring, tools, comfort settings, and persistent progress.',
-      },
-      {
-        title: 'MUMOSA Crisis Response',
-        href: '/projects/mumosa-crisis-response-vr',
-        image: '/images/projects/mumosa-crisis-response-vr/mumosa-banner.png',
-        imageAlt: 'MUMOSA crisis-response interface and spatial evidence prototype',
-        evidence: 'Client research · Unreal',
-        summary: 'A spatial evidence-review direction grounded in crisis-response research and a client-facing prototype.',
-      },
-      {
-        title: 'Shift Culture VR',
-        href: '/projects/vr-microgames',
-        image: '/images/B360_bike_simulator.png',
-        imageAlt: 'B-360 dirt bike safety simulator prototype',
-        evidence: 'Community UX · Mobile VR',
-        summary: 'An accessible dirt-bike safety experience designed around inexpensive hardware and first-time VR users.',
-      },
-    ],
+    icon: Headset,
+    viewFilter: 'xr',
+    projects: [projects.birdwatching, projects.mumosa, projects.shift],
   },
   {
-    id: 'games',
-    number: '02',
-    label: 'Games',
-    kicker: 'Rules, multiplayer, combat, and systems that create readable choices.',
-    projects: [
-      {
-        title: 'Shinobi Story',
-        href: '/projects/shinobi-story',
-        image: '/images/ShinobiStoryBanner.jpg',
-        imageAlt: 'Shinobi Story project banner',
-        evidence: 'Live game · 5 years',
-        summary: 'Long-term work across implementation, content, animation, events, community, and live operations.',
-      },
-      {
-        title: 'Shonen Showdown',
-        href: '/projects/shonen-showdown',
-        image: '/images/projects/shonen-showdown/duel-fp-01.png',
-        imageAlt: 'First-person duel view from Shonen Showdown',
-        evidence: 'Unity 6 · Photon Fusion 2',
-        summary: 'A networked first-person card game built around a reusable rules engine and data-driven content.',
-      },
-      {
-        title: 'Prince of Persia Mod',
-        href: '/projects/prince-of-persia-warrior-within-mod',
-        image: '/images/projects/prince-of-persia-warrior-within-mod/prince-character-select-current-20260505.png',
-        imageAlt: 'Prince of Persia Warrior Within character mod selection screen',
-        evidence: 'Godot / C# · Solo mod',
-        summary: 'A complete character mod with rewind mechanics, a custom resource economy, combat, and presentation.',
-      },
-    ],
+    id: 'simulation',
+    label: 'Simulation',
+    icon: Box,
+    viewFilter: 'games',
+    projects: [projects.shinobi, projects.birdwatching, projects.blackDice],
+  },
+  {
+    id: 'gameplay',
+    label: 'Gameplay',
+    icon: Gamepad2,
+    viewFilter: 'games',
+    projects: [projects.shonen, projects.shinobi, projects.prince],
   },
   {
     id: 'tools',
-    number: '03',
     label: 'Tools',
-    kicker: 'Useful products, local-first workflows, and technical pipelines.',
-    projects: [
-      {
-        title: 'Black Dice Engine',
-        href: '/projects/black-dice-engine',
-        image: '/images/projects/black-dice-engine/black-dice-engine-banner.png',
-        imageAlt: 'Black Dice Engine dark fantasy banner',
-        evidence: 'Local-first AI · Runtime tools',
-        summary: 'A local game-master engine coordinating campaign state, rules, memory, media, and player tools.',
-      },
-      {
-        title: 'Ami',
-        href: '/projects/ami-research-companion',
-        image: '/images/projects/ami/ami-banner.png',
-        imageAlt: 'Ami research companion interface',
-        evidence: 'Grounded research · macOS',
-        summary: 'A calm research companion built for a real user, with source-grounded answers and portable delivery.',
-      },
-      {
-        title: 'FEH Barracks Manager',
-        href: '/projects/feh-barracks-manager',
-        image: '/images/projects/feh-barracks/feh-login-screen.png',
-        imageAlt: 'FEH Barracks Manager application screen',
-        evidence: 'Data pipeline · Release tooling',
-        summary: 'A solo companion app with scraping, reconciliation, synced collections, exports, and release bundles.',
-      },
-    ],
+    icon: Wrench,
+    viewFilter: 'tools',
+    projects: [projects.blackDice, projects.ami, projects.feh],
   },
 ];
 
+const lensStackOrder: readonly LensId[] = ['simulation', 'xr', 'gameplay', 'tools'];
+
 interface ProjectCardProps {
-  project: FeaturedProject;
-  index: number;
+  project: Project;
+  featured?: boolean;
+  priority?: boolean;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectCard({ project, featured = false, priority = false }: ProjectCardProps) {
   return (
     <Link
       href={project.href}
-      className={styles.projectCard}
-      aria-label={`View ${project.title} case study`}
+      className={featured ? styles.featureCard : styles.secondaryCard}
+      aria-label={'View ' + project.title + ' case study'}
     >
-      <div className={styles.projectImage}>
+      <div className={featured ? styles.featureCopy : styles.secondaryCopy}>
+        {featured ? <p className={styles.featureKicker}>Selected Work</p> : null}
+        <div className={styles.cardTitleRow}>
+          <h3>{project.title}</h3>
+          {!featured ? <ArrowRight aria-hidden="true" size={24} strokeWidth={1.5} /> : null}
+        </div>
+        <p className={styles.cardSummary}>{project.summary}</p>
+        {featured ? (
+          <span className={styles.viewProject}>View project <ArrowRight aria-hidden="true" size={20} strokeWidth={1.7} /></span>
+        ) : null}
+      </div>
+      <div className={featured ? styles.featureImage : styles.secondaryImage}>
         <Image
           src={project.image}
           alt={project.imageAlt}
           fill
-          sizes="(min-width: 1100px) 42vw, 88vw"
-          className={styles.projectImageAsset}
-          priority={index === 0}
+          sizes={featured ? '(min-width: 900px) 55vw, 92vw' : '(min-width: 900px) 50vw, 92vw'}
+          className={styles.cardImage}
+          priority={priority}
+          unoptimized
         />
-        <div className={styles.projectShade} />
-      </div>
-      <div className={styles.projectCopy}>
-        <p className={styles.projectEvidence}>{project.evidence}</p>
-        <div className={styles.projectTitleRow}>
-          <h3>{project.title}</h3>
-          <span aria-hidden="true">↗</span>
-        </div>
-        <p className={styles.projectSummary}>{project.summary}</p>
       </div>
     </Link>
   );
 }
 
+interface LensNodeProps {
+  lens: Lens;
+  active: boolean;
+  onSelect: (id: LensId) => void;
+}
+
+function LensNode({ lens, active, onSelect }: LensNodeProps) {
+  const Icon = lens.icon;
+  return (
+    <a
+      href={'#lens-' + lens.id}
+      className={active ? styles.nodeActive : styles.node}
+      aria-current={active ? 'location' : undefined}
+      onClick={() => onSelect(lens.id)}
+    >
+      <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
+      <span>{lens.label}</span>
+    </a>
+  );
+}
+
 export default function PortfolioScrollHome() {
-  const [activeCategory, setActiveCategory] = useState<CategoryId>('xr');
-  const categoryElements = useRef<Record<CategoryId, HTMLElement | null>>({
+  const [activeLens, setActiveLens] = useState<LensId>('simulation');
+  const lensElements = useRef<Record<LensId, HTMLElement | null>>({
     xr: null,
-    games: null,
+    simulation: null,
+    gameplay: null,
     tools: null,
   });
 
   useEffect(() => {
-    const elements = categories
-      .map((category) => categoryElements.current[category.id])
+    const elements = lensStackOrder
+      .map((id) => lensElements.current[id])
       .filter((element): element is HTMLElement => element !== null);
 
     const observer = new IntersectionObserver(
@@ -178,18 +215,17 @@ export default function PortfolioScrollHome() {
           .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
 
         if (visibleEntry) {
-          setActiveCategory(visibleEntry.target.id as CategoryId);
+          setActiveLens(visibleEntry.target.id.replace('lens-', '') as LensId);
         }
       },
-      {
-        rootMargin: '-22% 0px -48% 0px',
-        threshold: [0.05, 0.2, 0.45, 0.7],
-      },
+      { rootMargin: '-18% 0px -62% 0px', threshold: [0.1, 0.3, 0.55] },
     );
 
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
+
+  const orderedLenses = lensStackOrder.map((id) => lenses.find((lens) => lens.id === id) as Lens);
 
   return (
     <main className={styles.page}>
@@ -200,12 +236,13 @@ export default function PortfolioScrollHome() {
               src="/images/Tsvetanski_Georgi_Headshot.jpeg"
               alt="Georgi Tsvetanski"
               fill
-              sizes="48px"
+              sizes="76px"
               className={styles.portraitImage}
               priority
+              unoptimized
             />
           </span>
-          <span>
+          <span className={styles.identityWords}>
             <strong>Georgi Tsvetanski</strong>
             <small>Simulation · XR · Gameplay Systems</small>
           </span>
@@ -213,89 +250,39 @@ export default function PortfolioScrollHome() {
 
         <nav className={styles.headerNav} aria-label="Primary navigation">
           <Link href="/about">About</Link>
-          <Link href="/resume.pdf" target="_blank" className={styles.resumeLink}>
-            Résumé <span aria-hidden="true">↗</span>
-          </Link>
+          <Link href="/career" className={styles.allWorkLink}>All work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} /></Link>
         </nav>
       </header>
 
-      <section className={styles.intro} aria-labelledby="home-heading">
-        <div className={styles.introCopy}>
-          <p className={styles.eyebrow}>Georgi Tsvetanski · Selected work</p>
-          <h1 id="home-heading">Technical design for XR, games, and tools.</h1>
-          <p className={styles.introLine}>Spatial interaction · Gameplay systems · Useful software</p>
-          <div className={styles.introActions}>
-            <a href="#xr" className={styles.primaryAction}>Browse projects <span aria-hidden="true">↓</span></a>
-            <Link href="/about" className={styles.secondaryAction}>About me <span aria-hidden="true">↗</span></Link>
-          </div>
-        </div>
-        <div className={styles.introPortrait}>
-          <div className={styles.introPortraitFrame}>
-            <Image
-              src="/images/Tsvetanski_Georgi_Headshot.jpeg"
-              alt="Georgi Tsvetanski"
-              fill
-              sizes="(min-width: 900px) 26vw, 55vw"
-              className={styles.introPortraitImage}
-              priority
-            />
-          </div>
-          <div className={styles.introPortraitMeta}>
-            <span>Simulation-minded</span>
-            <span>Human-centered</span>
-          </div>
-        </div>
-      </section>
-
-      <div className={styles.workLayout}>
-        <aside className={styles.categoryRail} aria-label="Project categories">
-          <p className={styles.railLabel}>Explore</p>
-          <nav>
-            {categories.map((category) => {
-              const active = activeCategory === category.id;
-              return (
-                <a
-                  key={category.id}
-                  href={`#${category.id}`}
-                  className={active ? styles.categoryLinkActive : styles.categoryLink}
-                  aria-current={active ? 'location' : undefined}
-                >
-                  <strong>{category.label}</strong>
-                </a>
-              );
-            })}
+      <div className={styles.referenceLayout}>
+        <aside className={styles.nodeRail} aria-label="Explore work">
+          <nav className={styles.nodeList}>
+            {lenses.map((lens) => <LensNode key={lens.id} lens={lens} active={activeLens === lens.id} onSelect={setActiveLens} />)}
           </nav>
-          <span className={styles.railLine} aria-hidden="true" />
         </aside>
 
-        <div className={styles.categoryStack}>
-          {categories.map((category) => (
+        <div className={styles.lensStack}>
+          {orderedLenses.map((lens) => (
             <section
-              key={category.id}
-              id={category.id}
-              ref={(element) => {
-                categoryElements.current[category.id] = element;
-              }}
-              className={styles.categorySection}
-              aria-labelledby={`${category.id}-heading`}
+              key={lens.id}
+              id={'lens-' + lens.id}
+              ref={(element) => { lensElements.current[lens.id] = element; }}
+              className={styles.lensSection}
+              aria-labelledby={'lens-heading-' + lens.id}
             >
-              <div className={styles.categoryHeading}>
-                <div>
-                  <h2 id={`${category.id}-heading`}>{category.label}</h2>
-                  <p>{category.kicker}</p>
-                </div>
+              <h2 id={'lens-heading-' + lens.id} className={styles.srOnly}>{lens.label} projects</h2>
+              <div className={activeLens === lens.id ? styles.featureWrapActive : styles.featureWrap}>
+                <span className={styles.connectorDot} aria-hidden="true" />
+                <span className={styles.connectorCurve} aria-hidden="true" />
+                <ProjectCard project={lens.projects[0]} featured priority={lens.id === 'simulation'} />
               </div>
-
-              <div className={styles.projectRail}>
-                {category.projects.map((project, index) => (
-                  <ProjectCard key={project.title} project={project} index={index} />
+              <div className={styles.secondaryStack}>
+                {lens.projects.slice(1).map((project) => (
+                  <ProjectCard key={project.title} project={project} />
                 ))}
               </div>
-
-              <p className={styles.scrollHint}>Scroll to browse <span aria-hidden="true">→</span></p>
-
-              <Link href={`/career?filter=${category.id}`} className={styles.viewAllLink}>
-                View all {category.label} projects <span aria-hidden="true">→</span>
+              <Link href={'/career?filter=' + lens.viewFilter} className={styles.viewAllLink}>
+                View all {lens.label} work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} />
               </Link>
             </section>
           ))}
@@ -303,11 +290,8 @@ export default function PortfolioScrollHome() {
       </div>
 
       <footer className={styles.footer}>
-        <div>
-          <p className={styles.eyebrow}>Have a role or project in mind?</p>
-          <h2>Let&apos;s build something responsive.</h2>
-        </div>
-        <a href="mailto:georgi@tsvetanski.com">georgi@tsvetanski.com <span aria-hidden="true">↗</span></a>
+        <a href="mailto:georgi@tsvetanski.com">georgi@tsvetanski.com <ArrowRight aria-hidden="true" size={18} strokeWidth={1.5} /></a>
+        <span>Available for XR, game systems, and tools.</span>
       </footer>
     </main>
   );
