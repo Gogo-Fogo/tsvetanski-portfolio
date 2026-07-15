@@ -54,8 +54,8 @@ const projects = {
   shinobi: {
     title: 'Shinobi Story',
     href: '/projects/shinobi-story',
-    image: '/images/ShinobiStoryBanner.jpg',
-    imageAlt: 'Shinobi Story project banner',
+    image: '/images/ShinobiStoryHeroClean.png',
+    imageAlt: 'Shinobi Story character charging through a forest',
     evidence: 'Live game · 5 years',
     summary: 'Long-term work across implementation, content, animation, events, community, and live operations.',
   },
