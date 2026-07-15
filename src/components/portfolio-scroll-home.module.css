@@ -969,6 +969,6 @@
   .connectorStart,
   .connectorEnd,
   .nodeActive {
-    animation: none;
+    animation-duration: 5s;
   }
 }
