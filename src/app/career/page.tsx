@@ -8,13 +8,16 @@ import Link from 'next/link';
 import { Suspense, useMemo } from 'react';
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
 
+type ProjectFilter = 'all' | 'xr' | 'games' | 'tools';
+type LegacyProjectFacet = 'engineering' | 'xr' | 'ai-product' | 'art-storytelling';
+
 interface Project {
   title: string;
   description: string;
   tags: string[];
   searchTerms?: string[];
-  facets: ProjectFilter[];
-  rank?: Partial<Record<ProjectFilter, number>>;
+  facets: LegacyProjectFacet[];
+  rank?: Partial<Record<LegacyProjectFacet | 'all', number>>;
   type?: 'commercial' | 'prototype';
   href?: string;
   external?: boolean;
@@ -25,14 +28,11 @@ interface Project {
   bannerBorderClass?: string;
 }
 
-type ProjectFilter = 'all' | 'engineering' | 'xr' | 'ai-product' | 'art-storytelling';
-
 const filterOptions: { value: ProjectFilter; label: string }[] = [
   { value: 'all', label: 'All Projects' },
-  { value: 'engineering', label: 'Engineering & Systems' },
-  { value: 'xr', label: 'VR & Spatial Projects' },
-  { value: 'ai-product', label: 'AI & Product Tools' },
-  { value: 'art-storytelling', label: 'Design & Storytelling' },
+  { value: 'xr', label: 'XR' },
+  { value: 'games', label: 'Games' },
+  { value: 'tools', label: 'Tools' },
 ];
 
 const projects: Project[] = [
@@ -303,6 +303,40 @@ const projects: Project[] = [
   },
 ];
 
+const categoryProjectOrder: Record<Exclude<ProjectFilter, 'all'>, readonly string[]> = {
+  xr: [
+    'Birdwatching VR',
+    'MUMOSA Crisis Response VR Study',
+    'VR Dirt Bike Game',
+    'VR Car Drift Simulator',
+    'VR Patapon Game',
+  ],
+  games: [
+    'Shinobi Story',
+    'Shonen Showdown',
+    'Prince of Persia: Warrior Within Mod',
+    'Guilty As Arrr',
+    'Black Dice Engine',
+    'Shogun: Flowers Fall in Blood',
+    'Totally Bugged Out',
+    'Cranky (Game Jam 2024)',
+    'Cranky: The Squirrel Annihilator',
+    'The Signal',
+    'The Last Paycheck',
+    'VR Patapon Game',
+  ],
+  tools: [
+    'Black Dice Engine',
+    'Ami',
+    'FEH Barracks Manager',
+    'ComfyUI Production Pipeline',
+    'MUMOSA Crisis Response VR Study',
+  ],
+};
+
+const projectBelongsToCategory = (project: Project, category: Exclude<ProjectFilter, 'all'>) =>
+  categoryProjectOrder[category].includes(project.title);
+
 const tagDescriptions: Record<string, string> = {
   'Photon Fusion': 'Host/client networking framework used for synchronized multiplayer gameplay.',
   'Networked Multiplayer': 'Systems designed for low-latency shared interactions between players.',
@@ -376,11 +410,21 @@ const tagDescriptions: Record<string, string> = {
 
 const sortProjectsForFilter = (items: Project[], filter: ProjectFilter) =>
   [...items].sort((first, second) => {
-    const firstRank = first.rank?.[filter] ?? first.rank?.all ?? Number.MAX_SAFE_INTEGER;
-    const secondRank = second.rank?.[filter] ?? second.rank?.all ?? Number.MAX_SAFE_INTEGER;
+    if (filter !== 'all') {
+      const order = categoryProjectOrder[filter];
+      const firstRank = order.indexOf(first.title);
+      const secondRank = order.indexOf(second.title);
 
-    if (firstRank !== secondRank) {
-      return firstRank - secondRank;
+      if (firstRank !== secondRank) {
+        return firstRank - secondRank;
+      }
+    } else {
+      const firstRank = first.rank?.all ?? Number.MAX_SAFE_INTEGER;
+      const secondRank = second.rank?.all ?? Number.MAX_SAFE_INTEGER;
+
+      if (firstRank !== secondRank) {
+        return firstRank - secondRank;
+      }
     }
 
     return first.title.localeCompare(second.title);
@@ -409,7 +453,7 @@ const matchesSearch = (haystack: string, query: string) => {
 function CareerContent() {
   const [activeFilter, setActiveFilter] = useQueryState(
     'filter',
-    parseAsStringLiteral<ProjectFilter>(['all', 'engineering', 'xr', 'ai-product', 'art-storytelling']).withDefault('all')
+    parseAsStringLiteral<ProjectFilter>(['all', 'xr', 'games', 'tools']).withDefault('all')
   );
   const [searchQuery, setSearchQuery] = useQueryState(
     'q',
@@ -427,7 +471,7 @@ function CareerContent() {
     const baseList =
       resolvedFilter === 'all'
         ? projects
-        : projects.filter((project) => project.facets.includes(resolvedFilter));
+        : projects.filter((project) => projectBelongsToCategory(project, resolvedFilter));
     const rankedList = sortProjectsForFilter(baseList, resolvedFilter);
 
     if (normalizedQuery.length === 0) {
@@ -459,9 +503,9 @@ function CareerContent() {
             ]}
           />
           <div className="mt-8">
-            <h1 className="text-4xl font-bold tracking-tight">XR & Game Project Portfolio</h1>
-            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">Engineering · VR Projects · AI Tools · Design & Storytelling</p>
-            <p className="text-[var(--muted)] mt-2 text-sm">Browse by discipline to find work faster.</p>
+            <h1 className="text-4xl font-bold tracking-tight">Project Archive</h1>
+            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">XR · Games · Tools</p>
+            <p className="text-[var(--muted)] mt-2 text-sm">Browse the complete portfolio through the same three lenses as the homepage.</p>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">

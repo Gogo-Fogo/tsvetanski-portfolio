@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 type Theme = "light" | "dark";
 
@@ -19,6 +20,8 @@ const applyTheme = (theme: Theme) => {
 };
 
 export default function ThemeToggle() {
+  const pathname = usePathname();
+  const onHomepage = pathname === "/";
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => getSystemTheme());
 
@@ -58,16 +61,16 @@ export default function ThemeToggle() {
   }
 
   return (
-    <div className="group fixed right-4 top-4 z-50 flex items-center">
-      <div className="flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)]/90 px-3 py-2 shadow-[var(--shadow-strong)] backdrop-blur">
-        <span className="hidden sm:block text-[10px] font-semibold uppercase tracking-[0.35em] text-[var(--foreground)]/80">
+    <div className={`group fixed right-4 z-50 flex items-center ${onHomepage ? "bottom-4" : "top-4"}`}>
+      <div className={`flex items-center rounded-full border border-[var(--border)] bg-[var(--surface)]/90 shadow-[var(--shadow-strong)] backdrop-blur ${onHomepage ? "p-1.5" : "gap-3 px-3 py-2"}`}>
+        <span className={onHomepage ? "sr-only" : "hidden sm:block text-[10px] font-semibold uppercase tracking-[0.35em] text-[var(--foreground)]/80"}>
           Theme
         </span>
         <button
           type="button"
           onClick={toggleTheme}
           aria-label={getAriaLabel()}
-          className={`inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-[var(--foreground)]/30 bg-[var(--surface)]/90 text-[var(--foreground)] shadow-[var(--shadow-strong)] ring-2 ring-[var(--accent-cyan)]/30 backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--foreground)]/60 hover:ring-[var(--accent-cyan)]/55 ${theme === "dark" ? "animate-[themePulseDark_4.5s_ease-in-out_infinite]" : "animate-[themePulseLight_4.5s_ease-in-out_infinite]"}`}
+          className={`inline-flex ${onHomepage ? "h-11 w-11" : "h-14 w-14"} items-center justify-center rounded-full border-2 border-[var(--foreground)]/30 bg-[var(--surface)]/90 text-[var(--foreground)] shadow-[var(--shadow-strong)] ring-2 ring-[var(--accent-cyan)]/30 backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--foreground)]/60 hover:ring-[var(--accent-cyan)]/55 ${theme === "dark" ? "animate-[themePulseDark_4.5s_ease-in-out_infinite]" : "animate-[themePulseLight_4.5s_ease-in-out_infinite]"}`}
         >
           {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
         </button>
