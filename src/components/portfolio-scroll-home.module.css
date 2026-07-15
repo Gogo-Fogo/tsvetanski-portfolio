@@ -869,3 +869,6 @@
 .featureCard,.secondaryCard{border-radius:1.25rem}
 .nodeActive:focus-visible{outline:1px solid var(--portfolio-orange);outline-offset:1px}
 @media (min-width:701px) and (max-height:900px){.nodeRail{padding-top:.75rem}.node,.nodeActive{height:5rem;border-radius:.7rem}}
+
+/* Keep short ultrawide project banners at the reference aspect and centered. */
+@media (min-width:1400px) and (max-height:900px) and (min-aspect-ratio:2/1){.projectPanel{width:min(100%,124vh);justify-self:center}}
