@@ -105,8 +105,8 @@
   display: grid;
   grid-template-columns: 8.2rem minmax(0, 1fr);
   align-items: start;
-  gap: clamp(4.5rem, 7vw, 8.4rem);
-  width: min(91vw, 106rem);
+  gap: clamp(7rem, 12vw, 12rem);
+  width: min(91vw, 90rem);
   margin: 2.9rem auto 0;
 }
 
@@ -411,7 +411,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  width: min(91vw, 106rem);
+  width: min(91vw, 90rem);
   margin: 0 auto;
   padding: 2.1rem 0 5.5rem;
   border-top: 1px solid var(--border);
@@ -509,9 +509,8 @@
 
   .referenceLayout {
     grid-template-columns: 6.7rem minmax(0, 1fr);
-    gap: clamp(2.75rem, 5vw, 5rem);
-    width: min(94vw, 106rem);
-    margin-top: 1.55rem;
+    width: min(94vw, 90rem);
+    margin-top: 2rem;
   }
 
   .nodeRail {
