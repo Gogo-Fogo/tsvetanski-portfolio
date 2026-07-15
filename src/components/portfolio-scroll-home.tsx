@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Box, BrainCircuit, Gamepad2, RectangleGoggles } from 'lucide-react';
+import { ArrowRight, Box, BrainCircuit, Gamepad2, Glasses } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './portfolio-scroll-home.module.css';
@@ -105,7 +105,7 @@ const lenses: readonly Lens[] = [
   {
     id: 'xr',
     label: 'XR',
-    icon: RectangleGoggles,
+    icon: Glasses,
     viewFilter: 'xr',
     projects: [projects.birdwatching, projects.mumosa, projects.shift],
   },
@@ -188,7 +188,11 @@ function LensNode({ lens, active, onSelect, nodeRef }: LensNodeProps) {
       aria-pressed={active}
       onClick={() => onSelect(lens.id)}
     >
-      <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
+      {lens.id === "xr" ? (
+        <span className={styles.vrIcon} aria-hidden="true"><span className={styles.vrIconLens} /></span>
+      ) : (
+        <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
+      )}
       <span>{lens.label}</span>
     </button>
   );
