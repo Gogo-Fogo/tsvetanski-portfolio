@@ -5,6 +5,8 @@
 }
 
 .page {
+  --portfolio-orange: #ff7b1a;
+  --portfolio-cyan: #2ad8f4;
   min-height: 100vh;
   overflow-x: clip;
   background:
