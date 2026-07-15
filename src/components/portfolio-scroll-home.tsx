@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Box, Gamepad2, Headset, Wrench } from 'lucide-react';
+import { ArrowRight, Box, BrainCircuit, Gamepad2, RectangleGoggles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './portfolio-scroll-home.module.css';
@@ -105,7 +105,7 @@ const lenses: readonly Lens[] = [
   {
     id: 'xr',
     label: 'XR',
-    icon: Headset,
+    icon: RectangleGoggles,
     viewFilter: 'xr',
     projects: [projects.birdwatching, projects.mumosa, projects.shift],
   },
@@ -126,7 +126,7 @@ const lenses: readonly Lens[] = [
   {
     id: 'tools',
     label: 'Tools',
-    icon: Wrench,
+    icon: BrainCircuit,
     viewFilter: 'tools',
     projects: [projects.blackDice, projects.ami, projects.feh],
   },
