@@ -872,3 +872,31 @@
 
 /* Keep short ultrawide project banners at the reference aspect and centered. */
 @media (min-width:1400px) and (max-height:900px) and (min-aspect-ratio:2/1){.projectPanel{width:min(100%,124vh);justify-self:center}}
+
+/* Keep the desktop frame fixed while the project column carries the scroll. */
+@media (min-width: 701px) {
+  .page {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .referenceLayout {
+    height: calc(100vh - 10rem);
+    min-height: 0;
+  }
+
+  .projectPanel {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+}
+
+@media (min-width: 701px) and (max-height: 700px) {
+  .referenceLayout {
+    height: calc(100vh - 7rem);
+  }
+}

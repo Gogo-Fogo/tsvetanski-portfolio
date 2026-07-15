@@ -350,7 +350,9 @@ export default function PortfolioScrollHome() {
       if (card) resizeObserver.observe(card);
     });
 
+    const projectPanel = projectPanelRef.current;
     window.addEventListener('scroll', measure, { passive: true });
+    projectPanel?.addEventListener('scroll', measure, { passive: true });
     window.addEventListener('resize', measure);
     measure();
 
@@ -358,6 +360,7 @@ export default function PortfolioScrollHome() {
       if (animationFrame !== 0) window.cancelAnimationFrame(animationFrame);
       resizeObserver.disconnect();
       window.removeEventListener('scroll', measure);
+      projectPanel?.removeEventListener('scroll', measure);
       window.removeEventListener('resize', measure);
     };
   }, [activeLens]);
