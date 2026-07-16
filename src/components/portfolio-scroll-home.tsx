@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Box, BrainCircuit, Gamepad2, Glasses } from 'lucide-react';
+import { ArrowRight, Box, BrainCircuit, Gamepad2, RectangleGoggles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './portfolio-scroll-home.module.css';
@@ -105,7 +105,7 @@ const lenses: readonly Lens[] = [
   {
     id: 'xr',
     label: 'XR',
-    icon: Glasses,
+    icon: RectangleGoggles,
     viewFilter: 'xr',
     projects: [projects.birdwatching, projects.mumosa, projects.shift],
   },
@@ -188,8 +188,15 @@ function LensNode({ lens, active, onSelect, nodeRef }: LensNodeProps) {
       aria-pressed={active}
       onClick={() => onSelect(lens.id)}
     >
-      {lens.id === "xr" ? (
-        <span className={styles.vrIcon} aria-hidden="true"><span className={styles.vrIconLens} /></span>
+      {lens.id === 'xr' ? (
+        <Image
+          src="/images/reference-xr-headset.png"
+          alt=""
+          width={64}
+          height={52}
+          className={styles.xrReferenceIcon}
+          aria-hidden="true"
+        />
       ) : (
         <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
       )}
@@ -387,7 +394,7 @@ export default function PortfolioScrollHome() {
         <Link href="/" className={styles.identity} aria-label="Georgi Tsvetanski homepage">
           <span className={styles.portrait}>
             <Image
-              src="/images/Georgi-portrait-reference.png"
+              src="/images/Georgi-portrait-cutout.png"
               alt="Georgi Tsvetanski"
               fill
               sizes="76px"
