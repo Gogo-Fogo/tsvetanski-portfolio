@@ -387,7 +387,7 @@ export default function PortfolioScrollHome() {
         <Link href="/" className={styles.identity} aria-label="Georgi Tsvetanski homepage">
           <span className={styles.portrait}>
             <Image
-              src="/images/Tsvetanski_Georgi_Headshot.jpeg"
+              src="/images/Georgi-portrait-reference.png"
               alt="Georgi Tsvetanski"
               fill
               sizes="76px"

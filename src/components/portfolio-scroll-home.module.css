@@ -988,64 +988,65 @@
 .vrIcon {
   position: relative;
   display: inline-block;
-  width: 2.55rem;
-  height: 1.35rem;
-  border: 1.9px solid currentColor;
-  border-radius: 0.52rem 0.52rem 0.34rem 0.34rem;
+  width: 2.5rem;
+  height: 1.38rem;
+  border: 1.8px solid var(--foreground);
+  border-radius: 0.62rem 0.62rem 0.42rem 0.42rem;
+  color: var(--foreground);
 }
 
 .vrIcon::before,
 .vrIcon::after {
   position: absolute;
-  top: 0.33rem;
-  width: 0.4rem;
-  height: 0.58rem;
-  border: 1.6px solid currentColor;
+  top: 0.37rem;
+  width: 0.36rem;
+  height: 0.54rem;
+  border: 1.5px solid var(--foreground);
   content: '';
 }
 
 .vrIcon::before {
-  left: -0.46rem;
+  left: -0.42rem;
   border-right: 0;
-  border-radius: 0.58rem 0 0 0.58rem;
+  border-radius: 0.54rem 0 0 0.54rem;
 }
 
 .vrIcon::after {
-  right: -0.46rem;
+  right: -0.42rem;
   border-left: 0;
-  border-radius: 0 0.58rem 0.58rem 0;
+  border-radius: 0 0.54rem 0.54rem 0;
 }
 
 .vrIconLens {
   position: absolute;
-  inset: 0.22rem 0.46rem;
-  border: 1.15px solid currentColor;
-  border-radius: 0.25rem;
-  opacity: 0.92;
+  inset: 0.3rem 0.53rem;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(var(--foreground), var(--foreground)) center / 0.28rem 1.4px no-repeat;
 }
 
 .vrIconLens::before,
 .vrIconLens::after {
   position: absolute;
-  top: 0.14rem;
+  top: 0;
   width: 0.42rem;
   height: 0.42rem;
-  border: 1.35px solid currentColor;
+  border: 1.35px solid var(--foreground);
   border-radius: 50%;
   content: '';
 }
 
 .vrIconLens::before {
-  left: 0.16rem;
+  left: 0;
 }
 
 .vrIconLens::after {
-  right: 0.16rem;
+  right: 0;
 }
 
-/* Keep the portrait readable as a small dark tile, matching the reference header. */
-.portrait{width:5.2rem;height:4.6rem;border-radius:.28rem}
-.portraitImage{transform:scale(.84);transform-origin:center 34%}
-@media (min-width:701px) and (max-height:900px){.portrait{width:4.95rem;height:4.4rem}}
-@media (min-width:701px) and (max-height:700px){.portrait{width:4.8rem;height:4.25rem}}
-@media (max-width:700px){.portrait{width:4.45rem;height:4rem}}
+/* Reference portrait: a navy-backed cutout with the same proportions as the supplied header. */
+.portrait{width:4.6rem;height:5.25rem;border-radius:.2rem;background:#06111c}
+.portraitImage{object-fit:contain;object-position:center;filter:none;mix-blend-mode:normal;transform:none}
+@media (min-width:701px) and (max-height:900px){.portrait{width:4.35rem;height:4.85rem}}
+@media (min-width:701px) and (max-height:700px){.portrait{width:4.05rem;height:4.55rem}}
+@media (max-width:700px){.portrait{width:4rem;height:4.45rem}}
