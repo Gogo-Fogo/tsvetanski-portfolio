@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video'; // Import LightboxVideo
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 type VideoStats = {
   title?: string;
@@ -20,6 +21,13 @@ const trashBeenVideos = [
     caption: 'Young tester playthrough'
   }
 ];
+
+const snapshotItems = [
+  { label: 'My role', value: 'Solo designer and developer' },
+  { label: 'Timeframe', value: 'One-week application sprint' },
+  { label: 'Built with', value: 'Unity, visual scripting, Blender, WebGL' },
+  { label: 'Result', value: 'Playable build that supported my Breda acceptance' },
+] as const;
 
 const getVideoId = (embedUrl: string) => embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
 
@@ -83,6 +91,8 @@ export default async function BredaProjectPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Project Summary & Live Project */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">

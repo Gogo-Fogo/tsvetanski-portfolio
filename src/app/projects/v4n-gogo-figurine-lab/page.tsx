@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import InstagramGrid from '@/components/instagram-grid';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -31,6 +32,13 @@ const instagramPosts = [
   'https://www.instagram.com/p/DEdgZLMRETF/',
 ];
 
+const snapshotItems = [
+  { label: 'My role', value: 'Independent maker and small-business founder' },
+  { label: 'What I make', value: 'Printed, painted, and electronically enhanced statuettes' },
+  { label: 'Process', value: 'FDM and resin printing, finishing, LEDs, custom controls' },
+  { label: 'Result', value: '2024 concept-track grant and an ongoing public body of work' },
+] as const;
+
 
 export default function V4NGogoFigurineLabPage() {
   return (
@@ -57,6 +65,8 @@ export default function V4NGogoFigurineLabPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Videos — lead with media */}
           <div>
             <div className="mb-6 flex items-end justify-between">

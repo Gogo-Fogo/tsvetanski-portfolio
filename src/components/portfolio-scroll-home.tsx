@@ -2,16 +2,18 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Box, BrainCircuit, Gamepad2, RectangleGoggles } from 'lucide-react';
+import { ArrowRight, BrainCircuit, Clapperboard, Gamepad2, Instagram, Linkedin, Mail, RectangleGoggles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './portfolio-scroll-home.module.css';
 
-type LensId = 'xr' | 'simulation' | 'gameplay' | 'tools';
+type LensId = 'xr' | 'gameplay' | 'tools' | 'creative';
 
 interface Project {
   title: string;
   href: string;
+  mobileImage?: string;
+  mobileImageAlt?: string;
   image: string;
   imageAlt: string;
   evidence: string;
@@ -23,6 +25,8 @@ interface Lens {
   label: string;
   icon: LucideIcon;
   viewFilter: string;
+  viewHref?: string;
+  viewAllLabel?: string;
   projects: readonly [Project, Project, Project];
 }
 
@@ -30,16 +34,18 @@ const projects = {
   birdwatching: {
     title: 'Birdwatching VR',
     href: '/projects/birdwatching',
-    image: '/images/projects/birdwatching/birdwatching-igda-showcase-demo-01.jpeg',
-    imageAlt: 'Player wearing a VR headset in the Birdwatching VR prototype',
+    image: '/images/projects/birdwatching/birdwatching-forest-hero.jpg',
+    imageAlt: 'Stylized forest environment from Birdwatching VR',
     evidence: 'Unity 6 · PCVR / Quest',
     summary: 'A camera-to-field-guide loop with scoring, tools, comfort settings, and persistent progress.',
   },
   mumosa: {
     title: 'MUMOSA Crisis Response',
     href: '/projects/mumosa-crisis-response-vr',
-    image: '/images/projects/mumosa-crisis-response-vr/mumosa-banner.png',
-    imageAlt: 'MUMOSA crisis-response interface and spatial evidence prototype',
+    image: '/images/projects/mumosa-crisis-response-vr/mumosa-vr-evidence-selection.png',
+    imageAlt: 'MUMOSA spatial evidence selection inside an Unreal crisis-response scene',
+    mobileImage: '/images/projects/mumosa-crisis-response-vr/mumosa-vr-spatial-marker.png',
+    mobileImageAlt: 'MUMOSA spatial evidence marker inside an Unreal crisis-response scene',
     evidence: 'Client research · Unreal',
     summary: 'A spatial evidence-review direction grounded in crisis-response research and a client-facing prototype.',
   },
@@ -75,6 +81,14 @@ const projects = {
     evidence: 'Godot / C# · Solo mod',
     summary: 'A complete character mod with rewind mechanics, a custom resource economy, combat, and presentation.',
   },
+  cranky: {
+    title: 'Cranky',
+    href: '/projects/cranky-game-jam',
+    image: '/images/CRANKY_Animation_Blender_Rigging.png',
+    imageAlt: 'Cranky pug character rig and animation controls in Blender',
+    evidence: 'Global Game Jam 2024 · 1 week',
+    summary: 'A chaotic split-screen multiplayer prototype built with a team in one week for Global Game Jam.',
+  },
   blackDice: {
     title: 'Black Dice Engine',
     href: '/projects/black-dice-engine',
@@ -86,49 +100,76 @@ const projects = {
   ami: {
     title: 'Ami',
     href: '/projects/ami-research-companion',
-    image: '/images/projects/ami/ami-banner.png',
-    imageAlt: 'Ami research companion interface',
+    image: '/images/projects/ami/ami-chat-evidence-illustrated.png',
+    imageAlt: 'Ami research companion answering a question with illustrated visual evidence',
     evidence: 'Grounded research · macOS',
     summary: 'A calm research companion built for a real user, with source-grounded answers and portable delivery.',
   },
   feh: {
     title: 'FEH Barracks Manager',
     href: '/projects/feh-barracks-manager',
-    image: '/images/projects/feh-barracks/feh-login-screen.png',
-    imageAlt: 'FEH Barracks Manager application screen',
+    image: '/images/projects/feh-barracks/feh-hero-library.png',
+    imageAlt: 'FEH Barracks Manager searchable hero library and collection controls',
     evidence: 'Data pipeline · Release tooling',
     summary: 'A solo companion app with scraping, reconciliation, synced collections, exports, and release bundles.',
+  },
+
+  cpseVideo: {
+    title: 'UMD CPSE Summer Program',
+    href: '/cpse',
+    image: 'https://img.youtube.com/vi/YP9sqDBSWdo/maxresdefault.jpg',
+    imageAlt: 'UMD CPSE Summer Program 2024 video',
+    evidence: 'Videography · Editing · Interviews',
+    summary: 'A program highlight produced from planning through filming and post-production for UMD CPSE.',
+  },
+  shinobiVideo: {
+    title: 'Shinobi Story: Featured Highlight',
+    href: '/projects/shinobi-story',
+    image: 'https://img.youtube.com/vi/bPsGUDkz6-0/maxresdefault.jpg',
+    imageAlt: 'Shinobi Story featured video highlight',
+    evidence: 'Trailer editing · Live-game storytelling',
+    summary: 'A focused video showcase drawn from five years of content, animation, events, and live operations.',
+  },
+  alienWalk: {
+    title: 'Alien Walking Animation',
+    href: '/creative#animation',
+    image: '/images/projects/creative/alien-walk-wide.png',
+    imageAlt: 'Alien walking animation study in an extended grayscale street scene',
+    evidence: '3D animation · Walk cycle',
+    summary: 'A character-motion study exploring weight, rhythm, posing, and a readable looping walk cycle.',
   },
 } satisfies Record<string, Project>;
 
 const lenses: readonly Lens[] = [
   {
     id: 'xr',
-    label: 'XR',
+    label: 'XR + Simulation',
     icon: RectangleGoggles,
     viewFilter: 'xr',
-    projects: [projects.birdwatching, projects.mumosa, projects.shift],
-  },
-  {
-    id: 'simulation',
-    label: 'Simulation',
-    icon: Box,
-    viewFilter: 'games',
-    projects: [projects.shinobi, projects.birdwatching, projects.blackDice],
+    projects: [projects.mumosa, projects.shift, projects.birdwatching],
   },
   {
     id: 'gameplay',
-    label: 'Gameplay',
+    label: 'Gameplay Systems',
     icon: Gamepad2,
     viewFilter: 'games',
-    projects: [projects.shonen, projects.shinobi, projects.prince],
+    projects: [projects.shinobi, projects.shonen, projects.cranky],
   },
   {
     id: 'tools',
-    label: 'Tools',
+    label: 'Tools & AI',
     icon: BrainCircuit,
     viewFilter: 'tools',
-    projects: [projects.blackDice, projects.ami, projects.feh],
+    projects: [projects.blackDice, projects.feh, projects.ami],
+  },
+  {
+    id: 'creative',
+    label: 'Creative Media Works',
+    icon: Clapperboard,
+    viewFilter: 'creative',
+    viewHref: '/creative',
+    viewAllLabel: 'View all Creative Media Works',
+    projects: [projects.cpseVideo, projects.shinobiVideo, projects.alienWalk],
   },
 ];
 
@@ -162,10 +203,21 @@ function ProjectCard({ project, featured = false, priority = false }: ProjectCar
           alt={project.imageAlt}
           fill
           sizes={featured ? '(min-width: 900px) 55vw, 92vw' : '(min-width: 900px) 50vw, 92vw'}
-          className={styles.cardImage}
+          className={`${styles.cardImage} ${project.mobileImage ? styles.cardImageDesktop : ''}`}
           priority={priority}
           unoptimized
         />
+        {project.mobileImage ? (
+          <Image
+            src={project.mobileImage}
+            alt={project.mobileImageAlt ?? project.imageAlt}
+            fill
+            sizes="92vw"
+            className={`${styles.cardImage} ${styles.cardImageMobile}`}
+            priority={priority}
+            unoptimized
+          />
+        ) : null}
       </div>
     </Link>
   );
@@ -188,19 +240,8 @@ function LensNode({ lens, active, onSelect, nodeRef }: LensNodeProps) {
       aria-pressed={active}
       onClick={() => onSelect(lens.id)}
     >
-      {lens.id === 'xr' ? (
-        <Image
-          src="/images/reference-xr-headset.png"
-          alt=""
-          width={64}
-          height={52}
-          className={styles.xrReferenceIcon}
-          aria-hidden="true"
-        />
-      ) : (
-        <Icon aria-hidden="true" size={30} strokeWidth={1.4} />
-      )}
-      <span>{lens.label}</span>
+      <Icon aria-hidden="true" size={30} strokeWidth={1.4} className={lens.id === 'xr' ? styles.xrIcon : undefined} />
+      <span>{lens.id === 'xr' ? 'XR + Sim' : lens.label}</span>
     </button>
   );
 }
@@ -215,7 +256,7 @@ interface ConnectorFrame {
 }
 
 export default function PortfolioScrollHome() {
-  const [activeLens, setActiveLens] = useState<LensId>('simulation');
+  const [activeLens, setActiveLens] = useState<LensId>('xr');
   const [activeProject, setActiveProject] = useState(0);
   const layoutRef = useRef<HTMLDivElement | null>(null);
   const projectPanelRef = useRef<HTMLElement | null>(null);
@@ -229,11 +270,11 @@ export default function PortfolioScrollHome() {
   const activeProjectRef = useRef(0);
   const nodeRefs = useRef<Record<LensId, HTMLButtonElement | null>>({
     xr: null,
-    simulation: null,
+    // Simulation projects are included in the XR lens.
     gameplay: null,
     tools: null,
+    creative: null,
   });
-
 
   const selectedLens = lenses.find((lens) => lens.id === activeLens) as Lens;
 
@@ -376,6 +417,36 @@ export default function PortfolioScrollHome() {
     };
   }, [activeLens]);
 
+  useEffect(() => {
+    const forwardWheelToProjects = (event: WheelEvent) => {
+      const projectPanel = projectPanelRef.current;
+      if (!projectPanel || window.innerWidth <= 700 || event.ctrlKey) return;
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+      let scrollParent = event.target instanceof HTMLElement ? event.target : null;
+      while (scrollParent && scrollParent !== document.body) {
+        if (scrollParent === projectPanel) break;
+        const overflowY = window.getComputedStyle(scrollParent).overflowY;
+        if (/auto|scroll/.test(overflowY) && scrollParent.scrollHeight > scrollParent.clientHeight) return;
+        scrollParent = scrollParent.parentElement;
+      }
+
+      const deltaMultiplier = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? projectPanel.clientHeight
+          : 1;
+      const delta = event.deltaY * deltaMultiplier;
+      if (delta === 0) return;
+
+      event.preventDefault();
+      projectPanel.scrollTop += delta;
+    };
+
+    window.addEventListener('wheel', forwardWheelToProjects, { passive: false });
+    return () => window.removeEventListener('wheel', forwardWheelToProjects);
+  }, []);
+
   const selectLens = (id: LensId) => {
     if (id !== activeLens) {
       setActiveLens(id);
@@ -383,15 +454,18 @@ export default function PortfolioScrollHome() {
       activeProjectRef.current = 0;
     }
     window.history.replaceState(null, '', '#lens-' + id);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     window.requestAnimationFrame(() => {
-      projectPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      projectPanelRef.current?.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
   };
 
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <Link href="/" className={styles.identity} aria-label="Georgi Tsvetanski homepage">
+        <div className={styles.headerInner}>
+          <Link href="/" className={styles.identity} aria-label="Georgi Tsvetanski homepage">
           <span className={styles.portrait}>
             <Image
               src="/images/Georgi-portrait-cutout.png"
@@ -403,15 +477,16 @@ export default function PortfolioScrollHome() {
               unoptimized
             />
           </span>
-          <span className={styles.identityWords}>
+          <h1 className={styles.identityWords}>
             <strong>Georgi Tsvetanski</strong>
             <small>Simulation · XR · Gameplay Systems</small>
-          </span>
+          </h1>
         </Link>
 
-        <nav className={styles.headerNav} aria-label="Primary navigation">
-          <Link href="/about" className={styles.aboutLink}>About <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} /></Link>
-        </nav>
+          <nav className={styles.headerNav} aria-label="Primary navigation">
+            <Link href="/about" className={styles.aboutLink}>About <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} /></Link>
+          </nav>
+        </div>
       </header>
 
       <div ref={layoutRef} className={styles.referenceLayout}>
@@ -460,16 +535,32 @@ export default function PortfolioScrollHome() {
               </article>
             ))}
           </div>
-          <Link href={'/career?filter=' + selectedLens.viewFilter} className={styles.viewAllLink}>
-            View all {selectedLens.label} work <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} />
+          <Link href={selectedLens.viewHref ?? '/career?filter=' + selectedLens.viewFilter} className={styles.viewAllLink}>
+            {selectedLens.viewAllLabel ?? `View all ${selectedLens.label} work`} <ArrowRight aria-hidden="true" size={22} strokeWidth={1.5} />
           </Link>
+          <footer id="connect" className={styles.connectSection}>
+            <div className={styles.connectCard}>
+              <p className={styles.connectEyebrow}>Connect</p>
+              <nav className={styles.connectLinks} aria-label="Connect with Georgi">
+                <a href="mailto:georgi@tsvetanski.com" aria-label="Email Georgi">
+                  <span className={styles.connectIcon}><Mail aria-hidden="true" size={22} strokeWidth={1.5} /></span>
+                  <span>Email</span>
+                </a>
+                <a href="https://www.linkedin.com/in/georgitsvetanski-526373234" target="_blank" rel="noreferrer" aria-label="Georgi on LinkedIn">
+                  <span className={styles.connectIcon}><Linkedin aria-hidden="true" size={22} strokeWidth={1.5} /></span>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/v4n_gogo/" target="_blank" rel="noreferrer" aria-label="Georgi on Instagram">
+                  <span className={styles.connectIcon}><Instagram aria-hidden="true" size={18} strokeWidth={1.5} /></span>
+                  <span>Instagram</span>
+                </a>
+              </nav>
+            </div>
+            <p className={styles.connectMeta}>© 2026 Georgi Tsvetanski</p>
+          </footer>
         </section>
       </div>
 
-      <footer className={styles.footer}>
-        <a href="mailto:georgi@tsvetanski.com">georgi@tsvetanski.com <ArrowRight aria-hidden="true" size={18} strokeWidth={1.5} /></a>
-        <span>Available for XR, game systems, and tools.</span>
-      </footer>
     </main>
   );
 }

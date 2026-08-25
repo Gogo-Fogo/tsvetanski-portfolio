@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import DocViewer from '@/components/doc-viewer';
 import type { DocOutlineItem, DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 const snapshotItems = [
   {
     label: 'Role',
-    value: 'Solo developer across product design, frontend, data ingestion, release flow, and launcher packaging',
+    value: 'Solo developer: product design, frontend, data ingestion, releases, and launcher packaging',
   },
   {
     label: 'Surfaces',
@@ -26,7 +27,7 @@ const snapshotItems = [
   },
   {
     label: 'Current Local Scale',
-    value: '1270 indexed heroes, 1271 headshots, 5081 full-body images, and 1267 quote files',
+    value: '1,270 indexed heroes, 5,081 character images, and 1,267 quote files',
   },
 ];
 
@@ -49,7 +50,7 @@ const productScreens = [
     title: 'Tavern Social Surface',
     caption: 'The Tavern pushes the product past plain CRUD by giving the collection app a social lounge, avatar stage, and friend-state layer.',
     popupCaption:
-      'Current Tavern capture showing the stage presentation, friend management panel, and the side-surface work that makes the app feel more like a real product.',
+      'Current Tavern capture showing the stage presentation, friend management panel, and social features beyond collection management.',
   },
   {
     src: '/images/projects/feh-barracks/feh-aether-resort.png',
@@ -174,12 +175,14 @@ export default function FehBarracksManagerCaseStudy() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">FEH Barracks Manager</h1>
           <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            FEH Barracks Manager started as a personal tool for Fire Emblem Heroes, then grew into a full product: synced barracks management, custom hero
-            data ingestion, release-bundle distribution, and a portable launcher path for a game community that does not give you a stable API to work with.
+            A Fire Emblem Heroes companion app for tracking owned characters across devices. I built the interface, cloud sync, data importer, release
+            bundles, and portable Windows launcher without access to an official game API.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <LightboxImage
               src="/images/projects/feh-barracks/feh-barracks-dashboard.png"
@@ -190,15 +193,6 @@ export default function FehBarracksManagerCaseStudy() {
               popupCaption="Current FEH Barracks dashboard capture showing the synced account shell, quick hero-add flow, favorites, and team builder surfaces together."
               roundedClassName="rounded-none"
             />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
-              </div>
-            ))}
           </div>
 
           <div>
@@ -328,9 +322,8 @@ export default function FehBarracksManagerCaseStudy() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome</h2>
             <p className="text-sm leading-relaxed text-[var(--muted)]">
-              FEH Barracks Manager is one of the clearest examples of how I work when a project gets real. It is not just interface work and it is not just
-              backend plumbing. It is product definition, data reliability, cost-aware architecture, release discipline, and enough user empathy to keep the
-              tool practical even when the source data underneath it keeps moving.
+              FEH Barracks Manager combines interface design, data ingestion, cost-aware architecture, packaging, and updates. The release workflow keeps
+              the tool usable while its source data changes and lets another person launch it without rebuilding my development environment.
             </p>
           </div>
         </section>

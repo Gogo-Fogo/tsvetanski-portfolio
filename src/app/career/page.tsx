@@ -1,12 +1,13 @@
 ﻿"use client";
 
 import LightboxImage from '@/components/lightbox-image';
-import Breadcrumbs from '@/components/breadcrumbs';
 import { HoverCard } from '@/components/floating-ui-primitives';
 import { MotionPage } from '@/components/motion-safe';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense, useMemo } from 'react';
-import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs';
+import { ArrowLeft, ArrowUp, Gamepad2, Grid2X2, Search, Wrench, type LucideIcon, type LucideProps } from 'lucide-react';
+import { forwardRef, Suspense, useEffect, useMemo, useState } from 'react';
+import { parseAsString, parseAsStringLiteral, useQueryStates } from 'nuqs';
 
 type ProjectFilter = 'all' | 'xr' | 'games' | 'tools';
 type LegacyProjectFacet = 'engineering' | 'xr' | 'ai-product' | 'art-storytelling';
@@ -14,11 +15,11 @@ type LegacyProjectFacet = 'engineering' | 'xr' | 'ai-product' | 'art-storytellin
 interface Project {
   title: string;
   description: string;
+  status: 'Released' | 'Delivered' | 'Completed' | 'Playable' | 'Prototype' | 'In development' | 'Concept';
   tags: string[];
   searchTerms?: string[];
   facets: LegacyProjectFacet[];
   rank?: Partial<Record<LegacyProjectFacet | 'all', number>>;
-  type?: 'commercial' | 'prototype';
   href?: string;
   external?: boolean;
   bannerImage?: string;
@@ -28,17 +29,45 @@ interface Project {
   bannerBorderClass?: string;
 }
 
-const filterOptions: { value: ProjectFilter; label: string }[] = [
-  { value: 'all', label: 'All Projects' },
-  { value: 'xr', label: 'XR' },
-  { value: 'games', label: 'Games' },
-  { value: 'tools', label: 'Tools' },
+const VrHeadset = forwardRef<SVGSVGElement, LucideProps>(function VrHeadset(
+  { color = 'currentColor', size = 24, strokeWidth = 2, className, ...props },
+  ref
+) {
+  return (
+    <svg
+      ref={ref}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      {...props}
+    >
+      <path d="M3.5 10.25c0-2.6 2.1-4.75 4.7-4.75h7.6c2.6 0 4.7 2.15 4.7 4.75V13c0 1.9-1.5 3.5-3.4 3.5h-1.2c-1.1 0-2.1-.7-2.5-1.8l-.4-1.2h-4.8l-.4 1.2c-.4 1.1-1.4 1.8-2.5 1.8H6.9c-1.9 0-3.4-1.6-3.4-3.5z" />
+      <path d="M6 5.75C6.85 4.6 8.15 4 9.6 4h4.8c1.45 0 2.75.6 3.6 1.75" />
+      <rect x="5.5" y="9.2" width="5.3" height="4.1" rx="1.3" />
+      <rect x="13.2" y="9.2" width="5.3" height="4.1" rx="1.3" />
+      <path d="M10.8 11.25h2.4M3.5 10.5H2.5M20.5 10.5h1" />
+    </svg>
+  );
+});
+
+const filterOptions: { value: ProjectFilter; label: string; Icon: LucideIcon }[] = [
+  { value: 'all', label: 'All Projects', Icon: Grid2X2 },
+  { value: 'xr', label: 'XR', Icon: VrHeadset },
+  { value: 'games', label: 'Games', Icon: Gamepad2 },
+  { value: 'tools', label: 'Tools', Icon: Wrench },
 ];
 
 const projects: Project[] = [
   {
     title: "ComfyUI Production Pipeline",
-    description: "Cross-project local AI media pipeline — ComfyUI workflow routing, demo-safe asset boundaries, dark fantasy lookdev, and downstream game-asset cleanup.",
+    description: "Local-first AI media pipeline for lookdev, asset cleanup, and demo-safe delivery.",
+    status: 'Prototype',
     tags: ["ComfyUI", "AI Art Pipeline", "Asset Workflow"],
     searchTerms: ["comfyui", "comfy", "ai art", "workflow", "image generation", "black dice", "prince of persia", "asset cleanup", "local media"],
     facets: ['ai-product', 'art-storytelling', 'engineering'],
@@ -47,12 +76,12 @@ const projects: Project[] = [
     bannerImage: "/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png",
     bannerAlt: "ComfyUI character workflow graph for Shogun-style asset iteration",
     bannerWidth: 1920,
-    bannerHeight: 1080,
-    type: 'prototype'
+    bannerHeight: 1080
   },
   {
     title: "Black Dice Engine",
-    description: "Local-first AI Game Master engine for dark collaborative TTRPG campaigns — GM dashboard, player companion, deterministic state tools, memory, and local media routing.",
+    description: "Local-first AI Game Master for collaborative TTRPG campaigns.",
+    status: 'Prototype',
     tags: ["Local-First AI", "Runtime Architecture", "Rules Engine"],
     searchTerms: ["black dice", "dice engine", "ai game master", "ttrpg", "tabletop", "rpg", "gm dashboard", "player companion", "campaign memory", "comfyui", "local first"],
     facets: ['ai-product', 'engineering'],
@@ -61,12 +90,12 @@ const projects: Project[] = [
     bannerImage: "/images/projects/black-dice-engine/black-dice-engine-banner.png",
     bannerAlt: "Black Dice Engine banner showing dark fantasy character and dice branding",
     bannerWidth: 1672,
-    bannerHeight: 941,
-    type: 'prototype'
+    bannerHeight: 941
   },
   {
     title: "Shinobi Story",
-    description: "Fully custom Naruto MMORPG — complete WoW client overhaul, original animations. $110K in revenue, 1M+ downloads. Led content strategy and community over five years.",
+    description: "Custom Naruto MMORPG with 1M+ downloads and $110K revenue.",
+    status: 'Released',
     tags: ["Live Game Operations", "Community Growth", "Content Strategy"],
     searchTerms: ["shinobi", "narrative action", "content strategy", "marketing", "player engagement"],
     facets: ['engineering', 'art-storytelling'],
@@ -80,7 +109,8 @@ const projects: Project[] = [
   },
   {
     title: "Guilty As Arrr",
-    description: "Led multiplayer implementation, session flow, and proximity voice logic for a multi-user social deduction game with real-time spatial audio attenuation.",
+    description: "Networked social deduction game with proximity voice and spatial audio.",
+    status: 'Prototype',
     tags: ["Photon Fusion", "Networked Multiplayer", "Spatial Audio"],
     searchTerms: ["pirate", "social deduction", "photon voice", "fusion networking"],
     facets: ['engineering'],
@@ -93,7 +123,8 @@ const projects: Project[] = [
   },
   {
     title: "VR Dirt Bike Game",
-    description: "Community-focused VR safety prototype for B-360, optimized for accessible mobile headsets.",
+    description: "Accessible VR dirt-bike safety prototype for mobile headsets.",
+    status: 'Prototype',
     tags: ["VR Safety Simulation", "Community UX", "Human Factors"],
     searchTerms: ["dirt bike", "safety training", "education", "riding"],
     facets: ['engineering', 'xr'],
@@ -106,7 +137,8 @@ const projects: Project[] = [
   },
   {
     title: "VR Car Drift Simulator",
-    description: "Physics-driven spatial interaction prototype — tuned vehicle drift dynamics and real-time cockpit feedback in a night city environment.",
+    description: "VR drift simulator with tuned vehicle physics and cockpit feedback.",
+    status: 'Prototype',
     tags: ["Vehicle Physics", "VR Driving Simulation", "Spatial Interaction"],
     searchTerms: ["car drift", "driving", "vehicle dynamics", "simulator"],
     facets: ['engineering', 'xr'],
@@ -119,7 +151,8 @@ const projects: Project[] = [
   },
   {
     title: "MUMOSA Crisis Response VR Study",
-    description: "Graduate client project for DEVCOM Army Research Laboratory / MUMOSA — multimodal situation-awareness research, crisis-response heuristics, client report, and Unreal spatial-review proof of concept.",
+    description: "VR crisis-response study focused on evidence review and situation awareness.",
+    status: 'Delivered',
     tags: ["Defense Research", "Crisis Response UX", "Spatial Evidence Review"],
     searchTerms: ["mumosa", "army research laboratory", "devcom", "crisis response", "situational awareness", "forensic training", "schema graph", "3d reconstruction", "vr evidence review"],
     facets: ['ai-product', 'engineering', 'xr'],
@@ -128,12 +161,12 @@ const projects: Project[] = [
     bannerImage: "/images/projects/mumosa-crisis-response-vr/mumosa-banner.png",
     bannerAlt: "MUMOSA dashboard figure showing multimodal question answering, evidence panels, schema graphs, and simulation evidence",
     bannerWidth: 995,
-    bannerHeight: 645,
-    type: 'prototype'
+    bannerHeight: 645
   },
   {
     title: "Birdwatching VR",
-    description: "Unity 6 XR prototype with a physical camera, bird detection, star-rated photo scoring, persistent bingo-book progress, backpack tools, feeding-stick interaction, and comfort settings.",
+    description: "Unity XR wildlife prototype with camera, scoring, tools, and comfort systems.",
+    status: 'Prototype',
     tags: ["Unity XR Prototype", "Camera Systems", "Comfort Design"],
     searchTerms: ["birdwatching", "vr", "unity", "unity 6", "xr", "bird photography", "ornithologist", "post-nuclear", "bingo book", "render texture", "wildlife exploration", "camera capture", "quest", "openxr", "felix", "talulla"],
     facets: ['xr', 'engineering'],
@@ -142,11 +175,11 @@ const projects: Project[] = [
     bannerImage: "/images/projects/birdwatching/birdwatching-bird-closeup-qa-20260505.png",
     bannerAlt: "Close-up bird model from the Birdwatching VR Unity prototype",
     bannerWidth: 1009,
-    bannerHeight: 706,
-    type: 'prototype'
+    bannerHeight: 706
   },
   {
-    title: "Shonen Showdown",    description: "Lead developer on a multiplayer first-person TCG in Unity 6 — full rules engine, Photon Fusion 2 networking, and ScriptableObject-driven card data.",
+    title: "Shonen Showdown",    description: "Multiplayer first-person TCG with a reusable rules engine and networked cards.",
+    status: 'Prototype',
     tags: ["Rules Engine", "Photon Fusion 2", "ScriptableObject Data"],
     searchTerms: ["card game", "tcg", "anime", "prototype", "shonen", "unity", "networking"],
     facets: ['engineering', 'art-storytelling'],
@@ -159,7 +192,8 @@ const projects: Project[] = [
   },
   {
     title: "Fallout Mod (Level Design)",
-    description: "Team-built Fallout 4 interior level — joined mid-project as third-floor lead, handling interior production, merge stability, and visual optimization.",
+    description: "Fallout 4 interior level focused on production, merges, and visual polish.",
+    status: 'Completed',
     tags: ["Level Design", "Environmental Storytelling", "Team Collaboration"],
     searchTerms: ["fallout", "modding", "level overhaul", "world building"],
     facets: ['art-storytelling'],
@@ -172,7 +206,8 @@ const projects: Project[] = [
   },
   {
     title: "Totally Bugged Out",
-    description: "First-person bug survival prototype — universal throw system and swarming enemy AI that traverses walls and ceilings.",
+    description: "First-person bug survival prototype with swarming enemy AI.",
+    status: 'Playable',
     tags: ["Enemy AI", "First-Person Combat", "Unity"],
     searchTerms: ["bugs", "survival", "first-person", "balkan", "swarm ai"],
     facets: ['art-storytelling', 'engineering'],
@@ -185,7 +220,8 @@ const projects: Project[] = [
   },
   {
     title: "Shogun: Flowers Fall in Blood",
-    description: "Mobile tactical RPG prototype — grid-based combat, gesture-driven skills, progression, enemy AI, and gacha simulation.",
+    description: "Mobile tactical RPG prototype with grid combat, skills, and progression.",
+    status: 'In development',
     tags: ["Tactical RPG", "Mobile Systems", "Gacha Simulation"],
     searchTerms: ["shogun", "naruto", "tactical rpg", "gacha", "mobile"],
     facets: ['art-storytelling', 'engineering'],
@@ -198,7 +234,8 @@ const projects: Project[] = [
   },
   {
     title: "Ami",
-    description: "Local-first research companion built for my mother — grounded source retrieval, personal-record support, Codex-backed synthesis, and portable macOS delivery.",
+    description: "Local-first research companion with grounded retrieval and portable delivery.",
+    status: 'Delivered',
     tags: ["Local-First AI", "Healthcare UX", "Cross-Platform Packaging"],
     searchTerms: ["ami", "research companion", "mom", "medical research", "codex", "mac app", "local-first", "evidence retrieval"],
     facets: ['ai-product', 'engineering'],
@@ -211,7 +248,8 @@ const projects: Project[] = [
   },
   {
     title: "FEH Barracks Manager",
-    description: "Solo-built Fire Emblem Heroes companion app with synced barracks, custom hero-data scraping, AI export, and a portable launcher fed by GitHub release bundles.",
+    description: "Fire Emblem Heroes companion app with synced barracks and release tooling.",
+    status: 'In development',
     tags: ["Live-Service Tooling", "Data Pipeline", "Release Engineering"],
     searchTerms: ["feh", "fire emblem heroes", "barracks", "manager", "supabase", "scraper", "launcher", "release bundles", "live-service", "collection manager"],
     facets: ['ai-product', 'engineering'],
@@ -224,7 +262,8 @@ const projects: Project[] = [
   },
   {
     title: "Prince of Persia: Warrior Within Mod",
-    description: "Solo Slay the Spire 2 character mod in Godot/C# with Medallion of Time rewinds, Sand economy, Dahaka escape pressure, and custom Warrior Within audio/presentation.",
+    description: "Slay the Spire 2 character mod with rewinds and a Sand economy.",
+    status: 'Playable',
     tags: ["Game Modding", "Combat Systems", "Reverse Engineering"],
     searchTerms: ["prince of persia", "warrior within", "slay the spire 2", "mod", "godot", "c#", "harmony", "baselib", "dahaka", "rewind", "sand", "character mod"],
     facets: ['engineering', 'art-storytelling'],
@@ -237,7 +276,8 @@ const projects: Project[] = [
   },
   {
     title: "Cranky (Game Jam 2024)",
-    description: "Chaotic split-screen local multiplayer where two pugs chase squirrels — built in one week for Global Game Jam.",
+    description: "Split-screen pug multiplayer built in one week for Global Game Jam.",
+    status: 'Completed',
     tags: ["Local Multiplayer", "Rapid Prototyping", "Unity"],
     searchTerms: ["cranky", "pug", "squirrels", "global game jam", "local multiplayer"],
     facets: ['engineering', 'art-storytelling'],
@@ -250,7 +290,8 @@ const projects: Project[] = [
   },
   {
     title: "Cranky: The Squirrel Annihilator",
-    description: "Solo expansion of the jam — first-person pug movement, reactive squirrel/rooster AI, full UI, and WebGL deployment.",
+    description: "Solo first-person pug game with reactive AI, UI, and WebGL deployment.",
+    status: 'Playable',
     tags: ["Enemy AI", "WebGL Deployment", "Solo Build"],
     searchTerms: ["cranky", "squirrel annihilator", "dog chase", "webgl", "ai"],
     facets: ['engineering'],
@@ -263,7 +304,8 @@ const projects: Project[] = [
   },
   {
     title: "The Signal",
-    description: "Sci-fi board game with modular exploration, evolving enemy behavior, class customization, and co-op/competitive win paths.",
+    description: "Sci-fi board game with modular exploration and evolving enemy behavior.",
+    status: 'Completed',
     tags: ["Board Game Design", "Systems Design", "Co-op Design"],
     searchTerms: ["board game", "sci-fi", "co-op", "class customization", "modular exploration"],
     facets: ['art-storytelling'],
@@ -276,7 +318,8 @@ const projects: Project[] = [
   },
   {
     title: "The Last Paycheck",
-    description: "Dystopian 2050 design document — poverty, survival, unstable jobs, and inflation pressure as player emotional engagement.",
+    description: "Dystopian 2050 design document about poverty, jobs, and inflation.",
+    status: 'Concept',
     tags: ["Narrative Design", "Systems Design", "Design Document"],
     searchTerms: ["dystopian", "2050", "poverty", "survival", "systems design"],
     facets: ['art-storytelling'],
@@ -288,8 +331,9 @@ const projects: Project[] = [
     bannerHeight: 1280
   },
   {
-    title: "VR Patapon Game",
-    description: "Designing a VR rhythm-strategy game based on Patapon — timing-based tactics in immersive space.",
+    title: "Patapon VR: The First Beat",
+    description: "VR rhythm-strategy design concept based on Patapon; not yet implemented.",
+    status: 'Concept',
     tags: ["VR GDD", "Rhythm Interaction", "Strategy"],
     searchTerms: ["patapon", "rhythm", "strategy", "experimental input"],
     facets: ['xr', 'art-storytelling'],
@@ -298,8 +342,7 @@ const projects: Project[] = [
     bannerImage: '/images/projects/patapon-vr/patapon-boss-battle.png',
     bannerAlt: 'Patapon VR boss battle concept art',
     bannerWidth: 799,
-    bannerHeight: 421,
-    type: 'prototype'
+    bannerHeight: 421
   },
 ];
 
@@ -309,7 +352,7 @@ const categoryProjectOrder: Record<Exclude<ProjectFilter, 'all'>, readonly strin
     'MUMOSA Crisis Response VR Study',
     'VR Dirt Bike Game',
     'VR Car Drift Simulator',
-    'VR Patapon Game',
+    'Patapon VR: The First Beat',
   ],
   games: [
     'Shinobi Story',
@@ -323,7 +366,7 @@ const categoryProjectOrder: Record<Exclude<ProjectFilter, 'all'>, readonly strin
     'Cranky: The Squirrel Annihilator',
     'The Signal',
     'The Last Paycheck',
-    'VR Patapon Game',
+    'Patapon VR: The First Beat',
   ],
   tools: [
     'Black Dice Engine',
@@ -451,14 +494,19 @@ const matchesSearch = (haystack: string, query: string) => {
 };
 
 function CareerContent() {
-  const [activeFilter, setActiveFilter] = useQueryState(
-    'filter',
-    parseAsStringLiteral<ProjectFilter>(['all', 'xr', 'games', 'tools']).withDefault('all')
-  );
-  const [searchQuery, setSearchQuery] = useQueryState(
-    'q',
-    parseAsString
-  );
+  const [{ filter: activeFilter, q: searchQuery }, setArchiveQuery] = useQueryStates({
+    filter: parseAsStringLiteral<ProjectFilter>(['all', 'xr', 'games', 'tools']).withDefault('all'),
+    q: parseAsString,
+  });
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 560);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const resolvedFilter: ProjectFilter =
     activeFilter && filterOptions.some((option) => option.value === activeFilter)
@@ -492,157 +540,207 @@ function CareerContent() {
     });
   }, [resolvedFilter, searchQuery]);
 
+  const filterCounts: Record<ProjectFilter, number> = {
+    all: projects.length,
+    xr: projects.filter((project) => projectBelongsToCategory(project, 'xr')).length,
+    games: projects.filter((project) => projectBelongsToCategory(project, 'games')).length,
+    tools: projects.filter((project) => projectBelongsToCategory(project, 'tools')).length,
+  };
+  const hasActiveQuery = (searchQuery ?? '').trim().length > 0;
+
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <MotionPage className="max-w-6xl mx-auto">
-        <header className="mb-20">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects' },
-            ]}
-          />
-          <div className="mt-8">
-            <h1 className="text-4xl font-bold tracking-tight">Project Archive</h1>
-            <p className="text-[var(--muted)] mt-3 font-medium tracking-[0.2em] text-xs uppercase">XR · Games · Tools</p>
-            <p className="text-[var(--muted)] mt-2 text-sm">Browse the complete portfolio through the same three lenses as the homepage.</p>
+    <main className="min-h-screen bg-[var(--archive-background)] px-6 py-8 font-sans text-[var(--archive-foreground)] sm:px-8 md:py-9 lg:px-6 2xl:px-0">
+      <MotionPage className="mx-auto max-w-[1396px]">
+        <header className="mb-5 md:mb-5">
+          <Link
+            href="/"
+            className="mb-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--archive-subtle)] transition-colors hover:text-[var(--archive-cyan)]"
+          >
+            <ArrowLeft aria-hidden="true" size={15} strokeWidth={1.8} />
+            Back to portfolio
+          </Link>
+          <div>
+            <h1 className="text-[30px] font-bold leading-none tracking-[-0.035em] sm:text-[56px]">Project Archive</h1>
+            <p className="mt-4 text-xl font-medium leading-none tracking-[-0.01em] text-[var(--archive-accent)] sm:text-2xl">XR · Games · Tools</p>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            {filterOptions.map((option) => {
-              const active = option.value === resolvedFilter;
+          <div className="mt-6 flex flex-col gap-4 md:mt-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+            <div className="flex flex-wrap items-center gap-3">
+              {filterOptions.map((option) => {
+                const active = option.value === resolvedFilter;
+                const Icon = option.Icon;
 
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => setActiveFilter(option.value)}
-                  className={`cursor-pointer rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors ${
-                    active
-                      ? 'bg-[var(--foreground)] text-[var(--background)]'
-                      : 'border border-[var(--border)] text-[var(--muted)] hover:border-[var(--foreground)] hover:text-[var(--foreground)]'
-                  }`}
-                  aria-pressed={active}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setArchiveQuery({ filter: option.value })}
+                    className={`inline-flex cursor-pointer items-center gap-3 rounded-md border px-4 py-2.5 text-xs font-normal tracking-normal transition-colors sm:py-3 sm:text-sm ${
+                      option.value === 'all'
+                        ? 'sm:min-w-[160px] sm:px-5'
+                        : option.value === 'xr'
+                          ? 'sm:min-w-[112px] sm:px-5'
+                          : option.value === 'games'
+                            ? 'sm:min-w-[140px] sm:px-5'
+                            : 'sm:min-w-[150px] sm:px-5'
+                    } ${
+                      active
+                        ? 'border-[var(--archive-cyan-border)] bg-[var(--archive-active-background)] text-[var(--archive-cyan)] shadow-[0_0_0_1px_rgba(22,200,238,0.12)]'
+                        : 'border-[var(--archive-border)] bg-[var(--archive-control-background)] text-[var(--archive-control-text)] hover:border-[var(--archive-border-strong)] hover:text-[var(--archive-foreground)]'
+                    }`}
+                    aria-pressed={active}
+                    aria-label={`${option.label}: ${filterCounts[option.value]} projects`}
+                  >
+                    <Icon aria-hidden="true" size={option.value === 'xr' ? 24 : 18} strokeWidth={option.value === 'xr' ? 1.8 : 1.7} />
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <input
-              type="search"
-              value={searchQuery ?? ''}
-              onChange={(event) => {
-                const nextValue = event.target.value;
-                setSearchQuery(nextValue.length > 0 ? nextValue : null);
-              }}
-              placeholder="Search projects by title, skill, or keyword"
-              className="w-full max-w-xl rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--foreground)] outline-none transition-colors placeholder:text-[var(--muted)] focus:border-[var(--foreground)]"
-              aria-label="Search projects"
-            />
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
-              Results: {filteredProjects.length}
-            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between lg:justify-end">
+              <div className="relative w-full sm:w-[348px]">
+                <Search
+                  aria-hidden="true"
+                  size={20}
+                  strokeWidth={1.6}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--archive-muted)]"
+                />
+                <input
+                  type="search"
+                  value={searchQuery ?? ''}
+                  onChange={(event) => {
+                    const nextValue = event.target.value;
+                    setArchiveQuery({ q: nextValue.length > 0 ? nextValue : null });
+                  }}
+                  placeholder="Search projects…"
+                  className="h-[47px] w-full rounded-md border border-[var(--archive-border)] bg-[var(--archive-control-background)] py-2.5 pl-11 pr-4 text-sm text-[var(--archive-foreground)] outline-none transition-colors placeholder:text-[var(--archive-placeholder)] focus:border-[var(--archive-cyan-border)]"
+                  aria-label="Search projects"
+                />
+              </div>
+              <div className="flex items-center justify-between gap-4 sm:justify-end">
+                <p className="text-sm text-[var(--archive-control-text)] sm:whitespace-nowrap" aria-live="polite">
+                  {filteredProjects.length} projects
+                </p>
+                {hasActiveQuery ? (
+                  <button
+                    type="button"
+                    onClick={() => setArchiveQuery({ filter: 'all', q: null })}
+                    className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--archive-accent)] hover:underline underline-offset-4"
+                  >
+                    Clear
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project) => (
-            <div key={project.title}>
-              {project.href ? (
-                <Link
-                  href={project.href}
-                  target={project.external ? "_blank" : undefined}
-                  rel={project.external ? "noreferrer noopener" : undefined}
-                  className={`group relative block h-full rounded-2xl border bg-[var(--surface)] p-8 shadow-[var(--shadow)] transition-all duration-300 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] flex flex-col justify-between ${
-                    project.type === 'prototype'
-                      ? 'border-dashed border-[var(--border)] opacity-85'
-                      : 'border-[var(--border)]'
-                  }`}
-                >
-                  {project.type === 'prototype' ? (
-                    <span className="absolute right-6 top-6 rounded-full border border-[var(--border)]/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                      Concept
-                    </span>
-                  ) : null}
-                  <div>
-                    <div className="mb-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                      {project.bannerImage ? (
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {filteredProjects.map((project) => {
+            const isEarlyStage = project.status === 'Prototype' || project.status === 'In development' || project.status === 'Concept';
+
+            return (
+              <article
+                key={project.title}
+                className="group flex h-full flex-col overflow-hidden rounded-[10px] border border-[var(--archive-border)] bg-[var(--archive-surface)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--archive-border-strong)] hover:shadow-[var(--archive-card-shadow)]"
+              >
+                <div className="relative aspect-[2.55] w-full overflow-hidden border-b border-[var(--archive-border)] bg-[var(--archive-surface)]">
+                  {project.bannerImage ? (
+                    <>
+                      <Link
+                        href={project.href ?? '#'}
+                        target={project.external ? '_blank' : undefined}
+                        rel={project.external ? 'noreferrer noopener' : undefined}
+                        className="relative block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--archive-cyan-border)]"
+                        aria-label={`View ${project.title} case study`}
+                      >
+                        <Image
+                          src={project.bannerImage}
+                          alt={project.bannerAlt ?? `${project.title} banner`}
+                          fill
+                          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw"
+                          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                      </Link>
+                      <div className="absolute right-5 top-4 z-10">
                         <LightboxImage
                           src={project.bannerImage}
                           alt={project.bannerAlt ?? `${project.title} banner`}
                           width={project.bannerWidth ?? 1600}
                           height={project.bannerHeight ?? 900}
-                          className="h-auto w-full object-cover"
-                          roundedClassName="rounded-none"
+                          triggerVariant="preview-icon"
                         />
-                      ) : (
-                        <div className="flex h-48 w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
-                          Banner coming soon
-                        </div>
-                      )}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-xs font-semibold uppercase tracking-[0.3em] text-[var(--archive-muted)]">
+                      Banner coming soon
                     </div>
-                    <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2">
-                      <li>{project.description}</li>
-                      <li>Key focus: {project.tags[0]}</li>
-                    </ul>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-8">
-                    {project.tags.map((tag, i) => (
-                      <HoverCard key={i} title={tag} description={tagDescriptions[tag] ?? 'Core competency applied in this case study.'}>
-                        {tag}
-                      </HoverCard>
-                    ))}
-                  </div>
-                </Link>
-              ) : (
-                <div className="group relative p-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] flex flex-col justify-between opacity-85 cursor-default">
-                  {project.type === 'prototype' ? (
-                    <span className="absolute right-6 top-6 rounded-full border border-[var(--border)]/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-                      Concept
+                  )}
+                </div>
+
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`rounded-[4px] border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] ${
+                        isEarlyStage
+                          ? 'border-[var(--archive-prototype)] text-[var(--archive-prototype)]'
+                          : 'border-[var(--archive-shipped)] text-[var(--archive-shipped)]'
+                      }`}
+                    >
+                      {project.status}
                     </span>
-                  ) : null}
-                  <div>
-                    <div className="mb-6 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                      {project.bannerImage ? (
-                        <LightboxImage
-                          src={project.bannerImage}
-                          alt={project.bannerAlt ?? `${project.title} banner`}
-                          width={project.bannerWidth ?? 1600}
-                          height={project.bannerHeight ?? 900}
-                          className="h-auto w-full object-cover"
-                          roundedClassName="rounded-none"
-                        />
-                      ) : (
-                        <div className="flex h-48 w-full items-center justify-center bg-[var(--surface)] text-xs font-semibold uppercase tracking-[0.3em] text-[var(--muted)]">
-                          Banner coming soon
-                        </div>
-                      )}
-                    </div>
-                    <h2 className="text-xl font-semibold mb-3 tracking-tight">{project.title}</h2>
-                    <ul className="list-disc pl-5 text-base text-[var(--muted)] leading-relaxed space-y-2">
-                      <li>{project.description}</li>
-                      <li>Key focus: {project.tags[0]}</li>
-                    </ul>
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-8">
+
+                  <h2 className="mt-2 line-clamp-1 text-[18px] font-semibold uppercase leading-[1.15] tracking-[0.015em] sm:text-[19px]">{project.title}</h2>
+                  <p className="mt-1 text-sm leading-[1.4] text-[var(--archive-muted)]">{project.description}</p>
+
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {project.tags.map((tag, i) => (
-                      <HoverCard key={i} title={tag} description={tagDescriptions[tag] ?? 'Core competency applied in this case study.'}>
+                      <HoverCard key={i} title={tag} compact showInfoIcon={false} description={tagDescriptions[tag] ?? 'Core competency applied in this case study.'}>
                         {tag}
                       </HoverCard>
                     ))}
+                  </div>
+
+                  <div className="mt-auto flex items-center justify-between gap-4 pt-2">
+                    {project.href ? (
+                      <Link
+                        href={project.href}
+                        target={project.external ? "_blank" : undefined}
+                        rel={project.external ? "noreferrer noopener" : undefined}
+                        className="ml-auto text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--archive-accent)] transition-colors hover:text-[var(--archive-foreground)] hover:underline underline-offset-4"
+                        aria-label={`View ${project.title} case study`}
+                      >
+                        View case study →
+                      </Link>
+                    ) : (
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--archive-muted)]">
+                        Case study coming soon
+                      </span>
+                    )}
                   </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
         {filteredProjects.length === 0 ? (
           <p className="mt-10 text-sm text-[var(--muted)]">No projects in this filter yet. Try another category.</p>
+        ) : null}
+
+        {showScrollTop ? (
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+            className="fixed bottom-24 right-4 z-40 inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--archive-border)] bg-[var(--archive-surface)] text-[var(--archive-muted)] shadow-[var(--archive-card-shadow)] backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--archive-cyan-border)] hover:text-[var(--archive-cyan)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--archive-cyan-border)]/50 sm:bottom-6 sm:right-[5.5rem]"
+            aria-label="Back to top"
+            title="Back to top"
+          >
+            <ArrowUp aria-hidden="true" size={18} strokeWidth={1.8} />
+          </button>
         ) : null}
 
       </MotionPage>

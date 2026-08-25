@@ -419,7 +419,7 @@ export default async function Creative() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[var(--accent-orange)]/40 bg-[var(--surface)] p-8 shadow-[var(--shadow)] space-y-6">
+          <div id="animation" className="scroll-mt-24 rounded-2xl border border-[var(--accent-orange)]/40 bg-[var(--surface)] p-8 shadow-[var(--shadow)] space-y-6">
             <div className="flex flex-col gap-3">
               <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Digital Animation Portfolio</p>
               <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">Storyboards, 3D, Digital, Traditional</h2>

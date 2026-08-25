@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -8,6 +9,25 @@ export const metadata: Metadata = {
   title: "Shonen Showdown | Georgi Tsvetanski",
   description: "Lead developer on a multiplayer first-person Trading Card Game built in Unity 6 — full TCG rules engine, Photon Fusion 2 networking, and a ScriptableObject-driven card data system.",
 };
+
+const snapshotItems = [
+  {
+    label: 'My Role',
+    value: 'Lead developer responsible for battle rules, turn flow, networking, and card-data architecture',
+  },
+  {
+    label: 'Team',
+    value: 'Three-person student team with separate ownership of scenes and systems',
+  },
+  {
+    label: 'Stack',
+    value: 'Unity 6, C#, Photon Fusion 2, ScriptableObjects, and shared-mode networking',
+  },
+  {
+    label: 'Technical Challenge',
+    value: 'Keep turn phases, card effects, summons, attacks, and player-visible state synchronized across the network',
+  },
+];
 
 export default function ShonenShowdownPage() {
   return (
@@ -30,6 +50,7 @@ export default function ShonenShowdownPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
 
           {/* Hero — Full-width video */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
@@ -46,13 +67,11 @@ export default function ShonenShowdownPage() {
 
           {/* Project Summary — full width */}
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Summary</h2>
+            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">How It Works And What I Owned</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Shonen Showdown bridges physical card games and anime battles. Unlike flat 2D simulators, the player
-                holds cards in-hand and witnesses monsters materialize as 3D holograms on the field — closer to
-                the Yu-Gi-Oh! anime fantasy than any existing simulator. Built in Unity 6 with Photon Fusion 2
-                networking and proximity voice chat for social lobbies.
+                Shonen Showdown presents a networked card battle from first person. Players hold cards, declare attacks, and see summoned monsters appear
+                as 3D holograms on the board. Social lobbies also support proximity voice chat.
               </p>
               <div>
                 <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">

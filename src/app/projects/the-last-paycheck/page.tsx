@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -7,6 +8,13 @@ export const metadata: Metadata = {
   title: "The Last Paycheck | Georgi Tsvetanski",
   description: "Narrative and systems design document for a dystopian 2050 board game — poverty, unstable jobs, inflation pressure, and player emotional engagement.",
 };
+
+const snapshotItems = [
+  { label: 'Status', value: 'Completed design document; no playable build' },
+  { label: 'My role', value: 'Solo narrative and systems designer' },
+  { label: 'Design focus', value: 'Economic pressure, unstable work, and family trade-offs' },
+  { label: 'Deliverable', value: 'Board-game concept and full game design document' },
+] as const;
 
 
 export default function TheLastPaycheckPage() {
@@ -29,6 +37,8 @@ export default function TheLastPaycheckPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="relative aspect-video w-full">

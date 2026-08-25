@@ -3,6 +3,7 @@ import DocViewer from '@/components/doc-viewer';
 import type { DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxLocalVideo from '@/components/lightbox-local-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -17,23 +18,19 @@ const imageBase = '/images/projects/prince-of-persia-warrior-within-mod';
 const snapshotItems = [
   {
     label: 'Role',
-    value: 'Solo designer, gameplay engineer, mod integrator, art-pipeline builder, and presentation owner',
+    value: 'Solo designer and gameplay engineer; also handled integration, assets, audio, and presentation',
   },
   {
     label: 'Current Stack',
     value: 'STS2 v0.103.2, BaseLib v3.1.0, Godot 4.5.1, C#/.NET 9, Harmony patches',
   },
   {
-    label: 'Playable Core',
-    value: 'Custom Prince character, Medallion of Time starter relic, Sand HUD, Wind Back rewinds, and Dahaka escape takeover',
+    label: 'Technical Challenge',
+    value: 'Restore a complete combat checkpoint while keeping health, cards, enemies, and custom resources consistent',
   },
   {
-    label: 'Content Direction',
-    value: 'Registered runtime pool plus authored/pre-release card families targeting a 32-card first public slice',
-  },
-  {
-    label: 'Presentation Layer',
-    value: 'Puppet idle rigs, room music, combat voice, Dahaka voice, SFX, loading videos, and contextual game-over overlays',
+    label: 'Playable Build',
+    value: 'Custom character, Sand resource, combat rewind, Dahaka pursuit, cards, audio, UI, and contextual videos',
   },
 ];
 
@@ -240,12 +237,14 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
             futures, and accept that every stolen second brings the Dahaka closer.
           </p>
           <p className="mt-4 max-w-4xl text-sm leading-relaxed text-[var(--muted)]">
-            The value of the project is not only the crossover fantasy. It is the engineering needed to make a custom character, rewind system, pursuit
-            encounter, audio layer, and presentation pipeline behave inside an early-access moddable combat engine.
+            I built the character, combat systems, pursuit encounter, audio layer, and presentation pipeline inside Slay the Spire 2&apos;s
+            early-access mod environment.
           </p>
         </header>
 
         <section className="flex flex-col gap-10 md:gap-12">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
             <LightboxImage
               src={`${imageBase}/prince-character-select-current-20260505.png`}
@@ -286,36 +285,21 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project In Short</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Playable character</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">A selectable Prince with a custom deck, starter relic, rewards, dialogue, visuals, and audio.</p>
               </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Why This Is A Strong Portfolio Project</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                Warrior Within only works in a deckbuilder if the Prince feels mobile, violent, hunted, and dangerous to himself. That pushed the mod past
-                a card pack into custom resource state, generated combat cards, boss takeover logic, UI repair, audio routing, animation systems, and
-                engine-specific compatibility patches.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                The implementation keeps the fantasy legible: Sand buys second chances, the Medallion rewinds combat, and the Dahaka turns repeated time
-                theft into pressure the player has to answer.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What The Current Build Covers</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                {currentBuildItems.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Core system</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Sand powers a rewind that restores combat state instead of only undoing lost health.</p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Risk and pressure</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Repeated time travel advances a Dahaka pursuit and can trigger a dedicated escape encounter.</p>
+              </div>
             </div>
           </div>
 
@@ -352,7 +336,34 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
             </div>
           </div>
 
-          <div>
+          <details className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <summary className="cursor-pointer list-none p-6 marker:content-none md:p-8">
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Closer look</p>
+                  <h2 className="mt-3 text-xl font-semibold tracking-tight">Cards, art pipeline, and reviewer documents</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+                    Open the full build scope, card-family evidence, production assets, adaptation choices, and supporting notes.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--background)] shadow-[0_0_18px_rgba(34,211,238,0.22)] transition-colors group-hover:bg-[var(--foreground)]">
+                  <span className="group-open:hidden">Open +</span>
+                  <span className="hidden group-open:inline">Close -</span>
+                </span>
+              </div>
+            </summary>
+
+            <div className="space-y-12 border-t border-[var(--border)] p-6 md:p-8">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6">
+                <h2 className="mb-5 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Build Scope</h2>
+                <ul className="space-y-3 text-sm leading-relaxed text-[var(--muted)]">
+                  {currentBuildItems.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Card Family Evidence</h2>
             <p className="mb-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
               The gallery shows design-family evidence from the local project. Some cards are in the registered playable runtime pool, while newer cards
@@ -386,9 +397,9 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
                 </article>
               ))}
             </div>
-          </div>
+              </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Art And Presentation Pipeline</h2>
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <p className="max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
@@ -468,9 +479,9 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
                 />
               </div>
             </div>
-          </div>
+              </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
               <LightboxImage
                 src={`${imageBase}/ravages-of-time.png`}
@@ -494,9 +505,9 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
                 assassin, shield tank, serene time mage, or passive stall-counter class.
               </p>
             </div>
-          </div>
+              </div>
 
-          <div>
+              <div>
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reviewer Docs</h2>
             <p className="mb-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
               Three short notes for different reviewers: current build scope, the hard systems work, and how the visual/audio pipeline is being produced.
@@ -512,16 +523,9 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
                 />
               ))}
             </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              The page now presents the mod as a serious systems and presentation project: a playable STS2 character mod with a risky time resource,
-              a real pursuit loop, engine-level rewind repair work, current gameplay capture, and a visible production pipeline that separates system
-              ownership from ComfyUI-assisted visual lookdev.
-            </p>
-          </div>
+              </div>
+            </div>
+          </details>
         </section>
       </div>
     </main>

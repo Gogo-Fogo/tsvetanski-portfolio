@@ -1,13 +1,21 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video'; // Added import
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "Trash Been | Georgi Tsvetanski",
-  description: "Cooperative game design project from Breda University of Applied Sciences — waste management mechanics, environmental storytelling, and player co-operation systems.",
+  description: "Solo Unity platformer built in one week for a Breda application — collect trash to restore a polluted city, unlock movement upgrades, and maintain momentum.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Solo designer and developer' },
+  { label: 'Timeframe', value: 'One week, from concept to playable build' },
+  { label: 'Built with', value: 'Unity visual scripting, Blender, WebGL' },
+  { label: 'Result', value: 'Playable application project that helped secure Breda acceptance' },
+] as const;
 
 
 export default function TrashBeenCaseStudy() {
@@ -55,6 +63,8 @@ export default function TrashBeenCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="aspect-video w-full">
@@ -145,7 +155,7 @@ export default function TrashBeenCaseStudy() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Rapid Development & QA</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                The hardest part was programming under time pressure in a pre-AI workflow era. I combined rapid implementation with community support and lightweight iterative testing.
+                The hardest part was building and debugging the full loop within one week. I kept the scope small, used community resources when blocked, and tested each playable revision.
               </p>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
                 <li>- Unity (Engine, Visual Scripting)</li>
@@ -153,7 +163,7 @@ export default function TrashBeenCaseStudy() {
                 <li>- Rapid iteration + remote playtest loop</li>
               </ul>
               <p className="text-sm text-[var(--muted)] leading-relaxed mt-4">
-                <span className="text-[var(--foreground)] font-medium">Outcome:</span> Trash Been helped secure acceptance into Breda by demonstrating strong scope control, systems thinking, and execution under constraint.
+                <span className="text-[var(--foreground)] font-medium">Outcome:</span> I submitted a complete playable build on time, and the project helped secure my acceptance into Breda.
               </p>
             </div>
           </div>

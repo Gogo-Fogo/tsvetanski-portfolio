@@ -18,12 +18,17 @@
 .header {
   position: relative;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   min-height: 7.55rem;
   padding: 0.65rem clamp(1.2rem, 2.4vw, 3rem);
   border-bottom: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: inherit;
 }
 
 .identity {
@@ -57,6 +62,10 @@
   display: block;
 }
 
+.identityWords {
+  margin: 0;
+}
+
 .identity strong {
   font-family: var(--font-geist-mono), monospace;
   font-size: clamp(1rem, 1.55vw, 1.38rem);
@@ -76,9 +85,11 @@
 .headerNav {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
-.aboutLink {
+.aboutLink,
+.contactLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -94,13 +105,26 @@
   transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
-.aboutLink:hover,
-.aboutLink:focus-visible {
+.aboutLink,
+.contactLink {
   background: var(--portfolio-orange);
   color: #07101a;
+}
+
+.aboutLink:hover,
+.aboutLink:focus-visible {
+  background: transparent;
+  color: var(--portfolio-orange);
   transform: translateY(-2px);
 }
 
+
+.contactLink:hover,
+.contactLink:focus-visible {
+  background: transparent;
+  color: var(--portfolio-orange);
+  transform: translateY(-2px);
+}
 .referenceLayout {
   position: relative;
   isolation: isolate;
@@ -266,7 +290,32 @@
   transform: translateY(-0.25rem);
   opacity: 1;
   border-color: var(--portfolio-orange);
-  box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--portfolio-cyan) 12%, transparent);
+  box-shadow: 0 0 2.6rem color-mix(in srgb, var(--portfolio-cyan) 12%, transparent);
+}
+
+.featureCard::before,
+.secondaryCard::before {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: inset 0 0 1.15rem color-mix(in srgb, var(--portfolio-cyan) 16%, transparent);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: box-shadow 220ms ease, opacity 220ms ease;
+}
+
+.projectTrackItemActive > a::before {
+  box-shadow: inset 0 0 1.15rem color-mix(in srgb, var(--portfolio-orange) 18%, transparent);
+  opacity: 0.72;
+}
+
+.featureCard:hover::before,
+.featureCard:focus-visible::before,
+.secondaryCard:hover::before,
+.secondaryCard:focus-visible::before {
+  opacity: 1;
 }
 
 .featureCopy,
@@ -376,6 +425,10 @@
   transition: transform 700ms cubic-bezier(0.2, 0.7, 0, 1);
 }
 
+.cardImageMobile {
+  display: none;
+}
+
 .featureCard:hover .cardImage,
 .featureCard:focus-visible .cardImage,
 .secondaryCard:hover .cardImage,
@@ -408,27 +461,6 @@
   transform: translateY(-2px);
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  width: min(91vw, 90rem);
-  margin: 0 auto;
-  padding: 2.1rem 0 5.5rem;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.03em;
-}
-
-.footer a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: var(--portfolio-cyan);
-}
 
 .srOnly {
   position: absolute;
@@ -503,7 +535,8 @@
     font-size: clamp(0.68rem, 0.85vw, 0.8rem);
   }
 
-  .aboutLink {
+  .aboutLink,
+  .contactLink {
     min-width: 8.8rem;
     min-height: 3rem;
     font-size: 0.94rem;
@@ -674,13 +707,22 @@
     display: none;
   }
 
-  .aboutLink {
+  .aboutLink,
+  .contactLink {
     min-width: auto;
     min-height: 2.75rem;
     padding: 0 0.8rem;
     gap: 0.35rem;
     font-size: 0.86rem;
   }
+  .headerNav {
+    gap: 0.35rem;
+  }
+
+  .headerNav svg {
+    display: none;
+  }
+
 
   .referenceLayout {
     display: block;
@@ -798,22 +840,17 @@
     font-size: 0.76rem;
   }
 
-  .footer {
-    display: grid;
-    justify-content: start;
-    gap: 0.65rem;
-    width: min(92vw, 48rem);
-    padding: 1.7rem 0 3.8rem;
-    font-size: 0.66rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .aboutLink,
+  .contactLink,
   .node,
   .nodeActive,
   .featureCard,
   .secondaryCard,
+  .featureCard::before,
+  .secondaryCard::before,
   .cardImage,
   .viewAllLink {
     transition: none;
@@ -825,7 +862,7 @@
 .page{background:radial-gradient(ellipse 44rem 34rem at 86% 10%,color-mix(in srgb,var(--portfolio-cyan) 7%,transparent),transparent 72%),radial-gradient(ellipse 34rem 30rem at 8% 40%,color-mix(in srgb,var(--portfolio-cyan) 4%,transparent),transparent 72%),linear-gradient(135deg,#040b16 0%,var(--portfolio-ink) 54%,#06111c 100%)}
 .header{min-height:7.5rem;padding:.6rem clamp(2rem,3.2vw,3.4rem)}
 .portrait{width:4.75rem;height:4.75rem}
-.aboutLink{min-width:11.9rem;min-height:3.6rem;gap:1.15rem}
+.aboutLink,.contactLink{min-width:11.9rem;min-height:3.6rem;gap:1.15rem}
 .referenceLayout{grid-template-columns:7.8rem minmax(0,1fr);gap:clamp(7.8rem,11.7vw,11.9rem);width:min(90.5vw,90rem);margin-top:2.9rem}
 .nodeList{gap:2.15rem}
 .node,.nodeActive{width:7.75rem;height:7.45rem;gap:.65rem}
@@ -854,26 +891,77 @@
 .viewProject{min-height:3.8rem;margin-top:1.85rem;padding-inline:1.75rem;gap:1.6rem}
 .featureImage,.secondaryImage{position:absolute;inset:0;z-index:0;min-height:0}
 .cardImage,.featureCard[href="/projects/shinobi-story"] .cardImage{object-position:center;transform:none}
+.featureCard[href="/projects/mumosa-crisis-response-vr"] .cardImage{object-position:center 48%}
+.secondaryCard[href="/projects/cranky-game-jam"] .cardImage{object-position:center 48%}
+.secondaryCard[href="/projects/feh-barracks-manager"] .cardImage{object-position:center 27%}
+.secondaryCard[href="/projects/ami-research-companion"] .cardImage{object-position:center 42%}
 .featureCard:hover .cardImage,.featureCard:focus-visible .cardImage,.secondaryCard:hover .cardImage,.secondaryCard:focus-visible .cardImage,.featureCard[href="/projects/shinobi-story"]:hover .cardImage,.featureCard[href="/projects/shinobi-story"]:focus-visible .cardImage{transform:scale(1.018)}
 .featureCard[href="/projects/shinobi-story"] .featureImage::after{content:none}
-.footer{width:min(90.5vw,90rem)}
 @media (min-width:701px) and (max-width:1100px){.referenceLayout{grid-template-columns:6.6rem minmax(0,1fr);gap:clamp(4.5rem,8vw,6rem);width:min(94vw,62rem)}.node,.nodeActive{width:6.55rem;height:6.15rem}.featureCopy,.secondaryCopy{width:52%}}
-@media (min-width:701px) and (max-height:900px){.header{min-height:5.65rem;padding-block:.38rem}.portrait{width:4rem;height:4rem}.aboutLink{min-width:9.7rem;min-height:3rem}.referenceLayout{grid-template-columns:6.6rem minmax(0,1fr);width:min(94vw,90rem);margin-top:1.8rem}.nodeList{gap:1.35rem}.node,.nodeActive{width:6.55rem;height:5.75rem}.projectStack{gap:1.35rem}.featureCard{min-height:0;height:clamp(24rem,56vh,30rem)}.secondaryCard{min-height:0;height:clamp(15rem,31vh,18.5rem)}.featureCopy{width:min(47%,26rem);padding:clamp(1.6rem,3.1vw,3rem)}.secondaryCopy{width:min(48%,25rem);padding:clamp(1.4rem,2.8vw,2.65rem)}.featureKicker::after{width:2.7rem;margin-top:.65rem}.cardTitleRow{margin-top:1.3rem}.cardTitleRow h3{font-size:clamp(2.35rem,2.9vw,3.25rem)}.secondaryCard .cardTitleRow h3{font-size:clamp(1.8rem,2.45vw,2.6rem)}.viewProject{min-height:3rem;margin-top:1.3rem}}
+@media (min-width:701px) and (max-height:900px){.header{min-height:5.65rem;padding-block:.38rem}.portrait{width:4rem;height:4rem}.aboutLink,.contactLink{min-width:9.7rem;min-height:3rem}.referenceLayout{grid-template-columns:6.6rem minmax(0,1fr);width:min(94vw,90rem);margin-top:1.8rem}.nodeList{gap:1.35rem}.node,.nodeActive{width:6.55rem;height:5.75rem}.projectStack{gap:1.35rem}.featureCard{min-height:0;height:clamp(24rem,56vh,30rem)}.secondaryCard{min-height:0;height:clamp(15rem,31vh,18.5rem)}.featureCopy{width:min(47%,26rem);padding:clamp(1.6rem,3.1vw,3rem)}.secondaryCopy{width:min(48%,25rem);padding:clamp(1.4rem,2.8vw,2.65rem)}.featureKicker::after{width:2.7rem;margin-top:.65rem}.cardTitleRow{margin-top:1.3rem}.cardTitleRow h3{font-size:clamp(2.35rem,2.9vw,3.25rem)}.secondaryCard .cardTitleRow h3{font-size:clamp(1.8rem,2.45vw,2.6rem)}.viewProject{min-height:3rem;margin-top:1.3rem}}
 @media (min-width:701px) and (max-height:700px){.header{min-height:4.9rem}.portrait{width:3.6rem;height:3.6rem}.referenceLayout{margin-top:1rem}.nodeList{gap:.72rem}.node,.nodeActive{height:4.65rem}.featureCard{height:21.5rem}.secondaryCard{height:13.5rem}}
 @media (max-width:700px){.referenceLayout{display:block;width:100%;margin-top:0}.featureCard,.secondaryCard{display:block;min-height:27rem;height:min(31rem,66vh);border-radius:1.1rem}.secondaryCard{min-height:23rem;height:min(26rem,58vh)}.featureCard::after,.secondaryCard::after{background:linear-gradient(0deg,rgba(5,12,24,.99) 0%,rgba(5,12,24,.92) 39%,rgba(5,12,24,.2) 72%,transparent 100%),linear-gradient(90deg,rgba(5,12,24,.22),transparent 65%)}.featureCopy,.secondaryCopy{justify-content:flex-end;width:100%;height:100%;padding:1.35rem 1.25rem 1.5rem}.featureImage,.secondaryImage{position:absolute;inset:0;min-height:0;aspect-ratio:auto}.cardTitleRow,.secondaryCard .cardTitleRow{margin-top:.85rem}.cardTitleRow h3,.secondaryCard .cardTitleRow h3{font-size:clamp(2rem,9vw,3rem)}}
 
 /* Reference geometry correction */
 .featureCard[href="/projects/shinobi-story"] .cardImage{transform:scale(1.14);transform-origin:78% 50%}
 .featureCard[href="/projects/shinobi-story"]:hover .cardImage,.featureCard[href="/projects/shinobi-story"]:focus-visible .cardImage{transform:scale(1.16)}
-@media (min-width:701px) and (max-height:900px){.referenceLayout{grid-template-columns:5.75rem minmax(0,1fr);width:min(90.5vw,90rem)}.node,.nodeActive{width:5.65rem;height:5.45rem}.aboutLink{min-width:8.7rem;min-height:2.55rem}}
+@media (min-width:701px) and (max-height:900px){.referenceLayout{grid-template-columns:5.75rem minmax(0,1fr);width:min(90.5vw,90rem)}.node,.nodeActive{width:5.65rem;height:5.45rem}.aboutLink,.contactLink{min-width:8.7rem;min-height:2.55rem}}
 
 /* Final reference alignment */
 .featureCard,.secondaryCard{border-radius:1.25rem}
 .nodeActive:focus-visible{outline:1px solid var(--portfolio-orange);outline-offset:1px}
 @media (min-width:701px) and (max-height:900px){.nodeRail{padding-top:.75rem}.node,.nodeActive{height:5rem;border-radius:.7rem}}
 
-/* Keep short ultrawide project banners at the reference aspect and centered. */
-@media (min-width:1400px) and (max-height:900px) and (min-aspect-ratio:2/1){.projectPanel{width:min(100%,124vh);justify-self:center}}
+/* Keep desktop geometry stable across viewport heights; only width may compress. */
+@media (min-width:1200px){
+  .header{min-height:120px;padding:10px 48px}
+  .portrait{width:76px;height:76px}
+  .aboutLink,.contactLink{min-width:190px;min-height:58px}
+  .referenceLayout{
+    grid-template-columns:clamp(96px,7.3vw,124px) minmax(0,1fr);
+    gap:clamp(96px,11.5vw,236px);
+    width:min(1540px,calc(100vw - 32px));
+    margin-top:46px
+  }
+  .nodeList{gap:34px}
+  .node,.nodeActive{width:clamp(96px,7.3vw,124px);height:119px;gap:10px}
+  .projectPanel{width:100%;justify-self:stretch}
+  .projectStack{gap:30px}
+  .featureCard{width:100%;height:584px;aspect-ratio:auto}
+  .secondaryCard{width:100%;height:360px;aspect-ratio:auto}
+}
+
+/* Let narrow desktop rail cards grow with wrapped labels instead of clipping them. */
+@media (min-width: 701px) {
+  .node svg,
+  .nodeActive svg {
+    flex: 0 0 auto;
+  }
+
+  .node span,
+  .nodeActive span {
+    max-width: 100%;
+    line-height: 1.3;
+    text-wrap: balance;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1200px) {
+  .node,
+  .nodeActive {
+    box-sizing: border-box;
+    height: auto;
+    min-height: 6.9rem;
+    padding: 0.7rem 0.3rem;
+    gap: 0.45rem;
+  }
+
+  .node span,
+  .nodeActive span {
+    font-size: clamp(0.65rem, 0.9vw, 0.74rem);
+  }
+}
 
 /* Keep the desktop frame fixed while the project column carries the scroll. */
 @media (min-width: 701px) {
@@ -1041,10 +1129,321 @@
 }
 
 /* Small, background-free reference portrait: no visible rectangular photo tile. */
-.portrait{width:4.75rem;height:4.4rem;overflow:visible;border-radius:0;background:transparent;box-shadow:none}
-.portraitImage{object-fit:contain;object-position:center;filter:saturate(.92) contrast(1.04);mix-blend-mode:normal;transform:scale(1.1);transform-origin:center}
-@media (min-width:701px) and (max-height:900px){.portrait{width:4.4rem;height:4.15rem}}
-@media (min-width:701px) and (max-height:700px){.portrait{width:4.1rem;height:3.9rem}}
-@media (max-width:700px){.portrait{width:4.2rem;height:3.95rem}}
+.portrait{width:5.2rem;height:4.7rem;overflow:visible;border-radius:0;background:transparent;box-shadow:none}
+.portraitImage{object-fit:contain;object-position:center;filter:saturate(.92) contrast(1.04);mix-blend-mode:normal;transform:scale(1.24);transform-origin:center}
+@media (min-width:701px) and (max-height:900px){.portrait{width:4.7rem;height:4.25rem}}
+@media (min-width:701px) and (max-height:700px){.portrait{width:4.3rem;height:4rem}}
+@media (max-width:700px){.portrait{width:4.45rem;height:4.05rem}}
 
-.xrReferenceIcon{width:3.35rem;height:auto;object-fit:contain;mix-blend-mode:screen;filter:brightness(1.08) contrast(1.05)}
+/* Keep the header content in the same centered frame as the homepage. */
+.header{padding-inline:0}
+.headerInner{width:min(90.5vw,90rem);margin-inline:auto}
+@media (min-width:1200px){
+  .header{padding:10px 0}
+  .headerInner{width:min(1540px,calc(100vw - 32px))}
+}
+@media (max-width:700px){
+  .header{padding:.45rem 0}
+  .headerInner{width:calc(100% - 2rem)}
+  .headerNav{gap:.35rem}
+  .aboutLink,.contactLink{
+    min-width:0;
+    min-height:2.75rem;
+    padding:0 .65rem;
+    gap:0;
+    font-size:.82rem
+  }
+  .headerNav svg{display:none}
+}
+@media (max-width:360px){
+  .portrait{width:3.7rem;height:3.5rem}
+  .identity{gap:.45rem}
+  .identity strong{font-size:.74rem}
+  .headerNav{gap:.25rem}
+  .aboutLink,.contactLink{
+    min-height:2.5rem;
+    padding:0 .45rem;
+    font-size:.74rem
+  }
+}
+
+.xrReferenceIcon{width:3.35rem;height:auto;object-fit:contain;mix-blend-mode:normal;filter:none}
+@media (max-width:700px){
+  .cardImageDesktop{display:none}
+  .cardImageMobile{display:block}
+  .featureCard[href="/projects/mumosa-crisis-response-vr"] .cardImageMobile{object-position:70% 54%;transform:scale(1.12);transform-origin:70% 54%}
+}
+
+
+.node .xrIcon{width:2.25rem;height:2.25rem;stroke-width:1.6}
+@media (min-width:701px){.node svg,.nodeActive svg{width:2.25rem;height:2.25rem;stroke-width:1.6;flex-shrink:0}}
+@media (max-width:700px){.node svg,.nodeActive svg,.node .xrIcon{width:1.65rem;height:1.65rem;stroke-width:1.5;flex-shrink:0}}
+
+/* Quiet project index action and a single-line contact footer. */
+.viewAllLink {
+  width: max-content;
+  max-width: 100%;
+  min-height: 0;
+  margin-top: 1.4rem;
+  padding: 0.45rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 0.8rem;
+}
+
+.viewAllLink:hover,
+.viewAllLink:focus-visible {
+  color: var(--portfolio-orange);
+  background: transparent;
+  transform: translateX(0.2rem);
+}
+
+.connectSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding: 1.1rem 0 0.35rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 74%, transparent);
+  scroll-margin-top: 1rem;
+}
+
+.connectCard {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.connectEyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.connectLinks {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+.connectLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.connectIcon {
+  display: inline-flex;
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+  transition: color 180ms ease;
+}
+
+.connectLinks a:hover,
+.connectLinks a:focus-visible {
+  color: var(--portfolio-orange);
+  transform: translateY(-1px);
+}
+
+.connectLinks a:hover .connectIcon,
+.connectLinks a:focus-visible .connectIcon {
+  color: var(--portfolio-orange);
+}
+
+.connectMeta {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .viewAllLink { width: max-content; min-height: 0; margin-top: 1rem; }
+  .connectSection { align-items: flex-start; gap: 0.9rem; margin-top: 1rem; padding-top: 1rem; }
+  .connectCard { align-items: flex-start; flex-direction: column; gap: 0.75rem; }
+  .connectLinks { flex-wrap: wrap; gap: 0.7rem 1rem; }
+  .connectLinks a { font-size: 0.65rem; }
+  .connectMeta { padding-top: 0.1rem; font-size: 0.52rem; }
+}
+
+/* Light theme: preserve the home composition while replacing the dark-only reference treatment. */
+:global([data-theme="light"]) .page {
+  --portfolio-orange: #a85c08;
+  --portfolio-cyan: #007e9f;
+  --portfolio-ink: #f5f7f9;
+  background:
+    radial-gradient(ellipse 44rem 34rem at 86% 10%, color-mix(in srgb, var(--portfolio-cyan) 4%, transparent), transparent 72%),
+    radial-gradient(ellipse 34rem 30rem at 8% 40%, color-mix(in srgb, var(--portfolio-cyan) 2%, transparent), transparent 72%),
+    linear-gradient(135deg, #f8fafb 0%, #eef2f5 54%, #f8f9fa 100%);
+  color: var(--foreground);
+}
+
+:global([data-theme="light"]) .portrait {
+  overflow: hidden;
+  background: #eef2f5;
+  border: 1px solid #d6e1e6;
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+:global([data-theme="light"]) .portraitImage {
+  object-position: center 34%;
+  filter: saturate(0.98) contrast(1.02) brightness(1.02);
+  transform: scale(1.15);
+}
+
+:global([data-theme="light"]) .node,
+:global([data-theme="light"]) .nodeActive {
+  border-color: #cbd5df;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+
+:global([data-theme="light"]) .node:hover,
+:global([data-theme="light"]) .node:focus-visible {
+  border-color: var(--portfolio-cyan);
+  background: #e8f7fa;
+}
+
+:global([data-theme="light"]) .nodeActive {
+  border-color: var(--portfolio-orange);
+  background: #fff2e4;
+  color: var(--portfolio-orange);
+  box-shadow: 0 0 1.8rem color-mix(in srgb, var(--portfolio-orange) 15%, transparent);
+}
+
+:global([data-theme="light"]) .connectorStart,
+:global([data-theme="light"]) .connectorEnd {
+  fill: var(--surface);
+  stroke: var(--portfolio-orange);
+}
+
+:global([data-theme="light"]) .connectorEnd {
+  fill: var(--portfolio-ink);
+}
+
+:global([data-theme="light"]) .featureCard,
+:global([data-theme="light"]) .secondaryCard {
+  background: var(--surface);
+  box-shadow: 0 0 2.1rem color-mix(in srgb, var(--portfolio-cyan) 8%, transparent);
+}
+
+:global([data-theme="light"]) .featureCard::after,
+:global([data-theme="light"]) .secondaryCard::after {
+  inset: 0 auto 0 0;
+  width: 48%;
+  border-right: 1px solid #d6e1e6;
+  background: #eef2f5;
+}
+
+:global([data-theme="light"]) .featureCard:hover,
+:global([data-theme="light"]) .featureCard:focus-visible,
+:global([data-theme="light"]) .secondaryCard:hover,
+:global([data-theme="light"]) .secondaryCard:focus-visible {
+  box-shadow: 0 0 2.6rem color-mix(in srgb, var(--portfolio-orange) 13%, transparent);
+}
+
+@media (max-width: 700px) {
+  :global([data-theme="light"]) .featureCard::after,
+  :global([data-theme="light"]) .secondaryCard::after {
+    inset: 0;
+    width: auto;
+    border-right: 0;
+    background:
+      linear-gradient(0deg, #eef2f5 0%, #eef2f5 50%, rgba(238, 242, 245, 0.8) 59%, rgba(238, 242, 245, 0.14) 70%, rgba(238, 242, 245, 0) 76%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connectLinks a,
+  .connectIcon { transition: none; }
+}
+
+/* Keep project banners cinematic without letting them dominate the viewport. */
+@media (min-width: 701px) {
+  .featureCard {
+    height: clamp(25.5rem, 41vh, 29rem);
+  }
+
+  .secondaryCard {
+    height: clamp(14.5rem, 25vh, 17rem);
+  }
+}
+
+/* Keep wide-screen copy inside the intentionally compact cinematic banner. */
+@media (min-width: 1200px) {
+  .featureCard {
+    height: clamp(27rem, 54vh, 29rem);
+  }
+
+  .featureCopy {
+    width: min(43%, 27rem);
+    padding: clamp(1.5rem, 3vh, 2.25rem) clamp(2rem, 3vw, 3rem);
+  }
+
+  .featureKicker::after {
+    margin-top: 0.55rem;
+  }
+
+  .featureCard .cardTitleRow {
+    margin-top: 1rem;
+  }
+
+  .featureCard .cardTitleRow h3 {
+    font-size: clamp(2.55rem, 4.8vh, 3rem);
+    line-height: 0.98;
+  }
+
+  .featureCard .cardSummary {
+    margin-top: 1.1rem;
+    font-size: clamp(0.95rem, 1.8vh, 1.05rem);
+    line-height: 1.45;
+  }
+
+  .featureCard .viewProject {
+    min-height: 3rem;
+    margin-top: 1.15rem;
+    padding-inline: 1.35rem;
+  }
+}
+
+@media (min-width: 701px) and (max-height: 700px) {
+  .featureCard {
+    height: 21.5rem;
+  }
+
+  .secondaryCard {
+    height: 13.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .featureCard {
+    min-height: 22rem;
+    height: min(25.5rem, 58vh);
+  }
+
+  .secondaryCard {
+    min-height: 19rem;
+    height: min(21rem, 48vh);
+  }
+}

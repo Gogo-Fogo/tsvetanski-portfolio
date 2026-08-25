@@ -50,9 +50,23 @@ Instead of duplicating long Tailwind strings, use this standard wrapper for imag
   - Secondary: `border border-[var(--border)] text-[var(--foreground)]`
 
 ## 7. Narrative Flow
-1. **Header**: Breadcrumbs + Project Title + 1-sentence TL;DR.
-2. **Hero**: Main banner or high-impact video.
-3. **The Overview**: Paired with a close-up or gameplay screenshot.
-4. **Roles/Tools**: Brief technical metadata.
-5. **The Deep Dive**: Alternating "Text + Media" blocks for specific features (AI, Level Design, Art).
-6. **Outcomes/Links**: Results followed by external CTA buttons.
+1. **Header**: Breadcrumbs + project type + title + one plain-English sentence explaining what was built.
+2. **At a glance**: Four compact facts covering personal role, technical challenge, stack or platform, and result/proof.
+3. **Hero proof**: Main gameplay video, product capture, or strongest visual evidence.
+4. **Case study**: Challenge, important decisions, implementation, and outcome. Use specific headings instead of a generic "Closer Look" label.
+5. **Technical evidence**: Architecture diagrams, detailed documents, repositories, and supporting media.
+6. **Outcome/links**: Current status, measured result, demo, build, and source links where available.
+
+## 8. Recruiter-First Writing Rules
+- Lead with the plain-English result, then introduce a specialist term when it adds precision.
+- Prefer concrete verbs such as `built`, `tested`, `shipped`, `measured`, and `debugged` over abstract nouns such as `synthesis`, `delivery model`, or `workflow ownership`.
+- State personal ownership explicitly on team projects.
+- Replace reassurance such as "real product" or "not just a prototype" with evidence: where it ran, who tested it, what shipped, or what changed after use.
+- Define uncommon terms on first use. Keep engine, framework, and architecture names in metadata or technical sections when a general recruiter does not need them to understand the first sentence.
+- Do not repeat the same claim in the header, At a glance cards, overview, and outcome. Each layer should add new evidence.
+- Keep captions descriptive and short; do not use them as a second body paragraph.
+
+## 9. Page Depth
+- **Flagship project**: At a glance + full case study + technical evidence.
+- **Supporting project**: At a glance + two to four proof sections + outcome.
+- **Concept or older work**: Short summary + strongest artifact links. Do not stretch limited evidence into a flagship-length page.

@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -8,6 +9,13 @@ export const metadata: Metadata = {
   title: "The Signal | Georgi Tsvetanski",
   description: "Systems and narrative design for a sci-fi board game — modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Systems and narrative designer on a three-person team' },
+  { label: 'My contribution', value: 'Insight cards, progression, risk-reward, and playtest iteration' },
+  { label: 'Format', value: 'Physical sci-fi board game built over one semester' },
+  { label: 'Result', value: 'Complete playable build, tested and revised with the team' },
+] as const;
 
 
 export default function TheSignalPage() {
@@ -29,6 +37,8 @@ export default function TheSignalPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="relative aspect-video w-full">
@@ -106,8 +116,8 @@ export default function TheSignalPage() {
                   Room tiles and encounters are placed dynamically, ensuring no two explorations feel identical.
                 </li>
                 <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Dopamine-Driven Loops:</span>
-                  Focused on high-impact loot drops and risk-reward decision points inspired by modern roguelikes.
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Reward and Risk:</span>
+                  Loot, discoveries, and difficult choices give players clear reasons to keep exploring.
                 </li>
                 <li>
                   <span className="text-[var(--foreground)] font-medium block mb-1">Insight System:</span>
@@ -201,8 +211,8 @@ export default function TheSignalPage() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview & Key Features</h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              My design philosophy focused on dopamine triggers: discovery, progression, risk-reward choices, and environmental
-              storytelling. Players take the role of a scavenger, mercenary, or scholar exploring procedurally generated rooms
+              My design focused on discovery, progression, risk-reward choices, and environmental storytelling. Players take the role
+              of a scavenger, mercenary, or scholar exploring procedurally generated rooms
               aboard an ancient alien ship.
             </p>
             <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">

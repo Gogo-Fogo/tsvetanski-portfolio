@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 import VideoCarousel, { type VideoCard } from '../../creative/video-carousel';
 
 import type { Metadata } from 'next';
@@ -25,6 +26,25 @@ type ShinobiVideo = {
   thumbnailUrl?: string;
   zoomClassName?: string;
 };
+
+const snapshotItems = [
+  {
+    label: 'My Role',
+    value: 'Live operations, content planning, animation, player support, marketing, and developer mentoring',
+  },
+  {
+    label: 'Project',
+    value: 'Custom MMORPG built by overhauling the World of Warcraft 3.3.5 client and gameplay systems',
+  },
+  {
+    label: 'Reach',
+    value: '1M+ downloads, 56,000 players, and a 16,500-member Discord community',
+  },
+  {
+    label: 'Commercial Result',
+    value: '$110K revenue across a five-year live project from 2019 to 2024',
+  },
+];
 
 const shinobiStoryVideos: ShinobiVideo[] = [
   {
@@ -141,11 +161,14 @@ export default async function ShinobiStoryPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight mt-4">Shinobi Story</h1>
           <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A fully custom Naruto MMORPG — the WoW 3.3.5 client was completely overhauled with original character and ability animations, rebuilt systems, and custom gameplay. $110K in revenue, 1M+ downloads, 56K players, 16.5K Discord members. I joined as customer support, contributed animations, shipped content weekly, and ended up mentoring the dev team.
+            A custom Naruto MMORPG with original animation, rebuilt gameplay systems, weekly content releases, and five years of live operations. I grew
+            from customer support into animation, content production, marketing, and developer mentoring.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] max-w-2xl mx-auto border-2 border-[#D8B33C]">
             <Image
@@ -197,7 +220,8 @@ export default async function ShinobiStoryPage() {
             <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Narrative</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Not a mod — the WoW 3.3.5 client was completely overhauled. Original character and ability animations, custom combat systems, and rebuilt gameplay infrastructure made it a fully original product.
+                The team used the WoW 3.3.5 client as a technical base, then replaced its characters, abilities, animation, combat, and supporting gameplay
+                systems to create a distinct MMORPG.
               </p>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
                 I started in customer support to learn the live community pulse, then transitioned into development. I contributed character and ability animations, guided new developers in scripting, level design, and debugging, and shaped content rollouts and training resources.

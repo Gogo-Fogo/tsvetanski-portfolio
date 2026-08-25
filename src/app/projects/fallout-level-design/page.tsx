@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import DocViewer from '@/components/doc-viewer';
 import type { DocPage, DocOutlineItem } from '@/components/doc-viewer';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -9,6 +10,13 @@ export const metadata: Metadata = {
   title: "Fallout Level Design | Georgi Tsvetanski",
   description: "Third-floor lead on a team-built Fallout 4 interior level — interior production, merge stability, and visual optimization across a multi-person pipeline.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Third-floor level designer and merge support' },
+  { label: 'Team context', value: 'Joined an active Fallout 4 mod team mid-project' },
+  { label: 'Built with', value: 'Creation Kit, Blender, NifSkope, B.A.E.' },
+  { label: 'Result', value: 'Stable merged build with connected, optimized interior spaces' },
+] as const;
 
 
 const falloutDocuments = [
@@ -188,68 +196,92 @@ export default function FalloutLevelDesignCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="aspect-video w-full">
-              <LightboxImage
-                src="/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png"
-                alt="Hall of Idols puzzle chamber — Fallout 4 level design"
-                width={2048}
-                height={959}
-                className="h-full w-full object-cover"
-                roundedClassName="rounded-none"
-              />
+          <ProjectAtAGlance items={snapshotItems} />
+
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-strong)] md:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent-cyan)]">Featured level-design proof</p>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">Hall of Idols puzzle chamber</h2>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                  I narrowed the final design to one production-ready module: rotate the idol statues, reveal the hidden stairs, and descend into the Sun Chamber.
+                  The standalone structure also reduced merge conflicts during team development.
+                </p>
+                <div className="mt-6 grid gap-3 text-sm text-[var(--muted)]">
+                  <p><span className="font-semibold text-[var(--foreground)]">Player loop:</span> read the dead end → rotate idols → unlock stairs → descend.</p>
+                  <p><span className="font-semibold text-[var(--foreground)]">Implementation:</span> scripted placeholders, spotlight guidance, and modular area handoff.</p>
+                  <p><span className="font-semibold text-[var(--foreground)]">Tools:</span> Fallout 4 Creation Kit, Blender, NifSkope, and B.A.E.</p>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
+                <LightboxImage
+                  src="/images/projects/fallout/hall-of-idols/hall-of-idols-p01-img01.png"
+                  alt="Hall of Idols puzzle chamber — Fallout 4 level design"
+                  width={2048}
+                  height={959}
+                  className="h-auto w-full object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Puzzle chamber blockout with spotlight-guided statues and traversal staging."
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {hallOfIdolsRevisedImages.filter((_, index) => index !== 2).map((image) => (
+                <div key={image.src} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                  <LightboxImage
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    className="h-auto w-full object-cover"
+                    popupCaption={image.caption}
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Scope Split</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project In Short</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Major Team Build</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">Floating Institute (FII)</p>
-                <p className="mt-2 text-sm text-[var(--muted)]">
-                  Larger, late-semester combined project. I was not project lead there, but handled third-floor level design, optimization,
-                  and technical support during merge stabilization.
-                </p>
+                <p className="text-sm font-semibold text-[var(--foreground)]">Team production</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Joined an active Fallout 4 mod team mid-project and owned the third-floor interior lane.</p>
               </div>
               <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Earlier Project (Lead)</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">GAME 370 Milestone One - Ashen Vale</p>
-                <p className="mt-2 text-sm text-[var(--muted)]">
-                  Smaller first project where I led delivery and learned core Creation Kit workflow before the larger FII production cycle.
-                </p>
+                <p className="text-sm font-semibold text-[var(--foreground)]">My contribution</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Built room variants and stabilized door links, portals, bounds, lighting, and merged cells.</p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Result</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Delivered a connected, readable interior that held together inside the final shared build.</p>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project Context</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                The team goal was to create a multi-area Fallout 4 experience that felt native to the existing world while introducing a new
-                location hub with connected interior cells and combat spaces. Work had to fit Creation Kit constraints and merge cleanly into
-                a shared ESP.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                At one point during the semester, I merged my level ESP into the main team level. Because of that, my original personal ESP became
-                outdated and no longer represents the final integrated build state.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">My Role</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Joined mid-project and onboarded quickly to an active production pipeline.</li>
-                <li>- Built the third-floor interior and multiple room variants.</li>
-                <li>- Led level-design polish, optimization, and technical support for integrated team cells.</li>
-                <li>- Fixed first-merge technical issues: door links, room bounds, portals, and lighting.</li>
-                <li>- Future-proofed the level to run better and avoid visual breakage after full-team merge.</li>
-              </ul>
-            </div>
-          </div>
+          <details className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <summary className="cursor-pointer list-none p-6 marker:content-none md:p-8">
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Closer look</p>
+                  <h2 className="mt-3 text-xl font-semibold text-[var(--foreground)]">Workflow, optimization, and milestone evidence</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+                    Open the full process for technical decisions, problems resolved, earlier work, and supporting documents.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--background)] shadow-[0_0_18px_rgba(34,211,238,0.22)] transition-colors group-hover:bg-[var(--foreground)]">
+                  <span className="group-open:hidden">Open +</span>
+                  <span className="hidden group-open:inline">Close -</span>
+                </span>
+              </div>
+            </summary>
 
-          {/* Technical Workflow — text + editor screenshot side by side */}
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <div className="space-y-12 border-t border-[var(--border)] p-6 md:p-8">
+              {/* Technical Workflow — text + editor screenshot side by side */}
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Technical Workflow</h2>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div className="flex flex-col gap-6">
@@ -282,9 +314,9 @@ export default function FalloutLevelDesignCaseStudy() {
                 />
               </div>
             </div>
-          </div>
+              </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Challenges Resolved</h2>
               <ul className="space-y-3 text-sm text-[var(--muted)]">
@@ -311,9 +343,9 @@ export default function FalloutLevelDesignCaseStudy() {
                 <li>- Kept scene readability first: stable navigation and clear combat spaces over visual excess.</li>
               </ul>
             </div>
-          </div>
+              </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Milestone One (Project Lead)</h2>
             <p className="mb-6 text-sm text-[var(--muted)]">
               This was my first Fallout Creation Kit project and intentionally much smaller in scale than FII. It helped me learn puzzle
@@ -337,43 +369,10 @@ export default function FalloutLevelDesignCaseStudy() {
                 </div>
               ))}
             </div>
-          </div>
+              </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Revised Design: Hall of Idols</h2>
-            <p className="mb-5 text-sm text-[var(--muted)]">
-              In the revised final design document, I narrowed scope to one fully defined puzzle module to show exact implementation detail.
-              Hall of Idols functioned as the tutorial gate: the player rotates idol statues, reveals a hidden stairway, and transitions to
-              the Sun Chamber phase.
-            </p>
-            <ul className="mb-6 space-y-2 text-sm text-[var(--muted)]">
-              <li>- World function: a ritual checkpoint that filters progression through correct idol orientation.</li>
-              <li>- Gameplay loop: entry -&gt; dead-end read -&gt; interact/rotate idols -&gt; unlock hidden stairs -&gt; descend.</li>
-              <li>- Technical focus: scripted statue placeholders, spotlight guidance, and modular handoff to Area 2.</li>
-              <li>- Integration strategy: authored as a standalone module to reduce team conflict during active development.</li>
-            </ul>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {hallOfIdolsRevisedImages.map((image) => (
-                <div
-                  key={image.src}
-                  className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]"
-                >
-                  <LightboxImage
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    className="h-auto w-full object-cover"
-                    popupCaption={image.caption}
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Milestone Evidence — document viewer */}
-          <div>
+              {/* Milestone Evidence — document viewer */}
+              <div>
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Milestone Evidence</h2>
             <p className="mb-5 text-sm text-[var(--muted)]">
               Excerpts from the FII final milestone submission documenting role ownership, technical decisions, and runtime-control strategy.
@@ -384,17 +383,9 @@ export default function FalloutLevelDesignCaseStudy() {
               pages={falloutEvidenceImages as DocPage[]}
               outline={falloutEvidenceOutline}
             />
-          </div>
+              </div>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              The final level shipped as a stable merged team build with connected spaces, clearer flow, and reduced visual and runtime failures.
-              My contribution was less about claiming a full level solo and more about making the integrated project hold together technically under real constraints.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">References & Documents</h2>
             <div className="mb-6 flex flex-wrap gap-3">
               {falloutDocuments.map((document) => (
@@ -423,7 +414,9 @@ export default function FalloutLevelDesignCaseStudy() {
                 </li>
               ))}
             </ul>
-          </div>
+              </div>
+            </div>
+          </details>
 
         </section>
       </div>

@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -7,6 +8,13 @@ export const metadata: Metadata = {
   title: "Patapon VR: The First Beat | Georgi Tsvetanski",
   description: "Design document for a VR rhythm-strategy prequel to Patapon — the player physically drums to command an army from a Divine Chariot across a roguelite expedition.",
 };
+
+const snapshotItems = [
+  { label: 'Status', value: 'Design concept only; not yet implemented' },
+  { label: 'My role', value: 'Solo systems, interaction, and narrative designer' },
+  { label: 'Target', value: 'Meta Quest 3 and PCVR using Unity OpenXR' },
+  { label: 'Design question', value: 'How physical drumming can command an army without tiring the player' },
+] as const;
 
 export default function PataponVRCaseStudy() {
   return (
@@ -41,6 +49,8 @@ export default function PataponVRCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+
+          <ProjectAtAGlance items={snapshotItems} />
 
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">

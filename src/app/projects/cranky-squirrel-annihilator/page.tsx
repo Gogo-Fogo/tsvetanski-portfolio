@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 import CrankyPugViewer from '@/components/cranky-pug-viewer';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -9,6 +10,13 @@ export const metadata: Metadata = {
   title: "Cranky: The Squirrel Annihilator | Georgi Tsvetanski",
   description: "Solo expansion of the Cranky game jam prototype — first-person pug movement, reactive squirrel and rooster AI, full UI, and WebGL-ready deployment.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Solo developer, designer, and 3D artist' },
+  { label: 'Core challenge', value: 'Funny dog-like movement that still feels responsive' },
+  { label: 'Built with', value: 'Unity, C#, Blender, Substance Painter' },
+  { label: 'Result', value: 'Playable WebGL build with custom movement and reactive AI' },
+] as const;
 
 
 export default function CrankySquirrelAnnihilatorPage() {
@@ -31,6 +39,8 @@ export default function CrankySquirrelAnnihilatorPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="aspect-video w-full">
@@ -152,7 +162,7 @@ export default function CrankySquirrelAnnihilatorPage() {
               <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overcoming Challenges</h2>
               <p className="text-sm text-[var(--muted)] leading-relaxed">
                 Balancing awkward physics with responsive controls and making all systems work smoothly in WebGL required constant
-                iteration and testing. This project pushed me to experiment, fail fast, and adapt as I improved each build.
+                iteration and testing. I compared each revision against playtest feedback and adjusted the controls, physics, and build performance.
               </p>
             </div>
           </div>
@@ -193,7 +203,7 @@ export default function CrankySquirrelAnnihilatorPage() {
               <li>- Unity and Reddit dev communities for guidance and troubleshooting.</li>
               <li>- Professors and classmates at Montgomery College for feedback and support.</li>
               <li>- Free asset creators on Unity Asset Store and Pixabay for audio/visual resources.</li>
-              <li>- Early playtesters who gave brutally honest feedback that improved the game.</li>
+              <li>- Early playtesters whose feedback improved the controls and pacing.</li>
             </ul>
           </div>
 

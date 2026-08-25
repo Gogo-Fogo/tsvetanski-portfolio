@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -7,6 +8,13 @@ export const metadata: Metadata = {
   title: "Guilty As Arrr | Georgi Tsvetanski",
   description: "Real-time spatial audio deduction game in Unity with Photon Fusion — multi-user networked multiplayer with role-based social mechanics.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Team lead, systems developer, and playtest coordinator' },
+  { label: 'Core challenge', value: 'Keep proximity voice and social cues readable over a network' },
+  { label: 'Built with', value: 'Unity URP, Photon Fusion, Photon Voice 2' },
+  { label: 'Result', value: 'Testable multiplayer slice rescoped and delivered within one semester' },
+] as const;
 
 
 const guiltyDocuments = [
@@ -65,6 +73,8 @@ export default function RepoXCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero — playtest highlight */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="relative aspect-video w-full">
@@ -87,8 +97,8 @@ export default function RepoXCaseStudy() {
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
               Guilty As Arrr is a multiplayer pirate social deduction prototype. The core gameplay revolves around
-              <span className="text-[var(--foreground)] font-medium"> spatial audio attenuation</span>, where physical distance
-              and orientation directly impact the social deduction loop, forcing players to manage their proximity for critical conversations.
+              <span className="text-[var(--foreground)] font-medium"> proximity voice</span>: physical distance and direction change
+              who players can hear, so positioning becomes part of every private conversation and accusation.
             </p>
           </div>
 
@@ -131,7 +141,7 @@ export default function RepoXCaseStudy() {
             <p className="text-sm text-[var(--muted)] leading-relaxed">
               Midway through development, one teammate left the class. That shift required a full scope reset and moved a larger share
               of implementation, testing, and delivery onto my workload. Instead of over-promising, I narrowed the project to a realistic,
-              high-quality vertical slice that could be completed and validated within the semester timeline.
+              working multiplayer slice that could be completed and tested within the semester.
             </p>
             <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
               <li>- Reframed the target from a broad feature set to a stable multiplayer prototype.</li>
@@ -143,8 +153,8 @@ export default function RepoXCaseStudy() {
           <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
             <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Team Lead Workflow (Trello)</h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              I leaned hard on Trello as the team lead to keep the project moving after the rescope. The board became the source of truth
-              for ownership, weekly priorities, and what was realistically shippable with reduced bandwidth.
+              I used Trello as the team lead to keep the project moving after the rescope. The board tracked
+              ownership, weekly priorities, and what the smaller team could finish.
             </p>
             <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
               <li>- Broke work by teammate and system area so accountability stayed clear.</li>

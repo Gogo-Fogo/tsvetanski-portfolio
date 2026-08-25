@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -70,6 +71,25 @@ const driftCityCollisionSetupImage = {
   height: 282,
 };
 
+const snapshotItems = [
+  {
+    label: 'My Role',
+    value: 'Vehicle handling, XR interaction, cockpit feedback, technical structure, debugging, and UX evaluation',
+  },
+  {
+    label: 'Stack',
+    value: 'Unity, C#, VR interaction systems, and vehicle-physics prototyping',
+  },
+  {
+    label: 'Technical Challenge',
+    value: 'Balance expressive drift handling with stable controls, readable instruments, and comfortable camera behavior',
+  },
+  {
+    label: 'Outcome',
+    value: 'Playable drift prototype with a GDD, UI analysis, code-quality report, and annotated technical deck',
+  },
+];
+
 export default function VRInteractionLabCaseStudy() {
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
@@ -91,6 +111,8 @@ export default function VRInteractionLabCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="grid gap-8 md:grid-cols-2 md:items-start">
               <div>

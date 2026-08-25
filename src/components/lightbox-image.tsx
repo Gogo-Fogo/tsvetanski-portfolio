@@ -19,6 +19,8 @@ type LightboxImageProps = {
   popupCtaLabel?: string;
   captionPosition?: 'auto' | 'bottom' | 'right';
   hidePopupCaption?: boolean;
+  showPreviewIcon?: boolean;
+  triggerVariant?: 'image' | 'preview-icon';
 };
 
 export default function LightboxImage({
@@ -35,7 +37,9 @@ export default function LightboxImage({
   popupCtaHref,
   popupCtaLabel,
   captionPosition = 'auto',
-  hidePopupCaption = false
+  hidePopupCaption = false,
+  showPreviewIcon = false,
+  triggerVariant = 'image',
 }: LightboxImageProps) {
   const resolvedCaption = hidePopupCaption ? '' : (popupCaption ?? alt);
   const hasCaption = resolvedCaption.trim().length > 0;
@@ -50,22 +54,48 @@ export default function LightboxImage({
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <button
-          type="button"
-          className={`group relative block w-full ${fill ? 'h-full' : ''} ${roundedClassName} cursor-pointer focus:outline-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]`}
-          aria-label={`Open image ${alt}`}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            width={fill ? undefined : width}
-            height={fill ? undefined : height}
-            fill={fill}
-            sizes={sizes}
-            priority={priority}
-            className={`${roundedClassName} ${className ?? ''} relative z-0`.trim()}
-          />
-        </button>
+        {triggerVariant === 'preview-icon' ? (
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-[var(--archive-preview-border)] bg-[var(--archive-preview-background)] text-[var(--archive-preview-foreground)] shadow-lg backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--archive-cyan-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--archive-cyan-border)]/60"
+            aria-label={`Preview image for ${alt}`}
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+              <rect x="3.5" y="4" width="17" height="16" rx="2" />
+              <circle cx="8.5" cy="9" r="1.25" />
+              <path d="m4.5 17 4.2-4.2 3.2 3.1 2.45-2.45L19.5 17" />
+            </svg>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className={`group relative block w-full ${fill ? 'h-full' : ''} ${roundedClassName} cursor-pointer focus:outline-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]`}
+            aria-label={`Open image ${alt}`}
+          >
+            <Image
+              src={src}
+              alt={alt}
+              width={fill ? undefined : width}
+              height={fill ? undefined : height}
+              fill={fill}
+              sizes={sizes}
+              priority={priority}
+              className={`${roundedClassName} ${className ?? ''} relative z-0`.trim()}
+            />
+            {showPreviewIcon ? (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute right-5 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-[var(--archive-preview-border)] bg-[var(--archive-preview-background)] text-[var(--archive-preview-foreground)] shadow-lg backdrop-blur-sm"
+              >
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3.5" y="4" width="17" height="16" rx="2" />
+                  <circle cx="8.5" cy="9" r="1.25" />
+                  <path d="m4.5 17 4.2-4.2 3.2 3.1 2.45-2.45L19.5 17" />
+                </svg>
+              </span>
+            ) : null}
+          </button>
+        )}
       </Dialog.Trigger>
 
       <Dialog.Portal>

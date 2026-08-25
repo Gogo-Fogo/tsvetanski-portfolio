@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 const gallery = [
   {
@@ -42,21 +43,22 @@ const gallery = [
 
 const [simulatorImage, devImage, budgetImage, ridersImage, menuImage, volunteeringImage] = gallery;
 
-const snapshot = [
+const snapshotItems = [
   {
-    title: 'Client & Mission',
-    description:
-      'Built with B-360, a Baltimore nonprofit that uses dirt bike culture to connect youth with STEM learning, mentorship, and community support.',
+    label: 'Project',
+    value: 'VR dirt-bike safety prototype for B-360, a Baltimore youth STEM nonprofit',
   },
   {
-    title: 'Team',
-    description:
-      'Developed in Dr. Elka Cahn\'s community-focused game design class with teammates Zefran Jehle and Lewis Plested.',
+    label: 'Team',
+    value: 'Built with Zefran Jehle and Lewis Plested in Dr. Elka Cahn\'s community game-design class',
   },
   {
-    title: 'My Role',
-    description:
-      'I handled technical implementation, VR interaction flow, gameplay feel, and comfort-focused iteration across the prototype.',
+    label: 'My Role',
+    value: 'Technical implementation, VR interaction flow, gameplay feel, and comfort testing',
+  },
+  {
+    label: 'Prototype Result',
+    value: 'Reviewed in person with B-360; testers reported no motion sickness during the session',
   },
 ];
 
@@ -64,7 +66,7 @@ const prototypeLoop = [
   'Inspect a dirt bike in a workshop to learn parts and placement.',
   'Answer short quiz prompts tied to safety and bike knowledge.',
   'Test ride the bike in first-person instead of stopping at a static learning scene.',
-  'Make something B-360 could actually use in workshops, not just a flashy class demo.',
+  'Deliver a prototype B-360 could evaluate for workshops and outreach.',
 ];
 
 const constraints = [
@@ -81,7 +83,7 @@ const constraints = [
   {
     title: 'Real-World Use',
     description:
-      'The goal was to give B-360 something they could use in workshops and outreach, not just show once for class.',
+      'The goal was to give B-360 a prototype they could evaluate for workshops and outreach.',
   },
 ];
 
@@ -106,7 +108,7 @@ const continuationPlan = [
 ];
 
 const takeaways = [
-  'This project pushed me to think less about novelty and more about usefulness, comfort, and access.',
+  'I learned to judge VR decisions by usefulness, comfort, and access rather than novelty.',
   'It taught me more about working with a real client and real constraints than a typical classroom project.',
   'It also reminded me why I care about XR when it is tied to people and a real use case.',
 ];
@@ -132,6 +134,8 @@ export default function VRMicrogamesCaseStudy() {
         </header>
 
         <section className="grid gap-10">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="rounded-2xl border border-[var(--foreground)]/30 bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <div className="grid gap-8 md:grid-cols-2 md:items-start">
               <div>
@@ -140,10 +144,10 @@ export default function VRMicrogamesCaseStudy() {
                   Featured by the University of Baltimore Newsroom on January 30, 2026
                 </p>
                 <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
-                  This was not just a class exercise. It had to reflect B-360&apos;s mission, run on affordable mobile VR hardware, and make sense in workshops.
+                  The prototype had to reflect B-360&apos;s mission, run on affordable mobile VR hardware, and make sense in workshops.
                 </p>
                 <ul className="mt-5 space-y-2 text-sm text-[var(--muted)] leading-relaxed">
-                  <li>- Built with a real Baltimore nonprofit, not a made-up class brief.</li>
+                  <li>- Built with the Baltimore nonprofit B-360 around its workshop needs.</li>
                   <li>- Designed around Google Cardboard-style access instead of high-end VR assumptions.</li>
                   <li>- Reviewed in person with B-360 during prototype testing.</li>
                 </ul>
@@ -187,32 +191,19 @@ export default function VRMicrogamesCaseStudy() {
             </div>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Snapshot</h2>
-              <ul className="space-y-4 text-sm text-[var(--muted)] leading-relaxed">
-                {snapshot.map((item) => (
-                  <li key={item.title}>
-                    <span className="text-[var(--foreground)] font-medium block mb-1">{item.title}</span>
-                    {item.description}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={simulatorImage.src}
-                  alt={simulatorImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={simulatorImage.width}
-                  height={simulatorImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="In-simulator riding view used while testing readability, obstacle awareness, and first-person comfort."
-                />
-              </div>
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <div className="relative aspect-video w-full">
+              <LightboxImage
+                src={simulatorImage.src}
+                alt={simulatorImage.alt}
+                fill
+                sizes="100vw"
+                width={simulatorImage.width}
+                height={simulatorImage.height}
+                className="object-cover"
+                roundedClassName="rounded-none"
+                popupCaption="In-simulator riding view used while testing readability, obstacle awareness, and first-person comfort."
+              />
             </div>
           </div>
 

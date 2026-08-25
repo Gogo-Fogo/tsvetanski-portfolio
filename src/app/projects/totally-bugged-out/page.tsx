@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -8,6 +9,13 @@ export const metadata: Metadata = {
   title: "Totally Bugged Out | Georgi Tsvetanski",
   description: "First-person bug survival prototype — universal throw system, multi-state roach AI, and swarming enemy behavior that traverses walls and ceilings.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Solo designer and developer' },
+  { label: 'Core challenge', value: 'Responsive object throwing against wall-climbing enemy AI' },
+  { label: 'Built with', value: 'Unity, C#, Blender, WebGL' },
+  { label: 'Result', value: 'Playable survival prototype with tested combat and AI systems' },
+] as const;
 
 
 export default function TotallyBuggedOutPage() {
@@ -30,6 +38,8 @@ export default function TotallyBuggedOutPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="relative aspect-video w-full">
@@ -106,7 +116,7 @@ export default function TotallyBuggedOutPage() {
                   Integrated a Rigidbody-based system allowing players to pick up and weaponize household props against infestations.
                 </li>
                 <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Advanced Roach AI:</span>
+                  <span className="text-[var(--foreground)] font-medium block mb-1">Multi-State Roach Behavior:</span>
                   Enemies feature multi-state behaviors including wall-climbing, player-chasing, and &quot;panic-fleeing&quot; when nearby roaches are destroyed.
                 </li>
                 <li>

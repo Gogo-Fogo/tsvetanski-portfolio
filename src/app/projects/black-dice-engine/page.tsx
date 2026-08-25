@@ -1,12 +1,13 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Black Dice Engine | Georgi Tsvetanski',
   description:
-    'Local-first AI Game Master engine for dark collaborative TTRPG campaigns: GM dashboard, player companion, deterministic dice/state tools, campaign memory, and local media routing.',
+    'A tabletop RPG platform with a Game Master dashboard, player companion, deterministic rules services, campaign memory, and optional AI assistance.',
 };
 
 const snapshotItems = [
@@ -16,15 +17,15 @@ const snapshotItems = [
   },
   {
     label: 'Status',
-    value: 'Early prototype with Node/TypeScript game server, GM dashboard shell, player companion shell, runtime status, session snapshot, and dice-roll endpoints',
+    value: 'Early prototype with a game server, GM dashboard, player companion, session state, and dice endpoints',
   },
   {
-    label: 'Core Idea',
-    value: 'Turn a local gaming PC into an AI-powered tabletop RPG command center',
+    label: 'Stack',
+    value: 'Node.js, TypeScript, local web clients, structured campaign storage, and media adapters',
   },
   {
-    label: 'Boundary',
-    value: 'AI can suggest narration, rolls, state changes, and media prompts; deterministic services validate the actual table state',
+    label: 'Technical Rule',
+    value: 'AI may suggest actions, but deterministic services validate dice, permissions, and campaign state',
   },
 ];
 
@@ -95,13 +96,14 @@ export default function BlackDiceEnginePage() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">Black Dice Engine</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            Black Dice Engine is a local-first AI Game Master engine for dark, collaborative tabletop RPG campaigns. It is not
-            “an AI chatbot for D&amp;D.” It is a tabletop command center that coordinates narration, player companion screens,
-            deterministic state tools, campaign memory, local scene generation, and optional director assistance.
+            A tabletop RPG platform that coordinates narration, player companion screens, dice and campaign state, session memory, and optional AI or
+            locally generated scene media. The rules services—not the language model—control the game state.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-strong)]">
             <LightboxImage
               src="/images/projects/black-dice-engine/black-dice-engine-banner.png"
@@ -112,15 +114,6 @@ export default function BlackDiceEnginePage() {
               roundedClassName="rounded-none"
               popupCaption="Black Dice Engine branding: a local-first AI GM command center for dark collaborative TTRPG campaigns."
             />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
-              </div>
-            ))}
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">

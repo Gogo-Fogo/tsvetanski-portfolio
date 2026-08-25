@@ -3,6 +3,7 @@ import DocViewer from '@/components/doc-viewer';
 import type { DocOutlineItem, DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxLocalVideo from '@/components/lightbox-local-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -14,16 +15,16 @@ export const metadata: Metadata = {
 
 const snapshotItems = [
   {
-    label: 'Georgi Tsvetanski',
-    value: 'VR systems: camera capture, bird detection/scoring, bingo book integration, backpack tools, comfort menu, and builds.',
+    label: 'My Role',
+    value: 'Built camera capture, bird detection and scoring, field-guide progress, backpack tools, comfort settings, and builds',
   },
   {
-    label: 'Felix Chughtai',
-    value: 'Main level scene, outdoor layout, world dressing, and environment pass.',
+    label: 'Technical Challenge',
+    value: 'Turn an in-world VR camera into a reliable capture, recognition, scoring, and collection system',
   },
   {
-    label: 'Talulla Allen',
-    value: 'Team design support, presentation material, playtest/demo support, and project framing.',
+    label: 'Team',
+    value: 'Three-person student team with Felix Chughtai and Talulla Allen',
   },
   {
     label: 'Build Status',
@@ -291,6 +292,8 @@ export default function BirdwatchingCaseStudy() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
             <div className="grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
               <div>
@@ -322,62 +325,21 @@ export default function BirdwatchingCaseStudy() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.9fr_1fr_0.9fr] lg:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Stack</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                {stackItems.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Implemented Slice</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                {implementedSlice.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/birdwatching/birdwatching-current-build-note-02.svg"
-                alt="Birdwatching VR system note covering camera and bingo-book flow"
-                width={1400}
-                height={1000}
-                className="h-auto w-full object-cover"
-                roundedClassName="rounded-none"
-                popupCaption="Current build note showing the camera capture, bird detection, scoring, persistence, and bingo-book loop."
-              />
-              <div className="border-t border-[var(--border)] p-5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Current Build Note</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                  A quick systems snapshot from the current prototype, kept here so the page does not turn into one long wall of copy.
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Built Systems</h2>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              {systemCards.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
-              ))}
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project In Short</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Player loop</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Photograph birds, score each shot, and complete a physical field guide in VR.</p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">My contribution</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Owned camera capture, detection, scoring, persistence, tools, comfort settings, and builds.</p>
+              </div>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                <p className="text-sm font-semibold text-[var(--foreground)]">Validation</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Tested the playable slice with public users at an IGDA Baltimore showcase.</p>
+              </div>
             </div>
           </div>
 
@@ -408,12 +370,59 @@ export default function BirdwatchingCaseStudy() {
               />
               <div className="border-t border-[var(--border)] p-5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Current Prototype Footage</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                  Live Unity footage of the in-hand field-guide setup.
-                </p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">Live Unity footage of the in-hand field-guide setup.</p>
               </div>
             </div>
           </div>
+
+          <details className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <summary className="cursor-pointer list-none p-6 marker:content-none md:p-8">
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Closer look</p>
+                  <h2 className="mt-3 text-xl font-semibold tracking-tight">Systems, interaction polish, testing, and documents</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+                    Open the technical stack, complete system breakdown, development logs, showcase notes, and planning material.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--background)] shadow-[0_0_18px_rgba(34,211,238,0.22)] transition-colors group-hover:bg-[var(--foreground)]">
+                  <span className="group-open:hidden">Open +</span>
+                  <span className="hidden group-open:inline">Close -</span>
+                </span>
+              </div>
+            </summary>
+
+            <div className="space-y-12 border-t border-[var(--border)] p-6 md:p-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6">
+                  <h2 className="mb-5 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Stack</h2>
+                  <ul className="space-y-3 text-sm text-[var(--muted)]">
+                    {stackItems.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-6">
+                  <h2 className="mb-5 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Implemented Slice</h2>
+                  <ul className="space-y-3 text-sm text-[var(--muted)]">
+                    {implementedSlice.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
+            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Built Systems</h2>
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              {systemCards.map((item) => (
+                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                </div>
+              ))}
+            </div>
+              </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.96fr_1.04fr] md:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
@@ -506,7 +515,7 @@ export default function BirdwatchingCaseStudy() {
             </div>
           </div>
 
-          <div>
+              <div>
             <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reviewer Notes</h2>
             <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
               Three quick references: current build notes, original pitch deck, and the written planning doc.
@@ -531,7 +540,9 @@ export default function BirdwatchingCaseStudy() {
                 outline={planningDocOutline}
               />
             </div>
-          </div>
+              </div>
+            </div>
+          </details>
 
         </section>
       </div>

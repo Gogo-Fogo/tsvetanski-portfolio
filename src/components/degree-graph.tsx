@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useCallback, useEffect, useRef } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import GraphTooltip from "./graph-tooltip";
 
 type GraphNode = {
@@ -300,9 +300,9 @@ const LAYOUT_EDITOR_STORAGE_KEY = "degree-graph-layout-overrides-v3";
 const LAYOUT_EDITOR_ALL_STORAGE_KEY = "degree-graph-all-layout-overrides-v1";
 const LAYOUT_EDITOR_ACCESS_KEY = "degree-graph-layout-editor-access-v1";
 const COLLAPSED_ZOOM_MULTIPLIER = 1.27;
-const COLLAPSED_CENTER_BIAS: Vec2 = { x: 0, y: 50 };
-const ALL_EXPANDED_ZOOM_MULTIPLIER = 0.95;
-const ALL_EXPANDED_CENTER_BIAS: Vec2 = { x: 0, y: 42 };
+const COLLAPSED_CENTER_BIAS: Vec2 = { x: 0, y: 20 };
+const ALL_EXPANDED_ZOOM_MULTIPLIER = 0.9;
+const ALL_EXPANDED_CENTER_BIAS: Vec2 = { x: 0, y: 0 };
 const ALL_EXPANDED_SUB_SPREAD_MULTIPLIER = 1.55;
 const ALL_EXPANDED_LAYOUT_ITERATIONS = 14;
 const ALL_EXPANDED_SUB_MAX_DISPLACEMENT = 72;
@@ -311,6 +311,10 @@ const ALL_EXPANDED_FALLBACK_SPREAD_ATTEMPTS = 6;
 const ALL_EXPANDED_SPREAD_STEP = 0.12;
 const ALL_EXPANDED_NODE_SPRING = 0.08;
 const ALL_EXPANDED_LABEL_SPRING = 0.03;
+const FOCUS_BOUNDS_PADDING = 18;
+const FOCUS_PADDING_X_PX = 36;
+const FOCUS_PADDING_TOP_PX = 72;
+const FOCUS_PADDING_BOTTOM_PX = 40;
 
 const LAYOUT_CONFIG: LayoutConfig = {
   desktopMinWidth: 1024,
@@ -329,6 +333,28 @@ const LAYOUT_CONFIG: LayoutConfig = {
   labelVerticalPadding: 4,
   viewBoxMargin: 12,
 };
+
+const DESKTOP_MEDIA_QUERY = `(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`;
+
+const subscribeToDesktopViewport = (onStoreChange: () => void) => {
+  if (typeof window === "undefined") return () => undefined;
+
+  const mediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
+  const handleChange = () => onStoreChange();
+
+  if (typeof mediaQuery.addEventListener === "function") {
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }
+
+  mediaQuery.addListener(handleChange);
+  return () => mediaQuery.removeListener(handleChange);
+};
+
+const getDesktopViewportSnapshot = () =>
+  typeof window !== "undefined" && window.matchMedia(DESKTOP_MEDIA_QUERY).matches;
+
+const getDesktopViewportServerSnapshot = () => false;
 
 const EDGE_CURVATURE = 0.2;
 
@@ -1028,7 +1054,15 @@ const computeFocusBounds = (
     includeBox(toLabelBox(node, labelLayout));
   });
 
-  return bounds;
+  // focusNodes is non-empty above and includeBox initializes bounds on its first item.
+  const resolvedBounds = bounds as unknown as Box;
+
+  return {
+    left: resolvedBounds.left - FOCUS_BOUNDS_PADDING,
+    right: resolvedBounds.right + FOCUS_BOUNDS_PADDING,
+    top: resolvedBounds.top - FOCUS_BOUNDS_PADDING,
+    bottom: resolvedBounds.bottom + FOCUS_BOUNDS_PADDING,
+  };
 };
 
 const getLayoutMetrics = (
@@ -1445,10 +1479,11 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       return {};
     }
   });
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(`(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`).matches;
-  });
+  const isDesktop = useSyncExternalStore(
+    subscribeToDesktopViewport,
+    getDesktopViewportSnapshot,
+    getDesktopViewportServerSnapshot
+  );
 
   const activePreset = useMemo(
     () => getMergedExpandedPreset(activeDegree, presetOverrides),
@@ -1468,23 +1503,6 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       return next;
     });
   }, [layoutEditorAccessEnabled]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia(`(min-width: ${LAYOUT_CONFIG.desktopMinWidth}px)`);
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setIsDesktop(event.matches);
-    };
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
-
-    mediaQuery.addListener(handleChange);
-    return () => mediaQuery.removeListener(handleChange);
-  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1557,6 +1575,12 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   };
 
   const handleReset = () => {
+    setActiveDegree(null);
+    setExpandAllBranches(false);
+    setHoveredNode(null);
+    setEditorSelection(null);
+    setEditorDrag(null);
+    setIsDragging(false);
     setZoom(1);
     setPan({ x: 0, y: 0 });
   };
@@ -1746,9 +1770,9 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       const offsetY = (rect.height - VIEWBOX_HEIGHT * viewScale) / 2;
 
       // Keep focused content out from under the title/controls overlay (px -> user units).
-      const paddingXPx = 24;
-      const paddingTopPx = 60;
-      const paddingBottomPx = 24;
+      const paddingXPx = FOCUS_PADDING_X_PX;
+      const paddingTopPx = FOCUS_PADDING_TOP_PX;
+      const paddingBottomPx = FOCUS_PADDING_BOTTOM_PX;
 
       const contentScale = zoomFactor * zoomScaleMultiplier;
 
@@ -1797,6 +1821,28 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
         },
         zoomFactor
       );
+    },
+    [zoomScaleMultiplier]
+  );
+
+  const fitFocusZoom = useCallback(
+    (bounds: Box, requestedZoom: number): number => {
+      const svg = svgRef.current;
+      if (!svg) return requestedZoom;
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return requestedZoom;
+
+      const viewScale = Math.min(rect.width / VIEWBOX_WIDTH, rect.height / VIEWBOX_HEIGHT);
+      const availableWidth = (rect.width - FOCUS_PADDING_X_PX * 2) / viewScale;
+      const availableHeight =
+        (rect.height - FOCUS_PADDING_TOP_PX - FOCUS_PADDING_BOTTOM_PX) / viewScale;
+      const boundsWidth = Math.max(bounds.right - bounds.left, 1);
+      const boundsHeight = Math.max(bounds.bottom - bounds.top, 1);
+      const maxContentScale = Math.min(availableWidth / boundsWidth, availableHeight / boundsHeight);
+      const maxZoom = maxContentScale / zoomScaleMultiplier;
+
+      return clamp(Math.min(requestedZoom, maxZoom), 0.5, 2);
     },
     [zoomScaleMultiplier]
   );
@@ -2019,19 +2065,6 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     return edgesData.filter((edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target));
   }, [visibleNodes]);
 
-  const getAwayDirection = useCallback((nodeId: string): Vec2 => {
-    const node = nodesData.find((entry) => entry.id === nodeId);
-    const coreNode = nodesData.find((entry) => entry.id === "core-ms");
-    if (!node || !coreNode || nodeId === "core-ms") return { x: 0, y: -1 };
-    return normalizeVector(
-      {
-        x: node.position.x - coreNode.position.x,
-        y: node.position.y - coreNode.position.y,
-      },
-      { x: 0, y: -1 }
-    );
-  }, []);
-
   const handleNodeClick = (nodeId: string, group: GraphNode["group"]) => {
     if (group !== "degree" && group !== "core") return;
 
@@ -2048,40 +2081,27 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
     if (!node) return;
 
     const desktopPreset = isDesktop ? getMergedExpandedPreset(nodeId, presetOverrides) : undefined;
-    const zoomFactor = desktopPreset?.focusZoom ?? 1.4;
+    const requestedZoom = desktopPreset?.focusZoom ?? (isDesktop ? 1.24 : 1.08);
+
+    const preset = desktopPreset;
+    const focusPanBias = preset?.focusPanBias ?? { x: 0, y: -14 };
+    const nextRenderYOffset = isDesktop ? (nodeId === "core-ms" ? 136 : 96) : 0;
+    const nextLayout = computeGraphLayout(nodeId, isDesktop, preset);
+    const focusBounds = nextLayout.focusBounds;
+    const zoomFactor = focusBounds ? fitFocusZoom(focusBounds, requestedZoom) : requestedZoom;
     setZoom(zoomFactor);
 
-    if (isDesktop) {
-      const preset = desktopPreset;
-      const focusPanBias = preset?.focusPanBias ?? { x: 0, y: -14 };
-      const nextRenderYOffset = nodeId === "core-ms" ? 136 : 96;
-      const nextLayout = computeGraphLayout(nodeId, true, preset);
-      const focusBounds = nextLayout.focusBounds;
-
-      const nextPan = focusBounds
-        ? computeFocusPanForBounds(
-            focusBounds,
-            zoomFactor,
-            focusPanBias,
-            nextRenderYOffset,
-            preset?.centerOnNode ? node.position : undefined
-          )
-        : computeFocusPan(node.position, zoomFactor, focusPanBias, nextRenderYOffset);
-
-      if (nextPan) setPan(nextPan);
-    } else {
-      const awayDirection = getAwayDirection(nodeId);
-      const focusPadding = 70;
-      setPan(
-        clampPan(
-          {
-            x: -(node.position.x - VIEWBOX_WIDTH / 2) * zoomFactor - awayDirection.x * focusPadding,
-            y: -(node.position.y - VIEWBOX_HEIGHT / 2) * zoomFactor - awayDirection.y * focusPadding,
-          },
-          zoomFactor
+    const nextPan = focusBounds
+      ? computeFocusPanForBounds(
+          focusBounds,
+          zoomFactor,
+          focusPanBias,
+          nextRenderYOffset,
+          preset?.centerOnNode ? node.position : undefined
         )
-      );
-    }
+      : computeFocusPan(node.position, zoomFactor, focusPanBias, nextRenderYOffset);
+
+    if (nextPan) setPan(nextPan);
 
     setActiveDegree(nodeId);
   };
@@ -2100,13 +2120,19 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   return (
     <div className={containerClasses} data-testid="degree-graph">
-      <div className="pointer-events-none absolute left-6 top-6 z-10 max-w-[280px] text-2xl font-bold tracking-tight text-[var(--foreground)] hidden lg:block">
+      <p id="degree-graph-instructions" className="sr-only">
+        Interactive education map. Use Tab to move between degrees and skills, then press Enter or Space to explore a branch.
+      </p>
+      <div className="pointer-events-none absolute left-6 top-6 z-10 hidden max-w-[280px] text-2xl font-bold tracking-tight text-[var(--foreground)] lg:block">
         Click a circle to explore.
       </div>
       <div className="absolute right-4 top-4 z-20 flex gap-2">
         {activeDegree && (
           <button
+            type="button"
             onClick={closeActiveBranch}
+            aria-label="Back to all degrees"
+            title="Back to all degrees"
             className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -2115,7 +2141,10 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           </button>
         )}
         <button
+          type="button"
           onClick={() => handleZoom(1)}
+          aria-label="Zoom in"
+          title="Zoom in"
           className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -2124,7 +2153,10 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           </svg>
         </button>
         <button
+          type="button"
           onClick={() => handleZoom(-1)}
+          aria-label="Zoom out"
+          title="Zoom out"
           className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -2132,7 +2164,10 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           </svg>
         </button>
         <button
+          type="button"
           onClick={handleReset}
+          aria-label="Reset graph view"
+          title="Reset graph view"
           className="rounded-full bg-[var(--surface)] p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -2141,6 +2176,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           </svg>
         </button>
         <button
+          type="button"
           onClick={toggleExpandAllBranches}
           className={`rounded-full bg-[var(--surface)] px-3 py-2 text-[10px] font-semibold tracking-[0.08em] transition-colors ${
             expandAllBranches
@@ -2148,8 +2184,10 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
               : "text-[var(--muted)] hover:text-[var(--foreground)]"
           }`}
           title={expandAllBranches ? "Switch to default view" : "Expand all branches"}
+          aria-label={expandAllBranches ? "Show default degree view" : "Show all degrees and skills"}
+          aria-pressed={expandAllBranches}
         >
-          {expandAllBranches ? "DEFAULT" : "ALL"}
+          {expandAllBranches ? "DEFAULT" : "SHOW ALL"}
         </button>
         {layoutEditorAccessEnabled && (
           <button
@@ -2231,6 +2269,9 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       )}
       <svg 
         ref={svgRef}
+        role="group"
+        aria-label="Education degree graph"
+        aria-describedby="degree-graph-instructions"
         className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -2380,7 +2421,21 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
           return (
             <g key={node.id} transform={`translate(${node.position.x}, ${node.position.y})`}>
               <g
-                className="transition-all duration-[350ms] ease-in-out"
+                role="button"
+                tabIndex={layoutEditorEnabled && isDesktop ? -1 : 0}
+                aria-label={`${node.label}. ${node.description ?? "Explore this education topic."}`}
+                aria-pressed={node.group !== "sub" ? activeDegree === node.id : undefined}
+                onClick={() => {
+                  if (layoutEditorEnabled && isDesktop) return;
+                  handleNodeClick(node.id, node.group);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter" && event.key !== " ") return;
+                  event.preventDefault();
+                  if (layoutEditorEnabled && isDesktop) return;
+                  handleNodeClick(node.id, node.group);
+                }}
+                className="degree-graph-node transition-all duration-[350ms] ease-in-out focus:outline-none"
                 style={{
                   opacity: node.parentId
                     ? activeDegree
@@ -2426,10 +2481,6 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                     "--node-glow-strong": `${node.color}aa`,
                   }}
                   filter="drop-shadow(0 0 10px rgba(0,0,0,0.25))"
-                  onClick={() => {
-                    if (layoutEditorEnabled && isDesktop) return;
-                    handleNodeClick(node.id, node.group);
-                  }}
                   onMouseDown={(event) => {
                     if (!nodeEditorTarget || !nodeDragStartOffset) return;
                     beginEditorDrag(event, nodeEditorTarget, nodeDragStartOffset);
@@ -2437,7 +2488,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
                   onMouseEnter={(e) => handleNodeHover(node, e)}
                   onMouseLeave={() => handleNodeHover(null)}
                   data-editor-handle={nodeEditorTarget ? "true" : undefined}
-                  className={`origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite] ${
+                  className={`degree-graph-node-target origin-center animate-[nodePulseLight_4.5s_ease-in-out_infinite] dark:animate-[nodePulseDark_4.5s_ease-in-out_infinite] ${
                     nodeEditorTarget ? "cursor-move" : "cursor-pointer"
                   }`}
                 >

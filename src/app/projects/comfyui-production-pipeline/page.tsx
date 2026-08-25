@@ -1,45 +1,46 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'ComfyUI Production Pipeline | Georgi Tsvetanski',
   description:
-    'Portfolio case study for ComfyUI-assisted creative production: local media routing, workflow registries, repo boundaries, visual lookdev, and downstream asset cleanup.',
+    'A repeatable ComfyUI workflow for generating, reviewing, cleaning, and exporting media for games and prototypes.',
 };
 
 const snapshotItems = [
   {
     label: 'Role',
-    value: 'AI media pipeline designer, prompt/workflow author, and downstream asset cleanup owner',
+    value: 'Workflow designer, prompt author, and asset-cleanup owner',
   },
   {
     label: 'Used In',
-    value: 'Local media routing experiments, character concept passes, texture/material tests, Prince mod cleanup, and portfolio presentation assets',
+    value: 'Character concepts, material tests, mod assets, and presentation media',
   },
   {
-    label: 'Principle',
-    value: 'ComfyUI is a production aid, not the portfolio claim by itself. The value is the pipeline around it.',
+    label: 'Technical Focus',
+    value: 'Repeatable workflows, queued jobs, review points, metadata, and export steps',
   },
   {
-    label: 'Boundary',
-    value: 'Generated outputs, models, private prompts, and heavy workflows stay outside Git unless they are demo-safe and intentionally published.',
+    label: 'Repository Rule',
+    value: 'Large models, private prompts, and generated output stay outside public Git repositories',
   },
 ];
 
 const pipelineItems = [
   {
     title: 'Prompt + Workflow Registry',
-    body: 'Jobs are described through workflow IDs, visibility labels, output categories, and prompt-template links before anything is sent to the local media stack.',
+    body: 'Each job records its workflow, prompt template, output category, and visibility before it enters the generation queue.',
   },
   {
-    title: 'Local-First Routing',
-    body: 'Media generation is treated as an asynchronous local job. A router prepares requests, checks workflow metadata, and keeps output paths outside the public repository.',
+    title: 'Local Job Routing',
+    body: 'A router prepares each request, validates its workflow metadata, and stores outputs outside the public repository.',
   },
   {
-    title: 'Downstream Cleanup',
-    body: 'For game/mod assets, generated lookdev still needs matte extraction, layer cleanup, contact sheets, scale checks, UI bakes, and honest labeling before it belongs in a project.',
+    title: 'Asset Preparation',
+    body: 'Game and mod assets move through mask extraction, layer cleanup, contact sheets, scale checks, UI bakes, and source labeling.',
   },
 ];
 
@@ -67,7 +68,7 @@ const workflowFamilies = [
     src: '/images/projects/comfyui-production-pipeline/workflow-flux-klein-enhancer-graph.png',
     alt: 'ComfyUI workflow screenshot for Flux/Klein enhancement and upscale pipeline',
     caption:
-      'A refinement/upscale workflow showing how enhancement, denoise, and export stages are separated instead of jammed into one opaque prompt.',
+      'Enhancement, denoising, and export are separated into visible stages that can be adjusted independently.',
     width: 1920,
     height: 1080,
   },
@@ -95,7 +96,7 @@ const workflowCards = [
 const lessons = [
   {
     title: 'Make AI output auditable',
-    body: 'Generated media should keep enough metadata to explain what workflow produced it, where it is stored, who can see it, and whether it is safe to publish.',
+    body: 'Each generated asset should record its workflow, storage location, visibility, and publication status.',
   },
   {
     title: 'Do not block live play on rendering',
@@ -103,7 +104,7 @@ const lessons = [
   },
   {
     title: 'Separate lookdev from implementation',
-    body: 'A strong generated image is only the beginning. The actual craft is turning it into clean layers, readable UI, usable sprites, or a consistent visual direction.',
+    body: 'Generated source material still needs clean layers, readable UI treatment, usable sprites, or a consistent visual direction.',
   },
 ];
 
@@ -143,7 +144,7 @@ const supportingExamples = [
     src: '/images/projects/comfyui-production-pipeline/shogun-courtyard-bamboo.png',
     alt: 'Bamboo courtyard background from the Shogun production folder',
     caption:
-      'Environment art from the Shogun folder gives the page a real production context beyond character-only examples.',
+      'Environment art from the Shogun folder shows how the workflow extends beyond character-only examples.',
     width: 1024,
     height: 1792,
   },
@@ -176,12 +177,14 @@ export default function ComfyUiProductionPipelinePage() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">ComfyUI Production Pipeline</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            A cross-project case study for how I use ComfyUI in practice: not as a magic image button, but as part of a controlled production
-            pipeline for concept exploration, dark fantasy branding, tabletop scene generation, character lookdev, and downstream game-asset cleanup.
+            I designed a repeatable ComfyUI process for creating, reviewing, cleaning, and exporting media used across game prototypes, mods, and
+            tabletop tools.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-strong)]">
               <LightboxImage
@@ -191,26 +194,16 @@ export default function ComfyUiProductionPipelinePage() {
                 height={1080}
                 className="h-auto w-full object-contain"
                 roundedClassName="rounded-none"
-                popupCaption="Ronin identity workflow captured from ComfyUI: references, prompt conditioning, sampling, cleanup, and export structure without a broken-node warning in frame."
+                popupCaption="Ronin workflow with reference inputs, prompt conditioning, sampling, cleanup, and export stages."
               />
             </div>
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Why This Gets Its Own Page</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Technical Focus</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                ComfyUI shows up across multiple projects, but the interesting portfolio story is not that I generated images. It is that I built a
-                repeatable way to use local generative media responsibly: workflow metadata, safe repository boundaries, visibility labels, approval
-                points, and post-processing steps that turn rough output into usable project material across games, prototypes, and visual systems.
+                The engineering work sits around image generation: recording workflow metadata, keeping private and public files separate, routing jobs,
+                adding review points, and preparing selected output for use in a project.
               </p>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
-              </div>
-            ))}
           </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
@@ -228,8 +221,7 @@ export default function ComfyUiProductionPipelinePage() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Workflow Screenshots</h2>
             <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
-              These are actual ComfyUI graphs captured from saved workflows. The point is not only the image at the end; it is the repeatable structure:
-              loaders, prompts, masks, samplers, cleanup nodes, upscale branches, and export boundaries.
+              Saved ComfyUI graphs show the reusable stages behind each output: references, prompts, masks, samplers, cleanup, upscaling, and export.
             </p>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {workflowFamilies.map((family) => (
@@ -255,8 +247,7 @@ export default function ComfyUiProductionPipelinePage() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">One Cleanup Example</h2>
             <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
-              The Prince workflow is one concrete cleanup example, not the whole page. It shows the practical part: a source image moves through extraction
-              and final organization before it becomes useful for a mod, pitch page, or staged visual system.
+              A Prince source image moves through mask extraction and cleanup before it is organized for use in the mod and its presentation materials.
             </p>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {cleanupStages.map((stage) => (
@@ -303,8 +294,8 @@ export default function ComfyUiProductionPipelinePage() {
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Local Workflow Router</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                ComfyUI works best for me when it is treated as a local media service behind a small routing layer. A project prepares media jobs, resolves
-                workflow IDs, checks prompt-template metadata, and stores generated files outside the public repository.
+                Projects submit media requests through a small routing layer. The router selects a saved workflow, validates prompt metadata, sends the
+                job to ComfyUI, and stores the result outside the public repository.
               </p>
               <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--background)] p-5 font-mono text-xs leading-relaxed text-[var(--muted)]">
                 GM / AI proposes media<br />
@@ -327,14 +318,13 @@ export default function ComfyUiProductionPipelinePage() {
 
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Honest Disclosure</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">AI Use And Ownership</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                My portfolio pages separate system ownership from AI-assisted visual support. If ComfyUI helped with lookdev, I label that honestly and
-                focus the claim on what I designed, built, routed, cleaned, integrated, or tested.
+                I label ComfyUI-assisted visuals and distinguish them from the systems, interfaces, routing, cleanup, integration, and testing I completed.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                That distinction matters. A generated image can communicate direction, but it does not replace engineering, interaction design, data modeling,
-                UI implementation, or asset-production judgment.
+                Generated images support visual direction. My portfolio claims focus on the production decisions and implementation required to make those
+                images usable.
               </p>
             </div>
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">

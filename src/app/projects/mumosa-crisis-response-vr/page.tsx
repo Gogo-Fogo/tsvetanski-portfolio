@@ -2,19 +2,20 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import DocViewer from '@/components/doc-viewer';
 import type { DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'MUMOSA Situation Awareness Dashboard | Georgi Tsvetanski',
   description:
-    'Client-facing graduate case study for Army Research Laboratory: translating MUMOSA short-term post-crisis analysis needs and long-term real-time situational awareness goals into a grounded dashboard and Unreal spatial review proof of concept.',
+    'Graduate client project for Army Research Laboratory: a dashboard and Unreal prototype connecting reports, images, timelines, and spatial evidence.',
 };
 
 const snapshotItems = [
   {
     label: 'Role',
-    value: 'Research, paper-prototype, and spatial-simulation lead for a source-grounded MUMOSA redesign',
+    value: 'Led research and spatial prototyping; contributed to the dashboard information architecture',
   },
   {
     label: 'Team',
@@ -22,7 +23,7 @@ const snapshotItems = [
   },
   {
     label: 'Client Need',
-    value: 'Short term: post-crisis analysis and responder training. Long term: real-time situational awareness, hazard cues, and guided next-step reasoning.',
+    value: 'Help analysts reconstruct incidents, compare evidence, and train responders',
   },
   {
     label: 'Artifacts',
@@ -33,30 +34,30 @@ const snapshotItems = [
 const clientNeedItems = [
   {
     title: 'Short-Term Use',
-    body: 'Support investigators, analysts, and emergency-response instructors after a crisis by making fragmented reports, images, events, and timelines easier to compare and teach from.',
+    body: 'Help investigators and instructors compare reports, images, events, and timelines after a crisis.',
   },
   {
     title: 'Long-Term Direction',
-    body: 'Leave room for real-time situational awareness: live evidence intake, dynamic timelines, hazard highlighting, role-specific views, and AI assistance that stays tied to sources.',
+    body: 'Extend the same structure to incoming evidence, changing timelines, hazard alerts, and role-specific views.',
   },
   {
     title: 'Design Response',
-    body: 'Treat MUMOSA as an evidence workspace first. The dashboard organizes questions, sources, conflicts, timelines, and spatial context before asking users to trust an AI summary.',
+    body: 'Organize questions, sources, conflicts, timelines, and spatial context in one evidence workspace.',
   },
 ];
 
 const researchItems = [
   {
     title: 'Cognitive Load Comes First',
-    body: 'My lit review kept returning to the same problem: responders and investigators are already overloaded. The interface has to reduce fragmentation, not add another noisy control room.',
+    body: 'Responders and investigators already manage too many information streams. The interface should reduce fragmentation and visual noise.',
   },
   {
-    title: 'Trust Needs Grounding',
-    body: 'The strongest heuristic in the MUMOSA paper is still the right one for our coursework too: every AI summary needs a visible path back to the source evidence.',
+    title: 'AI Claims Need Sources',
+    body: 'Every AI summary should link directly to the report, image, event, or scene evidence that supports it.',
   },
   {
-    title: 'Resolve Phase Is The Best Fit',
-    body: 'The most believable use case stayed the same through prototyping: post-crisis reconstruction and training, where schema graphs, documents, and 3D review become genuinely useful.',
+    title: 'Post-Crisis Review Comes First',
+    body: 'Post-crisis reconstruction and training provide the clearest near-term use for documents, event relationships, and 3D scene review.',
   },
 ];
 
@@ -127,15 +128,15 @@ const teamDashboardItems = [
 const unrealPlanItems = [
   {
     title: 'PC-First, VR-Ready',
-    body: 'The spatial module starts as a keyboard-and-mouse walkthrough using Unreal\'s First Person C++ template. VR/OpenXR support comes after the core interaction model is proven.',
+    body: 'Keyboard-and-mouse walkthrough first; OpenXR follows after the core interaction is proven.',
   },
   {
     title: 'Evidence Marker System',
-    body: 'A reusable C++ actor class stores marker ID, label, AI interpretation, confidence level, status, timeline event, discrepancy note, and linked source records. Clicking a marker selects it and opens the evidence panel.',
+    body: 'Reusable C++ markers store the claim, confidence, timeline state, discrepancies, and linked sources.',
   },
   {
     title: 'Source-Grounded Panel',
-    body: 'Every marker opens a UI panel showing the AI interpretation, linked sources, confidence badge, timeline context, and any discrepancy warnings. The "show source" action is the primary interaction, not an afterthought.',
+    body: 'Selecting a marker opens its interpretation, confidence, timeline context, and direct source links.',
   },
   {
     title: 'Hazard Overlay + Timeline States',
@@ -244,13 +245,14 @@ export default function MumosaCrisisResponseVrCaseStudy() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">MUMOSA Situation Awareness Dashboard</h1>
           <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            MUMOSA is a client-facing dashboard concept for making sense of complex incidents from multiple evidence streams: reports, images,
-            extracted events, timelines, and spatial reconstructions. Our design work focused on what ARL needs now — post-crisis analysis and
-            training — while keeping the interaction model credible for longer-term real-time situational awareness.
+            A graduate client project for Army Research Laboratory that helps analysts compare reports, images, timelines, and reconstructed scenes after
+            a crisis.
           </p>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-strong)]">
             <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
               <div>
@@ -258,36 +260,28 @@ export default function MumosaCrisisResponseVrCaseStudy() {
                   <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
                   ARL Client Context
                 </span>
-                <h2 className="mt-4 text-2xl font-semibold tracking-tight">Designing for the system MUMOSA needs now, without boxing in where it goes next.</h2>
+                <h2 className="mt-4 text-2xl font-semibold tracking-tight">From scattered evidence to a traceable incident timeline</h2>
                 <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                  The near-term product has to help analysts and responders reconstruct what happened after an incident and use that evidence for training.
-                  The longer-term vision is more ambitious: support real-time understanding as new text, image, event, and spatial data arrives. My work
-                  turns that gap into a concrete interaction model: ask a question, inspect grounded evidence, understand the event over time, and step into
-                  a spatial review when the physical scene matters.
+                  Analysts ask a question, inspect the supporting evidence, place events on a timeline, and open a reconstructed scene when location and
+                  physical context are important. The same flow can later accept new evidence as an incident develops.
                 </p>
                 <ul className="mt-5 space-y-2 text-sm text-[var(--muted)]">
                   <li>- Short term: post-crisis investigation, lessons-learned review, and responder training.</li>
                   <li>- Long term: real-time situational awareness with dynamic timelines, hazard cues, and guided next actions.</li>
-                  <li>- My lane: source-grounded spatial review in Unreal, connected back to the dashboard workflow.</li>
+                  <li>- My lane: research, spatial interaction design, and the Unreal scene-review prototype.</li>
                 </ul>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="#client-framing"
-                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-                  >
-                    View Client Framing
-                  </a>
                   <a
                     href="#unreal-simulation"
                     className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
                   >
-                    View VR Proof
+                    View Unreal Proof
                   </a>
                   <a
-                    href="#lit-review"
+                    href="#client-framing"
                     className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
                   >
-                    View Lit Review
+                    Project Summary
                   </a>
                 </div>
               </div>
@@ -299,26 +293,104 @@ export default function MumosaCrisisResponseVrCaseStudy() {
                   height={645}
                   className="h-auto w-full object-cover"
                   roundedClassName="rounded-none"
-                  popupCaption="Client-paper dashboard figure: MUMOSA brings interactive Q/A together with textual evidence, visual evidence, schema graphs, and simulation evidence inside one crisis-analysis surface."
+                  popupCaption="Dashboard concept combining questions, reports, images, event relationships, and reconstructed scene evidence."
                 />
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {snapshotItems.map((item) => (
-              <div key={item.label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">{item.label}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">{item.value}</p>
+          <div id="unreal-simulation" className="scroll-mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-strong)] md:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent-cyan)]">Featured implementation</p>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight">Unreal spatial evidence prototype</h2>
+                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                  I turned the paper interaction model into a PC-first Unreal proof of concept where analysts can select evidence in the scene, inspect its
+                  confidence and timeline context, and follow it back to source material.
+                </p>
+                <div className="mt-6 grid gap-3">
+                  {unrealPlanItems.slice(0, 3).map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="https://youtu.be/88Qk5ThLEmc"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--background)] transition hover:bg-transparent hover:text-[var(--foreground)]"
+                  >
+                    Watch prototype
+                  </a>
+                  <a
+                    href="https://github.com/Gogo-Fogo/MUMOSA"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--foreground)] transition hover:border-[var(--foreground)]"
+                  >
+                    View repository
+                  </a>
+                </div>
               </div>
-            ))}
+
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
+                <LightboxImage
+                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-spatial-marker.png"
+                  alt="Unreal proof of concept showing a spatial evidence marker in the MUMOSA scene"
+                  width={1920}
+                  height={1080}
+                  className="h-auto w-full object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Unreal proof of concept: a source-grounded spatial marker anchors evidence to a reconstructed scene."
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-analysis-popup.png"
+                  alt="Unreal MUMOSA proof of concept showing an analysis popup attached to a scene marker"
+                  width={1920}
+                  height={1080}
+                  className="h-auto w-full object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Selecting a marker opens its interpretation while keeping the physical context visible."
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-evidence-selection.png"
+                  alt="Unreal MUMOSA proof of concept showing selected spatial evidence"
+                  width={1920}
+                  height={1080}
+                  className="h-auto w-full object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Evidence selection connects a spatial marker to the supporting source trail."
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src="/images/projects/mumosa-crisis-response-vr/mumosa-simulation-evidence.png"
+                  alt="Simulation evidence concept showing 3D reconstruction with annotated evidence markers"
+                  width={450}
+                  height={230}
+                  className="h-auto w-full object-cover"
+                  roundedClassName="rounded-none"
+                  popupCaption="Original simulation-evidence concept with linked source panels and confidence indicators."
+                />
+              </div>
+            </div>
           </div>
 
-          <div id="client-framing" className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Client Needs And Design Response</h2>
+          <div id="client-framing" className="scroll-mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+            <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project In Short</h2>
             <p className="mb-6 max-w-4xl text-sm leading-relaxed text-[var(--muted)]">
-              We treated ARL&apos;s problem as a sensemaking problem, not a dashboard-decoration problem. The user needs to move from scattered fragments to
-              a defensible understanding of what happened, when it happened, and which evidence supports or contradicts that explanation.
+              The team designed one evidence workflow spanning questions, sources, timelines, and reconstructed scenes. I led the research and spatial
+              prototype, contributed to the dashboard structure, and built the Unreal proof of concept.
             </p>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {clientNeedItems.map((item) => (
@@ -330,45 +402,35 @@ export default function MumosaCrisisResponseVrCaseStudy() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.08fr_0.92fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What MUMOSA Is</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                MUMOSA is a multimodal situational-awareness dashboard. The core idea is to stop treating crisis evidence as separate silos and instead connect
-                reports, images, extracted events, schema graphs, and 3D or simulation views inside one interface that can support investigation, training, and,
-                later, potentially real-time response.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                What makes it interesting to me is that it sits directly in the space I care about most: human factors, high-stakes information flow, and
-                spatial interfaces that help users understand a scene rather than only read about it.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What I Owned</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                I am not presenting this as if I built the entire MUMOSA platform myself. My contribution spanned the immersive review lane across every phase:
-                the literature review that shaped the VR framing, the paper prototype that tested the spatial interaction model, contributions to the revised
-                dashboard information architecture, and the Unreal Engine proof of concept that turns those ideas into a working spatial review direction.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                The dashboard redesign work shown later came from the shared team process and is included here as context. The digital phase keeps that split
-                clear: the flatscreen prototype lives in Axure with my colleagues, while I carried the spatial simulation lane forward in Unreal Engine.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Research Findings That Shaped The Direction</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {researchItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+          <details className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <summary className="cursor-pointer list-none p-6 marker:content-none md:p-8">
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent-cyan)]">Closer look</p>
+                  <h2 className="mt-2 text-xl font-semibold tracking-tight">Research, paper prototypes, dashboard work, and deliverables</h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--muted)]">
+                    Open the full process only if you want the detailed rationale, supporting artifacts, testing plan, and authored research.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
+                <span className="shrink-0 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--background)] shadow-[0_0_18px_rgba(34,211,238,0.22)] transition-colors group-hover:bg-[var(--foreground)]">
+                  <span className="group-open:hidden">Open +</span>
+                  <span className="hidden group-open:inline">Close −</span>
+                </span>
+              </div>
+            </summary>
+
+            <div className="space-y-12 border-t border-[var(--border)] p-6 md:p-8">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+                <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Research Findings That Shaped The Direction</h2>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                  {researchItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
           <div id="paper-prototype" className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
@@ -506,75 +568,80 @@ export default function MumosaCrisisResponseVrCaseStudy() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.96fr_1.04fr] lg:items-start">
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/mumosa-crisis-response-vr/mumosa-figjam-board-overview.png"
-                alt="Planning board overview showing dashboard wireframes, dashboard inspiration, and the VR paper prototype section"
-                width={1041}
-                height={994}
-                className="h-auto w-full object-cover"
-                roundedClassName="rounded-none"
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] md:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+                <LightboxImage
+                  src="/images/projects/mumosa-crisis-response-vr/mumosa-figjam-board-overview.png"
+                  alt="Planning board overview showing dashboard wireframes, dashboard inspiration, and the VR paper prototype section"
+                  width={1041}
+                  height={994}
+                  className="h-auto w-full object-contain"
+                  roundedClassName="rounded-none"
                   popupCaption="Shared planning board for the low-fidelity phase: dashboard overhaul ideas, dashboard inspiration, and the VR paper-prototype strip developed in parallel."
-              />
-            </div>
+                />
+              </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Team Dashboard Direction</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                Even though my emphasis is the VR and spatial simulation lane, the full project was broader than that. The shared planning board tracked flatscreen
-                improvements alongside my lane, and those dashboard ideas matter because spatial review only makes sense as one mode in a larger investigative
-                workflow.
-              </p>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                {teamDashboardItems.map((item) => (
-                  <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
-                    <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                  </div>
-                ))}
+              <div>
+                <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Team Dashboard Direction</h2>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
+                  Even though my emphasis is the VR and spatial simulation lane, the full project was broader than that. The shared planning board tracked flatscreen
+                  improvements alongside my lane, and those dashboard ideas matter because spatial review only makes sense as one mode in a larger investigative
+                  workflow.
+                </p>
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  {teamDashboardItems.map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <div className="mb-6 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] md:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)]">
                 <LightboxImage
                   src="/images/projects/mumosa-crisis-response-vr/mumosa-planning-board-vr-cluster.png"
                   alt="Planning board showing the VR cluster with cognitive goals, risks, and mitigation strategies"
                   width={1215}
                   height={1022}
-                  className="h-auto w-full object-cover"
+                  className="h-auto w-full object-contain"
                   roundedClassName="rounded-none"
                   popupCaption="Planning board VR cluster: cognitive goals, practical risks (hardware cost, motion sickness, data streaming), and mitigations documented during the low-fidelity phase."
                 />
               </div>
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Design Brief Translation</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                Reviewing the design brief helped tighten the page narrative. The board makes it clear that the project is not only about adding VR, but about
-                restructuring the whole experience around cognition, role, and investigation flow.
-              </p>
-              <div className="mt-6 grid gap-4">
-                {[
-                  {
-                    title: 'Role-Adaptive Information',
-                    body: 'The design brief reframed the dashboard around dynamic filtering and role-based views so investigators, responders, and coordinators can enter the same incident from different cognitive starting points.',
-                  },
-                  {
-                    title: 'Overview To Detail To Overview',
-                    body: 'One of the clearest patterns in the brief is hierarchical exploration: start broad, drill into specific evidence, then move back out to re-establish context.',
-                  },
-                  {
-                    title: 'Training Is Not Secondary',
-                    body: 'The board treats simulation-based learning, pattern recognition, and decision rehearsal as core outcomes, not side benefits layered on after the fact.',
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
-                    <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                  </div>
-                ))}
+
+              <div>
+                <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Design Brief Translation</h2>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
+                  Reviewing the design brief helped tighten the page narrative. The board makes it clear that the project is not only about adding VR, but about
+                  restructuring the whole experience around cognition, role, and investigation flow.
+                </p>
+                <div className="mt-6 grid gap-4">
+                  {[
+                    {
+                      title: 'Role-Adaptive Information',
+                      body: 'The design brief reframed the dashboard around dynamic filtering and role-based views so investigators, responders, and coordinators can enter the same incident from different cognitive starting points.',
+                    },
+                    {
+                      title: 'Overview To Detail To Overview',
+                      body: 'One of the clearest patterns in the brief is hierarchical exploration: start broad, drill into specific evidence, then move back out to re-establish context.',
+                    },
+                    {
+                      title: 'Training Is Not Secondary',
+                      body: 'The board treats simulation-based learning, pattern recognition, and decision rehearsal as core outcomes, not side benefits layered on after the fact.',
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -617,8 +684,8 @@ export default function MumosaCrisisResponseVrCaseStudy() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Planned Usability Test</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                The paper-prototype package included a usability script. That matters because the low-fidelity phase was not just a sketch dump; it
-                has a concrete evaluation plan for orientation, timeline understanding, and deeper evidence review.
+                The paper-prototype package included a usability script with a concrete evaluation plan for orientation, timeline understanding, and
+                deeper evidence review.
               </p>
               <div className="mt-6 grid gap-4">
                 {usabilityTestItems.map((item) => (
@@ -629,103 +696,6 @@ export default function MumosaCrisisResponseVrCaseStudy() {
                 ))}
               </div>
             </div>
-
-          <div id="unreal-simulation" className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-              <div>
-                <h2 className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">My Lane Now: Unreal Engine Spatial Simulation</h2>
-                <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  The VR paper prototype proved the interaction model, then I carried that direction into an early Unreal Engine proof of concept. The spatial
-                  review module is PC-first and designed around the same principles the paper prototype validated: source-grounded evidence, physical context
-                  for hazards and events, and a clear relationship to the dashboard.
-                </p>
-              </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-spatial-marker.png"
-                  alt="Unreal proof of concept showing a spatial evidence marker in the MUMOSA scene"
-                  width={1920}
-                  height={1080}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Unreal proof of concept: a source-grounded spatial marker anchors evidence to a reconstructed scene instead of leaving the user with an abstract dashboard card."
-                />
-              </div>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-analysis-popup.png"
-                  alt="Unreal MUMOSA proof of concept showing an analysis popup attached to a scene marker"
-                  width={1920}
-                  height={1080}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Analysis popup: marker selection opens an interpretation panel that keeps the evidence visible in its physical context."
-                />
-              </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-vr-evidence-selection.png"
-                  alt="Unreal MUMOSA proof of concept showing selected spatial evidence"
-                  width={1920}
-                  height={1080}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Evidence selection: the prototype tests whether users can move from a question or marker to the supporting source trail."
-                />
-              </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-simulation-evidence.png"
-                  alt="Simulation evidence concept showing 3D reconstruction with annotated evidence markers"
-                  width={450}
-                  height={230}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Original simulation-evidence concept: AI-labeled evidence markers in a reconstructed 3D scene, with linked source panels and confidence indicators."
-                />
-              </div>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {unrealPlanItems.slice(0, 3).map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-              {unrealPlanItems.slice(3).map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/mumosa-crisis-response-vr/mumosa-3d-gaussian-splatting-reference.gif"
-                  alt="Animated reference showing Gaussian splatting 3D reconstruction from overlapping photos"
-                  width={768}
-                  height={432}
-                  className="h-auto w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Gaussian splatting reference: overlapping photos or quick video walkthroughs can be turned into realistic 3D scenes for forensic review — a key technology behind the spatial reconstruction pipeline MUMOSA would use."
-                />
-              </div>
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Reconstruction Pipeline Concept</p>
-                <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">From Photos To Spatial Evidence</p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-                  The long-term pipeline uses drones, robots, and body cameras to collect overlapping visual data. Photogrammetry or Gaussian splatting
-                  reconstructs the physical scene. Vision-language models extract key events, hazards, and objects, which MUMOSA turns into clickable spatial
-                  markers with links back to source evidence. The Unreal prototype simulates this pipeline with realistic sample data.
-                </p>
-              </div>
-            </div>
-          </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Course Deliverables And Project Status</h2>
@@ -815,6 +785,8 @@ export default function MumosaCrisisResponseVrCaseStudy() {
               should make it clear what evidence supports the claim and where uncertainty still exists.
             </p>
           </div>
+            </div>
+          </details>
         </section>
       </div>
     </main>

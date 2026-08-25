@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -7,6 +8,13 @@ export const metadata: Metadata = {
   title: "Cranky (Global Game Jam 2024) | Georgi Tsvetanski",
   description: "Split-screen local multiplayer built in one week for Global Game Jam 2024 — chaotic pug-chases-squirrel action. Lead Animator and Co-Designer.",
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Project manager, 3D artist, and animator' },
+  { label: 'Team and pace', value: 'Global Game Jam team, one-week sprint' },
+  { label: 'Built with', value: 'Unity, Blender, Substance Painter' },
+  { label: 'Result', value: 'Complete split-screen Windows build delivered on time' },
+] as const;
 
 
 export default function CrankyGameJamPage() {
@@ -30,6 +38,8 @@ export default function CrankyGameJamPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           {/* Hero Banner */}
           <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
             <div className="aspect-video w-full">

@@ -80,9 +80,11 @@ type HoverCardProps = {
   title: string;
   description: ReactNode;
   children: ReactNode;
+  compact?: boolean;
+  showInfoIcon?: boolean;
 };
 
-export function HoverCard({ title, description, children }: HoverCardProps) {
+export function HoverCard({ title, description, children, compact = false, showInfoIcon = true }: HoverCardProps) {
   const [open, setOpen] = useState(false);
   const [referenceEl, setReferenceEl] = useState<HTMLElement | null>(null);
   const [floatingEl, setFloatingEl] = useState<HTMLElement | null>(null);
@@ -119,13 +121,19 @@ export function HoverCard({ title, description, children }: HoverCardProps) {
       <span
         ref={setReferenceEl}
         tabIndex={0}
-        className="inline-flex cursor-help items-center rounded-full border border-[var(--border)] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--foreground)]/40"
+        className={`archive-tag inline-flex cursor-help items-center border border-[var(--tag-border)] text-[var(--tag-text)] transition-colors hover:border-[var(--tag-border-hover)] hover:text-[var(--tag-text-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)]/40 ${
+          compact
+            ? 'rounded-[4px] bg-[var(--tag-background)] px-2 py-1.5 text-[11px] font-normal normal-case tracking-normal whitespace-nowrap'
+            : 'rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.25em]'
+        }`}
         {...getReferenceProps()}
       >
         {children}
-        <span aria-hidden="true" className="ml-1 text-[9px] tracking-normal opacity-70">
-          ⓘ
-        </span>
+        {showInfoIcon ? (
+          <span aria-hidden="true" className="ml-1 text-[9px] tracking-normal opacity-70">
+            ⓘ
+          </span>
+        ) : null}
       </span>
 
       {open ? (

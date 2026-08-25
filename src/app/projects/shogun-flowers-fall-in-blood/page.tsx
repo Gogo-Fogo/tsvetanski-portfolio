@@ -2,6 +2,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxLocalVideo from '@/components/lightbox-local-video';
 import LightboxVideo from '@/components/lightbox-video';
+import ProjectAtAGlance from '@/components/project-at-a-glance';
 
 import type { Metadata } from 'next';
 
@@ -10,6 +11,13 @@ export const metadata: Metadata = {
   description:
     'Solo mobile tactics RPG in Unity. First combat prototype in May 2025; current March 2026 build is focused on one battle slice, a revised HUD, and cleaned-up support scenes.',
 };
+
+const snapshotItems = [
+  { label: 'My role', value: 'Solo designer and developer' },
+  { label: 'Status', value: 'In development; current focus is one complete battle slice' },
+  { label: 'Built with', value: 'Unity, Aseprite, PixelLab, Gemini-assisted ideation' },
+  { label: 'Current proof', value: 'Playable combat, summon, barracks, and settings captures' },
+] as const;
 
 type LocalVideoCardProps = {
   src: string;
@@ -59,6 +67,8 @@ export default function ShogunFlowersFallInBloodPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
+          <ProjectAtAGlance items={snapshotItems} />
+
           <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_94%,var(--accent-cyan)_6%))] p-5 shadow-[var(--shadow-strong)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:p-6">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
@@ -153,8 +163,26 @@ export default function ShogunFlowersFallInBloodPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+          <details className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
+            <summary className="cursor-pointer list-none p-6 marker:content-none md:p-8">
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Closer look</p>
+                  <h2 className="mt-3 text-xl font-semibold tracking-tight">Current scope, support scenes, and production direction</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+                    Open the current battle scope, support-scene prototypes, systems audit, implementation notes, and art pipeline.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full border border-[var(--accent-cyan)] bg-[var(--accent-cyan)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--background)] shadow-[0_0_18px_rgba(34,211,238,0.22)] transition-colors group-hover:bg-[var(--foreground)]">
+                  <span className="group-open:hidden">Open +</span>
+                  <span className="hidden group-open:inline">Close -</span>
+                </span>
+              </div>
+            </summary>
+
+            <div className="space-y-12 border-t border-[var(--border)] p-6 md:p-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Where The Project Stands</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
                 I am not presenting Shogun as a broad foundation for the full game anymore. Right now the useful parts are the character data setup, the combat scene, the mobile UI work, and a few support scenes that can actually be tested.
@@ -165,7 +193,7 @@ export default function ShogunFlowersFallInBloodPage() {
                 <li>- Everything else stays secondary until one battle can run cleanly from start to finish.</li>
               </ul>
             </div>
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-8">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Current Slice Scope</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
                 The current slice is built around Ryoma, Kuro, and Tsukiko fighting Ronin Footman, Oni Brute, and Yurei Caster. The goal is to prove the core tactical loop before expanding scope.
@@ -176,7 +204,7 @@ export default function ShogunFlowersFallInBloodPage() {
                 <li>- One success condition: a readable battle from setup to result without manual repair.</li>
               </ul>
             </div>
-          </div>
+              </div>
 
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <div className="max-w-3xl">
@@ -204,7 +232,7 @@ export default function ShogunFlowersFallInBloodPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
               <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">2026 Systems Reset & Documentation</h2>
               <p className="mb-4 text-sm leading-relaxed text-[var(--muted)]">
@@ -265,14 +293,16 @@ export default function ShogunFlowersFallInBloodPage() {
               </p>
               <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
                 <li>- Ronin Footman is the first real test of that character pipeline.</li>
-                <li>- Portrait-first presentation is part of the game's look, not just a UI convenience.</li>
+                <li>- Portrait-first presentation supports both mobile readability and the game&apos;s visual identity.</li>
                 <li>- Right now the job is not to show every possible system. It is to make one battle slice work.</li>
               </ul>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
                 All design and development of Shogun: Flowers Fall in Blood remains an independent personal project.
               </p>
             </div>
-          </div>
+              </div>
+            </div>
+          </details>
         </section>
       </div>
     </main>
