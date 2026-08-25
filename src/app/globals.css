@@ -121,6 +121,22 @@ body {
   letter-spacing: -0.01em;
 }
 
+@layer base {
+  a[href],
+  button:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  select {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
 .archive-tag {
   border-color: var(--tag-border);
   background: var(--tag-background);

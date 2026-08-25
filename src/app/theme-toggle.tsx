@@ -70,7 +70,7 @@ export default function ThemeToggle() {
           type="button"
           onClick={toggleTheme}
           aria-label={getAriaLabel()}
-          className={`inline-flex ${onHomepage ? "h-11 w-11" : "h-14 w-14"} items-center justify-center rounded-full border-2 border-[var(--foreground)]/30 bg-[var(--surface)]/90 text-[var(--foreground)] shadow-[var(--shadow-strong)] ring-2 ring-[var(--accent-cyan)]/30 backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--foreground)]/60 hover:ring-[var(--accent-cyan)]/55 ${theme === "dark" ? "animate-[themePulseDark_4.5s_ease-in-out_infinite]" : "animate-[themePulseLight_4.5s_ease-in-out_infinite]"}`}
+          className={`inline-flex ${onHomepage ? "h-11 w-11" : "h-14 w-14"} cursor-pointer items-center justify-center rounded-full border-2 border-[var(--foreground)]/30 bg-[var(--surface)]/90 text-[var(--foreground)] shadow-[var(--shadow-strong)] ring-2 ring-[var(--accent-cyan)]/30 backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--foreground)]/60 hover:ring-[var(--accent-cyan)]/55 ${theme === "dark" ? "animate-[themePulseDark_4.5s_ease-in-out_infinite]" : "animate-[themePulseLight_4.5s_ease-in-out_infinite]"}`}
         >
           {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
         </button>
