@@ -68,7 +68,7 @@ Don't add or update third-party skills without pinning a reviewed commit in
   optional contents menu, `CaseStudyFooter`). Shared UI: `src/components/ui/` (`ProjectCard`,
   `CategoryTabs`, buttons, page intro).
 - **Brand:** `src/components/site/logo-mark.tsx` (GT logo from `art-source/brand/`), tokens in
-  `src/app/globals.css` (`--brand-orange`, `--brand-orange-text`, `--brand-cyan`, type scale).
+  `src/app/globals.css` (`--brand-orange`, `--brand-orange-text`, `--ui-strong`, type scale).
 
 ## Design rules (settled with the owner)
 
@@ -87,6 +87,9 @@ Don't add or update third-party skills without pinning a reviewed commit in
 - **Mobile:** 44 px touch targets, nothing hover-only, no horizontal page scroll at 375 px,
   the contact bubble never covers content or CTAs.
 - **Motion:** subtle and meaningful; always respect `prefers-reduced-motion`.
+- **Colour:** orange is the only accent (the name, primary buttons, the selected tab). Everything
+  else is neutral grey; `--ui-strong` is the neutral for focus rings and hover borders. The dark
+  theme is charcoal, not navy. The About skills graph keeps its own category colours.
 - **Themes:** check light and dark; the brand orange needs a darker text variant on light
   (`--brand-orange-text`). The saved theme lives in `localStorage['portfolio-theme']`.
 - **Fixed controls:** only the contact bubble floats (inner pages, hidden while the footer is in

@@ -58,7 +58,7 @@ export default function CrankyPugViewer() {
   };
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
+    <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--hover-glow)]">
       <div className="aspect-square w-full">
         {!active ? (
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-[linear-gradient(160deg,#0f172a,#111827)]">

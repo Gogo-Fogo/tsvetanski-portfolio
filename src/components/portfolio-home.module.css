@@ -24,8 +24,7 @@
   inset: -4.5rem 0 0;
   z-index: 0;
   background:
-    radial-gradient(ellipse 42rem 18rem at 78% 70%, color-mix(in srgb, var(--brand-cyan) 10%, transparent), transparent 70%),
-    radial-gradient(ellipse 30rem 14rem at 90% 100%, color-mix(in srgb, var(--brand-orange) 9%, transparent), transparent 70%);
+    radial-gradient(ellipse 30rem 14rem at 88% 100%, color-mix(in srgb, var(--brand-orange) 8%, transparent), transparent 70%);
   pointer-events: none;
   content: "";
 }
@@ -58,7 +57,7 @@
   font-size: 0.8rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brand-cyan);
+  color: var(--muted);
 }
 
 .heroLine {
@@ -95,25 +94,15 @@
   object-position: bottom;
 }
 
-.heroSlashOrange,
-.heroSlashCyan {
+.heroSlashOrange {
   position: absolute;
   bottom: 0;
   width: 1.6rem;
   border-radius: 0.2rem;
   transform: skewX(-24deg);
-}
-
-.heroSlashOrange {
   right: 18%;
   height: 82%;
   background: linear-gradient(to top, color-mix(in srgb, var(--brand-orange) 55%, transparent), transparent);
-}
-
-.heroSlashCyan {
-  left: 14%;
-  height: 58%;
-  background: linear-gradient(to top, color-mix(in srgb, var(--brand-cyan) 40%, transparent), transparent);
 }
 
 /* Category tabs */

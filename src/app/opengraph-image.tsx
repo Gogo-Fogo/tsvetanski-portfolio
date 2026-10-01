@@ -17,9 +17,9 @@ export default function Image() {
           alignItems: 'center',
           gap: 64,
           padding: '0 96px',
-          backgroundColor: '#0b1018',
+          backgroundColor: '#111111',
           backgroundImage:
-            'radial-gradient(circle at 85% 80%, rgba(255,123,26,0.18), transparent 45%), radial-gradient(circle at 70% 20%, rgba(30,210,243,0.14), transparent 45%)',
+            'radial-gradient(circle at 85% 80%, rgba(255,123,26,0.18), transparent 45%)',
           color: '#f3f3f3',
           fontFamily: 'sans-serif',
         }}
@@ -30,7 +30,7 @@ export default function Image() {
         </svg>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: '-2px', lineHeight: 1 }}>Georgi Tsvetanski</div>
-          <div style={{ marginTop: 22, fontSize: 26, letterSpacing: '6px', color: '#1ed2f3' }}>SIMULATION · XR · GAMEPLAY SYSTEMS</div>
+          <div style={{ marginTop: 22, fontSize: 26, letterSpacing: '6px', color: '#a3a3a3' }}>SIMULATION · XR · GAMEPLAY SYSTEMS</div>
           <div style={{ marginTop: 28, fontSize: 32, color: 'rgba(243,243,243,0.82)', maxWidth: 640 }}>
             I build interactive experiences that bridge research and play.
           </div>

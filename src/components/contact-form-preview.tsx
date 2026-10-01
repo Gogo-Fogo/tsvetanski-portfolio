@@ -14,7 +14,7 @@ type ContactFormValues = {
 };
 
 const fieldClass =
-  "min-h-11 rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-base text-[var(--foreground)] transition-colors focus:border-[var(--brand-cyan)] aria-[invalid=true]:border-red-500";
+  "min-h-11 rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-base text-[var(--foreground)] transition-colors focus:border-[var(--ui-strong)] aria-[invalid=true]:border-red-500";
 const labelClass = "text-sm font-medium text-[var(--foreground)]";
 const errorClass = "text-sm text-red-600 dark:text-red-400";
 

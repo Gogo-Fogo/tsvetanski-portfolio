@@ -8,20 +8,22 @@ html {
 }
 
 :root {
-  --background: #f7f6f3;
+  --background: #f7f7f6;
   --foreground: #111111;
   --surface: #ffffff;
-  --surface-muted: #f3f2ee;
-  --border: #e6e4df;
+  --surface-muted: #f2f2f0;
+  --border: #e5e5e3;
   --muted: #6b6b6b;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
   --shadow-strong: 0 24px 70px rgba(0, 0, 0, 0.12);
-  --accent-cyan: rgba(86, 215, 255, 0.55);
+  --hover-glow: rgba(0, 0, 0, 0.1);
 
-  /* Brand and layout tokens shared by every page (from the homepage design). */
+  /* Brand and layout tokens shared by every page. Orange is the only accent colour: it
+     marks the name and the things you click. Everything else is neutral. */
   --brand-orange: #ff7b1a;
   --brand-orange-text: #b8500a;
-  --brand-cyan: #007e9f;
+  /* Neutral high-contrast colour for focus rings, hover and selected borders. */
+  --ui-strong: #3d3d3d;
   --brand-on-orange: #160b02;
   --gutter: clamp(1rem, 4vw, 3.5rem);
   --shell-max: 92rem;
@@ -31,7 +33,7 @@ html {
   --anchor-offset: 1rem;
   --radius-sm: 0.65rem;
   --radius-md: 1rem;
-  --focus-ring: 0 0 0 3px var(--background), 0 0 0 5px var(--brand-cyan);
+  --focus-ring: 0 0 0 3px var(--background), 0 0 0 5px var(--ui-strong);
 
   /* Type scale (rem; root is 17.5px). */
   --text-xs: 0.75rem;
@@ -56,17 +58,17 @@ html {
 }
 
 [data-theme="dark"] {
-  --background: #0b1018;
+  --background: #111111;
   --foreground: #f3f3f3;
-  --surface: #111824;
-  --surface-muted: #0f151f;
-  --border: #243044;
-  --muted: #a0a0a0;
+  --surface: #1a1a1a;
+  --surface-muted: #151515;
+  --border: #2b2b2b;
+  --muted: #a3a3a3;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
   --shadow-strong: 0 24px 70px rgba(0, 0, 0, 0.6);
-  --accent-cyan: rgba(86, 215, 255, 0.65);
+  --hover-glow: rgba(255, 255, 255, 0.14);
   --brand-orange-text: #ff8a33;
-  --brand-cyan: #1ed2f3;
+  --ui-strong: #d6d6d6;
   color-scheme: dark;
 }
 
@@ -90,7 +92,7 @@ body {
   }
 
   :focus-visible {
-    outline: 2px solid var(--brand-cyan);
+    outline: 2px solid var(--ui-strong);
     outline-offset: 3px;
   }
 
