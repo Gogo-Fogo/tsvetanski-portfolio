@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tsvetanski.com
 
-## Getting Started
+Portfolio of Georgi Tsvetanski: simulation, XR and gameplay systems. Built with Next.js (App
+Router), React, TypeScript and Tailwind CSS, deployed on Vercel.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # optional: YOUTUBE_API_KEY for live video view counts
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Before pushing, `npm run lint` and `npm run build` must both pass.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | What's there |
+|---|---|
+| `src/app/` | Routes: homepage, `about`, `career` (the full project list), `creative`, `cpse`, `projects/<slug>` case studies, sitemap |
+| `src/components/` | Shared UI: homepage, lightboxes, breadcrumbs, command palette, degree graph |
+| `public/images/` | Site images; case-study media lives in `public/images/projects/<slug>/` |
+| `art-source/` | Full-resolution artwork; `scripts/build-creative-art.py` builds the `/creative` gallery from it |
+| `scripts/` | Art pipeline, agent-skill installer, UI snapshot scripts |
+| `CONTEXT/` | IA guidelines, page blueprint, UX audits, background docs |
+| `.agents/skills/` | Pinned agent skills for UX, interaction design and IA work |
 
-## Learn More
+## Working with AI coding agents
 
-To learn more about Next.js, take a look at the following resources:
+This repo is set up for Codex and Claude Code. **[AGENTS.md](AGENTS.md) holds the rules**:
+design and content rules, which skill to use for which task, how to add a case study, and the
+screenshot verification step. `CLAUDE.md` imports it.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After cloning, install the skills once:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+bash scripts/install-agent-skills.sh
+```
 
-## Deploy on Vercel
+This puts the pinned skills in `.agents/skills/` (read by Codex) and mirrors them into
+`.claude/skills/` (read by Claude Code; git-ignored). Start a new agent session afterwards. The
+set focuses on UX, interaction design and information architecture for desktop and mobile
+browsers, plus `web-interaction-review`, written for this site. See
+[.agents/skills/README.md](.agents/skills/README.md) for what each skill does and why others
+were left out.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Verifying UI changes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npx next start -p 3000 -H 127.0.0.1
+node scripts/ui-snapshots/capture.mjs   # home, about, career at 1440 and 390 px, light and dark
+node scripts/ui-snapshots/verify.mjs
+```
+
+Screenshots land in `tmp/graph-shots/` (git-ignored). The capture script drives a local
+Brave, Chrome or Edge install; set `GRAPH_BROWSER_PATH` to use a different Chromium browser.
