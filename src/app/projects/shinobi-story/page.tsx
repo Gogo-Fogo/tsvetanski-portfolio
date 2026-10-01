@@ -13,7 +13,7 @@ import {
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Shinobi Story | Georgi Tsvetanski",
+  title: "Shinobi Story",
   description: "Led content strategy and live operations for a fully custom Naruto MMORPG — complete WoW 3.3.5 client overhaul, original animations, $110K in revenue, 1M+ downloads, 56K players.",
 };
 

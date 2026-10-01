@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Cranky (Global Game Jam 2024) | Georgi Tsvetanski",
+  title: "Cranky (Global Game Jam 2024)",
   description: "Split-screen local multiplayer built in one week for Global Game Jam 2024 — chaotic pug-chases-squirrel action. Lead Animator and Co-Designer.",
 };
 

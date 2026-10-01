@@ -7,7 +7,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Shogun: Flowers Fall in Blood | Georgi Tsvetanski',
+  title: 'Shogun: Flowers Fall in Blood',
   description:
     'Solo mobile tactics RPG in Unity. First combat prototype in May 2025; current March 2026 build is focused on one battle slice, a revised HUD, and cleaned-up support scenes.',
 };

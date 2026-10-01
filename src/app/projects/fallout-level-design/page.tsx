@@ -7,7 +7,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Fallout Level Design | Georgi Tsvetanski",
+  title: "Fallout Level Design",
   description: "Third-floor lead on a team-built Fallout 4 interior level — interior production, merge stability, and visual optimization across a multi-person pipeline.",
 };
 

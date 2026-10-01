@@ -5,7 +5,7 @@ import LightboxVideo from '@/components/lightbox-video';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "UMD CPSE Videography | Georgi Tsvetanski",
+  title: "UMD CPSE Videography",
   description: "Cinematic recruitment and program highlight videos for the University of Maryland Clark School CPSE initiative — trailers, interviews, and event coverage.",
 };
 

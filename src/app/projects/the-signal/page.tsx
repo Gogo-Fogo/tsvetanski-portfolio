@@ -6,7 +6,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "The Signal | Georgi Tsvetanski",
+  title: "The Signal",
   description: "Systems and narrative design for a sci-fi board game — modular exploration, evolving enemy behavior, class customization, and cooperative/competitive win paths.",
 };
 

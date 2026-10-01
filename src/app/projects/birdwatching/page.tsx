@@ -8,7 +8,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Birdwatching VR | Georgi Tsvetanski',
+  title: 'Birdwatching VR',
   description:
     'Unity 6 XR prototype about photographing birds in VR, with camera capture, species detection, star-rated bingo-book progress, backpack tools, feeding-stick interaction, and comfort settings.',
 };

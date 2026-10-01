@@ -6,7 +6,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "VR Interaction Lab | Georgi Tsvetanski",
+  title: "VR Interaction Lab",
   description: "Physics-driven VR prototypes in Unity: a B-360 dirt bike safety simulator for accessible mobile headsets and a night-city drift driving experience.",
 };
 

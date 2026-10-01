@@ -8,10 +8,7 @@ import {
   Clapperboard,
   FileText,
   Gamepad2,
-  Instagram,
   LayoutGrid,
-  Linkedin,
-  Mail,
   RectangleGoggles,
   Send,
 } from 'lucide-react';
@@ -229,16 +226,6 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.monogram} aria-label="Georgi Tsvetanski homepage">
-          G<span>T</span>
-        </Link>
-        <nav className={styles.headerNav} aria-label="Primary navigation">
-          <Link href="/career">Projects</Link>
-          <Link href="/about">About</Link>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
 
       <section className={styles.hero} aria-labelledby="hero-name">
         <div className={styles.heroCopy}>
@@ -304,24 +291,6 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
         </Link>
       </section>
 
-      <footer id="contact" className={styles.footer}>
-        <p className={styles.footerLabel}>Contact</p>
-        <nav className={styles.footerLinks} aria-label="Contact Georgi">
-          <a href="mailto:georgi@tsvetanski.com">
-            <Mail aria-hidden="true" size={20} strokeWidth={1.5} />
-            georgi@tsvetanski.com
-          </a>
-          <a href="https://www.linkedin.com/in/georgitsvetanski-526373234" target="_blank" rel="noreferrer">
-            <Linkedin aria-hidden="true" size={20} strokeWidth={1.5} />
-            LinkedIn
-          </a>
-          <a href="https://www.instagram.com/v4n_gogo/" target="_blank" rel="noreferrer">
-            <Instagram aria-hidden="true" size={20} strokeWidth={1.5} />
-            Instagram
-          </a>
-        </nav>
-        <p className={styles.footerMeta}>© 2026 Georgi Tsvetanski</p>
-      </footer>
     </main>
   );
 }

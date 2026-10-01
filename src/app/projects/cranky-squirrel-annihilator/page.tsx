@@ -7,7 +7,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Cranky: The Squirrel Annihilator | Georgi Tsvetanski",
+  title: "Cranky: The Squirrel Annihilator",
   description: "Solo expansion of the Cranky game jam prototype — first-person pug movement, reactive squirrel and rooster AI, full UI, and WebGL-ready deployment.",
 };
 

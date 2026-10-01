@@ -7,7 +7,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'MUMOSA Situation Awareness Dashboard | Georgi Tsvetanski',
+  title: 'MUMOSA Situation Awareness Dashboard',
   description:
     'Graduate client project for Army Research Laboratory: a dashboard and Unreal prototype connecting reports, images, timelines, and spatial evidence.',
 };

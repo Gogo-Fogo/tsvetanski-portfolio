@@ -6,7 +6,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Totally Bugged Out | Georgi Tsvetanski",
+  title: "Totally Bugged Out",
   description: "First-person bug survival prototype — universal throw system, multi-state roach AI, and swarming enemy behavior that traverses walls and ceilings.",
 };
 

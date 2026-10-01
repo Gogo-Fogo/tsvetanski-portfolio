@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Horror VN Kit | Georgi Tsvetanski',
+  title: 'Horror VN Kit',
   description:
     'A zero-programming Unity toolkit for branching psychological-horror visual novels, built so a writer could author scenes entirely in the Inspector.',
 };

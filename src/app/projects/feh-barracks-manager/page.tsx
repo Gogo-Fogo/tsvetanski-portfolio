@@ -7,7 +7,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'FEH Barracks Manager | Georgi Tsvetanski',
+  title: 'FEH Barracks Manager',
   description:
     'Solo-built Fire Emblem Heroes companion app spanning synced user data, a custom scraping pipeline, AI export, and portable Windows launcher distribution.',
 };

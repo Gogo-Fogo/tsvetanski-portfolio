@@ -6,7 +6,7 @@ import { MotionPage } from '@/components/motion-safe';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About | Georgi Tsvetanski',
+  title: 'About',
   description: 'XR and gameplay developer working across spatial interaction, simulation, and game systems.',
 };
 

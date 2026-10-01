@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Black Dice Engine | Georgi Tsvetanski',
+  title: 'Black Dice Engine',
   description:
     'A tabletop RPG platform with a Game Master dashboard, player companion, deterministic rules services, campaign memory, and optional AI assistance.',
 };

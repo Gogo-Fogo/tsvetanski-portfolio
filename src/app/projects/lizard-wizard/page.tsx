@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Lizard Wizard | Georgi Tsvetanski',
+  title: 'Lizard Wizard',
   description:
     'A five-person Unity capstone: a momentum-based desert puzzle-platformer. I set up the shared production structure and built the predator sensing AI.',
 };

@@ -1,24 +1,14 @@
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { selectShots } from "./shots.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const outputDir = path.resolve(__dirname, "..", "..", "tmp", "graph-shots");
 const maxSnapshotAgeMs = 60 * 60 * 1000;
 
-const expectedSnapshots = [
-  { file: "about-desktop-light.png", width: 1440, height: 1100 },
-  { file: "about-desktop-dark.png", width: 1440, height: 1100 },
-  { file: "about-mobile-light.png", width: 390, height: 844 },
-  { file: "about-mobile-dark.png", width: 390, height: 844 },
-  { file: "home-desktop-light.png", width: 1440, height: 1100 },
-  { file: "home-desktop-dark.png", width: 1440, height: 1100 },
-  { file: "home-mobile-light.png", width: 390, height: 844 },
-  { file: "home-mobile-dark.png", width: 390, height: 844 },
-  { file: "career-desktop-dark.png", width: 1440, height: 1100 },
-  { file: "career-mobile-light.png", width: 390, height: 844 },
-];
+const expectedSnapshots = selectShots(process.argv.slice(2));
 
 async function verifySnapshot(snapshot) {
   const filePath = path.join(outputDir, snapshot.file);

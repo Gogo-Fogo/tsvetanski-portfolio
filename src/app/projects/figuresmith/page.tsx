@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Figuresmith LLC — Figurine Studio | Georgi Tsvetanski",
+  title: "Figuresmith LLC — Figurine Studio",
   description: "I founded Figuresmith LLC as a figurine-making studio after receiving a 2024 Concept Track grant, combining 3D printing, hand painting, LEDs, and custom electronics.",
 };
 

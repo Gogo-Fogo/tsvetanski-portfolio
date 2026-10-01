@@ -4,6 +4,7 @@ import { mkdir, rm, stat, writeFile } from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { selectShots } from "./shots.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,18 +15,6 @@ const OUTPUT_DIR = path.join(TMP_DIR, "graph-shots");
 const PROFILE_DIR = path.join(TMP_DIR, `.graph-browser-profile-${process.pid}-${Date.now()}`);
 const PROFILE_ROOT = TMP_DIR + path.sep;
 
-const SHOTS = [
-  { file: "about-desktop-light.png", path: "/about", width: 1440, height: 1100, theme: "light" },
-  { file: "about-desktop-dark.png", path: "/about", width: 1440, height: 1100, theme: "dark" },
-  { file: "about-mobile-light.png", path: "/about", width: 390, height: 844, theme: "light" },
-  { file: "about-mobile-dark.png", path: "/about", width: 390, height: 844, theme: "dark" },
-  { file: "home-desktop-light.png", path: "/", width: 1440, height: 1100, theme: "light" },
-  { file: "home-desktop-dark.png", path: "/", width: 1440, height: 1100, theme: "dark" },
-  { file: "home-mobile-light.png", path: "/", width: 390, height: 844, theme: "light" },
-  { file: "home-mobile-dark.png", path: "/", width: 390, height: 844, theme: "dark" },
-  { file: "career-desktop-dark.png", path: "/career", width: 1440, height: 1100, theme: "dark" },
-  { file: "career-mobile-light.png", path: "/career", width: 390, height: 844, theme: "light" },
-];
 
 function resolveBrowserPath() {
   const localAppData = process.env.LOCALAPPDATA || "";
@@ -221,8 +210,8 @@ async function captureShot(debuggingUrl, shot) {
       `(async () => {
         await document.fonts.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-        if (${JSON.stringify(shot.path)} === '/about') {
-          document.querySelector('[data-testid="degree-graph"]')?.scrollIntoView({ block: 'center' });
+        if (${JSON.stringify(shot.scroll ?? "top")} === 'bottom') {
+          window.scrollTo(0, document.documentElement.scrollHeight);
         } else {
           window.scrollTo(0, 0);
         }
@@ -244,6 +233,20 @@ async function captureShot(debuggingUrl, shot) {
           clipped: [],
         }))()`,
       );
+    const structure = await evaluate(
+      client,
+      `(() => ({
+        mains: document.querySelectorAll('main').length,
+        h1s: document.querySelectorAll('h1').length,
+        title: document.title,
+      }))()`,
+    );
+    if (structure.mains !== 1 || structure.h1s !== 1) {
+      throw new Error(`${shot.file}: expected one main and one h1, found ${structure.mains} and ${structure.h1s}.`);
+    }
+    if ((structure.title.match(/Georgi Tsvetanski/g) || []).length > 1) {
+      throw new Error(`${shot.file}: name repeated in title "${structure.title}".`);
+    }
     if (layout.scrollWidth > layout.innerWidth + 1) {
       throw new Error(`${shot.file}: horizontal overflow ${layout.scrollWidth}px > ${layout.innerWidth}px.`);
     }
@@ -298,8 +301,8 @@ async function main() {
 
   try {
     await waitForJson(`${debuggingUrl}/json/version`);
-    for (const shot of SHOTS) await captureShot(debuggingUrl, shot);
-    console.log(`graph snapshots verified: ${OUTPUT_DIR}`);
+    for (const shot of selectShots(process.argv.slice(2))) await captureShot(debuggingUrl, shot);
+    console.log(`snapshots saved: ${OUTPUT_DIR}`);
   } finally {
     browser.kill();
     await delay(300);

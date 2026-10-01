@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Project Portfolio | Georgi Tsvetanski",
+  title: "Project Portfolio",
   description: "Selected projects spanning XR simulation, gameplay prototyping, multiplayer systems, tools, design research, and cinematic storytelling.",
 };
 

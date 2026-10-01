@@ -4,7 +4,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Baldur’s Gate 3 Modding | Georgi Tsvetanski',
+  title: 'Baldur’s Gate 3 Modding',
   description:
     'Learning Larian’s BG3 Toolkit: Osiris story scripting, dialogue with flags and skill checks, and an offline reference I built from the official modding docs.',
 };

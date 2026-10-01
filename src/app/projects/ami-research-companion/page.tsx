@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Ami | Georgi Tsvetanski',
+  title: 'Ami',
   description:
     'A private research app that helps my mother search local documents, review original pages, and organize evidence on her MacBook.',
 };

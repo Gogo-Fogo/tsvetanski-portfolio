@@ -3,25 +3,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
-import ThemeToggle from "./theme-toggle";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
-import CommandPaletteLazy from "@/components/command-palette-lazy";
 import FloatingContactBubble from "@/components/floating-contact-bubble";
-
-const themeBootstrapScript = `
-(() => {
-  try {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = systemPrefersDark ? 'dark' : 'light';
-
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-  } catch {
-    document.documentElement.dataset.theme = 'dark';
-    document.documentElement.style.colorScheme = 'dark';
-  }
-})();
-`;
+import CommandPaletteProvider from "@/components/site/command-palette-provider";
+import SiteHeader from "@/components/site/site-header";
+import SiteFooter from "@/components/site/site-footer";
+import { themeBootstrapScript } from "@/components/site/theme";
+import { SITE_NAME, SITE_ROLE, SITE_URL } from "@/content/project-helpers";
+import styles from "@/components/site/site.module.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,22 +22,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description =
+  "Georgi Tsvetanski builds XR simulations, gameplay systems and interactive tools, from research prototypes to shipped games.";
+
 export const metadata: Metadata = {
-  title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
-  description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
-  metadataBase: new URL("https://www.tsvetanski.com"),
+  title: {
+    default: `${SITE_NAME} | ${SITE_ROLE}`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description,
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
-    description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
-    url: "https://www.tsvetanski.com",
-    siteName: "Georgi Tsvetanski Portfolio",
-    type: "website"
+    title: `${SITE_NAME} | ${SITE_ROLE}`,
+    description,
+    url: "/",
+    siteName: SITE_NAME,
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Georgi Tsvetanski | Technical Designer for XR, Games & Interactive Tools",
-    description: "Technical designer and spatial interaction prototyper building XR experiences, gameplay systems, and interactive tools, with a background in storytelling, communication, and production.",
-  }
+    title: `${SITE_NAME} | ${SITE_ROLE}`,
+    description,
+  },
 };
 
 export default function RootLayout({
@@ -61,16 +57,21 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NuqsAdapter>
-          <SmoothScrollProvider />
-          <ThemeToggle />
-          <FloatingContactBubble />
-          <CommandPaletteLazy />
-          <Toaster richColors position="bottom-right" closeButton />
-          {children}
+          <CommandPaletteProvider>
+            <a href="#main" className={styles.skipLink}>
+              Skip to content
+            </a>
+            <SmoothScrollProvider />
+            <SiteHeader />
+            <div id="main" tabIndex={-1} className="outline-none">
+              {children}
+            </div>
+            <SiteFooter />
+            <FloatingContactBubble />
+            <Toaster richColors position="top-center" closeButton />
+          </CommandPaletteProvider>
         </NuqsAdapter>
       </body>
     </html>

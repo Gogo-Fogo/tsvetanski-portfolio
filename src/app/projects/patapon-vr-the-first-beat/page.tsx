@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Patapon VR: The First Beat | Georgi Tsvetanski",
+  title: "Patapon VR: The First Beat",
   description: "Design document for a VR rhythm-strategy prequel to Patapon — the player physically drums to command an army from a Divine Chariot across a roguelite expedition.",
 };
 

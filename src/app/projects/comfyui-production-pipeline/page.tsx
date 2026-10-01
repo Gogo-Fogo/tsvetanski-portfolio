@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'ComfyUI Production Pipeline | Georgi Tsvetanski',
+  title: 'ComfyUI Production Pipeline',
   description:
     'A repeatable ComfyUI workflow for generating, reviewing, cleaning, and exporting media for games and prototypes.',
 };

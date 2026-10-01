@@ -15,7 +15,7 @@ import {
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Creative Work | Georgi Tsvetanski",
+  title: "Creative Work",
   description: "Cinematic edits, recruitment trailers, event coverage, and interview production — storytelling across camera, post-production, and motion design.",
 };
 

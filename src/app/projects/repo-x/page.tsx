@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Guilty As Arrr | Georgi Tsvetanski",
+  title: "Guilty As Arrr",
   description: "Real-time spatial audio deduction game in Unity with Photon Fusion — multi-user networked multiplayer with role-based social mechanics.",
 };
 

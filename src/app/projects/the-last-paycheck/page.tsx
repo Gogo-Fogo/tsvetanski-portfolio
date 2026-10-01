@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "The Last Paycheck | Georgi Tsvetanski",
+  title: "The Last Paycheck",
   description: "Narrative and systems design document for a dystopian 2050 board game — poverty, unstable jobs, inflation pressure, and player emotional engagement.",
 };
 

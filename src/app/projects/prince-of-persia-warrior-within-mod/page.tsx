@@ -8,7 +8,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Prince of Persia: Warrior Within Mod | Georgi Tsvetanski',
+  title: 'Prince of Persia: Warrior Within Mod',
   description:
     'Solo Slay the Spire 2 character mod in Godot/C# with Medallion of Time rewinds, Sand economy, Dahaka escape pressure, custom audio, and runtime presentation systems.',
 };

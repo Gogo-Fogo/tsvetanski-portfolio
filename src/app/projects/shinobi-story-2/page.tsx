@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Shinobi Story 2 | Georgi Tsvetanski',
+  title: 'Shinobi Story 2',
   description:
     'Unreal Engine 5 follow-up to Shinobi Story. I designed and built the character creator UI and wrote the C++ traversal layer: target leaps, tree dashes and wall runs.',
 };

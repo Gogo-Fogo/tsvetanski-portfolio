@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Legion Go Console Dock | Georgi Tsvetanski',
+  title: 'Legion Go Console Dock',
   description:
     'A 3D-printable dock for the Lenovo Legion Go handheld with active cooling, rear cable routing, and NFC "game cards" that launch PC games.',
 };

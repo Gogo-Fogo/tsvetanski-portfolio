@@ -1,144 +1,115 @@
 "use client";
 
-import { useState } from "react";
+import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+
+const EMAIL = "georgi@tsvetanski.com";
 
 type ContactFormValues = {
   name: string;
   email: string;
-  projectType: string;
+  topic: string;
   message: string;
 };
 
-type ContactFormPreviewProps = {
-  compact?: boolean;
-};
+const fieldClass =
+  "min-h-11 rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-base text-[var(--foreground)] transition-colors focus:border-[var(--brand-cyan)] aria-[invalid=true]:border-red-500";
+const labelClass = "text-sm font-medium text-[var(--foreground)]";
+const errorClass = "text-sm text-red-600 dark:text-red-400";
 
-export default function ContactFormPreview({ compact = false }: ContactFormPreviewProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+/** Builds an email draft in the visitor's mail app; nothing is sent from the site. */
+export default function ContactFormPreview() {
+  const id = useId();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ContactFormValues>({
-    defaultValues: {
-      name: "",
-      email: "",
-      projectType: "xr-simulation",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", topic: "XR + Simulation", message: "" },
   });
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit((values) => {
+    const subject = `[Portfolio] ${values.topic}`;
+    const body = [`Name: ${values.name}`, `Email: ${values.email}`, "", values.message].join("\n");
     try {
-      setIsSubmitting(true);
-
-      const subject = `[Portfolio Inquiry] ${values.projectType}`;
-      const body = [
-        `Name: ${values.name}`,
-        `Email: ${values.email}`,
-        `Project Type: ${values.projectType}`,
-        "",
-        "Message:",
-        values.message,
-      ].join("\n");
-
-      const mailtoUrl = `mailto:georgi@tsvetanski.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoUrl;
-
-      toast.success("Draft opened in your email app", {
-        description: "Review and send when ready.",
-      });
-
-      reset({
-        name: values.name,
-        email: values.email,
-        projectType: values.projectType,
-        message: values.message,
+      window.location.assign(`mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+      toast.success("Your email app should open with the draft", {
+        description: `If nothing opened, write to ${EMAIL}.`,
       });
     } catch {
-      toast.error("Could not open email app", {
-        description: "You can still copy the email from the Connect section.",
-      });
-    } finally {
-      setIsSubmitting(false);
+      toast.error("Couldn't open your email app", { description: `Write to ${EMAIL} instead.` });
     }
   });
 
+  const describedBy = (field: keyof ContactFormValues) => (errors[field] ? `${id}-${field}-error` : undefined);
+
   return (
-    <form onSubmit={onSubmit} className={`${compact ? "mt-0" : "mt-6"} grid gap-4`} noValidate>
+    <form onSubmit={onSubmit} className="grid gap-4" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="grid gap-1.5 text-left">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Name</span>
+        <label className="grid gap-1.5">
+          <span className={labelClass}>Name</span>
           <input
             type="text"
-            placeholder="Your name"
-            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm outline-none transition-colors focus:border-[var(--foreground)]"
-            {...register("name", {
-              required: "Name is required",
-              minLength: { value: 2, message: "Name looks too short" },
-            })}
+            autoComplete="name"
+            className={fieldClass}
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={describedBy("name")}
+            {...register("name", { required: "Add your name." })}
           />
-          {errors.name ? <span className="text-xs text-red-500">{errors.name.message}</span> : null}
+          {errors.name ? <span id={`${id}-name-error`} className={errorClass}>{errors.name.message}</span> : null}
         </label>
 
-        <label className="grid gap-1.5 text-left">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Email</span>
+        <label className="grid gap-1.5">
+          <span className={labelClass}>Email</span>
           <input
             type="email"
-            placeholder="you@email.com"
-            className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm outline-none transition-colors focus:border-[var(--foreground)]"
+            autoComplete="email"
+            inputMode="email"
+            className={fieldClass}
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby={describedBy("email")}
             {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Please enter a valid email",
-              },
+              required: "Add your email so I can reply.",
+              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Check the email address, e.g. name@company.com." },
             })}
           />
-          {errors.email ? <span className="text-xs text-red-500">{errors.email.message}</span> : null}
+          {errors.email ? <span id={`${id}-email-error`} className={errorClass}>{errors.email.message}</span> : null}
         </label>
       </div>
 
-      <label className="grid gap-1.5 text-left">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Project Type</span>
-        <select
-          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm outline-none transition-colors focus:border-[var(--foreground)]"
-          {...register("projectType")}
-        >
-          <option value="xr-simulation">XR / Simulation</option>
-          <option value="gameplay-prototyping">Gameplay Prototyping</option>
-          <option value="creative-media">Creative / Media Collaboration</option>
-          <option value="other">Other</option>
+      <label className="grid gap-1.5">
+        <span className={labelClass}>Topic</span>
+        <select className={fieldClass} {...register("topic")}>
+          <option>XR + Simulation</option>
+          <option>Gameplay Systems</option>
+          <option>Tools & AI</option>
+          <option>Creative</option>
+          <option>A role or interview</option>
+          <option>Something else</option>
         </select>
       </label>
 
-      <label className="grid gap-1.5 text-left">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">Message</span>
+      <label className="grid gap-1.5">
+        <span className={labelClass}>Message</span>
         <textarea
           rows={4}
-          placeholder="Tell me about your goals, timeline, and scope..."
-          className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm outline-none transition-colors focus:border-[var(--foreground)]"
-          {...register("message", {
-            required: "Please add a short message",
-            minLength: { value: 12, message: "A little more detail helps" },
-          })}
+          className={fieldClass}
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={describedBy("message")}
+          {...register("message", { required: "Add a short message." })}
         />
-        {errors.message ? <span className="text-xs text-red-500">{errors.message.message}</span> : null}
+        {errors.message ? <span id={`${id}-message-error`} className={errorClass}>{errors.message.message}</span> : null}
       </label>
 
-      <div className="flex flex-wrap items-center gap-3 pt-1">
+      <div className="flex flex-wrap items-center gap-3">
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="inline-flex rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)] disabled:cursor-not-allowed disabled:opacity-70"
+          className="inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-[var(--brand-orange)] px-5 text-sm font-semibold text-[var(--brand-on-orange)] transition-shadow hover:shadow-[0_0_0_4px_color-mix(in_srgb,var(--brand-orange)_25%,transparent)]"
         >
-          {isSubmitting ? "Opening..." : "Send Inquiry"}
+          Open email draft
         </button>
-        <span className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">Opens Email Draft</span>
+        <span className="text-sm text-[var(--muted)]">Opens in your email app.</span>
       </div>
     </form>
   );

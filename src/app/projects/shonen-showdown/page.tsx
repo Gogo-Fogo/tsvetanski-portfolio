@@ -6,7 +6,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Shonen Showdown | Georgi Tsvetanski",
+  title: "Shonen Showdown",
   description: "Lead developer on a multiplayer first-person Trading Card Game built in Unity 6 — full TCG rules engine, Photon Fusion 2 networking, and a ScriptableObject-driven card data system.",
 };
 

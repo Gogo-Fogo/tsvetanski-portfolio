@@ -5,7 +5,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'TUR Workout Tracker | Georgi Tsvetanski',
+  title: 'TUR Workout Tracker',
   description:
     'An offline-first iPhone workout log in SwiftUI with a Garmin watch companion in Monkey C. Solo product: design, engineering, catalog and website.',
 };

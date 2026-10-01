@@ -6,7 +6,7 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Trash Been | Georgi Tsvetanski",
+  title: "Trash Been",
   description: "Solo Unity platformer built in one week for a Breda application — collect trash to restore a polluted city, unlock movement upgrades, and maintain momentum.",
 };
 
