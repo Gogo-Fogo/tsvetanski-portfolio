@@ -1,0 +1,235 @@
+{
+  "_comment": "Keyed by <category>/<slug>. scripts/build-creative-art.py merges these into public/images/animation/manifest.json, which /creative reads. Missing entries fall back to a title derived from the slug.",
+
+  "3d/sculpt-primitive-forms": {
+    "title": "Sculpt study — primitive forms",
+    "note": "Grey box-modelling exercise: a sphere grown into radial pods, a pill form, and floating discs above a plane."
+  },
+  "3d/low-poly-fantasy-house": {
+    "title": "Low-poly fantasy house",
+    "note": "Modelled and textured house with turrets, a hanging banner, and outbuildings on a low-poly base."
+  },
+  "3d/character-rig-pose": {
+    "title": "Character rig — pose test",
+    "note": "Rigged figure posed in the viewport, checking joint placement and limb deformation."
+  },
+  "3d/skeleton-rig": {
+    "title": "Skeleton rig — bone hierarchy",
+    "note": "The same character's skeleton drawn out in full so the chain from hips to fingertips is readable."
+  },
+  "3d/dog-robot-concept": {
+    "title": "Dog robot — concept passes",
+    "note": "Orthographic study sheets for a quadruped robot, working the head unit from several angles."
+  },
+  "3d/sculpt-twisted-log": {
+    "title": "Sculpt study — twisted log",
+    "note": "A cylinder worked into a twisted, draping form with the ridges of the twist carried through the surface."
+  },
+  "3d/maya-animation-context": {
+    "title": "Maya — animation setup",
+    "note": "Working Maya session showing the graph editor and channel box alongside the animated object."
+  },
+  "3d/sculpt-metal-flower": {
+    "title": "Sculpt study — metal flower",
+    "note": "Petals unwrapping from a central core, shaded in a polished metal to test how the curves read."
+  },
+  "3d/character-render-officer": {
+    "title": "Character render — officer",
+    "note": "Finished render of a uniformed character, kept dark against a flat backdrop."
+  },
+  "3d/creature-sculpt-dragon": {
+    "title": "Creature sculpt — dragon head",
+    "note": "Green dragon head sculpt worked up from the jaw, with the open mouth as the focal point."
+  },
+  "3d/insect-render": {
+    "title": "Insect — modelled and shaded",
+    "note": "Winged insect built and shaded against a pale backdrop, testing transparency in the wings."
+  },
+  "3d/low-poly-house-lighting": {
+    "title": "Low-poly house — lighting pass",
+    "note": "The house at night, lit only by window emissives and a few ground lights."
+  },
+  "3d/sculpt-vessel": {
+    "title": "Sculpt study — vessel",
+    "note": "Organic form pulled out of a simple vase silhouette, with a branch handle curving off the body."
+  },
+
+  "digital/dark-birds-painting": {
+    "title": "Birds — dark palette painting",
+    "note": "Loose painted study with a flock moving through a dark, swirling ground."
+  },
+  "digital/figure-in-rain": {
+    "title": "Figure in rain",
+    "note": "Monochrome figure study where the rain strokes do most of the shading."
+  },
+  "digital/figure-turnaround": {
+    "title": "Figure turnaround — construction",
+    "note": "Four views of one figure kept to pure construction lines, drawn on ruled paper."
+  },
+  "digital/samurai-illustration": {
+    "title": "Samurai — painted illustration",
+    "note": "A samurai mid-strike, built around a red cape and a spray of white strokes against black."
+  },
+  "digital/portrait-blocked-colour": {
+    "title": "Portrait — blocked colour",
+    "note": "Portrait reduced to flat blocks of yellow and blue with the line work left showing."
+  },
+  "digital/environment-before-after": {
+    "title": "Environment before and after",
+    "note": "The same hillside shown brown and bare, then again after a lighting and foliage pass."
+  },
+  "digital/wolf-graphic-portrait": {
+    "title": "Wolf — graphic portrait",
+    "note": "High-contrast treatment: the head sits in white against black, with the eyes left empty."
+  },
+  "digital/figure-study-backlit": {
+    "title": "Figure study — backlit",
+    "note": "A leaning figure read entirely as silhouette against a pale ground."
+  },
+  "digital/abandoned-truck": {
+    "title": "Abandoned truck — vehicle study",
+    "note": "Rust, dents, and foliage reclaiming a parked truck, painted over loose line work."
+  },
+  "digital/hero-foreshortened-punch": {
+    "title": "Hero cover — foreshortened punch",
+    "note": "Comic-style cover practising hard foreshortening, with the fist driving into the viewer."
+  },
+  "digital/character-sheet-sketch-to-colour": {
+    "title": "Character sheet — sketch to colour",
+    "note": "Construction sketches of a masked character beside the finished flat-colour version."
+  },
+  "digital/crest-set": {
+    "title": "Crest set — icon design",
+    "note": "A family of circular emblems in red and black, drawn to work together at small sizes."
+  },
+  "digital/bee-studies": {
+    "title": "Bee studies",
+    "note": "Three deliberately unfinished insect studies, used to stay out of tight rendering."
+  },
+  "digital/glowing-grove": {
+    "title": "Glowing grove — lighting study",
+    "note": "Canopy scene lit from the ground, testing how far coloured bounce light carries."
+  },
+  "digital/portrait-red-tie": {
+    "title": "Portrait — red tie",
+    "note": "Portrait held to a tight palette, with the red tie carrying the whole composition."
+  },
+  "digital/phoenix-illustration": {
+    "title": "Phoenix — painted illustration",
+    "note": "Bird mid-flight in front of a red disc, wings built from broad brush strokes."
+  },
+  "digital/parking-structure": {
+    "title": "Parking structure — environment render",
+    "note": "Repeated concrete bays shot through with hard daylight, testing depth and repetition."
+  },
+  "digital/dog-character-studies": {
+    "title": "Dog character — exploratory sketches",
+    "note": "Rough passes on a small robot dog with oversized eyes, plus thumbnails from the side and back."
+  },
+  "digital/material-palette": {
+    "title": "Material palette — texture studies",
+    "note": "Shaded spheres and flat swatches setting out the metals, fabrics, foliage, and wood for a scene."
+  },
+  "digital/environment-concept": {
+    "title": "Jungle environment — concept",
+    "note": "Environment concept pushing a bright canopy against a darker forest floor."
+  },
+
+  "traditional/still-life-skull-and-pots": {
+    "title": "Still life — skull and pots",
+    "note": "Dark tonal still life built from graphite blocks rather than outlines."
+  },
+  "traditional/still-life-skull-teaset": {
+    "title": "Still life — skull tea set",
+    "note": "Warm burnt-sienna study on a table edge, with the skull as the highest contrast."
+  },
+  "traditional/rose-study": {
+    "title": "Rose — pencil still life",
+    "note": "Rose drawn from life, worked light enough to leave the paper as the highlight."
+  },
+  "traditional/corridor-perspective": {
+    "title": "Corridor — one-point perspective",
+    "note": "A small figure at the end of a long corridor, with every line converging on it."
+  },
+  "traditional/glass-building-perspective": {
+    "title": "Glass building — perspective study",
+    "note": "Two-point perspective exercise on a glass facade, all structure and no shading."
+  },
+  "traditional/portrait-charcoal": {
+    "title": "Portrait — charcoal",
+    "note": "Head-and-shoulders portrait built from a few broad tonal masses and a strong light side."
+  },
+  "traditional/figure-blue-tones": {
+    "title": "Figure — blue tones",
+    "note": "Kneeling figure in a cool blue range, with the pose carried by mass rather than contour."
+  },
+  "traditional/seated-figure-charcoal": {
+    "title": "Seated figure — charcoal",
+    "note": "Academic study working through weight, proportion, and where the body actually contacts the seat."
+  },
+  "traditional/seated-figure-study": {
+    "title": "Seated figure — raised arm",
+    "note": "Full-figure study with the arm raised, emphasising the twist through the torso."
+  },
+  "traditional/seated-figure-tonal": {
+    "title": "Seated figure — tonal study",
+    "note": "Quiet graphite study looking down, kept deliberately soft except at the face and hands."
+  },
+  "traditional/blossom-tree": {
+    "title": "Blossom tree — colour study",
+    "note": "Bright canopy against a warm sky, the only saturated passage in an otherwise muted sheet."
+  },
+  "traditional/figure-magenta": {
+    "title": "Figure — magenta",
+    "note": "Figure cut out against a maroon ground and outlined in magenta to separate it."
+  },
+  "traditional/landscape-lake": {
+    "title": "Landscape — lake",
+    "note": "Water, bank, and foliage worked in warm earth tones with the reflection doing the perspective."
+  },
+  "traditional/figure-and-creature": {
+    "title": "Figure and creature",
+    "note": "A figure standing over something small and bright, kept loose in greens and browns."
+  },
+  "traditional/sleeping-cat": {
+    "title": "Sleeping cat — tonal study",
+    "note": "Soft-edged charcoal study of a sleeping cat with the ground plane left almost untouched."
+  },
+  "traditional/figure-in-flame": {
+    "title": "Figure in flame",
+    "note": "Figure dissolving into colour at the edges, with handwritten text worked into the upper right."
+  },
+  "traditional/abstract-glasses": {
+    "title": "Abstract — white on black",
+    "note": "Scribbled glasses and a ring reduced to pure black and white shapes."
+  },
+  "traditional/hands-study": {
+    "title": "Hands — sketch study",
+    "note": "Reclining figure and hands roughed in on toned paper, mostly unresolved on purpose."
+  },
+  "traditional/figure-drawing": {
+    "title": "Figure drawing — two figures",
+    "note": "Two figures built from the same light source, with the underdrawing left visible."
+  },
+
+  "ui-design/IMG_3551": {
+    "title": "Scene layout — incident street",
+    "note": "Low-fidelity layout of the environment the operator is dropped into: the storefront row, an impact point in the roadway, and a fire at the far corner, left unlabelled so the layout reads before the detail does."
+  },
+  "ui-design/IMG_3558": {
+    "title": "Scene states — annotated incidents",
+    "note": "The same street annotated with the three incidents the app has to surface: civilian casualty, a drone/pedestrian collision, and the active fire, each with the callout that triggered it."
+  },
+  "ui-design/IMG_3555": {
+    "title": "Controller mapping — teleport and snap turn",
+    "note": "Input design for the VR controller: teleport, exit VR/menu, mission-aware pick-up, LiDAR-sourced targeting, and snap turn, laid out around a window cut in the sheet so the scene sits inside the mapping."
+  },
+  "ui-design/IMG_3557": {
+    "title": "Controller mapping — active fire state",
+    "note": "The same mapping restated against the active-fire state, with the sensor-log card that raises the alert sitting over the scene."
+  },
+  "ui-design/IMG_3559": {
+    "title": "Controller mapping — interior layout",
+    "note": "Mapping paired with the interior layout, working through how the operator reads and picks up evidence inside the room."
+  }
+}

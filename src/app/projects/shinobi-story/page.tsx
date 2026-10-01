@@ -3,6 +3,12 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import LightboxImage from '@/components/lightbox-image';
 import ProjectAtAGlance from '@/components/project-at-a-glance';
 import VideoCarousel, { type VideoCard } from '../../creative/video-carousel';
+import {
+  formatYouTubeStats,
+  getYouTubeThumbnailUrl,
+  getYouTubeVideoId,
+  getYouTubeVideoStats,
+} from '@/app/youtube';
 
 import type { Metadata } from 'next';
 
@@ -11,12 +17,8 @@ export const metadata: Metadata = {
   description: "Led content strategy and live operations for a fully custom Naruto MMORPG — complete WoW 3.3.5 client overhaul, original animations, $110K in revenue, 1M+ downloads, 56K players.",
 };
 
+export const revalidate = 3600;
 
-type VideoStats = {
-  viewCount?: string;
-  likeCount?: string;
-  title?: string;
-};
 
 type ShinobiVideo = {
   title: string;
@@ -75,65 +77,19 @@ const shinobiStoryVideos: ShinobiVideo[] = [
   }
 ];
 
-const formatCount = (value?: string) => {
-  if (!value) {
-    return null;
-  }
-
-  const count = Number(value);
-  if (Number.isNaN(count)) {
-    return null;
-  }
-
-  return count.toLocaleString();
-};
-
-const getVideoId = (embedUrl: string) => embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
-
-const getThumbnailUrl = (embedUrl: string) => {
-  const videoId = getVideoId(embedUrl);
-  return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-};
-
 export default async function ShinobiStoryPage() {
   const videoIds = shinobiStoryVideos
-    .map((video) => getVideoId(video.embedUrl))
+    .map((video) => getYouTubeVideoId(video.embedUrl))
     .filter(Boolean);
-  const uniqueVideoIds = Array.from(new Set(videoIds));
-  const statsById = new Map<string, VideoStats>();
-
-  const apiKey = process.env.YOUTUBE_API_KEY;
-  if (apiKey && uniqueVideoIds.length > 0) {
-    try {
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${uniqueVideoIds.join(',')}&key=${apiKey}`,
-        { next: { revalidate: 604800 } }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        data.items?.forEach((item: { id: string; statistics?: VideoStats; snippet?: { title?: string } }) => {
-          if (item?.id) {
-            statsById.set(item.id, { ...item.statistics, title: item.snippet?.title });
-          }
-        });
-      }
-    } catch (error) {
-      console.warn('YouTube stats fetch failed', error);
-    }
-  }
+  const statsById = await getYouTubeVideoStats(videoIds);
 
   const getStatsText = (embedUrl: string) => {
-    const videoId = getVideoId(embedUrl);
-    const stats = statsById.get(videoId);
-    const viewCount = formatCount(stats?.viewCount);
-    const likeCount = formatCount(stats?.likeCount);
-
-    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : null;
+    const videoId = getYouTubeVideoId(embedUrl);
+    return formatYouTubeStats(statsById.get(videoId));
   };
 
   const getTitle = (embedUrl: string, fallbackTitle: string) => {
-    const videoId = getVideoId(embedUrl);
+    const videoId = getYouTubeVideoId(embedUrl);
     return statsById.get(videoId)?.title ?? fallbackTitle;
   };
 
@@ -141,7 +97,7 @@ export default async function ShinobiStoryPage() {
     title: getTitle(video.embedUrl, video.title),
     url: video.url,
     embedUrl: video.embedUrl,
-    thumbnailUrl: video.thumbnailUrl ?? getThumbnailUrl(video.embedUrl),
+    thumbnailUrl: video.thumbnailUrl ?? getYouTubeThumbnailUrl(video.embedUrl),
     note: video.note,
     statsText: getStatsText(video.embedUrl),
     className: video.zoomClassName,

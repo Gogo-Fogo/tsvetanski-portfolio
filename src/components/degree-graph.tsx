@@ -1440,6 +1440,7 @@ type DegreeGraphProps = {
 
 export default function DegreeGraph({ variant = "card", className }: DegreeGraphProps) {
   const [activeDegree, setActiveDegree] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [expandAllBranches, setExpandAllBranches] = useState(false);
   const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -1576,6 +1577,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   const handleReset = () => {
     setActiveDegree(null);
+    setSelectedNodeId(null);
     setExpandAllBranches(false);
     setHoveredNode(null);
     setEditorSelection(null);
@@ -1587,6 +1589,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
 
   const closeActiveBranch = useCallback(() => {
     setActiveDegree(null);
+    setSelectedNodeId(null);
     setExpandAllBranches(false);
     setZoom(1);
     setPan({ x: 0, y: 0 });
@@ -1595,6 +1598,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const toggleExpandAllBranches = useCallback(() => {
     setHoveredNode(null);
     setActiveDegree(null);
+    setSelectedNodeId(null);
     setEditorSelection(null);
     setEditorDrag(null);
     setZoom(1);
@@ -1658,6 +1662,9 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   const visibleNodeById = graphLayout.nodeById;
   const labelLayouts = graphLayout.labelLayouts;
   const activeLayoutNode = activeDegree ? visibleNodeById.get(activeDegree) : undefined;
+  const selectedNode = selectedNodeId
+    ? nodesData.find((node) => node.id === selectedNodeId) ?? null
+    : null;
   const zoomScaleMultiplier = 1.3;
   const allExpandedRenderScale = zoom * ALL_EXPANDED_ZOOM_MULTIPLIER;
   const collapsedRenderScale = zoom * COLLAPSED_ZOOM_MULTIPLIER;
@@ -2066,6 +2073,12 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
   }, [visibleNodes]);
 
   const handleNodeClick = (nodeId: string, group: GraphNode["group"]) => {
+    const node = nodesData.find((currentNode) => currentNode.id === nodeId);
+    if (!node) return;
+
+    setHoveredNode(null);
+    setSelectedNodeId(nodeId);
+
     if (group !== "degree" && group !== "core") return;
 
     if (expandAllBranches) {
@@ -2076,9 +2089,6 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
       closeActiveBranch();
       return;
     }
-
-    const node = nodesData.find((currentNode) => currentNode.id === nodeId);
-    if (!node) return;
 
     const desktopPreset = isDesktop ? getMergedExpandedPreset(nodeId, presetOverrides) : undefined;
     const requestedZoom = desktopPreset?.focusZoom ?? (isDesktop ? 1.24 : 1.08);
@@ -2272,7 +2282,7 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
         role="group"
         aria-label="Education degree graph"
         aria-describedby="degree-graph-instructions"
-        className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
+        className="absolute inset-x-0 top-0 h-[440px] w-full cursor-grab active:cursor-grabbing sm:inset-0 sm:h-full"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -2544,13 +2554,48 @@ export default function DegreeGraph({ variant = "card", className }: DegreeGraph
         })}
         </g>
       </svg>
-      <GraphTooltip
-        x={mousePos.x}
-        y={mousePos.y}
-        title={hoveredNode?.label ?? ""}
-        description={hoveredNode?.description}
-        visible={!!hoveredNode}
-      />
+      <div
+        className="absolute inset-x-3 bottom-3 z-20 min-h-[148px] rounded-xl border border-[var(--border)] bg-[var(--background)]/96 p-4 shadow-[var(--shadow)] backdrop-blur sm:hidden"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {selectedNode ? (
+          <>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+              {selectedNode.group === "sub" ? "Selected skill" : "Selected degree"}
+            </p>
+            <h3 className="mt-1.5 text-lg font-semibold leading-tight text-[var(--foreground)]">
+              {selectedNode.label}
+            </h3>
+            {selectedNode.description && (
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                {selectedNode.description}
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+              Education map
+            </p>
+            <h3 className="mt-1.5 text-lg font-semibold text-[var(--foreground)]">
+              Tap any circle to inspect it
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+              Degree circles open their connected skills. Tap a skill circle to read what it represents.
+            </p>
+          </>
+        )}
+      </div>
+      {isDesktop && (
+        <GraphTooltip
+          x={mousePos.x}
+          y={mousePos.y}
+          title={hoveredNode?.label ?? ""}
+          description={hoveredNode?.description}
+          visible={!!hoveredNode}
+        />
+      )}
     </div>
   );
 }

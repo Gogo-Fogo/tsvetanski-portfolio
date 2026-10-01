@@ -1,0 +1,657 @@
+{
+  "art-source/3d": {
+    "category": "3d",
+    "count": 13,
+    "fullRes": true,
+    "pieces": [
+      {
+        "name": "3d-character-render-officer.jpg",
+        "width": 1714,
+        "height": 716,
+        "source": "3d/character-render-officer.png",
+        "sourceWidth": 1714,
+        "sourceHeight": 716,
+        "downscaled": false,
+        "title": "Character render \u2014 officer",
+        "note": "Finished render of a uniformed character, kept dark against a flat backdrop."
+      },
+      {
+        "name": "3d-character-rig-pose.jpg",
+        "width": 1100,
+        "height": 647,
+        "source": "3d/character-rig-pose.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 647,
+        "downscaled": false,
+        "title": "Character rig \u2014 pose test",
+        "note": "Rigged figure posed in the viewport, checking joint placement and limb deformation."
+      },
+      {
+        "name": "3d-creature-sculpt-dragon.jpg",
+        "width": 1100,
+        "height": 750,
+        "source": "3d/creature-sculpt-dragon.webp",
+        "sourceWidth": 1100,
+        "sourceHeight": 750,
+        "downscaled": false,
+        "title": "Creature sculpt \u2014 dragon head",
+        "note": "Green dragon head sculpt worked up from the jaw, with the open mouth as the focal point."
+      },
+      {
+        "name": "3d-dog-robot-concept.jpg",
+        "width": 1100,
+        "height": 547,
+        "source": "3d/dog-robot-concept.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 547,
+        "downscaled": false,
+        "title": "Dog robot \u2014 concept passes",
+        "note": "Orthographic study sheets for a quadruped robot, working the head unit from several angles."
+      },
+      {
+        "name": "3d-insect-render.jpg",
+        "width": 1100,
+        "height": 619,
+        "source": "3d/insect-render.jpg",
+        "sourceWidth": 1100,
+        "sourceHeight": 619,
+        "downscaled": false,
+        "title": "Insect \u2014 modelled and shaded",
+        "note": "Winged insect built and shaded against a pale backdrop, testing transparency in the wings."
+      },
+      {
+        "name": "3d-low-poly-fantasy-house.jpg",
+        "width": 1100,
+        "height": 649,
+        "source": "3d/low-poly-fantasy-house.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 649,
+        "downscaled": false,
+        "title": "Low-poly fantasy house",
+        "note": "Modelled and textured house with turrets, a hanging banner, and outbuildings on a low-poly base."
+      },
+      {
+        "name": "3d-low-poly-house-lighting.jpg",
+        "width": 1100,
+        "height": 619,
+        "source": "3d/low-poly-house-lighting.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 619,
+        "downscaled": false,
+        "title": "Low-poly house \u2014 lighting pass",
+        "note": "The house at night, lit only by window emissives and a few ground lights."
+      },
+      {
+        "name": "3d-maya-animation-context.jpg",
+        "width": 1100,
+        "height": 619,
+        "source": "3d/maya-animation-context.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 619,
+        "downscaled": false,
+        "title": "Maya \u2014 animation setup",
+        "note": "Working Maya session showing the graph editor and channel box alongside the animated object."
+      },
+      {
+        "name": "3d-sculpt-metal-flower.jpg",
+        "width": 1100,
+        "height": 726,
+        "source": "3d/sculpt-metal-flower.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 726,
+        "downscaled": false,
+        "title": "Sculpt study \u2014 metal flower",
+        "note": "Petals unwrapping from a central core, shaded in a polished metal to test how the curves read."
+      },
+      {
+        "name": "3d-sculpt-primitive-forms.jpg",
+        "width": 1100,
+        "height": 655,
+        "source": "3d/sculpt-primitive-forms.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 655,
+        "downscaled": false,
+        "title": "Sculpt study \u2014 primitive forms",
+        "note": "Grey box-modelling exercise: a sphere grown into radial pods, a pill form, and floating discs above a plane."
+      },
+      {
+        "name": "3d-sculpt-twisted-log.jpg",
+        "width": 1100,
+        "height": 587,
+        "source": "3d/sculpt-twisted-log.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 587,
+        "downscaled": false,
+        "title": "Sculpt study \u2014 twisted log",
+        "note": "A cylinder worked into a twisted, draping form with the ridges of the twist carried through the surface."
+      },
+      {
+        "name": "3d-sculpt-vessel.jpg",
+        "width": 981,
+        "height": 800,
+        "source": "3d/sculpt-vessel.png",
+        "sourceWidth": 981,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Sculpt study \u2014 vessel",
+        "note": "Organic form pulled out of a simple vase silhouette, with a branch handle curving off the body."
+      },
+      {
+        "name": "3d-skeleton-rig.jpg",
+        "width": 1050,
+        "height": 800,
+        "source": "3d/skeleton-rig.png",
+        "sourceWidth": 1050,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Skeleton rig \u2014 bone hierarchy",
+        "note": "The same character's skeleton drawn out in full so the chain from hips to fingertips is readable."
+      }
+    ]
+  },
+  "art-source/digital": {
+    "category": "digital",
+    "count": 20,
+    "fullRes": true,
+    "pieces": [
+      {
+        "name": "digital-abandoned-truck.jpg",
+        "width": 1035,
+        "height": 800,
+        "source": "digital/abandoned-truck.png",
+        "sourceWidth": 1035,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Abandoned truck \u2014 vehicle study",
+        "note": "Rust, dents, and foliage reclaiming a parked truck, painted over loose line work."
+      },
+      {
+        "name": "digital-bee-studies.jpg",
+        "width": 1084,
+        "height": 800,
+        "source": "digital/bee-studies.png",
+        "sourceWidth": 1084,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Bee studies",
+        "note": "Three deliberately unfinished insect studies, used to stay out of tight rendering."
+      },
+      {
+        "name": "digital-character-sheet-sketch-to-colour.jpg",
+        "width": 600,
+        "height": 800,
+        "source": "digital/character-sheet-sketch-to-colour.jpeg",
+        "sourceWidth": 600,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Character sheet \u2014 sketch to colour",
+        "note": "Construction sketches of a masked character beside the finished flat-colour version."
+      },
+      {
+        "name": "digital-crest-set.jpg",
+        "width": 720,
+        "height": 800,
+        "source": "digital/crest-set.jpeg",
+        "sourceWidth": 720,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Crest set \u2014 icon design",
+        "note": "A family of circular emblems in red and black, drawn to work together at small sizes."
+      },
+      {
+        "name": "digital-dark-birds-painting.jpg",
+        "width": 1080,
+        "height": 1079,
+        "source": "digital/dark-birds-painting.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 1079,
+        "downscaled": false,
+        "title": "Birds \u2014 dark palette painting",
+        "note": "Loose painted study with a flock moving through a dark, swirling ground."
+      },
+      {
+        "name": "digital-dog-character-studies.jpg",
+        "width": 1100,
+        "height": 591,
+        "source": "digital/dog-character-studies.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 591,
+        "downscaled": false,
+        "title": "Dog character \u2014 exploratory sketches",
+        "note": "Rough passes on a small robot dog with oversized eyes, plus thumbnails from the side and back."
+      },
+      {
+        "name": "digital-environment-before-after.jpg",
+        "width": 1002,
+        "height": 800,
+        "source": "digital/environment-before-after.png",
+        "sourceWidth": 1002,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Environment before and after",
+        "note": "The same hillside shown brown and bare, then again after a lighting and foliage pass."
+      },
+      {
+        "name": "digital-environment-concept.jpg",
+        "width": 1100,
+        "height": 619,
+        "source": "digital/environment-concept.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 619,
+        "downscaled": false,
+        "title": "Jungle environment \u2014 concept",
+        "note": "Environment concept pushing a bright canopy against a darker forest floor."
+      },
+      {
+        "name": "digital-figure-in-rain.jpg",
+        "width": 1080,
+        "height": 1350,
+        "source": "digital/figure-in-rain.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 1350,
+        "downscaled": false,
+        "title": "Figure in rain",
+        "note": "Monochrome figure study where the rain strokes do most of the shading."
+      },
+      {
+        "name": "digital-figure-study-backlit.jpg",
+        "width": 800,
+        "height": 800,
+        "source": "digital/figure-study-backlit.png",
+        "sourceWidth": 800,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Figure study \u2014 backlit",
+        "note": "A leaning figure read entirely as silhouette against a pale ground."
+      },
+      {
+        "name": "digital-figure-turnaround.jpg",
+        "width": 632,
+        "height": 355,
+        "source": "digital/figure-turnaround.jpeg",
+        "sourceWidth": 632,
+        "sourceHeight": 355,
+        "downscaled": false,
+        "title": "Figure turnaround \u2014 construction",
+        "note": "Four views of one figure kept to pure construction lines, drawn on ruled paper."
+      },
+      {
+        "name": "digital-glowing-grove.jpg",
+        "width": 1080,
+        "height": 571,
+        "source": "digital/glowing-grove.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 571,
+        "downscaled": false,
+        "title": "Glowing grove \u2014 lighting study",
+        "note": "Canopy scene lit from the ground, testing how far coloured bounce light carries."
+      },
+      {
+        "name": "digital-hero-foreshortened-punch.jpg",
+        "width": 763,
+        "height": 800,
+        "source": "digital/hero-foreshortened-punch.png",
+        "sourceWidth": 763,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Hero cover \u2014 foreshortened punch",
+        "note": "Comic-style cover practising hard foreshortening, with the fist driving into the viewer."
+      },
+      {
+        "name": "digital-material-palette.jpg",
+        "width": 562,
+        "height": 800,
+        "source": "digital/material-palette.png",
+        "sourceWidth": 562,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Material palette \u2014 texture studies",
+        "note": "Shaded spheres and flat swatches setting out the metals, fabrics, foliage, and wood for a scene."
+      },
+      {
+        "name": "digital-parking-structure.jpg",
+        "width": 1100,
+        "height": 733,
+        "source": "digital/parking-structure.jpg",
+        "sourceWidth": 1100,
+        "sourceHeight": 733,
+        "downscaled": false,
+        "title": "Parking structure \u2014 environment render",
+        "note": "Repeated concrete bays shot through with hard daylight, testing depth and repetition."
+      },
+      {
+        "name": "digital-phoenix-illustration.jpg",
+        "width": 1080,
+        "height": 810,
+        "source": "digital/phoenix-illustration.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 810,
+        "downscaled": false,
+        "title": "Phoenix \u2014 painted illustration",
+        "note": "Bird mid-flight in front of a red disc, wings built from broad brush strokes."
+      },
+      {
+        "name": "digital-portrait-blocked-colour.jpg",
+        "width": 777,
+        "height": 800,
+        "source": "digital/portrait-blocked-colour.png",
+        "sourceWidth": 777,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Portrait \u2014 blocked colour",
+        "note": "Portrait reduced to flat blocks of yellow and blue with the line work left showing."
+      },
+      {
+        "name": "digital-portrait-red-tie.jpg",
+        "width": 1080,
+        "height": 1079,
+        "source": "digital/portrait-red-tie.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 1079,
+        "downscaled": false,
+        "title": "Portrait \u2014 red tie",
+        "note": "Portrait held to a tight palette, with the red tie carrying the whole composition."
+      },
+      {
+        "name": "digital-samurai-illustration.jpg",
+        "width": 1080,
+        "height": 1350,
+        "source": "digital/samurai-illustration.jpeg",
+        "sourceWidth": 1080,
+        "sourceHeight": 1350,
+        "downscaled": false,
+        "title": "Samurai \u2014 painted illustration",
+        "note": "A samurai mid-strike, built around a red cape and a spray of white strokes against black."
+      },
+      {
+        "name": "digital-wolf-graphic-portrait.jpg",
+        "width": 752,
+        "height": 800,
+        "source": "digital/wolf-graphic-portrait.png",
+        "sourceWidth": 752,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Wolf \u2014 graphic portrait",
+        "note": "High-contrast treatment: the head sits in white against black, with the eyes left empty."
+      }
+    ]
+  },
+  "art-source/traditional": {
+    "category": "traditional",
+    "count": 19,
+    "fullRes": true,
+    "pieces": [
+      {
+        "name": "traditional-abstract-glasses.jpg",
+        "width": 1076,
+        "height": 562,
+        "source": "traditional/abstract-glasses.png",
+        "sourceWidth": 1076,
+        "sourceHeight": 562,
+        "downscaled": false,
+        "title": "Abstract \u2014 white on black",
+        "note": "Scribbled glasses and a ring reduced to pure black and white shapes."
+      },
+      {
+        "name": "traditional-blossom-tree.jpg",
+        "width": 640,
+        "height": 800,
+        "source": "traditional/blossom-tree.png",
+        "sourceWidth": 640,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Blossom tree \u2014 colour study",
+        "note": "Bright canopy against a warm sky, the only saturated passage in an otherwise muted sheet."
+      },
+      {
+        "name": "traditional-corridor-perspective.jpg",
+        "width": 680,
+        "height": 800,
+        "source": "traditional/corridor-perspective.jpg",
+        "sourceWidth": 680,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Corridor \u2014 one-point perspective",
+        "note": "A small figure at the end of a long corridor, with every line converging on it."
+      },
+      {
+        "name": "traditional-figure-and-creature.jpg",
+        "width": 830,
+        "height": 800,
+        "source": "traditional/figure-and-creature.png",
+        "sourceWidth": 830,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Figure and creature",
+        "note": "A figure standing over something small and bright, kept loose in greens and browns."
+      },
+      {
+        "name": "traditional-figure-blue-tones.jpg",
+        "width": 800,
+        "height": 800,
+        "source": "traditional/figure-blue-tones.png",
+        "sourceWidth": 800,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Figure \u2014 blue tones",
+        "note": "Kneeling figure in a cool blue range, with the pose carried by mass rather than contour."
+      },
+      {
+        "name": "traditional-figure-drawing.jpg",
+        "width": 557,
+        "height": 800,
+        "source": "traditional/figure-drawing.jpg",
+        "sourceWidth": 557,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Figure drawing \u2014 two figures",
+        "note": "Two figures built from the same light source, with the underdrawing left visible."
+      },
+      {
+        "name": "traditional-figure-in-flame.jpg",
+        "width": 836,
+        "height": 1166,
+        "source": "traditional/figure-in-flame.png",
+        "sourceWidth": 836,
+        "sourceHeight": 1166,
+        "downscaled": false,
+        "title": "Figure in flame",
+        "note": "Figure dissolving into colour at the edges, with handwritten text worked into the upper right."
+      },
+      {
+        "name": "traditional-figure-magenta.jpg",
+        "width": 802,
+        "height": 800,
+        "source": "traditional/figure-magenta.png",
+        "sourceWidth": 802,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Figure \u2014 magenta",
+        "note": "Figure cut out against a maroon ground and outlined in magenta to separate it."
+      },
+      {
+        "name": "traditional-glass-building-perspective.jpg",
+        "width": 839,
+        "height": 800,
+        "source": "traditional/glass-building-perspective.jpg",
+        "sourceWidth": 839,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Glass building \u2014 perspective study",
+        "note": "Two-point perspective exercise on a glass facade, all structure and no shading."
+      },
+      {
+        "name": "traditional-hands-study.jpg",
+        "width": 1080,
+        "height": 783,
+        "source": "traditional/hands-study.jpg",
+        "sourceWidth": 1080,
+        "sourceHeight": 783,
+        "downscaled": false,
+        "title": "Hands \u2014 sketch study",
+        "note": "Reclining figure and hands roughed in on toned paper, mostly unresolved on purpose."
+      },
+      {
+        "name": "traditional-landscape-lake.jpg",
+        "width": 1100,
+        "height": 755,
+        "source": "traditional/landscape-lake.png",
+        "sourceWidth": 1100,
+        "sourceHeight": 755,
+        "downscaled": false,
+        "title": "Landscape \u2014 lake",
+        "note": "Water, bank, and foliage worked in warm earth tones with the reflection doing the perspective."
+      },
+      {
+        "name": "traditional-portrait-charcoal.jpg",
+        "width": 566,
+        "height": 800,
+        "source": "traditional/portrait-charcoal.jpg",
+        "sourceWidth": 566,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Portrait \u2014 charcoal",
+        "note": "Head-and-shoulders portrait built from a few broad tonal masses and a strong light side."
+      },
+      {
+        "name": "traditional-rose-study.jpg",
+        "width": 1136,
+        "height": 668,
+        "source": "traditional/rose-study.jpg",
+        "sourceWidth": 1136,
+        "sourceHeight": 668,
+        "downscaled": false,
+        "title": "Rose \u2014 pencil still life",
+        "note": "Rose drawn from life, worked light enough to leave the paper as the highlight."
+      },
+      {
+        "name": "traditional-seated-figure-charcoal.jpg",
+        "width": 801,
+        "height": 800,
+        "source": "traditional/seated-figure-charcoal.png",
+        "sourceWidth": 801,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Seated figure \u2014 charcoal",
+        "note": "Academic study working through weight, proportion, and where the body actually contacts the seat."
+      },
+      {
+        "name": "traditional-seated-figure-study.jpg",
+        "width": 799,
+        "height": 800,
+        "source": "traditional/seated-figure-study.png",
+        "sourceWidth": 799,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Seated figure \u2014 raised arm",
+        "note": "Full-figure study with the arm raised, emphasising the twist through the torso."
+      },
+      {
+        "name": "traditional-seated-figure-tonal.jpg",
+        "width": 801,
+        "height": 800,
+        "source": "traditional/seated-figure-tonal.png",
+        "sourceWidth": 801,
+        "sourceHeight": 800,
+        "downscaled": false,
+        "title": "Seated figure \u2014 tonal study",
+        "note": "Quiet graphite study looking down, kept deliberately soft except at the face and hands."
+      },
+      {
+        "name": "traditional-sleeping-cat.jpg",
+        "width": 716,
+        "height": 448,
+        "source": "traditional/sleeping-cat.png",
+        "sourceWidth": 716,
+        "sourceHeight": 448,
+        "downscaled": false,
+        "title": "Sleeping cat \u2014 tonal study",
+        "note": "Soft-edged charcoal study of a sleeping cat with the ground plane left almost untouched."
+      },
+      {
+        "name": "traditional-still-life-skull-and-pots.jpg",
+        "width": 1080,
+        "height": 1350,
+        "source": "traditional/still-life-skull-and-pots.jpg",
+        "sourceWidth": 1080,
+        "sourceHeight": 1350,
+        "downscaled": false,
+        "title": "Still life \u2014 skull and pots",
+        "note": "Dark tonal still life built from graphite blocks rather than outlines."
+      },
+      {
+        "name": "traditional-still-life-skull-teaset.jpg",
+        "width": 1100,
+        "height": 789,
+        "source": "traditional/still-life-skull-teaset.jpg",
+        "sourceWidth": 1100,
+        "sourceHeight": 789,
+        "downscaled": false,
+        "title": "Still life \u2014 skull tea set",
+        "note": "Warm burnt-sienna study on a table edge, with the skull as the highest contrast."
+      }
+    ]
+  },
+  "art-source/ui-design": {
+    "category": "ui-design",
+    "count": 5,
+    "fullRes": true,
+    "pieces": [
+      {
+        "name": "ui-design-img-3551.jpg",
+        "width": 1800,
+        "height": 1403,
+        "source": "ui-design/IMG_3551.jpg",
+        "sourceWidth": 2772,
+        "sourceHeight": 2160,
+        "downscaled": true,
+        "title": "Scene layout \u2014 incident street",
+        "note": "Low-fidelity layout of the environment the operator is dropped into: the storefront row, an impact point in the roadway, and a fire at the far corner, left unlabelled so the layout reads before the detail does."
+      },
+      {
+        "name": "ui-design-img-3555.jpg",
+        "width": 1800,
+        "height": 1022,
+        "source": "ui-design/IMG_3555.jpg",
+        "sourceWidth": 3806,
+        "sourceHeight": 2160,
+        "downscaled": true,
+        "title": "Controller mapping \u2014 teleport and snap turn",
+        "note": "Input design for the VR controller: teleport, exit VR/menu, mission-aware pick-up, LiDAR-sourced targeting, and snap turn, laid out around a window cut in the sheet so the scene sits inside the mapping."
+      },
+      {
+        "name": "ui-design-img-3557.jpg",
+        "width": 1800,
+        "height": 1350,
+        "source": "ui-design/IMG_3557.jpg",
+        "sourceWidth": 2880,
+        "sourceHeight": 2160,
+        "downscaled": true,
+        "title": "Controller mapping \u2014 active fire state",
+        "note": "The same mapping restated against the active-fire state, with the sensor-log card that raises the alert sitting over the scene."
+      },
+      {
+        "name": "ui-design-img-3558.jpg",
+        "width": 1800,
+        "height": 1300,
+        "source": "ui-design/IMG_3558.jpg",
+        "sourceWidth": 2991,
+        "sourceHeight": 2160,
+        "downscaled": true,
+        "title": "Scene states \u2014 annotated incidents",
+        "note": "The same street annotated with the three incidents the app has to surface: civilian casualty, a drone/pedestrian collision, and the active fire, each with the callout that triggered it."
+      },
+      {
+        "name": "ui-design-img-3559.jpg",
+        "width": 1800,
+        "height": 1136,
+        "source": "ui-design/IMG_3559.jpg",
+        "sourceWidth": 3423,
+        "sourceHeight": 2160,
+        "downscaled": true,
+        "title": "Controller mapping \u2014 interior layout",
+        "note": "Mapping paired with the interior layout, working through how the operator reads and picks up evidence inside the room."
+      }
+    ]
+  }
+}

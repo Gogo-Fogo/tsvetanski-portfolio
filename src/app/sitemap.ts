@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/projects/cranky-game-jam',
     '/projects/cranky-squirrel-annihilator',
     '/projects/fallout-level-design',
+    '/projects/figuresmith',
     '/projects/feh-barracks-manager',
     '/projects/mumosa-crisis-response-vr',
     '/projects/patapon-vr-the-first-beat',
@@ -27,7 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/projects/the-signal',
     '/projects/totally-bugged-out',
     '/projects/trash-been',
-    '/projects/v4n-gogo-figurine-lab',
     '/projects/vr-interaction-lab',
     '/projects/vr-microgames',
   ];

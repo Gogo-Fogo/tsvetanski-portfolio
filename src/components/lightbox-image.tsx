@@ -21,6 +21,12 @@ type LightboxImageProps = {
   hidePopupCaption?: boolean;
   showPreviewIcon?: boolean;
   triggerVariant?: 'image' | 'preview-icon';
+  /**
+   * Opt-in for small source images: caps the popup image at this pixel width
+   * so a low-resolution piece still reads at a comfortable size without being
+   * blown up to full container width. Undefined keeps the previous behaviour.
+   */
+  lightboxMaxWidth?: number;
 };
 
 export default function LightboxImage({
@@ -40,9 +46,12 @@ export default function LightboxImage({
   hidePopupCaption = false,
   showPreviewIcon = false,
   triggerVariant = 'image',
+  lightboxMaxWidth,
 }: LightboxImageProps) {
   const resolvedCaption = hidePopupCaption ? '' : (popupCaption ?? alt);
   const hasCaption = resolvedCaption.trim().length > 0;
+  const cappedLightboxWidth = typeof lightboxMaxWidth === 'number' && typeof width === 'number';
+  const ruledCaptionWidth = cappedLightboxWidth ? Math.round(lightboxMaxWidth as number) : undefined;
   const isPortrait = useMemo(() => {
     if (captionPosition === 'right') return true;
     if (captionPosition === 'bottom') return false;
@@ -110,14 +119,26 @@ export default function LightboxImage({
               Close
             </button>
           </Dialog.Close>
-          <div className={useSideCaption ? 'md:grid md:grid-cols-[minmax(0,1fr)_320px] md:items-start md:gap-4' : 'space-y-3'}>
+          <div
+            className={`${useSideCaption ? 'md:grid md:grid-cols-[minmax(0,1fr)_320px] md:items-start md:gap-4' : 'space-y-3'} ${
+              ruledCaptionWidth !== undefined && !useSideCaption ? 'mx-auto' : ''
+            }`}
+            style={
+              ruledCaptionWidth !== undefined && !useSideCaption
+                ? { maxWidth: `${ruledCaptionWidth}px` }
+                : undefined
+            }
+          >
             <Image
               src={src}
               alt={alt}
               width={width ?? 1600}
               height={height ?? 900}
               sizes="90vw"
-              className="mx-auto max-h-[84vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
+              className={`mx-auto max-h-[84vh] max-w-full rounded-2xl object-contain shadow-[0_20px_80px_rgba(0,0,0,0.6)] ${
+                cappedLightboxWidth ? 'w-full' : 'w-auto'
+              }`}
+              style={cappedLightboxWidth ? { maxWidth: `${ruledCaptionWidth}px` } : undefined}
             />
             {hasCaption ? (
               <div

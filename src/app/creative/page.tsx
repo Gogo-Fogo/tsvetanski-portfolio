@@ -4,6 +4,13 @@ import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 import VideoCarousel, { type VideoCard } from './video-carousel';
 import { MotionPage } from '@/components/motion-safe';
+import { animationCategories, animationUiDesign } from './animation-gallery';
+import {
+  formatYouTubeStats,
+  getYouTubeThumbnailUrl,
+  getYouTubeVideoId,
+  getYouTubeVideoStats,
+} from '@/app/youtube';
 
 import type { Metadata } from 'next';
 
@@ -12,25 +19,8 @@ export const metadata: Metadata = {
   description: "Cinematic edits, recruitment trailers, event coverage, and interview production — storytelling across camera, post-production, and motion design.",
 };
 
+export const revalidate = 3600;
 
-type VideoStats = {
-  viewCount?: string;
-  likeCount?: string;
-  title?: string;
-};
-
-const formatCount = (value?: string) => {
-  if (!value) {
-    return null;
-  }
-
-  const count = Number(value);
-  if (Number.isNaN(count)) {
-    return null;
-  }
-
-  return count.toLocaleString();
-};
 
 export default async function Creative() {
   const videographyLinks = [
@@ -128,16 +118,6 @@ export default async function Creative() {
     },
   ];
 
-  const animationGallery = [
-    { src: '/images/Art_Storyboards.jpg', alt: 'Storyboard work' },
-    { src: '/images/Art_3D.jpg', alt: '3D work sample 1' },
-    { src: '/images/Art_3D_2.jpg', alt: '3D work sample 2' },
-    { src: '/images/Art_Digital.jpg', alt: 'Digital art sample 1' },
-    { src: '/images/Art_Digital_2.jpg', alt: 'Digital art sample 2' },
-    { src: '/images/Art_Traditional_Charcoal_Pencil_etc.jpg', alt: 'Traditional art sample 1' },
-    { src: '/images/Art_Traditional_Charcoal_Pencil_etc_2.jpg', alt: 'Traditional art sample 2' },
-  ];
-
   const cpseHighlightVideo = {
     title: 'UMD CPSE | Summer Program 2024',
     url: 'https://youtu.be/YP9sqDBSWdo',
@@ -151,56 +131,26 @@ export default async function Creative() {
     { src: '/images/CPSE_FactSheet.jpg', alt: 'CPSE fact sheet visual' },
   ];
 
-  const getVideoId = (embedUrl: string) => embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
-
   const getThumbnailUrl = (embedUrl: string, thumbnailOverride?: string) => {
-  if (thumbnailOverride) {
-    return thumbnailOverride;
-  }
-
-  const videoId = getVideoId(embedUrl);
-  return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-};
-
-  const allVideoIds = [...videographyLinks, ...communicationLinks]
-    .map((video) => getVideoId(video.embedUrl))
-    .filter(Boolean);
-
-  const uniqueVideoIds = Array.from(new Set(allVideoIds));
-  const statsById = new Map<string, VideoStats>();
-
-  const apiKey = process.env.YOUTUBE_API_KEY;
-  if (apiKey && uniqueVideoIds.length > 0) {
-    try {
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${uniqueVideoIds.join(',')}&key=${apiKey}`,
-        { next: { revalidate: 604800 } }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        data.items?.forEach((item: { id: string; statistics?: VideoStats; snippet?: { title?: string } }) => {
-          if (item?.id) {
-            statsById.set(item.id, { ...item.statistics, title: item.snippet?.title });
-          }
-        });
-      }
-    } catch (error) {
-      console.warn('YouTube stats fetch failed', error);
+    if (thumbnailOverride) {
+      return thumbnailOverride;
     }
-  }
+
+    return getYouTubeThumbnailUrl(embedUrl);
+  };
+
+  const allVideoIds = [...videographyLinks, ...communicationLinks, cpseHighlightVideo]
+    .map((video) => getYouTubeVideoId(video.embedUrl))
+    .filter(Boolean);
+  const statsById = await getYouTubeVideoStats(allVideoIds);
 
   const getStatsText = (embedUrl: string) => {
-    const videoId = getVideoId(embedUrl);
-    const stats = statsById.get(videoId);
-    const viewCount = formatCount(stats?.viewCount);
-    const likeCount = formatCount(stats?.likeCount);
-
-    return viewCount && likeCount ? `${viewCount} views · ${likeCount} likes` : null;
+    const videoId = getYouTubeVideoId(embedUrl);
+    return formatYouTubeStats(statsById.get(videoId));
   };
 
   const getTitle = (embedUrl: string, fallbackTitle: string) => {
-    const videoId = getVideoId(embedUrl);
+    const videoId = getYouTubeVideoId(embedUrl);
     return statsById.get(videoId)?.title ?? fallbackTitle;
   };
 
@@ -232,6 +182,28 @@ export default async function Creative() {
         </header>
 
         <section className="space-y-10">
+          <div className="rounded-2xl border border-[var(--accent-orange)]/50 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_86%,var(--accent-orange)_14%))] p-8 shadow-[var(--shadow-strong)]">
+            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+                  Founder Case Study · LLC Formed in 2024
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Figuresmith LLC</h2>
+                <p className="mt-2 text-base leading-relaxed text-[var(--muted)]">
+                  I turned a grant-backed figurine concept into a registered small business spanning 3D printing, hand finishing,
+                  embedded LEDs, custom controls, and public process documentation.
+                </p>
+              </div>
+              <Link
+                href="/projects/figuresmith"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-sm transition-all hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
+              >
+                View Figuresmith Case
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
           <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_88%,var(--accent-cyan)_12%))] p-8 shadow-[var(--shadow-strong)] space-y-6">
             <div className="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)]">
               <div className="flex flex-col gap-3">
@@ -422,32 +394,84 @@ export default async function Creative() {
           <div id="animation" className="scroll-mt-24 rounded-2xl border border-[var(--accent-orange)]/40 bg-[var(--surface)] p-8 shadow-[var(--shadow)] space-y-6">
             <div className="flex flex-col gap-3">
               <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Digital Animation Portfolio</p>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">Storyboards, 3D, Digital, Traditional</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">UI Design, 3D, Digital, Traditional</h2>
               <p className="text-[var(--muted)] max-w-3xl">
-                Work samples from my Digital Animation AAS background. These pieces cover storyboard planning, 3D pipeline practice,
-                digital illustration, and traditional charcoal/pencil fundamentals.
+                Work samples from my Digital Animation AAS background, plus the low-fidelity UI design I did for a VR research
+                project. These pieces cover interface and interaction design, 3D pipeline practice, digital illustration, and
+                traditional charcoal/pencil fundamentals.
+              </p>
+              <p className="text-[var(--muted)] max-w-3xl text-sm">
+                Every piece is shown on its own rather than bundled into a sheet — select one to open it larger with a description.
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {animationGallery.map((image) => (
-                <div
-                  key={image.src}
-                  className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
-                >
-                  <div className="aspect-[4/3] w-full">
+            <div
+              data-animation-ui-design="true"
+              className="space-y-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
+            >
+              <div className="flex flex-col gap-1">
+                <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">MUMOSA — low-fidelity UI design</p>
+                <p className="max-w-3xl text-sm text-[var(--muted)]">
+                  Hand-drawn low-fidelity design for a VR crisis-response project: the scene the operator is dropped into, the
+                  incidents the app has to surface, and the controller mapping that drives both. Worked out on paper before any
+                  of it was built. Each sheet is shown uncropped — select one to open it at its native resolution.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {animationUiDesign.map((sheet) => (
+                  <div
+                    key={sheet.src}
+                    className="flex flex-col overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-150 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
+                  >
                     <LightboxImage
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
-                      className="h-full w-full object-cover"
+                      src={sheet.src}
+                      alt={sheet.title}
+                      width={sheet.width}
+                      height={sheet.height}
+                      sizes="(min-width: 1024px) 400px, 90vw"
+                      className="h-auto w-full object-contain"
                       roundedClassName="rounded-none"
+                      popupCaption={sheet.note}
+                      lightboxMaxWidth={1600}
                     />
+                    <div className="space-y-1 border-t border-[var(--border)] px-3 py-3">
+                      <p className="text-sm font-semibold text-[var(--foreground)]">{sheet.title}</p>
+                      <p className="text-xs text-[var(--muted)]">{sheet.note}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+
+            {animationCategories.map((category) => (
+              <div key={category.id} data-animation-category={category.id} className="space-y-3">
+                <div className="flex flex-col gap-1 border-t border-[var(--border)] pt-5">
+                  <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--foreground)]">{category.label}</h3>
+                  <p className="max-w-3xl text-sm text-[var(--muted)]">{category.blurb}</p>
+                </div>
+                <div className="columns-2 gap-3 md:columns-3">
+                  {category.pieces.map((piece) => (
+                    <div
+                      key={piece.src}
+                      className="mb-3 break-inside-avoid overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-150 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
+                    >
+                      <LightboxImage
+                        src={piece.src}
+                        alt={piece.title}
+                        width={piece.width}
+                        height={piece.height}
+                        sizes="(min-width: 768px) 320px, 45vw"
+                        className="h-auto w-full object-contain"
+                        roundedClassName="rounded-none"
+                        popupCaption={piece.note}
+                        lightboxMaxWidth={Math.round(Math.min(piece.width, 1200))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
 
             <div className="grid gap-4 md:grid-cols-2">
               {communicationLinks.slice(3).map((video) => (
@@ -498,20 +522,6 @@ export default async function Creative() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

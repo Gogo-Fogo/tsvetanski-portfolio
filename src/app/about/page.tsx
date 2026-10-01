@@ -84,7 +84,7 @@ export default function About() {
             </Link>
           </div>
 
-          <DegreeGraph className="mx-auto h-[420px] w-full max-w-3xl transition-all duration-300 sm:h-[500px] lg:h-[560px]" />
+          <DegreeGraph className="mx-auto h-[620px] w-full max-w-3xl transition-all duration-300 sm:h-[500px] lg:h-[560px]" />
 
           <p className="mt-4 text-sm text-[var(--muted)]">University of Baltimore · Simulation &amp; Game Design</p>
         </section>

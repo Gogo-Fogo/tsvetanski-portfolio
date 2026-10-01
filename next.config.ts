@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
       destination: "/resume.pdf",
       permanent: true,
     },
+    {
+      source: "/projects/v4n-gogo-figurine-lab",
+      destination: "/projects/figuresmith",
+      permanent: true,
+    },
   ],
   images: {
     remotePatterns: [

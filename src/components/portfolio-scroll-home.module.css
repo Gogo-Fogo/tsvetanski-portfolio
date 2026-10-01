@@ -396,6 +396,16 @@
   font-size: clamp(0.9rem, 1.25vw, 1.08rem);
 }
 
+.videoStats {
+  margin-top: 0.75rem;
+  color: var(--portfolio-cyan);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .viewProject {
   display: inline-flex;
   align-items: center;
@@ -1298,20 +1308,6 @@
   color: var(--foreground);
 }
 
-:global([data-theme="light"]) .portrait {
-  overflow: hidden;
-  background: #eef2f5;
-  border: 1px solid #d6e1e6;
-  border-radius: 50%;
-  box-shadow: none;
-}
-
-:global([data-theme="light"]) .portraitImage {
-  object-position: center 34%;
-  filter: saturate(0.98) contrast(1.02) brightness(1.02);
-  transform: scale(1.15);
-}
-
 :global([data-theme="light"]) .node,
 :global([data-theme="light"]) .nodeActive {
   border-color: #cbd5df;
@@ -1445,5 +1441,87 @@
   .secondaryCard {
     min-height: 19rem;
     height: min(21rem, 48vh);
+  }
+}
+
+/* Mobile cards keep the full screenshot readable instead of cropping it behind copy. */
+@media (max-width: 700px) {
+  .featureCard,
+  .secondaryCard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-height: 0;
+    height: auto;
+    background: var(--surface);
+  }
+
+  .featureCard::after,
+  .secondaryCard::after,
+  :global([data-theme="light"]) .featureCard::after,
+  :global([data-theme="light"]) .secondaryCard::after {
+    display: none;
+  }
+
+  .featureImage,
+  .secondaryImage {
+    position: relative;
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    background: #050c18;
+  }
+
+  .featureCopy,
+  .secondaryCopy {
+    position: relative;
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    padding: 1.25rem 1.2rem 1.4rem;
+    background: var(--surface);
+  }
+
+  .cardImage,
+  .featureCard[href="/projects/mumosa-crisis-response-vr"] .cardImageMobile,
+  .featureCard[href="/projects/shinobi-story"] .cardImage {
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .cardTitleRow h3,
+  .secondaryCard .cardTitleRow h3 {
+    font-size: clamp(1.8rem, 8.5vw, 2.6rem);
+    line-height: 1.02;
+  }
+}
+
+/* Mobile category tiles use the same centered icon-over-label composition as desktop. */
+@media (max-width: 700px) {
+  .node,
+  .nodeActive {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.75rem 0.65rem;
+  }
+
+  .node:hover,
+  .node:focus-visible {
+    transform: translateY(-0.12rem);
+  }
+}
+
+/* Keep the alien's full head inside the shallow desktop banner crop. */
+@media (min-width: 701px) {
+  .secondaryCard[href="/creative#animation"] .cardImage {
+    object-position: center 5%;
   }
 }

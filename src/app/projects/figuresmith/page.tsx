@@ -5,8 +5,8 @@ import ProjectAtAGlance from '@/components/project-at-a-glance';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "V4N GOGO Figurine Lab | Georgi Tsvetanski",
-  description: "Statuette creation practice — 3D printing, hand painting, LED integration, and custom button systems. Documented at @v4n_gogo on Instagram and YouTube.",
+  title: "Figuresmith LLC — Figurine Studio | Georgi Tsvetanski",
+  description: "I founded Figuresmith LLC as a figurine-making studio after receiving a 2024 Concept Track grant, combining 3D printing, hand painting, LEDs, and custom electronics.",
 };
 
 
@@ -33,14 +33,15 @@ const instagramPosts = [
 ];
 
 const snapshotItems = [
-  { label: 'My role', value: 'Independent maker and small-business founder' },
+  { label: 'My role', value: 'Founder, owner, and independent maker' },
+  { label: 'Business milestone', value: 'Formed Figuresmith LLC with support from a 2024 Concept Track grant' },
   { label: 'What I make', value: 'Printed, painted, and electronically enhanced statuettes' },
   { label: 'Process', value: 'FDM and resin printing, finishing, LEDs, custom controls' },
-  { label: 'Result', value: '2024 concept-track grant and an ongoing public body of work' },
+  { label: 'Current status', value: 'LLC later closed; the practice continues as a hobby and side business' },
 ] as const;
 
 
-export default function V4NGogoFigurineLabPage() {
+export default function FiguresmithPage() {
   return (
     <main className="min-h-screen bg-[var(--background)] p-8 font-sans text-[var(--foreground)] md:p-24">
       <div className="mx-auto max-w-5xl">
@@ -49,19 +50,27 @@ export default function V4NGogoFigurineLabPage() {
             items={[
               { label: 'Home', href: '/' },
               { label: 'Projects', href: '/career' },
-              { label: 'V4N GOGO Figurine Lab' },
+              { label: 'Figuresmith LLC' },
             ]}
             className="mb-4"
           />
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            Independent Art Practice — Statuette Creation
+            Founder-Led Figurine Studio — LLC Formed in 2024
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight">V4N GOGO Figurine Lab</h1>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight">Figuresmith LLC</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            Statuette creation practice under <span className="text-[var(--foreground)] font-medium">@v4n_gogo</span> — 3D printing,
-            hand painting, LED integration, and custom button/electronics systems.
-            Work documented through Instagram and YouTube.
+            I founded and formed <span className="font-semibold text-[var(--foreground)]">Figuresmith LLC</span> after receiving a 2024
+            Concept Track grant. The studio combined 3D printing, hand painting, LED integration, and custom electronics, with the
+            work published publicly under <span className="font-medium text-[var(--foreground)]">@v4n_gogo</span>.
           </p>
+          <div className="mt-6 max-w-3xl rounded-2xl border border-[var(--accent-orange)]/50 bg-[color-mix(in_oklab,var(--surface)_88%,var(--accent-orange)_12%)] p-5 shadow-[var(--shadow)]">
+            <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">Business milestone</p>
+            <p className="mt-2 text-lg font-semibold text-[var(--foreground)]">Formed Figuresmith LLC in 2024</p>
+            <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
+              I turned the grant-backed figurine concept into a registered small business and operated it alongside school before
+              closing the LLC when the time commitment became unsustainable.
+            </p>
+          </div>
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
@@ -131,11 +140,11 @@ export default function V4NGogoFigurineLabPage() {
           {/* Context */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">How It Started</h2>
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">From Grant Pitch to LLC</h2>
               <p className="text-sm leading-relaxed text-[var(--muted)]">
-                I initially started this path after pitching into the concept track at Shady Grove.
-                After passing, I received a small grant in <span className="font-medium text-[var(--foreground)]">2024</span> that helped me form
-                an LLC for figurine making.
+                I started this path by pitching the figurine studio through the Shady Grove Concept Track. After being selected, I
+                received a small grant in <span className="font-medium text-[var(--foreground)]">2024</span> and used that momentum to legally
+                form <span className="font-medium text-[var(--foreground)]">Figuresmith LLC</span> for figurine making.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
                 The LLC is no longer active because of school time constraints, but I continue the work as a hobby and side hustle while

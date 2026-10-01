@@ -18,6 +18,7 @@ interface Project {
   imageAlt: string;
   evidence: string;
   summary: string;
+  statsText?: string | null;
 }
 
 interface Lens {
@@ -193,6 +194,7 @@ function ProjectCard({ project, featured = false, priority = false }: ProjectCar
           {!featured ? <ArrowRight aria-hidden="true" size={24} strokeWidth={1.5} /> : null}
         </div>
         <p className={styles.cardSummary}>{project.summary}</p>
+        {project.statsText ? <p className={styles.videoStats}>{project.statsText}</p> : null}
         {featured ? (
           <span className={styles.viewProject}>View project <ArrowRight aria-hidden="true" size={20} strokeWidth={1.7} /></span>
         ) : null}
@@ -255,7 +257,11 @@ interface ConnectorFrame {
   endY: number;
 }
 
-export default function PortfolioScrollHome() {
+interface PortfolioScrollHomeProps {
+  shinobiVideoStatsText?: string | null;
+}
+
+export default function PortfolioScrollHome({ shinobiVideoStatsText }: PortfolioScrollHomeProps) {
   const [activeLens, setActiveLens] = useState<LensId>('xr');
   const [activeProject, setActiveProject] = useState(0);
   const layoutRef = useRef<HTMLDivElement | null>(null);
@@ -277,6 +283,9 @@ export default function PortfolioScrollHome() {
   });
 
   const selectedLens = lenses.find((lens) => lens.id === activeLens) as Lens;
+  const selectedProjects = selectedLens.projects.map((project) =>
+    project === projects.shinobiVideo ? { ...project, statsText: shinobiVideoStatsText } : project
+  );
 
   useEffect(() => {
     let animationFrame = 0;
@@ -468,7 +477,7 @@ export default function PortfolioScrollHome() {
           <Link href="/" className={styles.identity} aria-label="Georgi Tsvetanski homepage">
           <span className={styles.portrait}>
             <Image
-              src="/images/Georgi-portrait-cutout.png"
+              src="/images/Georgi-portrait-cutout-v4.png"
               alt="Georgi Tsvetanski"
               fill
               sizes="76px"
@@ -525,7 +534,7 @@ export default function PortfolioScrollHome() {
         >
           <h2 id="selected-lens-heading" className={styles.srOnly}>{selectedLens.label} projects</h2>
           <div className={styles.projectStack}>
-            {selectedLens.projects.map((project, index) => (
+            {selectedProjects.map((project, index) => (
               <article
                 key={project.title}
                 ref={(element) => { projectRefs.current[index] = element; }}
