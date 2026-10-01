@@ -17,6 +17,10 @@ const eslintConfig = defineConfig([
     ".claude/**",
     ".tmp/**",
     "tmp/**",
+    // Local agent scratch space and generated output (git-ignored).
+    ".codex-tmp/**",
+    "output/**",
+    "outputs/**",
     "test-results/**",
     "next-env.d.ts",
   ]),
