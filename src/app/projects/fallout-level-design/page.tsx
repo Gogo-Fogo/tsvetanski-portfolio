@@ -180,7 +180,7 @@ export default function FalloutLevelDesignCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Fallout Level Design' },
             ]}
             className="mb-4"

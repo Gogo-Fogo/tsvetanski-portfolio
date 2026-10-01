@@ -98,7 +98,7 @@ export default function VRInteractionLabCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'VR Car Drift Simulator' },
             ]}
             className="mb-4"

@@ -26,7 +26,7 @@ export default function TotallyBuggedOutPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Totally Bugged Out' },
             ]}
             className="mb-4"

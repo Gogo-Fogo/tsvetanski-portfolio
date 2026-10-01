@@ -37,7 +37,7 @@ export default function ShonenShowdownPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Shonen Showdown' },
             ]}
             className="mb-4"

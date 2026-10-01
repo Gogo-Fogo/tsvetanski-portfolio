@@ -51,7 +51,7 @@ export default function TrashBeenCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Trash Been: Urban Logistics' },
             ]}
             className="mb-4"

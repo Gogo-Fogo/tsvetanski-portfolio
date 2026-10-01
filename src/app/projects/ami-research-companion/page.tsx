@@ -59,7 +59,7 @@ export default function AmiResearchCompanionCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Ami' },
             ]}
             className="mb-4"

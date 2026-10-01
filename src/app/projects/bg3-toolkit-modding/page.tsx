@@ -90,7 +90,7 @@ export default function Bg3ToolkitModdingPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Baldur’s Gate 3 Modding' },
             ]}
             className="mb-4"

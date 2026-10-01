@@ -61,7 +61,7 @@ export default function RepoXCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Guilty As Arrr' },
             ]}
             className="mb-4"

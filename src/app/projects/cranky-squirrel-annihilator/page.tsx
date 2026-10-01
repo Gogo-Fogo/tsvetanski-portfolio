@@ -27,7 +27,7 @@ export default function CrankySquirrelAnnihilatorPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Cranky: The Squirrel Annihilator' },
             ]}
             className="mb-4"

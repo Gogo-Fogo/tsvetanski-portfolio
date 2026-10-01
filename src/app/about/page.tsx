@@ -92,7 +92,7 @@ export default function About() {
         <section className="pb-10 md:pb-14" aria-labelledby="experience-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
             <h2 id="experience-heading" className="text-3xl font-bold tracking-tight">Experience</h2>
-            <Link href="/career" className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--muted)] hover:text-[var(--foreground)]">
+            <Link href="/projects" className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--muted)] hover:text-[var(--foreground)]">
               Full archive →
             </Link>
           </div>

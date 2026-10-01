@@ -47,7 +47,7 @@ export default function LizardWizardPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Lizard Wizard' },
             ]}
             className="mb-4"

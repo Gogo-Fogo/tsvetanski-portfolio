@@ -86,7 +86,7 @@ export default function BlackDiceEnginePage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Black Dice Engine' },
             ]}
             className="mb-4"

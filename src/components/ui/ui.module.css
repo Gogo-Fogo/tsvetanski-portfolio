@@ -1,0 +1,395 @@
+/* Shared UI: project cards, category tabs, buttons, page intro. */
+
+/* ---------- Project cards ---------- */
+
+.cardFeatured,
+.cardCompact,
+.cardGrid {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brand-cyan) 30%, var(--border));
+  border-radius: var(--radius-md);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.cardFeatured:hover,
+.cardFeatured:focus-visible,
+.cardCompact:hover,
+.cardCompact:focus-visible,
+.cardGrid:hover,
+.cardGrid:focus-visible {
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-orange) 35%, transparent), 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+.cardFeatured:focus-visible,
+.cardCompact:focus-visible,
+.cardGrid:focus-visible {
+  outline: 2px solid var(--brand-cyan);
+  outline-offset: 3px;
+}
+
+.cardMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: #070c13;
+}
+
+.cardImage {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.cardFeatured:hover .cardImage,
+.cardFeatured:focus-visible .cardImage,
+.cardCompact:hover .cardImage,
+.cardCompact:focus-visible .cardImage,
+.cardGrid:hover .cardImage,
+.cardGrid:focus-visible .cardImage {
+  transform: scale(1.045);
+}
+
+/* Overlay cards (homepage): text sits on a dark gradient in both themes. */
+
+.cardFeatured,
+.cardCompact {
+  align-items: flex-end;
+  min-height: 14rem;
+  background: #070c13;
+  color: #fff;
+}
+
+.cardFeatured::after,
+.cardCompact::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(4, 8, 14, 0.94) 0%, rgba(4, 8, 14, 0.62) 40%, rgba(4, 8, 14, 0) 74%);
+  content: "";
+}
+
+.cardFeatured .cardCopy,
+.cardCompact .cardCopy {
+  padding: 1.15rem 4.5rem 1.15rem 1.25rem;
+}
+
+.cardFeatured .cardCopy {
+  padding: 1.75rem 5.5rem 1.75rem 2rem;
+}
+
+.cardFeatured .cardSummary,
+.cardCompact .cardSummary {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cardFeatured .tag,
+.cardCompact .tag {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(4, 8, 14, 0.45);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.cardFeatured .cardArrow,
+.cardCompact .cardArrow {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+/* Grid cards (Projects page, related projects): image on top, text below. */
+
+.cardGrid {
+  flex-direction: column;
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.cardGrid .cardMedia {
+  position: relative;
+  inset: auto;
+  z-index: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.cardGrid .cardCopy {
+  flex: 1;
+  padding: 1rem 3.75rem 1.1rem 1.1rem;
+}
+
+.cardGrid .cardArrow {
+  border-color: var(--border);
+  color: var(--foreground);
+}
+
+/* Shared card text */
+
+.cardCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardTitle {
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.cardFeatured .cardTitle {
+  font-size: clamp(1.75rem, 3vw, 2.8rem);
+  letter-spacing: -0.035em;
+}
+
+.cardSummary {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--foreground) 78%, transparent);
+}
+
+.cardFeatured .cardSummary {
+  max-width: 30rem;
+  font-size: 1.05rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.tag {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+}
+
+.cardArrow {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid;
+  border-radius: 50%;
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.cardFeatured .cardArrow {
+  right: 1.75rem;
+  bottom: 1.75rem;
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+.cardFeatured:hover .cardArrow,
+.cardFeatured:focus-visible .cardArrow,
+.cardCompact:hover .cardArrow,
+.cardCompact:focus-visible .cardArrow,
+.cardGrid:hover .cardArrow,
+.cardGrid:focus-visible .cardArrow {
+  border-color: var(--brand-orange);
+  color: var(--brand-orange-text);
+  transform: translateX(0.25rem);
+}
+
+.cardFeatured:hover .cardArrow,
+.cardFeatured:focus-visible .cardArrow,
+.cardCompact:hover .cardArrow,
+.cardCompact:focus-visible .cardArrow {
+  color: var(--brand-orange);
+}
+
+@media (max-width: 760px) {
+  .cardFeatured .cardCopy {
+    padding: 1.25rem 4.5rem 1.25rem 1.25rem;
+  }
+
+  .cardFeatured .cardArrow {
+    right: 1.1rem;
+    bottom: 1.1rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+/* ---------- Category tabs ---------- */
+
+.tabsWrap {
+  position: relative;
+}
+
+/* Fade at the right edge on phones shows that more tabs exist. */
+.tabsWrap::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1px;
+  width: 2.5rem;
+  background: linear-gradient(to right, transparent, var(--background));
+  pointer-events: none;
+  content: "";
+  opacity: var(--tabs-fade, 1);
+  transition: opacity 0.2s ease;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1rem 0.65rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  scroll-snap-align: start;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab svg {
+  color: var(--brand-cyan);
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--foreground);
+}
+
+.tab:focus-visible {
+  outline-offset: -2px;
+}
+
+.tab[aria-pressed="true"] {
+  border-bottom-color: var(--brand-orange);
+  color: var(--brand-orange-text);
+}
+
+.tabCount {
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+
+.buttonPrimary,
+.buttonSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.9rem;
+  padding: 0 1.3rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buttonPrimary {
+  background: var(--brand-orange);
+  color: var(--brand-on-orange);
+}
+
+.buttonPrimary:hover,
+.buttonPrimary:focus-visible {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-orange) 25%, transparent);
+  transform: translateY(-1px);
+}
+
+.buttonSecondary {
+  border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
+  color: var(--foreground);
+}
+
+.buttonSecondary:hover,
+.buttonSecondary:focus-visible {
+  border-color: var(--brand-cyan);
+  transform: translateY(-1px);
+}
+
+/* ---------- Page shell ---------- */
+
+.page {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem) var(--gutter) 0;
+}
+
+.eyebrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-cyan);
+}
+
+.pageTitle {
+  margin-top: 0.5rem;
+  font-size: var(--text-display);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.pageLede {
+  max-width: var(--prose-max);
+  margin-top: 0.85rem;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardFeatured,
+  .cardCompact,
+  .cardGrid,
+  .cardImage,
+  .cardArrow,
+  .tab,
+  .buttonPrimary,
+  .buttonSecondary {
+    transition: none;
+  }
+
+  .cardFeatured:hover .cardImage,
+  .cardFeatured:focus-visible .cardImage,
+  .cardCompact:hover .cardImage,
+  .cardCompact:focus-visible .cardImage,
+  .cardGrid:hover .cardImage,
+  .cardGrid:focus-visible .cardImage,
+  .cardFeatured:hover .cardArrow,
+  .cardCompact:hover .cardArrow,
+  .cardGrid:hover .cardArrow {
+    transform: none;
+  }
+}

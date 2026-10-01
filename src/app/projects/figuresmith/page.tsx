@@ -49,7 +49,7 @@ export default function FiguresmithPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Figuresmith LLC' },
             ]}
             className="mb-4"

@@ -55,7 +55,7 @@ export default function ShogunFlowersFallInBloodPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Shogun: Flowers Fall in Blood' },
             ]}
             className="mb-4"

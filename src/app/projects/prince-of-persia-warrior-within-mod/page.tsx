@@ -221,7 +221,7 @@ export default function PrinceOfPersiaWarriorWithinModCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Prince' },
             ]}
             className="mb-4"

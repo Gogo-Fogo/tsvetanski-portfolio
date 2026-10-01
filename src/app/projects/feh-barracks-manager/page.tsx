@@ -165,7 +165,7 @@ export default function FehBarracksManagerCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'FEH Barracks Manager' },
             ]}
             className="mb-4"

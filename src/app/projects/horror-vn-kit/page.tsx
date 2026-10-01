@@ -59,7 +59,7 @@ export default function HorrorVnKitPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Horror VN Kit' },
             ]}
             className="mb-4"

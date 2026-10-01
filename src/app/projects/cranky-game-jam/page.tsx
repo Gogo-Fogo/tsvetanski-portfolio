@@ -25,7 +25,7 @@ export default function CrankyGameJamPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Cranky (Game Jam 2024)' },
             ]}
             className="mb-4"

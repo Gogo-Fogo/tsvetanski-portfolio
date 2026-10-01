@@ -25,7 +25,7 @@ export default function TheLastPaycheckPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'The Last Paycheck' },
             ]}
             className="mb-4"

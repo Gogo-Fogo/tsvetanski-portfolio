@@ -276,7 +276,7 @@ export default function BirdwatchingCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Birdwatching VR' },
             ]}
             className="mb-4"

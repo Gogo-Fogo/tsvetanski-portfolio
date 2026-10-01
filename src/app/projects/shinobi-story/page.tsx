@@ -110,7 +110,7 @@ export default async function ShinobiStoryPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Shinobi Story' },
             ]}
             className="mb-4"

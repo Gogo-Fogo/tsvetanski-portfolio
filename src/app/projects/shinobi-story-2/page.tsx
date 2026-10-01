@@ -68,7 +68,7 @@ export default function ShinobiStory2Page() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Shinobi Story 2' },
             ]}
             className="mb-4"

@@ -59,7 +59,7 @@ export default function LegionGoConsoleDockPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Legion Go Console Dock' },
             ]}
             className="mb-4"

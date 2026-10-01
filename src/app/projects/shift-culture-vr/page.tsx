@@ -121,7 +121,7 @@ export default function VRMicrogamesCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Shift Culture VR (B-360)' },
             ]}
             className="mb-4"

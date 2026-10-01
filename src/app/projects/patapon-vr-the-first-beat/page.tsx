@@ -24,7 +24,7 @@ export default function PataponVRCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'Patapon VR: The First Beat' },
             ]}
             className="mb-4"

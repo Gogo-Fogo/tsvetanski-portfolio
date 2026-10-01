@@ -26,7 +26,7 @@ export default function TheSignalPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'The Signal' },
             ]}
             className="mb-4"

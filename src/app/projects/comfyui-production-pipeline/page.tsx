@@ -167,7 +167,7 @@ export default function ComfyUiProductionPipelinePage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'ComfyUI Production Pipeline' },
             ]}
             className="mb-4"

@@ -223,7 +223,7 @@ export default function MumosaCrisisResponseVrCaseStudy() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'MUMOSA Situation Awareness Dashboard' },
             ]}
             className="mb-4"

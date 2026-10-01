@@ -71,7 +71,7 @@ export default function TurWorkoutTrackerPage() {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/career' },
+              { label: 'Projects', href: '/projects' },
               { label: 'TUR Workout Tracker' },
             ]}
             className="mb-4"
