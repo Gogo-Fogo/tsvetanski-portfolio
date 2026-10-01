@@ -177,3 +177,36 @@ Still hosted and unlinked; **decide whether these are yours to publish:**
 ## Lizard Wizard (`/projects/lizard-wizard`)
 
 - Ported to the kit; team names moved into the at-a-glance list. No new claims.
+
+## Black Dice Engine (`/projects/black-dice-engine`)
+
+- Removed "Portfolio Relevance" ("This is portfolio-worthy because…") and the "Brand mark,
+  not the main product story" caption. Order: What it solves → Architecture → Engineering
+  lessons → Where it stands. GitHub link moved to the header.
+- Hero is the brand banner, captioned honestly: the dashboard and player screens are still
+  bare shells, so they aren't shown.
+- **Check:** is the banner art AI-generated? If so it should say so in the caption. A
+  screenshot of the GM dashboard, even a rough one, would be a better hero.
+
+## Ami (`/projects/ami-research-companion`)
+
+- Order: The problem (+ constraints) → What it does → Testing on her MacBook → Outcome.
+  Removed the "It demonstrates experience with…" pitch paragraph.
+
+## FEH Barracks Manager (`/projects/feh-barracks-manager`)
+
+- Hero is now the My Heroes library (was the dashboard). Order: Why I built it → Product
+  screens → How it's built → Hard problems → Outcome (docs + evidence pack in a deep dive).
+- The 1,270 / 5,081 / 1,267 numbers are now labelled "local data set", as on the old page
+  ("Current Local Scale").
+
+## ComfyUI Production Pipeline (`/projects/comfyui-production-pipeline`)
+
+- AI disclosure moved into the lede. Order: Pipeline shape → One cleanup, start to finish →
+  Local workflow router (more graphs and Shogun examples in a deep dive) → What I learned (links
+  to the projects it feeds).
+- Card image is now the BiRefNet cutout step instead of an unreadable node graph.
+
+## Legion Go Console Dock (`/projects/legion-go-console-dock`)
+
+- Ported to the kit; no copy changes beyond trimming.

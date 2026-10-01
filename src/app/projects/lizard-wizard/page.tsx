@@ -111,7 +111,7 @@ export default function LizardWizardPage() {
               </Figure>
             }
           >
-            <CardGrid items={sensingSteps} columns={2} />
+            <CardGrid items={sensingSteps} columns={1} />
           </Split>
         </Section>
 

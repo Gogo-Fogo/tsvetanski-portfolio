@@ -1,35 +1,33 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  DeepDive,
+  Figure,
+  MediaGrid,
+  Section,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import DocViewer from '@/components/doc-viewer';
 import type { DocOutlineItem, DocPage } from '@/components/doc-viewer';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'feh-barracks-manager' as const;
 
-export const metadata: Metadata = {
-  title: 'FEH Barracks Manager',
-  description:
-    'Solo-built Fire Emblem Heroes companion app spanning synced user data, a custom scraping pipeline, AI export, and portable Windows launcher distribution.',
-};
+export const metadata = projectMetadata(
+  slug,
+  'Solo-built Fire Emblem Heroes companion app: synced collections, a custom data pipeline, AI export and a portable Windows launcher.'
+);
 
-const snapshotItems = [
-  {
-    label: 'Role',
-    value: 'Solo developer: product design, frontend, data ingestion, releases, and launcher packaging',
-  },
-  {
-    label: 'Surfaces',
-    value: 'Browser, mobile browser, and portable Windows launcher',
-  },
-  {
-    label: 'Core Stack',
-    value: 'Next.js 16, React 19, Supabase, custom Game8/Fandom pipeline, GitHub Releases',
-  },
-  {
-    label: 'Current Local Scale',
-    value: '1,270 indexed heroes, 5,081 character images, and 1,267 quote files',
-  },
-];
+const glance = [
+  { label: 'My role', value: 'Solo developer: product design, frontend, data ingestion, releases and launcher packaging' },
+  { label: 'Built with', value: 'Next.js 16, React 19, Supabase, a custom Game8/Fandom pipeline, GitHub Releases' },
+  { label: 'Runs on', value: 'Browser, mobile browser and a portable Windows launcher' },
+  { label: 'Scale', value: '1,270 indexed heroes, 5,081 character images and 1,267 quote files (local data set)' },
+] as const;
 
 const productScreens = [
   {
@@ -145,189 +143,110 @@ const evidenceOutline: DocOutlineItem[] = [
 const documentLinks = [
   {
     href: '/documents/projects/FEH_Barracks/portfolio-case-study/07-portfolio-case-study-draft.md',
-    label: 'Case Study Draft',
+    label: 'Case study notes (Markdown)',
   },
   {
     href: '/documents/projects/FEH_Barracks/portfolio-case-study/01-project-summary.md',
-    label: 'Project Summary Notes',
+    label: 'Project summary (Markdown)',
   },
   {
     href: '/documents/projects/FEH_Barracks/release-notes-v0.4.0.md',
-    label: 'Release Notes v0.4.0',
+    label: 'Release notes v0.4.0 (Markdown)',
   },
 ];
 
-export default function FehBarracksManagerCaseStudy() {
+export default function FehBarracksManagerPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] p-8 font-sans text-[var(--foreground)] md:p-24">
-      <div className="mx-auto max-w-5xl">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'FEH Barracks Manager' },
-            ]}
-            className="mb-4"
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A Fire Emblem Heroes companion app for tracking owned characters across devices. I built the interface, cloud sync, data importer,
+            release bundles and a portable Windows launcher, without an official game API.
+          </p>
+        }
+        hero={
+          <LightboxImage
+            src="/images/projects/feh-barracks/feh-hero-library.png"
+            alt="My Heroes library with owned units, merges, dupes and build summaries"
+            width={1328}
+            height={1213}
+            priority
+            className="h-auto w-full"
+            roundedClassName="rounded-none"
           />
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            Solo Project · Live-Service Companion App
-          </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight">FEH Barracks Manager</h1>
-          <p className="mt-3 max-w-4xl text-[var(--muted)]">
-            A Fire Emblem Heroes companion app for tracking owned characters across devices. I built the interface, cloud sync, data importer, release
-            bundles, and portable Windows launcher without access to an official game API.
-          </p>
-        </header>
+        }
+        heroCaption="The My Heroes library: owned units, merges, dupes, tags and build state, searchable in one place."
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
-
-          <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <LightboxImage
-              src="/images/projects/feh-barracks/feh-barracks-dashboard.png"
-              alt="FEH Barracks dashboard showing add flow, favorites, team builder, and synced account shell"
-              width={1200}
-              height={1376}
-              className="h-auto w-full object-cover"
-              popupCaption="Current FEH Barracks dashboard capture showing the synced account shell, quick hero-add flow, favorites, and team builder surfaces together."
-              roundedClassName="rounded-none"
-            />
-          </div>
-
-          <div>
-            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Product Screens</h2>
-            <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              These current local captures show the parts of the app that matter most on a portfolio page: the synced barracks shell, the owned-library grid,
-              the Tavern social layer, and the Aether Resort prototype that turns roster data into something more playful.
-            </p>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              {productScreens.map((screen) => (
-                <article
-                  key={screen.src}
-                  className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_24px_var(--accent-cyan)]"
-                >
-                  <LightboxImage
-                    src={screen.src}
-                    alt={screen.alt}
-                    width={screen.width}
-                    height={screen.height}
-                    className="h-[320px] w-full object-cover object-top"
-                    popupCaption={screen.popupCaption}
-                    roundedClassName="rounded-none"
-                  />
-                  <div className="p-5">
-                    <p className="text-sm font-semibold text-[var(--foreground)]">{screen.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{screen.caption}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Why I Built It</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                Fire Emblem Heroes creates a very specific product problem. Players are not only tracking owned units. They are tracking merge projects,
-                dupes, skill plans, favorites, team ideas, and a roster that keeps changing under them. I wanted one place to keep that state usable across
-                devices without pretending the data side would stay simple.
+      <CaseStudyBody>
+        <Section
+          id="why"
+          title="Why I built it"
+          intro={
+            <>
+              <p>
+                Fire Emblem Heroes players track more than owned units: merge projects, duplicates, skill plans, favourites, team ideas, and a
+                roster that keeps changing. I wanted one place to keep that usable across devices.
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                That pushed the project into real systems work very quickly. The app had to feel like a real collection manager, but it also had to survive
-                unstable source coverage, naming mismatches, release maintenance, and the cost tradeoffs of shipping a lot of FEH art.
+              <p>
+                That turned into real systems work fast. The app had to feel like a proper collection manager while surviving unstable source
+                data, naming mismatches, release maintenance and the cost of shipping a lot of game art.
               </p>
-            </div>
+            </>
+          }
+        >
+          <BulletList items={productItems} />
+        </Section>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What The Product Covers</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                {productItems.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">System Split</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {systemItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
+        <Section id="screens" title="Product screens">
+          <MediaGrid>
+            <Figure caption="Dashboard: synced account, quick hero add, favourites and the team builder.">
+              <LightboxImage src="/images/projects/feh-barracks/feh-barracks-dashboard.png" alt="FEH Barracks dashboard" width={1200} height={1376} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+            {productScreens
+              .filter((screen) => !screen.src.includes('hero-library'))
+              .map((screen) => (
+                <Figure key={screen.src} caption={<><strong>{screen.title}.</strong> {screen.caption}</>}>
+                  <LightboxImage src={screen.src} alt={screen.alt} width={screen.width} height={screen.height} className="h-auto w-full" roundedClassName="rounded-none" />
+                </Figure>
               ))}
-            </div>
-          </div>
+          </MediaGrid>
+        </Section>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-start">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Hard Problems I Had To Solve</h2>
-              <div className="space-y-5">
-                {hardProblemItems.map((item) => (
-                  <div key={item.title}>
-                    <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <Section id="systems" title="How it's built">
+          <CardGrid items={systemItems} />
+        </Section>
 
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/feh-barracks/feh-release-art.webp"
-                alt="FEH Barracks release art portrait used in the project's presentation layer"
-                width={640}
-                height={960}
-                className="h-auto w-full object-cover"
-                popupCaption="Release-presentation art pulled from the FEH Barracks asset pipeline and launcher-facing presentation work."
-                roundedClassName="rounded-none"
-              />
-            </div>
-          </div>
+        <Section id="hard-problems" title="Hard problems">
+          <CardGrid items={hardProblemItems} />
+        </Section>
 
-          <div>
-            <h2 className="mb-3 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Project Evidence</h2>
-            <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              I already had a local FEH case-study pack and release notes in progress, so I turned that material into a cleaner evidence viewer here. It
-              shows the project summary, the current architecture/scale snapshot, and the release-hardening direction instead of asking the page to stand on
-              portfolio copy alone.
+        <Section
+          id="outcome"
+          title="Outcome"
+          intro={
+            <p>
+              The release workflow keeps the tool usable while its source data changes, and lets someone else launch it without rebuilding my
+              development environment.
             </p>
+          }
+        >
+          <ActionLinks links={documentLinks.map((link) => ({ href: link.href, label: link.label }))} />
+          <DeepDive summary="Evidence pack: summary, architecture and release notes">
             <DocViewer
-              title="FEH Barracks Manager Evidence Pack"
-              description="Project summary, architecture/scale snapshot, and release-hardening notes distilled from the working FEH docs."
+              title="FEH Barracks Manager evidence pack"
+              description="Project summary, architecture and scale, and release-hardening notes from the working docs."
               pages={evidencePages}
               outline={evidenceOutline}
             />
-          </div>
+          </DeepDive>
+        </Section>
+      </CaseStudyBody>
 
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Notes & Documents</h2>
-            <div className="flex flex-wrap gap-3">
-              {documentLinks.map((document) => (
-                <a
-                  key={document.href}
-                  href={document.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                >
-                  {document.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Outcome</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              FEH Barracks Manager combines interface design, data ingestion, cost-aware architecture, packaging, and updates. The release workflow keeps
-              the tool usable while its source data changes and lets another person launch it without rebuilding my development environment.
-            </p>
-          </div>
-        </section>
-      </div>
-    </main>
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }

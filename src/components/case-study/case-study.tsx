@@ -108,7 +108,7 @@ export function CardGrid({
   columns = 3,
 }: {
   items: readonly { title: ReactNode; body: ReactNode }[];
-  columns?: 2 | 3 | 4;
+  columns?: 1 | 2 | 3 | 4;
 }) {
   return (
     <ul className={styles.cardGrid} data-columns={columns}>

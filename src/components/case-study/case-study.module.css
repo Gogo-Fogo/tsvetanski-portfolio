@@ -302,6 +302,12 @@
   }
 }
 
+@media (min-width: 640px) {
+  .cardGrid[data-columns="1"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (min-width: 960px) {
   .cardGrid[data-columns="3"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
