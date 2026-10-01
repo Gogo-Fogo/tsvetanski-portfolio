@@ -1,562 +1,262 @@
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import Breadcrumbs from '@/components/breadcrumbs';
+import type { ReactNode } from 'react';
+import { ActionLinks, DeepDive, Figure, Prose, Split } from '@/components/case-study/case-study';
+import cs from '@/components/case-study/case-study.module.css';
+import VideoGrid, { type VideoGridItem } from '@/components/case-study/video-grid';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
-import VideoCarousel, { type VideoCard } from './video-carousel';
-import { MotionPage } from '@/components/motion-safe';
-import { animationCategories, animationUiDesign } from './animation-gallery';
-import {
-  formatYouTubeStats,
-  getYouTubeThumbnailUrl,
-  getYouTubeVideoId,
-  getYouTubeVideoStats,
-} from '@/app/youtube';
+import ProjectCard from '@/components/ui/project-card';
+import ui from '@/components/ui/ui.module.css';
+import { formatYouTubeStats, getYouTubeThumbnailUrl, getYouTubeVideoId, getYouTubeVideoStats } from '@/app/youtube';
+import { pageMetadata, projectsIn } from '@/content/project-helpers';
+import { animationCategories, animationUiDesign, type AnimationPiece } from './animation-gallery';
+import styles from './creative.module.css';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: "Creative Work",
-  description: "Cinematic edits, recruitment trailers, event coverage, and interview production — storytelling across camera, post-production, and motion design.",
-};
+export const metadata = pageMetadata({
+  title: 'Creative',
+  description:
+    'Video production, animation, 3D, illustration and writing by Georgi Tsvetanski: university program films, game trailers and a Digital Animation portfolio.',
+  path: '/creative',
+});
 
 export const revalidate = 3600;
 
+const embed = (id: string) => `https://www.youtube.com/embed/${id}`;
 
-export default async function Creative() {
-  const videographyLinks = [
-    {
-      title: "Blood Moon Festival - Shinobi Story Halloween Update",
-      url: "https://youtu.be/mkfwWyJT5OU",
-      embedUrl: "https://www.youtube.com/embed/mkfwWyJT5OU",
-      thumbnailUrl: "https://img.youtube.com/vi/mkfwWyJT5OU/maxresdefault.jpg",
-      note: "Shinobi Story video"
-    },
-    {
-      title: "Shinobi Story | Gameplay Prototype",
-      url: "https://youtu.be/X1hkWDu-i9E",
-      embedUrl: "https://www.youtube.com/embed/X1hkWDu-i9E",
-      thumbnailUrl: "https://img.youtube.com/vi/X1hkWDu-i9E/maxresdefault.jpg",
-      note: "Shinobi Story video"
-    },
-    {
-      title: "Shinobi Story | Combat Mechanics",
-      url: "https://youtu.be/3NiuTEdX1IU",
-      embedUrl: "https://www.youtube.com/embed/3NiuTEdX1IU",
-      note: "Shinobi Story video"
-    },
-    {
-      title: "Shinobi Story | Environment Showcase",
-      url: "https://youtu.be/bPsGUDkz6-0",
-      embedUrl: "https://www.youtube.com/embed/bPsGUDkz6-0",
-      note: "Shinobi Story video"
-    }
-  ];
+const pathway = { id: 'dX-CHGxzUyA', title: 'Find Your Pathway | UMD Communication 2025' };
+const summerProgram = { id: 'YP9sqDBSWdo', title: 'UMD CPSE | Summer Program 2024' };
 
-  const communicationLinks = [
-    {
-      title: "Find Your Pathway | UMDCP Communication 2025",
-      url: "https://www.youtube.com/watch?v=dX-CHGxzUyA",
-      embedUrl: "https://www.youtube.com/embed/dX-CHGxzUyA",
-      note: "Communication video"
-    },
-    {
-      title: "UMD CPSE | Dr. Romel Gomez | Shaping Future Engineers",
-      url: "https://www.youtube.com/watch?v=y6Y0rzSf0Mc",
-      embedUrl: "https://www.youtube.com/embed/y6Y0rzSf0Mc",
-      note: "Interview / profile"
-    },
-    {
-      title: "UMD CPSE | Team Video",
-      url: "https://youtu.be/ZgFJxupFYzQ",
-      embedUrl: "https://www.youtube.com/embed/ZgFJxupFYzQ",
-      note: "Videography"
-    },
-    {
-      title: "Animation Process Video (Media)",
-      url: "https://youtu.be/v9rzaW82IU4",
-      embedUrl: "https://www.youtube.com/embed/v9rzaW82IU4",
-      note: "Animation / media showcase"
-    },
-    {
-      title: "Animation Process Video 2 (Media)",
-      url: "https://youtu.be/lMrWcN3ko-I",
-      embedUrl: "https://www.youtube.com/embed/lMrWcN3ko-I",
-      note: "Animation / media showcase"
-    }
-  ];
+const moreVideos = [
+  { id: 'bPsGUDkz6-0', title: 'Shinobi Story | Environment Showcase' },
+  { id: 'mkfwWyJT5OU', title: 'Blood Moon Festival | Shinobi Story Halloween Update' },
+  { id: 'X1hkWDu-i9E', title: 'Shinobi Story | Gameplay Prototype' },
+  { id: '3NiuTEdX1IU', title: 'Shinobi Story | Combat Mechanics' },
+  { id: 'y6Y0rzSf0Mc', title: 'UMD CPSE | Dr. Romel Gomez | Shaping Future Engineers' },
+  { id: 'ZgFJxupFYzQ', title: 'UMD CPSE | Team Video' },
+];
 
-  const animationArchiveLinks = [
-    {
-      title: 'Old Animation Project (Degree Work)',
-      url: 'https://youtu.be/UfA0f0ih1I8',
-      embedUrl: 'https://www.youtube.com/embed/UfA0f0ih1I8',
-      note: 'Animation degree archive',
-    },
-    {
-      title: 'Animation Concept Video',
-      url: 'https://youtu.be/bWOdY2UhzWE',
-      embedUrl: 'https://www.youtube.com/embed/bWOdY2UhzWE',
-      note: 'Concept development',
-    },
-    {
-      title: 'Animatic Archive',
-      url: 'https://youtu.be/7hqtDkMbLaQ',
-      embedUrl: 'https://www.youtube.com/embed/7hqtDkMbLaQ',
-      note: 'Animatic study',
-    },
-    {
-      title: 'Intro Logo Animation (Client/Friend Project)',
-      url: 'https://youtu.be/hwuUvoTI_JM',
-      embedUrl: 'https://www.youtube.com/embed/hwuUvoTI_JM',
-      note: 'Logo + intro motion piece',
-    },
-    {
-      title: 'Sketchbook Video Archive',
-      url: 'https://youtu.be/FtY1ZvEQQM0',
-      embedUrl: 'https://www.youtube.com/embed/FtY1ZvEQQM0',
-      note: 'Traditional sketch process',
-    },
-  ];
+const animationVideos = [
+  { id: 'v9rzaW82IU4', title: 'Animation process video' },
+  { id: 'lMrWcN3ko-I', title: 'Animation process video 2' },
+  { id: 'UfA0f0ih1I8', title: 'Animation project (degree work)' },
+  { id: 'bWOdY2UhzWE', title: 'Animation concept video' },
+  { id: '7hqtDkMbLaQ', title: 'Animatic' },
+  { id: 'hwuUvoTI_JM', title: 'Intro logo animation (for a friend)' },
+  { id: 'FtY1ZvEQQM0', title: 'Sketchbook video' },
+];
 
-  const cpseHighlightVideo = {
-    title: 'UMD CPSE | Summer Program 2024',
-    url: 'https://youtu.be/YP9sqDBSWdo',
-    embedUrl: 'https://www.youtube.com/embed/YP9sqDBSWdo',
-    note: 'Immersive program highlight',
-  };
+const VISIBLE = 8;
 
-  const cpseImageAssets = [
-    { src: '/images/CPSE_FLYER_SummerProgram.jpg', alt: 'CPSE Summer Program flyer design' },
-    { src: '/images/CPSE_MoCoShowArticleHeader.jpg', alt: 'CPSE MoCoShow article header visual' },
-    { src: '/images/CPSE_FactSheet.jpg', alt: 'CPSE fact sheet visual' },
-  ];
-
-  const getThumbnailUrl = (embedUrl: string, thumbnailOverride?: string) => {
-    if (thumbnailOverride) {
-      return thumbnailOverride;
-    }
-
-    return getYouTubeThumbnailUrl(embedUrl);
-  };
-
-  const allVideoIds = [...videographyLinks, ...communicationLinks, cpseHighlightVideo]
-    .map((video) => getYouTubeVideoId(video.embedUrl))
-    .filter(Boolean);
-  const statsById = await getYouTubeVideoStats(allVideoIds);
-
-  const getStatsText = (embedUrl: string) => {
-    const videoId = getYouTubeVideoId(embedUrl);
-    return formatYouTubeStats(statsById.get(videoId));
-  };
-
-  const getTitle = (embedUrl: string, fallbackTitle: string) => {
-    const videoId = getYouTubeVideoId(embedUrl);
-    return statsById.get(videoId)?.title ?? fallbackTitle;
-  };
-
-  const videographyCards: VideoCard[] = videographyLinks.map((video) => ({
-    title: getTitle(video.embedUrl, video.title),
-    url: video.url,
-    embedUrl: video.embedUrl,
-    thumbnailUrl: getThumbnailUrl(video.embedUrl, video.thumbnailUrl),
-    note: video.note,
-    statsText: getStatsText(video.embedUrl),
-    hoverClassName: 'hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]',
-  }));
-
+function Gallery({ pieces, label }: { pieces: AnimationPiece[]; label: string }) {
+  const tile = (piece: AnimationPiece) => (
+    <li key={piece.src} className={styles.tile}>
+      <LightboxImage
+        src={piece.src}
+        alt={piece.title}
+        width={piece.width}
+        height={piece.height}
+        sizes="(min-width: 1024px) 300px, 45vw"
+        popupCaption={piece.note}
+        lightboxMaxWidth={Math.round(Math.min(piece.width, 1200))}
+        className="h-auto w-full"
+        roundedClassName="rounded-none"
+      />
+    </li>
+  );
+  const shown = pieces.slice(0, VISIBLE);
+  const rest = pieces.slice(VISIBLE);
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <MotionPage className="max-w-5xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Videography & Storytelling' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tighter mt-4 text-[var(--foreground)]">Videography & Communication Work</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-xl text-base">
-            Video editing, interviews, and storytelling work — from game trailers to university recruitment campaigns.
-          </p>
-        </header>
-
-        <section className="space-y-10">
-          <div className="rounded-2xl border border-[var(--accent-orange)]/50 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_86%,var(--accent-orange)_14%))] p-8 shadow-[var(--shadow-strong)]">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-                  Founder Case Study · LLC Formed in 2024
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Figuresmith LLC</h2>
-                <p className="mt-2 text-base leading-relaxed text-[var(--muted)]">
-                  I turned a grant-backed figurine concept into a registered small business spanning 3D printing, hand finishing,
-                  embedded LEDs, custom controls, and public process documentation.
-                </p>
-              </div>
-              <Link
-                href="/projects/figuresmith"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-sm transition-all hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-orange)]"
-              >
-                View Figuresmith Case
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_88%,var(--accent-cyan)_12%))] p-8 shadow-[var(--shadow-strong)] space-y-6">
-            <div className="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)]">
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-cyan)]/50 bg-[var(--surface)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]">
-                    <span className="inline-flex h-2 w-2 rounded-full bg-[var(--accent-cyan)]"></span>
-                    Featured Case Study
-                  </span>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Paid professional role</span>
-                </div>
-                <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">CPSE Communication & Media</h2>
-                <p className="text-[var(--muted)] text-base max-w-3xl">
-                  Paid role: field capture, interviews, and storytelling for the UMD Cyber-Physical Systems Engineering program — including the summer video that drew a Nobel Prize–winning physicist.
-                </p>
-                <Link
-                  href="/cpse"
-                  className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-sm transition-all hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-                >
-                  View CPSE Experience
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                  <LightboxVideo
-                    embedUrl={cpseHighlightVideo.embedUrl}
-                    thumbnailUrl={getThumbnailUrl(cpseHighlightVideo.embedUrl)}
-                    title={cpseHighlightVideo.title}
-                    popupCaption="CPSE summer-program highlight reel documenting immersive learning outcomes and student project impact."
-                    popupCtaHref="/cpse"
-                    popupCtaLabel="View CPSE case study"
-                    className="h-full w-full object-cover"
-                    roundedClassName="rounded-xl"
-                  />
-                </div>
-                <a className="text-sm font-semibold text-[var(--foreground)] hover:underline" href={cpseHighlightVideo.url} target="_blank" rel="noreferrer">
-                  {cpseHighlightVideo.title}
-                </a>
-                <p className="text-xs text-[var(--muted)]">{cpseHighlightVideo.note}</p>
-                {getStatsText(cpseHighlightVideo.embedUrl) ? <p className="text-xs text-[var(--muted)]">{getStatsText(cpseHighlightVideo.embedUrl)}</p> : null}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]">
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)] mb-3">CPSE Campaign Visual Assets</p>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {cpseImageAssets.map((asset) => (
-                  <div
-                    key={asset.src}
-                    className="overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(56,189,248,0.55)]"
-                  >
-                    <div className="aspect-[4/3] w-full">
-                      <LightboxImage
-                        src={asset.src}
-                        alt={asset.alt}
-                        fill
-                        sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
-                        className="h-full w-full object-cover"
-                        roundedClassName="rounded-none"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] rounded-2xl p-8 shadow-[var(--shadow)] space-y-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Videography & Motion</h2>
-                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
-                  <li>Short-form reels and trailers.</li>
-                  <li>Motion pieces for visual storytelling.</li>
-                </ul>
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
-                  href="https://www.youtube.com/@georgitsvetanski4061"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Source: Georgi Tsvetanski Channel
-                </a>
-                <a
-                  className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
-                  href="https://www.youtube.com/@WarswornMOBA"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Source: WarswornMOBA Channel
-                </a>
-              </div>
-            </div>
-
-            <VideoCarousel items={videographyCards} />
-          </div>
-
-          <div className="rounded-2xl border border-[var(--accent-cyan)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_90%,var(--accent-cyan)_10%))] p-8 shadow-[var(--shadow-strong)] space-y-6">
-            <div className="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)]">
-              <div className="space-y-3">
-                <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Featured Communication Case Study</p>
-                <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">Find Your Pathway (UMD Communication)</h2>
-                <p className="text-[var(--muted)] text-base max-w-3xl">
-                  Interview-led institutional story translating communication as a broad major into concrete career outcomes through
-                  alumni and faculty voices.
-                </p>
-                <p className="text-[var(--muted)] text-sm max-w-3xl">
-                  Produced for UMD&apos;s Communication program. I led video editing, technical direction, and camera operation, and carried most of the
-                  production direction/storytelling process while collaborating with student contributors across early and later drafts.
-                </p>
-
-                <div className="grid gap-8 md:grid-cols-2">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]">Why this is substantial</p>
-                    <ul className="mt-3 list-disc pl-5 text-[var(--muted)] text-base space-y-2">
-                      <li>Strategic storytelling across multiple stakeholders and goals.</li>
-                      <li>Producer-level ownership of structure, pacing, and narrative clarity.</li>
-                      <li>Clear bridge to IA/UX: turning complex information into a guided audience journey.</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)]">How I pitch it</p>
-                    <ul className="mt-3 list-disc pl-5 text-[var(--muted)] text-base space-y-2">
-                      <li><span className="text-[var(--foreground)] font-medium">Role:</span> Lead Editor · Technical Direction · Camera Operation · Production Direction</li>
-                      <li><span className="text-[var(--foreground)] font-medium">Challenge:</span> Align diverse voices into one credible institutional narrative</li>
-                      <li><span className="text-[var(--foreground)] font-medium">Outcome:</span> Recruitment-focused media asset with clear problem → examples → pathway flow</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <a
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-sm transition-all hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-                  href="https://youtu.be/dX-CHGxzUyA"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Watch Case Study Video
-                  <span aria-hidden="true">→</span>
-                </a>
-              </div>
-
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-                <div className="block aspect-video w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-                  <LightboxVideo
-                    embedUrl={communicationLinks[0].embedUrl}
-                    thumbnailUrl={getThumbnailUrl(communicationLinks[0].embedUrl)}
-                    title={getTitle(communicationLinks[0].embedUrl, communicationLinks[0].title)}
-                    popupCaption="Interview-led communication case study focused on translating major pathways into clear career outcomes."
-                    popupCtaHref="https://youtu.be/dX-CHGxzUyA"
-                    popupCtaLabel="Open on YouTube"
-                    className="h-full w-full object-cover"
-                    roundedClassName="rounded-xl"
-                  />
-                </div>
-                <a className="text-sm font-semibold text-[var(--foreground)] hover:underline" href={communicationLinks[0].url} target="_blank" rel="noreferrer">
-                  {getTitle(communicationLinks[0].embedUrl, communicationLinks[0].title)}
-                </a>
-                <p className="text-xs text-[var(--muted)]">{communicationLinks[0].note}</p>
-                {getStatsText(communicationLinks[0].embedUrl) ? <p className="text-xs text-[var(--muted)]">{getStatsText(communicationLinks[0].embedUrl)}</p> : null}
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--accent-orange)]/40 bg-[linear-gradient(145deg,var(--surface),color-mix(in_oklab,var(--surface)_88%,var(--accent-orange)_12%))] p-8 shadow-[var(--shadow-strong)]">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Featured Editorial Track</p>
-                <h2 className="text-xl font-semibold tracking-tight text-[var(--foreground)]">Writing & Storytelling</h2>
-                <ul className="list-disc pl-5 text-[var(--muted)] mt-2 text-base space-y-2">
-                  <li>Science + student life storytelling.</li>
-                  <li>Published at USG.</li>
-                </ul>
-              </div>
-              <a
-                className="text-xs font-mono uppercase tracking-widest text-[var(--muted)] hover:text-[var(--foreground)]"
-                href="https://uatshadygrove.org/author/georgitsvetanskigogo/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                View USG Author Archive
-              </a>
-            </div>
-          </div>
-
-          <div id="animation" className="scroll-mt-24 rounded-2xl border border-[var(--accent-orange)]/40 bg-[var(--surface)] p-8 shadow-[var(--shadow)] space-y-6">
-            <div className="flex flex-col gap-3">
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">Digital Animation Portfolio</p>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">UI Design, 3D, Digital, Traditional</h2>
-              <p className="text-[var(--muted)] max-w-3xl">
-                Work samples from my Digital Animation AAS background, plus the low-fidelity UI design I did for a VR research
-                project. These pieces cover interface and interaction design, 3D pipeline practice, digital illustration, and
-                traditional charcoal/pencil fundamentals.
-              </p>
-              <p className="text-[var(--muted)] max-w-3xl text-sm">
-                Every piece is shown on its own rather than bundled into a sheet — select one to open it larger with a description.
-              </p>
-            </div>
-
-            <div
-              data-animation-ui-design="true"
-              className="space-y-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)]"
-            >
-              <div className="flex flex-col gap-1">
-                <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">MUMOSA — low-fidelity UI design</p>
-                <p className="max-w-3xl text-sm text-[var(--muted)]">
-                  Hand-drawn low-fidelity design for a VR crisis-response project: the scene the operator is dropped into, the
-                  incidents the app has to surface, and the controller mapping that drives both. Worked out on paper before any
-                  of it was built. Each sheet is shown uncropped — select one to open it at its native resolution.
-                </p>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {animationUiDesign.map((sheet) => (
-                  <div
-                    key={sheet.src}
-                    className="flex flex-col overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-150 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
-                  >
-                    <LightboxImage
-                      src={sheet.src}
-                      alt={sheet.title}
-                      width={sheet.width}
-                      height={sheet.height}
-                      sizes="(min-width: 1024px) 400px, 90vw"
-                      className="h-auto w-full object-contain"
-                      roundedClassName="rounded-none"
-                      popupCaption={sheet.note}
-                      lightboxMaxWidth={1600}
-                    />
-                    <div className="space-y-1 border-t border-[var(--border)] px-3 py-3">
-                      <p className="text-sm font-semibold text-[var(--foreground)]">{sheet.title}</p>
-                      <p className="text-xs text-[var(--muted)]">{sheet.note}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {animationCategories.map((category) => (
-              <div key={category.id} data-animation-category={category.id} className="space-y-3">
-                <div className="flex flex-col gap-1 border-t border-[var(--border)] pt-5">
-                  <h3 className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--foreground)]">{category.label}</h3>
-                  <p className="max-w-3xl text-sm text-[var(--muted)]">{category.blurb}</p>
-                </div>
-                <div className="columns-2 gap-3 md:columns-3">
-                  {category.pieces.map((piece) => (
-                    <div
-                      key={piece.src}
-                      className="mb-3 break-inside-avoid overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] transition-shadow duration-150 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]"
-                    >
-                      <LightboxImage
-                        src={piece.src}
-                        alt={piece.title}
-                        width={piece.width}
-                        height={piece.height}
-                        sizes="(min-width: 768px) 320px, 45vw"
-                        className="h-auto w-full object-contain"
-                        roundedClassName="rounded-none"
-                        popupCaption={piece.note}
-                        lightboxMaxWidth={Math.round(Math.min(piece.width, 1200))}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {communicationLinks.slice(3).map((video) => (
-                <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
-                  <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-                    <LightboxVideo
-                      embedUrl={video.embedUrl}
-                      thumbnailUrl={getThumbnailUrl(video.embedUrl)}
-                      title={getTitle(video.embedUrl, video.title)}
-                      className="h-full w-full object-cover"
-                      roundedClassName="rounded-lg"
-                    />
-                  </div>
-                  <a className="text-sm font-semibold text-[var(--foreground)] hover:underline" href={video.url} target="_blank" rel="noreferrer">
-                    {getTitle(video.embedUrl, video.title)}
-                  </a>
-                  <p className="text-xs text-[var(--muted)]">{video.note}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-2">
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)] mb-4">Animation Degree Archive Videos</p>
-              <div className="grid gap-4 md:grid-cols-2">
-                {animationArchiveLinks.map((video) => (
-                  <div key={video.url} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_20px_var(--accent-orange)]">
-                    <div className="block aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)]">
-                      <LightboxVideo
-                        embedUrl={video.embedUrl}
-                        thumbnailUrl={getThumbnailUrl(video.embedUrl)}
-                        title={getTitle(video.embedUrl, video.title)}
-                        className="h-full w-full object-cover"
-                        roundedClassName="rounded-lg"
-                      />
-                    </div>
-                    <a className="text-sm font-semibold text-[var(--foreground)] hover:underline" href={video.url} target="_blank" rel="noreferrer">
-                      {getTitle(video.embedUrl, video.title)}
-                    </a>
-                    <p className="text-xs text-[var(--muted)]">{video.note}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-        </section>
-      </MotionPage>
-    </main>
+    <>
+      <ul className={styles.masonry}>{shown.map(tile)}</ul>
+      {rest.length ? (
+        <details className={styles.more}>
+          <summary className={styles.moreSummary}>
+            Show all {pieces.length} {label}
+          </summary>
+          <ul className={styles.masonry}>{rest.map(tile)}</ul>
+        </details>
+      ) : null}
+    </>
   );
 }
 
+function Block({ id, title, intro, children }: { id: string; title: string; intro?: ReactNode; children: ReactNode }) {
+  return (
+    <section id={id} className={cs.section} aria-labelledby={`${id}-title`}>
+      <h2 id={`${id}-title`} className={cs.sectionTitle}>
+        {title}
+      </h2>
+      {intro ? <div className={cs.prose}>{intro}</div> : null}
+      {children}
+    </section>
+  );
+}
 
+export default async function CreativePage() {
+  const ids = [pathway.id, summerProgram.id, ...moreVideos.map((video) => video.id), ...animationVideos.map((video) => video.id)];
+  const stats = await getYouTubeVideoStats(ids.map((id) => getYouTubeVideoId(embed(id))));
+  const toItem = (video: { id: string; title: string }): VideoGridItem => ({
+    title: stats.get(video.id)?.title ?? video.title,
+    embedUrl: embed(video.id),
+    thumbnailUrl: getYouTubeThumbnailUrl(embed(video.id)),
+    meta: formatYouTubeStats(stats.get(video.id)),
+  });
+  const creativeProjects = projectsIn('creative');
 
+  return (
+    <main className={ui.page}>
+      <p className={ui.eyebrow}>Video · Animation · Art · Writing</p>
+      <h1 className={ui.pageTitle}>Creative</h1>
+      <p className={ui.pageLede}>
+        Before and alongside games, I make films, animation and art: university program videos, game trailers, a Digital Animation portfolio
+        and published writing.
+      </p>
 
+      <nav className={styles.jump} aria-label="On this page">
+        <a href="#case-studies">Case studies</a>
+        <a href="#video">Video</a>
+        <a href="#animation">Animation &amp; 3D</a>
+        <a href="#illustration">Illustration</a>
+        <a href="#writing">Writing</a>
+      </nav>
 
+      <div className={cs.body}>
+        <Block id="case-studies" title="Creative case studies">
+          <ul className={styles.cards}>
+            {creativeProjects.map((project) => (
+              <li key={project.slug}>
+                <ProjectCard project={project} variant="grid" headingLevel="h3" />
+              </li>
+            ))}
+          </ul>
+          <Link href="/projects?category=creative" className={styles.allLink}>
+            All Creative projects <ArrowRight aria-hidden="true" size={17} strokeWidth={1.8} />
+          </Link>
+        </Block>
 
+        <Block
+          id="video"
+          title="Video"
+          intro={
+            <p>
+              Interview-led films and program videos for the University of Maryland, plus trailers and update videos for Shinobi Story.
+            </p>
+          }
+        >
+          <Split
+            media={
+              <Figure caption={stats.get(pathway.id)?.title ?? pathway.title}>
+                <div className="aspect-video">
+                  <LightboxVideo
+                    embedUrl={embed(pathway.id)}
+                    thumbnailUrl={getYouTubeThumbnailUrl(embed(pathway.id))}
+                    title={stats.get(pathway.id)?.title ?? pathway.title}
+                    className="h-full w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+              </Figure>
+            }
+          >
+            <h3>Find Your Pathway (UMD Communication)</h3>
+            <p>
+              An interview-led film that turns communication, a broad major, into concrete career outcomes through alumni and faculty voices.
+              I led the editing, technical direction and camera work, and carried most of the production direction and storytelling while
+              working with student contributors across drafts.
+            </p>
+          </Split>
+          <Split
+            reverse
+            media={
+              <Figure caption={stats.get(summerProgram.id)?.title ?? summerProgram.title}>
+                <div className="aspect-video">
+                  <LightboxVideo
+                    embedUrl={embed(summerProgram.id)}
+                    thumbnailUrl={getYouTubeThumbnailUrl(embed(summerProgram.id))}
+                    title={stats.get(summerProgram.id)?.title ?? summerProgram.title}
+                    className="h-full w-full object-cover"
+                    roundedClassName="rounded-none"
+                  />
+                </div>
+              </Figure>
+            }
+          >
+            <h3>UMD CPSE Summer Program 2024</h3>
+            <p>
+              A paid role with the UMD Cyber-Physical Systems Engineering program: field capture, interviews and editing. This summer program
+              film attracted a Nobel Prize-winning physicist as a special guest.
+            </p>
+            <p>
+              <Link href="/cpse">More on the CPSE work</Link>
+            </p>
+          </Split>
+          <VideoGrid items={moreVideos.map(toItem)} />
+          <ActionLinks
+            links={[
+              { href: 'https://www.youtube.com/@georgitsvetanski4061', label: 'My YouTube channel' },
+              { href: 'https://www.youtube.com/@WarswornMOBA', label: 'WarswornMOBA channel' },
+            ]}
+          />
+        </Block>
 
+        <Block
+          id="animation"
+          title="Animation and 3D"
+          intro={
+            <p>
+              Work from my Digital Animation associate&apos;s degree: rig tests, sculpts, low-poly scenes and shading, plus process videos and
+              older degree projects.
+            </p>
+          }
+        >
+          {animationCategories
+            .filter((category) => category.id === '3d')
+            .map((category) => (
+              <Gallery key={category.id} pieces={category.pieces} label="3D pieces" />
+            ))}
+          <DeepDive summary="Animation videos and the degree archive">
+            <VideoGrid items={animationVideos.map(toItem)} />
+          </DeepDive>
+        </Block>
 
+        <Block
+          id="illustration"
+          title="Illustration"
+          intro={<p>Digital painting, model sheets, icons and environment lighting, then the charcoal and pencil studies underneath it all.</p>}
+        >
+          {animationCategories
+            .filter((category) => category.id !== '3d')
+            .map((category) => (
+              <div key={category.id} className={styles.group}>
+                <Prose>
+                  <h3>{category.id === 'digital' ? 'Digital' : 'Traditional'}</h3>
+                  <p>{category.blurb}</p>
+                </Prose>
+                <Gallery pieces={category.pieces} label={`${category.id} pieces`} />
+              </div>
+            ))}
+          {animationUiDesign.length ? (
+            <DeepDive summary="Paper UI design sketches (MUMOSA VR prototype)">
+              <Prose>
+                <p>
+                  Hand-drawn low-fidelity design for the <Link href="/projects/mumosa-crisis-response-vr">MUMOSA</Link> VR prototype: the
+                  scene, the incidents it surfaces, and the controller mapping, worked out on paper before anything was built.
+                </p>
+              </Prose>
+              <Gallery pieces={animationUiDesign} label="sketches" />
+            </DeepDive>
+          ) : null}
+        </Block>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <Block
+          id="writing"
+          title="Writing"
+          intro={<p>Science and student-life stories published at the Universities at Shady Grove.</p>}
+        >
+          <ActionLinks links={[{ href: 'https://uatshadygrove.org/author/georgitsvetanskigogo/', label: 'My articles at USG' }]} />
+        </Block>
+      </div>
+    </main>
+  );
+}

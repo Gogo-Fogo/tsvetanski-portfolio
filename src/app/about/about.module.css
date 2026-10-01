@@ -1,0 +1,109 @@
+.intro {
+  display: grid;
+  gap: 1.5rem 3rem;
+  align-items: end;
+  max-width: var(--content-max);
+}
+
+@media (min-width: 760px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.bio {
+  max-width: var(--prose-max);
+  margin-top: 1rem;
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--foreground) 84%, transparent);
+}
+
+.bio p + p {
+  margin-top: 0.8rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.portrait {
+  order: -1;
+  width: 10rem;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 760px) {
+  .portrait {
+    order: 0;
+    width: 17rem;
+  }
+}
+
+.portraitImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.section {
+  max-width: var(--content-max);
+  margin-top: clamp(3rem, 7vw, 4.5rem);
+}
+
+.sectionTitle {
+  font-size: var(--text-xl);
+  font-weight: 620;
+  letter-spacing: -0.025em;
+}
+
+.sectionLede {
+  max-width: var(--prose-max);
+  margin: 0.5rem 0 1.5rem;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+
+.list {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rowTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.rowMeta {
+  margin-top: 0.2rem;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.rowDetail {
+  max-width: var(--prose-max);
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+}
+
+.rowLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  font-weight: 500;
+  color: var(--brand-orange-text);
+}

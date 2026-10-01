@@ -257,3 +257,55 @@ Still hosted and unlinked; **decide whether these are yours to publish:**
   thumbnails. Title shortened to "Figuresmith" (the lede still says Figuresmith LLC).
 - No hero image: the page has no local photos. Send a good photo of a finished figure and I'll
   use it as the hero and the card image.
+
+---
+
+## About (`/about`)
+
+- h1 "About" (was "XR & Gameplay Developer"); same portrait and role line as the homepage.
+- **Draft bio for your review** (two short paragraphs, built only from facts on the site and
+  your resume): Shinobi Story 2021–2024, MUMOSA for an ARL client project, the B-360 VR
+  simulator, Black Dice Engine, studying Simulation and Game Design at UBalt.
+- Experience first (three linked rows), then Education as a plain list, then the skills
+  graph as the optional visual.
+- **Check the education list** (from your resume PDF, which is out of date: its headline is
+  "Content Creator" and it has no master's):
+  - University of Baltimore, Bachelor's in Simulation and Game Design, 2025 – present.
+  - University of Baltimore, M.S. Interaction Design and Information Architecture,
+    "accelerated program". I couldn't find dates; please give me the years.
+  - University of Maryland, College Park, Bachelor's in **Digital Media and Communication**,
+    2023–2024. The skills graph calls it "B.A. Communication & Media Studies". Which is right?
+  - Montgomery College, Associate's in Digital Animation, 2020–2023.
+- The old caption "University of Baltimore · Simulation & Game Design" under the graph implied
+  all four degrees were from one school; removed.
+- Your resume PDF itself still says "Content Creator" at the top. Worth updating, since it's
+  the main button on the homepage.
+
+## Creative (`/creative`)
+
+- One name everywhere: "Creative" (was also "Videography & Communication Work" and
+  "Videography & Storytelling").
+- Sections: Creative case studies (cards) → Video → Animation and 3D → Illustration →
+  Writing, with in-page links at the top.
+- The three-video carousel (arrows and dots) is now a plain grid. Each gallery shows 8 pieces
+  with a "Show all" button, which shortens the page a lot on phones.
+- **Removed pitch text:** "Why this is substantial" and "How I pitch it".
+- Removed "Shot, edited and directed by me unless noted". I'd drafted that line and it isn't
+  sourced.
+
+## UMD CPSE Media Work (`/cpse`)
+
+- Rebuilt on the case-study kit (breadcrumb Home / Projects / UMD CPSE Media Work, with the
+  next-project footer). The summer program film is a click-to-play hero instead of an iframe
+  that loaded on page open; the duplicate copy in the gallery is gone. Uses the shared
+  YouTube helper.
+
+## Portrait and logo
+
+- Portrait re-cut with BiRefNet-HR from your ComfyUI-RMBG models plus pymatting edge
+  clean-up (`scripts/cutout-portrait.py`; run it with ComfyUI's Python). It's sharper (863×745,
+  was 330×285) and smaller (59 KB WebP, was a PNG).
+- Your GT logo, converted exactly from `GOGO_LOGO_SOURCE_FILE.ai` (no tracing), now appears in
+  the header, the browser tab icon, the Apple touch icon and the share card. Two-tone: the G
+  arc follows the text colour, the T and lower bowl are brand orange. Originals are in
+  `art-source/brand/`.

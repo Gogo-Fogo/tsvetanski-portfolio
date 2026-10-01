@@ -1,142 +1,161 @@
+import { ArrowRight, FileText } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DegreeGraph from '@/components/degree-graph';
-import { MotionPage } from '@/components/motion-safe';
+import ui from '@/components/ui/ui.module.css';
+import { pageMetadata } from '@/content/project-helpers';
+import styles from './about.module.css';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: 'About',
-  description: 'XR and gameplay developer working across spatial interaction, simulation, and game systems.',
-};
+  description:
+    'Georgi Tsvetanski: game developer and designer working across simulation, XR and gameplay systems. Experience, education and contact.',
+  path: '/about',
+});
 
 const experience = [
   {
-    role: 'Game Development',
+    role: 'Game developer and multimedia specialist',
     org: 'Pixel Bulb Studio · Shinobi Story',
     period: 'May 2021 – Apr 2024',
-    metric: '$110K project revenue',
+    detail: 'Live operations, content and animation on a Naruto MMORPG with 1M+ downloads and $110K revenue.',
     href: '/projects/shinobi-story',
   },
   {
-    role: 'Digital & Visual Media',
+    role: 'Digital and visual media specialist',
     org: 'UMD Cyber-Physical Systems Engineering',
     period: 'Sep 2023 – Oct 2024',
-    metric: 'Media · outreach · coordination',
+    detail: 'Led video production and social media; managed interns and campaigns for a program rebrand.',
     href: '/cpse',
   },
   {
-    role: 'Gameplay QA / Analysis',
-    org: 'Shokuho Mod Team · Freelance',
+    role: 'Gameplay QA and analysis',
+    org: 'Shokuho mod team · freelance',
     period: 'Mar 2025 – Aug 2025',
-    metric: 'Testing · balance · capture',
+    detail: 'Testing, balance and capture.',
     href: null,
   },
-];
+] as const;
 
-export default function About() {
+const education = [
+  {
+    school: 'University of Baltimore',
+    degree: "Bachelor's, Simulation and Game Design (design, coding and development track)",
+    period: '2025 – present',
+  },
+  {
+    school: 'University of Baltimore',
+    degree: 'M.S., Interaction Design and Information Architecture',
+    period: 'Accelerated program',
+  },
+  {
+    school: 'University of Maryland, College Park',
+    degree: "Bachelor's, Digital Media and Communication",
+    period: '2023 – 2024',
+  },
+  {
+    school: 'Montgomery College',
+    degree: "Associate's, Digital Animation",
+    period: '2020 – 2023',
+  },
+] as const;
+
+export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] px-6 py-8 text-[var(--foreground)] font-sans sm:px-8 md:px-16 md:py-12 lg:px-20">
-      <MotionPage className="mx-auto max-w-5xl">
-        <header className="border-b border-[var(--border)] pb-10">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link href="/" className="text-sm font-mono hover:underline decoration-1 underline-offset-4">
-              ← BACK TO HOME
-            </Link>
-            <Link
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--background)] transition-colors hover:bg-transparent hover:text-[var(--foreground)]"
-            >
-              View One-Page Resume [PDF] ↗
-            </Link>
+    <main className={ui.page}>
+      <section className={styles.intro} aria-labelledby="about-title">
+        <div>
+          <p className={ui.eyebrow}>Simulation · XR · Gameplay Systems</p>
+          <h1 id="about-title" className={ui.pageTitle}>
+            About
+          </h1>
+          <div className={styles.bio}>
+            <p>
+              I&apos;m Georgi Tsvetanski, a game developer and designer working where simulation, XR and gameplay systems meet. From 2021 to
+              2024 I worked on Shinobi Story, a live Naruto MMORPG with over a million downloads, moving from player support into animation,
+              content and mentoring developers.
+            </p>
+            <p>
+              Since then I&apos;ve built VR prototypes, research tools and engines: an Unreal evidence-review prototype for an Army Research
+              Laboratory client project, a VR safety simulator for a Baltimore nonprofit, and a local-first tabletop RPG engine. I&apos;m studying
+              Simulation and Game Design at the University of Baltimore.
+            </p>
           </div>
-
-          <div className="mt-12 grid items-center gap-8 sm:grid-cols-[176px_minmax(0,1fr)] sm:gap-10 md:grid-cols-[192px_minmax(0,1fr)] md:gap-12">
-            <div className="relative aspect-square w-full max-w-48 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <Image
-                src="/images/Georgi_PFP.jpg"
-                alt="Georgi Tsvetanski"
-                fill
-                sizes="(min-width: 768px) 192px, 144px"
-                className="object-cover"
-                priority
-                quality={100}
-                unoptimized
-              />
-            </div>
-            <div className="max-w-2xl">
-              <p className="mb-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">About / T-Shaped Developer</p>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">XR &amp; Gameplay Developer</h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-                Interactive systems, simulation, and player-facing tools across XR and Unity.
-              </p>
-            </div>
-          </div>
-        </header>
-
-        <section className="py-10 md:py-14" aria-labelledby="education-heading">
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-            <h2 id="education-heading" className="text-3xl font-bold tracking-tight">Education</h2>
-            <Link href="/projects/mumosa-crisis-response-vr" className="text-xs font-mono uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--foreground)]">
-              MUMOSA client project →
-            </Link>
-          </div>
-
-          <DegreeGraph className="mx-auto h-[620px] w-full max-w-3xl transition-all duration-300 sm:h-[500px] lg:h-[560px]" />
-
-          <p className="mt-4 text-sm text-[var(--muted)]">University of Baltimore · Simulation &amp; Game Design</p>
-        </section>
-
-        <section className="pb-10 md:pb-14" aria-labelledby="experience-heading">
-          <div className="mb-5 flex items-end justify-between gap-4">
-            <h2 id="experience-heading" className="text-3xl font-bold tracking-tight">Experience</h2>
-            <Link href="/projects" className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--muted)] hover:text-[var(--foreground)]">
-              Full archive →
-            </Link>
-          </div>
-
-          <div className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
-            {experience.map((item) => (
-              <article key={`${item.role}-${item.period}`} className="grid gap-3 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8">
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-semibold tracking-tight">{item.role}</h3>
-                    <span className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--muted)]">{item.period}</span>
-                  </div>
-                  <p className="mt-1 text-xs font-mono uppercase tracking-[0.14em] text-[var(--muted)]">{item.org}</p>
-                </div>
-                <div className="flex items-center justify-between gap-4 md:min-w-52 md:flex-col md:items-end md:justify-center">
-                  <span className="text-xs font-mono uppercase tracking-[0.12em] text-[var(--muted)]">{item.metric}</span>
-                  {item.href && (
-                    <Link href={item.href} className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--foreground)] hover:underline underline-offset-4">
-                      View work →
-                    </Link>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-8">
-          <p className="text-sm text-[var(--muted)]">Open to thoughtful work in XR, gameplay, and interaction design.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] hover:underline underline-offset-4"
-            >
-              Resume PDF ↗
-            </Link>
-            <a href="mailto:georgi@tsvetanski.com" className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] hover:underline underline-offset-4">
-              Contact →
+          <div className={styles.actions}>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer" className={ui.buttonPrimary}>
+              <FileText aria-hidden="true" size={18} strokeWidth={1.8} />
+              View Resume
             </a>
+            <Link href="/projects" className={ui.buttonSecondary}>
+              See all projects
+              <ArrowRight aria-hidden="true" size={17} strokeWidth={1.8} />
+            </Link>
           </div>
-        </footer>
-      </MotionPage>
+        </div>
+        <div className={styles.portrait}>
+          <Image
+            src="/images/georgi-hero-portrait.webp"
+            alt="Georgi Tsvetanski"
+            width={863}
+            height={745}
+            className={styles.portraitImage}
+            preload
+            unoptimized
+          />
+        </div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="experience-title">
+        <h2 id="experience-title" className={styles.sectionTitle}>
+          Experience
+        </h2>
+        <ul className={styles.list}>
+          {experience.map((item) => (
+            <li key={item.role} className={styles.row}>
+              <div>
+                <h3 className={styles.rowTitle}>{item.role}</h3>
+                <p className={styles.rowMeta}>
+                  {item.org} · {item.period}
+                </p>
+                <p className={styles.rowDetail}>{item.detail}</p>
+              </div>
+              {item.href ? (
+                <Link href={item.href} className={styles.rowLink}>
+                  See the work <ArrowRight aria-hidden="true" size={16} strokeWidth={1.8} />
+                </Link>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className={styles.section} aria-labelledby="education-title">
+        <h2 id="education-title" className={styles.sectionTitle}>
+          Education
+        </h2>
+        <ul className={styles.list}>
+          {education.map((item) => (
+            <li key={item.degree} className={styles.row}>
+              <div>
+                <h3 className={styles.rowTitle}>{item.degree}</h3>
+                <p className={styles.rowMeta}>
+                  {item.school} · {item.period}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className={styles.section} aria-labelledby="skills-title">
+        <h2 id="skills-title" className={styles.sectionTitle}>
+          Skills map
+        </h2>
+        <p className={styles.sectionLede}>
+          How the degrees connect to the skills I use. Select a degree to see what it added; the list above has the same information.
+        </p>
+        <DegreeGraph className="mx-auto h-[560px] w-full max-w-3xl sm:h-[500px] lg:h-[540px]" />
+      </section>
     </main>
   );
 }

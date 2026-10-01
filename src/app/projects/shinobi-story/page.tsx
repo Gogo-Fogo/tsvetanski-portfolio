@@ -22,12 +22,12 @@ const glance = [
   { label: 'Result', value: '$110K revenue over five live years, 2019–2024' },
 ] as const;
 
-const featured = { embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0', fallbackTitle: 'Shinobi Story featured highlight' };
+const featured = { embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0', fallbackTitle: 'Shinobi Story | Environment Showcase' };
 
 const moreVideos = [
-  { embedUrl: 'https://www.youtube.com/embed/mkfwWyJT5OU', fallbackTitle: 'Shinobi Story video' },
-  { embedUrl: 'https://www.youtube.com/embed/X1hkWDu-i9E', fallbackTitle: 'Shinobi Story video' },
-  { embedUrl: 'https://www.youtube.com/embed/3NiuTEdX1IU', fallbackTitle: 'Shinobi Story video' },
+  { embedUrl: 'https://www.youtube.com/embed/mkfwWyJT5OU', fallbackTitle: 'Blood Moon Festival | Shinobi Story Halloween Update' },
+  { embedUrl: 'https://www.youtube.com/embed/X1hkWDu-i9E', fallbackTitle: 'Shinobi Story | Gameplay Prototype' },
+  { embedUrl: 'https://www.youtube.com/embed/3NiuTEdX1IU', fallbackTitle: 'Shinobi Story | Combat Mechanics' },
 ];
 
 const results = [

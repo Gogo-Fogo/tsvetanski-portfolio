@@ -88,10 +88,10 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
           <span className={styles.heroSlashOrange} aria-hidden="true" />
           <span className={styles.heroSlashCyan} aria-hidden="true" />
           <Image
-            src="/images/georgi-hero-portrait.png"
+            src="/images/georgi-hero-portrait.webp"
             alt="Georgi Tsvetanski"
-            width={330}
-            height={285}
+            width={863}
+            height={745}
             className={styles.heroPortraitImage}
             preload
             unoptimized

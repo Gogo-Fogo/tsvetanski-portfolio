@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
 import { useCommandPalette } from './command-palette-provider';
+import LogoMark from './logo-mark';
 import ThemeButton from './theme-button';
 import styles from './site.module.css';
 
@@ -24,8 +25,11 @@ export default function SiteHeader() {
   return (
     <header id="top" className={styles.header}>
       <div className={styles.headerInner}>
-        <Link href="/" className={styles.monogram} aria-label="Georgi Tsvetanski, home">
-          G<span>T</span>
+        <Link href="/" className={styles.brand} aria-label="Georgi Tsvetanski, home">
+          <LogoMark className={styles.brandMark} />
+          <span className={styles.brandName} aria-hidden="true">
+            Georgi Tsvetanski
+          </span>
         </Link>
 
         <nav className={styles.nav} aria-label="Primary">
