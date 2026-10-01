@@ -136,11 +136,13 @@
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  /* A row never gets shorter than its card's text, so narrow short windows grow the grid
+     instead of clipping titles. */
+  grid-template-rows: repeat(2, minmax(min-content, 1fr));
   gap: 1rem;
   /* Fit header, hero, tabs, all three cards and "See all" in one desktop screen: the grid
      takes what's left of the viewport height (about 28rem goes to everything else). */
-  height: clamp(21rem, min(40vw, calc(100svh - 28rem)), 34rem);
+  min-height: clamp(21rem, min(40vw, calc(100svh - 28rem)), 34rem);
   animation: gridIn 0.35s ease both;
 }
 
@@ -156,7 +158,7 @@
   grid-row: span 2;
 }
 
-/* Cards take the grid's height; their own minimum would make them overlap. */
+/* Cards take the grid's height instead of their own 14rem minimum. */
 .grid > * {
   min-height: 0;
 }
@@ -208,16 +210,18 @@
   .grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
-    height: auto;
+    min-height: 0;
   }
 
+  /* Phones keep the cards' 4:3.4 and 16:10.5 shapes as a minimum height (from the card
+     width), so a card grows instead of clipping when its text needs more room. */
   .grid > :first-child {
     grid-row: auto;
-    aspect-ratio: 4 / 3.4;
+    min-height: calc((100vw - 2 * var(--gutter)) * 3.4 / 4);
   }
 
   .grid > :not(:first-child) {
-    aspect-ratio: 16 / 10.5;
+    min-height: calc((100vw - 2 * var(--gutter)) * 10.5 / 16);
   }
 }
 
@@ -256,6 +260,6 @@
   }
 
   .grid {
-    height: clamp(21rem, min(40vw, calc(100svh - 23rem)), 34rem);
+    min-height: clamp(21rem, min(40vw, calc(100svh - 23rem)), 34rem);
   }
 }
