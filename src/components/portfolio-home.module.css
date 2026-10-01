@@ -1,0 +1,538 @@
+.page {
+  --home-orange: #ff7b1a;
+  --home-orange-text: #ff8a33;
+  --home-cyan: var(--archive-cyan, #1ed2f3);
+  --home-gutter: clamp(1rem, 4vw, 3.5rem);
+  --home-max: 92rem;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+:global([data-theme="light"]) .page {
+  --home-orange-text: #b8500a;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--home-max);
+  margin: 0 auto;
+  padding: 1.1rem var(--home-gutter);
+}
+
+.monogram {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
+}
+
+.monogram span {
+  color: var(--home-orange);
+}
+
+.headerNav {
+  display: flex;
+  gap: clamp(1.1rem, 2.6vw, 2.25rem);
+  font-size: 0.95rem;
+}
+
+.headerNav a {
+  color: color-mix(in srgb, var(--foreground) 72%, transparent);
+  transition: color 0.2s ease;
+}
+
+.headerNav a:hover,
+.headerNav a:focus-visible {
+  color: var(--foreground);
+}
+
+/* Hero */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem;
+  max-width: var(--home-max);
+  min-height: 15.5rem;
+  margin: 0 auto;
+  padding: 0.75rem var(--home-gutter) 0;
+}
+
+.hero::before {
+  position: absolute;
+  inset: -4.5rem 0 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 42rem 18rem at 78% 70%, color-mix(in srgb, var(--home-cyan) 10%, transparent), transparent 70%),
+    radial-gradient(ellipse 30rem 14rem at 90% 100%, color-mix(in srgb, var(--home-orange) 9%, transparent), transparent 70%);
+  pointer-events: none;
+  content: "";
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  padding-bottom: 1.75rem;
+}
+
+.heroName {
+  font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.heroName span {
+  color: var(--home-orange-text);
+}
+
+.heroRole {
+  margin-top: 0.85rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--home-cyan);
+}
+
+.heroLine {
+  max-width: 34rem;
+  margin-top: 0.85rem;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.buttonPrimary,
+.buttonSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.9rem;
+  padding: 0 1.3rem;
+  border-radius: 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buttonPrimary {
+  background: var(--home-orange);
+  color: #160b02;
+}
+
+.buttonPrimary:hover,
+.buttonPrimary:focus-visible {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--home-orange) 25%, transparent);
+  transform: translateY(-1px);
+}
+
+.buttonSecondary {
+  border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
+  color: var(--foreground);
+}
+
+.buttonSecondary:hover,
+.buttonSecondary:focus-visible {
+  border-color: var(--home-cyan);
+  transform: translateY(-1px);
+}
+
+.heroPortrait {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: clamp(13rem, 24vw, 19rem);
+  height: 15.5rem;
+}
+
+.heroPortraitImage {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.heroSlashOrange,
+.heroSlashCyan {
+  position: absolute;
+  bottom: 0;
+  width: 1.6rem;
+  border-radius: 0.2rem;
+  transform: skewX(-24deg);
+}
+
+.heroSlashOrange {
+  right: 18%;
+  height: 82%;
+  background: linear-gradient(to top, color-mix(in srgb, var(--home-orange) 55%, transparent), transparent);
+}
+
+.heroSlashCyan {
+  left: 14%;
+  height: 58%;
+  background: linear-gradient(to top, color-mix(in srgb, var(--home-cyan) 40%, transparent), transparent);
+}
+
+/* Category tabs */
+
+.tabBar {
+  display: flex;
+  gap: 0.25rem;
+  max-width: var(--home-max);
+  margin: 0 auto;
+  padding: 0 var(--home-gutter);
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabBar::-webkit-scrollbar {
+  display: none;
+}
+
+.tab,
+.tabActive {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem 0.9rem;
+  border-bottom: 2px solid transparent;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab {
+  color: color-mix(in srgb, var(--foreground) 68%, transparent);
+}
+
+.tab svg {
+  color: var(--home-cyan);
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--foreground);
+}
+
+.tabActive {
+  border-bottom-color: var(--home-orange);
+  color: var(--home-orange-text);
+}
+
+/* Project cards */
+
+.panel {
+  max-width: var(--home-max);
+  margin: 0 auto;
+  padding: 1.25rem var(--home-gutter) 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  height: clamp(24rem, 40vw, 34rem);
+  animation: gridIn 0.35s ease both;
+}
+
+@keyframes gridIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+.card,
+.cardFeatured {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--home-cyan) 30%, transparent);
+  border-radius: 1rem;
+  background: #070c13;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cardFeatured {
+  grid-row: span 2;
+}
+
+.card:hover,
+.card:focus-visible,
+.cardFeatured:hover,
+.cardFeatured:focus-visible {
+  border-color: var(--home-orange);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--home-orange) 35%, transparent), 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.cardImage {
+  z-index: -2;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover .cardImage,
+.card:focus-visible .cardImage,
+.cardFeatured:hover .cardImage,
+.cardFeatured:focus-visible .cardImage {
+  transform: scale(1.045) translateX(-0.4rem);
+}
+
+.card::after,
+.cardFeatured::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(4, 8, 14, 0.94) 0%, rgba(4, 8, 14, 0.62) 38%, rgba(4, 8, 14, 0) 72%);
+  content: "";
+}
+
+.cardCopy {
+  position: absolute;
+  right: 4.5rem;
+  bottom: 0;
+  left: 0;
+  padding: 1.15rem 1.25rem;
+  color: #fff;
+}
+
+.cardFeatured .cardCopy {
+  padding: 1.75rem 2rem;
+}
+
+.cardTitle {
+  font-size: clamp(1.2rem, 1.55vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cardFeatured .cardTitle {
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  letter-spacing: -0.035em;
+}
+
+.cardSummary {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.cardFeatured .cardSummary {
+  max-width: 30rem;
+  margin-top: 0.6rem;
+  font-size: 1.05rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.tags li {
+  padding: 0.22rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(4, 8, 14, 0.45);
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cardArrow {
+  position: absolute;
+  right: 1.15rem;
+  bottom: 1.15rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  color: #fff;
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.cardFeatured .cardArrow {
+  right: 1.75rem;
+  bottom: 1.75rem;
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+.card:hover .cardArrow,
+.card:focus-visible .cardArrow,
+.cardFeatured:hover .cardArrow,
+.cardFeatured:focus-visible .cardArrow {
+  border-color: var(--home-orange);
+  color: var(--home-orange);
+  transform: translateX(0.25rem);
+}
+
+.viewAll {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--foreground) 72%, transparent);
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.viewAll:hover,
+.viewAll:focus-visible {
+  gap: 0.7rem;
+  color: var(--foreground);
+}
+
+/* Contact footer */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  max-width: var(--home-max);
+  margin: 3.5rem auto 0;
+  padding: 1.75rem var(--home-gutter) 5.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.footerLabel {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--home-cyan);
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+}
+
+.footerLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: color-mix(in srgb, var(--foreground) 82%, transparent);
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover,
+.footerLinks a:focus-visible {
+  color: var(--home-orange-text);
+}
+
+.footerMeta {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Phones and narrow tablets */
+
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: 0;
+  }
+
+  .heroPortrait {
+    order: -1;
+    justify-content: flex-start;
+    width: 9.5rem;
+    height: 8rem;
+  }
+
+  .heroCopy {
+    padding: 1rem 0 1.25rem;
+  }
+
+  .heroActions > a {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 0 0.75rem;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    height: auto;
+  }
+
+  .cardFeatured {
+    grid-row: auto;
+    aspect-ratio: 4 / 3.4;
+  }
+
+  .card {
+    aspect-ratio: 16 / 10.5;
+  }
+
+  .cardFeatured .cardCopy {
+    padding: 1.25rem;
+  }
+
+  .cardFeatured .cardArrow {
+    right: 1.15rem;
+    bottom: 1.15rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .footerMeta {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid {
+    animation: none;
+  }
+
+  .cardImage,
+  .cardArrow,
+  .buttonPrimary,
+  .buttonSecondary {
+    transition: none;
+  }
+
+  .card:hover .cardImage,
+  .card:focus-visible .cardImage,
+  .cardFeatured:hover .cardImage,
+  .cardFeatured:focus-visible .cardImage {
+    transform: none;
+  }
+}
