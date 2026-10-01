@@ -41,8 +41,8 @@ const toc = [
 const imageBase = '/images/projects/prince-of-persia-warrior-within-mod';
 
 const currentGameplayVideo = {
-  src: '/videos/projects/prince-of-persia-warrior-within-mod/prince-current-gameplay-2026-05-05.mp4',
-  poster: `${imageBase}/prince-current-gameplay-20260505-poster.png`,
+  src: '/videos/projects/prince-of-persia-warrior-within-mod/prince-gameplay-2026-05-05-web.mp4',
+  poster: `${imageBase}/prince-gameplay-poster.jpg`,
   title: 'May 5, 2026 current Prince mod gameplay capture',
   popupCaption:
     'Current May 5, 2026 gameplay capture supplied from the active mod build. It is the page evidence for Sand HUD, Wind Back rewind play, Dahaka pressure, and the newer puppet/presentation work.',

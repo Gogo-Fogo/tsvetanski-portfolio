@@ -1,6 +1,7 @@
 import { CardGrid, CaseStudyHeader, CaseStudyShell, Figure, MediaGrid, Prose, Section, Split } from '@/components/case-study/case-study';
 import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
+import LightboxLocalVideo from '@/components/lightbox-local-video';
 import { projectMetadata } from '@/content/project-helpers';
 
 const slug = 'shinobi-story-2' as const;
@@ -76,17 +77,16 @@ export default function ShinobiStory2Page() {
           </p>
         }
         hero={
-          <LightboxImage
-            src={`${IMG}/character-creator-in-engine.jpg`}
-            alt="Shinobi Story 2 character creator in Unreal: hanging parchment talismans for skin tone, age and body type, a slider banner and a Confirm Ninja stamp"
-            width={863}
-            height={487}
-            priority
-            className="h-auto w-full"
+          <LightboxLocalVideo
+            src="/videos/projects/shinobi-story-2/character-creator-walkthrough.mp4"
+            poster={`${IMG}/character-creator-walkthrough-poster.jpg`}
+            title="Shinobi Story 2 character creator walkthrough"
+            triggerLabel="Play the character creator walkthrough"
+            className="aspect-[1600/784] h-auto w-full object-cover"
             roundedClassName="rounded-none"
           />
         }
-        heroCaption="The character creator running in Unreal (play-in-editor capture, version 17)."
+        heroCaption="Walkthrough of the character creator running in Unreal: switching talismans, sliders and options, and rotating the character (53 s, no sound)."
         glance={glance}
       />
 
@@ -102,6 +102,16 @@ export default function ShinobiStory2Page() {
             </p>
           }
         >
+          <Figure caption="The creator in engine (play-in-editor capture, version 17).">
+            <LightboxImage
+              src={`${IMG}/character-creator-in-engine.jpg`}
+              alt="Shinobi Story 2 character creator in Unreal: hanging parchment talismans, a slider banner and a Confirm Ninja stamp"
+              width={863}
+              height={487}
+              className="h-auto w-full"
+              roundedClassName="rounded-none"
+            />
+          </Figure>
           <MediaGrid>
             <Figure caption="The approved art target (concept round 2, option 4).">
               <LightboxImage

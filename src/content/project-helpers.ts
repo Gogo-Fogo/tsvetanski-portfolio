@@ -43,8 +43,11 @@ export function relatedProjects(slug: ProjectSlug, count = 2): Project[] {
       p.primaryCategory !== project.primaryCategory &&
       p.categories.some((category) => project.categories.includes(category))
   );
-  const ordered = [...secondary, ...primary];
-  return ordered.slice(0, count);
+  // A project in several categories can sit in both lists; keep each one once.
+  const seen = new Set<ProjectSlug>();
+  return [...secondary, ...primary]
+    .filter((candidate) => !seen.has(candidate.slug) && seen.add(candidate.slug))
+    .slice(0, count);
 }
 
 export function categoryLabel(id: CategoryId): string {
