@@ -48,6 +48,29 @@ html {
   --tag-border: #d6dde5;
   --tag-border-hover: #aeb9c5;
   --tag-text-hover: #17212b;
+
+  /* Brand and layout tokens shared by every page (from the homepage design). */
+  --brand-orange: #ff7b1a;
+  --brand-orange-text: #b8500a;
+  --brand-cyan: #007e9f;
+  --brand-on-orange: #160b02;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --shell-max: 92rem;
+  --content-max: 68rem;
+  --prose-max: 44rem;
+  --header-height: 4.25rem;
+  --anchor-offset: 1rem;
+  --radius-sm: 0.65rem;
+  --radius-md: 1rem;
+  --focus-ring: 0 0 0 3px var(--background), 0 0 0 5px var(--brand-cyan);
+
+  /* Type scale (rem; root is 17.5px). */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: clamp(1.45rem, 2.4vw, 1.85rem);
+  --text-display: clamp(2.2rem, 4.6vw, 3.6rem);
   color-scheme: light;
 }
 
@@ -100,20 +123,13 @@ html {
   --tag-border: #2b3541;
   --tag-border-hover: #566575;
   --tag-text-hover: #ffffff;
-  --ambient-1: rgba(86, 215, 255, 0.28);
-  --ambient-2: rgba(120, 170, 255, 0.24);
-  --ambient-3: rgba(90, 135, 255, 0.26);
+  --brand-orange-text: #ff8a33;
+  --brand-cyan: #1ed2f3;
   color-scheme: dark;
 }
 
 body {
-  background: radial-gradient(circle at 12% 18%, var(--ambient-1), transparent 52%),
-    radial-gradient(circle at 85% 12%, var(--ambient-2), transparent 48%),
-    radial-gradient(circle at 55% 78%, var(--ambient-3), transparent 58%),
-    linear-gradient(140deg, var(--background) 0%, var(--hero-mid) 40%, var(--hero-end) 100%);
-  background-size: 140% 140%, 150% 150%, 135% 135%, 100% 100%;
-  background-attachment: fixed;
-  animation: ambientFloat 12s ease-in-out infinite;
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -131,6 +147,16 @@ body {
     cursor: pointer;
   }
 
+  :focus-visible {
+    outline: 2px solid var(--brand-cyan);
+    outline-offset: 3px;
+  }
+
+  /* In-page anchors land below the sticky header. */
+  [id] {
+    scroll-margin-top: var(--anchor-offset);
+  }
+
   button:disabled,
   [aria-disabled="true"] {
     cursor: not-allowed;
@@ -146,16 +172,6 @@ body {
 .archive-tag:hover {
   border-color: var(--tag-border-hover);
   color: var(--tag-text-hover);
-}
-
-@keyframes ambientFloat {
-  0%,
-  100% {
-    background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%;
-  }
-  50% {
-    background-position: 30% 20%, 70% 25%, 60% 80%, 0% 0%;
-  }
 }
 
 @keyframes themePulseLight {
@@ -204,14 +220,6 @@ body {
   color: var(--background);
 }
 
-.react-flow__attribution {
-  display: none;
-}
-
-.react-flow__edge-path {
-  stroke: rgba(148, 163, 184, 0.9) !important;
-  stroke-width: 2.4px !important;
-}
 html.lenis,
 html.lenis body {
   height: auto;
@@ -373,17 +381,6 @@ html.lenis body {
   border-color: rgba(255, 185, 120, 0.55);
   box-shadow: 0 0 18px rgba(255, 185, 120, 0.5);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* Keep third-party Instagram markup from forcing page-level horizontal scroll. */
 .instagram-embed-shell .instagram-media,
