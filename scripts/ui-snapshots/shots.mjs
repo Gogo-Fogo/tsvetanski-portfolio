@@ -17,6 +17,8 @@ const PAGES = [
   { name: "mumosa", path: "/projects/mumosa-crisis-response-vr", viewports: ["desktop", "mobile"] },
   { name: "bg3", path: "/projects/bg3-toolkit-modding", viewports: ["desktop", "mobile"] },
   { name: "tur", path: "/projects/tur-workout-tracker", viewports: ["mobile"] },
+  { name: "shinobi", path: "/projects/shinobi-story", viewports: ["desktop", "mobile"] },
+  { name: "prince", path: "/projects/prince-of-persia-warrior-within-mod", viewports: ["desktop", "mobile"] },
 ];
 
 const END_OF_PAGE = [

@@ -26,7 +26,7 @@ export default function InstagramGrid({ permalinks }: Props) {
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
         {permalinks.map((permalink) => (
-          <div key={permalink} className="instagram-embed-shell min-w-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+          <div key={permalink} className="instagram-embed-shell relative min-w-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
             <blockquote
               className="instagram-media"
               data-instgrm-permalink={permalink}
@@ -37,9 +37,9 @@ export default function InstagramGrid({ permalinks }: Props) {
               href={permalink}
               target="_blank"
               rel="noreferrer"
-              className="flex min-h-11 items-center justify-center border-t border-[var(--border)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+              className="flex min-h-11 items-center justify-center border-t border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
             >
-              View post on Instagram ↗
+              View on Instagram ↗
             </a>
           </div>
         ))}
