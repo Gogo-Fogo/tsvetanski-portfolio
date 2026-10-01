@@ -58,7 +58,7 @@ export default function ShogunPage() {
         }
         hero={
           <LightboxLocalVideo
-            src={`${VIDEOS}/shogun-2026-03-25-battle-prototype.mp4`}
+            src={`${VIDEOS}/shogun-2026-03-25-battle-prototype-web.mp4`}
             title="Shogun battle slice, March 25 2026"
             triggerLabel="Play the March 2026 battle slice"
             className="aspect-video h-full w-full bg-black"
@@ -114,7 +114,7 @@ export default function ShogunPage() {
           <MediaGrid>
             <Figure caption="Summon screen: banner layout and featured-unit framing (March 25, 2026).">
               <LightboxLocalVideo
-                src={`${VIDEOS}/shogun-2026-03-25-summons-prototype.mp4`}
+                src={`${VIDEOS}/shogun-2026-03-25-summons-prototype-web.mp4`}
                 title="Shogun summon screen prototype"
                 className="aspect-video h-full w-full bg-black"
                 roundedClassName="rounded-none"
@@ -122,7 +122,7 @@ export default function ShogunPage() {
             </Figure>
             <Figure caption="Barracks browsing and settings after the cleanup (March 25, 2026).">
               <LightboxLocalVideo
-                src={`${VIDEOS}/shogun-2026-03-25-settings-and-barracks-prototype.mp4`}
+                src={`${VIDEOS}/shogun-2026-03-25-settings-and-barracks-prototype-web.mp4`}
                 title="Shogun barracks and settings prototype"
                 className="aspect-video h-full w-full bg-black"
                 roundedClassName="rounded-none"

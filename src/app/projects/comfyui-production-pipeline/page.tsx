@@ -32,36 +32,6 @@ const pipelineItems = [
   },
 ];
 
-const workflowFamilies = [
-  {
-    title: 'Ronin Identity Workflow',
-    src: '/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png',
-    alt: 'ComfyUI workflow screenshot for Ronin identity-lock character iteration',
-    caption:
-      'A larger character workflow for keeping identity, pose, and style constraints organized across base, advanced, and upscale passes.',
-    width: 1920,
-    height: 1080,
-  },
-  {
-    title: 'Dahaka Cleanup Graph',
-    src: '/images/projects/comfyui-production-pipeline/workflow-dahaka-cleanup-graph.png',
-    alt: 'ComfyUI workflow screenshot for Dahaka asset cleanup and mask extraction',
-    caption:
-      'A compact cleanup graph for background extraction, mask combination, eraser-style repair, alpha joining, and final sheet export.',
-    width: 1920,
-    height: 1080,
-  },
-  {
-    title: 'Flux/Klein Enhancer',
-    src: '/images/projects/comfyui-production-pipeline/workflow-flux-klein-enhancer-graph.png',
-    alt: 'ComfyUI workflow screenshot for Flux/Klein enhancement and upscale pipeline',
-    caption:
-      'Enhancement, denoising, and export are separated into visible stages that can be adjusted independently.',
-    width: 1920,
-    height: 1080,
-  },
-];
-
 const workflowCards = [
   {
     title: 'Scene Reveal',
@@ -166,8 +136,8 @@ export default function ComfyUiProductionPipelinePage() {
         }
         hero={
           <LightboxImage
-            src="/images/projects/comfyui-production-pipeline/workflow-ronin-identity-graph.png"
-            alt="ComfyUI workflow graph for keeping a character's identity consistent across passes"
+            src="/images/projects/comfyui-production-pipeline/workflow-dahaka-cleanup-graph.png"
+            alt="ComfyUI cleanup graph: two background-removal passes, a mask combine and alpha join on a Dahaka asset sheet"
             width={1920}
             height={1080}
             priority
@@ -175,7 +145,7 @@ export default function ComfyUiProductionPipelinePage() {
             roundedClassName="rounded-none"
           />
         }
-        heroCaption="The Ronin identity workflow: reference inputs, prompt conditioning, sampling, cleanup and export as separate stages."
+        heroCaption="The Dahaka cleanup graph: two background-removal passes, mask combination, eraser repair and an alpha join before the final sheet export."
         glance={glance}
       />
 
@@ -212,14 +182,7 @@ export default function ComfyUiProductionPipelinePage() {
             {'GM or AI proposes media\n→ workflow and prompt template selected\n→ GM approves or edits\n→ router prepares the job\n→ ComfyUI renders locally\n→ output stored outside Git'}
           </pre>
           <CardGrid items={workflowCards} columns={2} />
-          <DeepDive summary="More workflow graphs and Shogun examples">
-            <MediaGrid>
-              {workflowFamilies.slice(1).map((family) => (
-                <Figure key={family.src} caption={<><strong>{family.title}.</strong> {family.caption}</>}>
-                  <LightboxImage src={family.src} alt={family.alt} width={family.width} height={family.height} className="h-auto w-full" roundedClassName="rounded-none" />
-                </Figure>
-              ))}
-            </MediaGrid>
+          <DeepDive summary="Shogun examples">
             <MediaGrid columns={3}>
               {supportingExamples.map((example) => (
                 <Figure key={example.src} caption={<><strong>{example.title}.</strong> {example.caption}</>}>
