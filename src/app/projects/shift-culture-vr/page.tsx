@@ -1,341 +1,203 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  Figure,
+  MediaGrid,
+  Prose,
+  Section,
+  Split,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-const gallery = [
-  {
-    src: '/images/B360_bike_simulator.png',
-    alt: 'B-360 VR dirt bike simulator scene',
-    width: 1600,
-    height: 900,
-  },
-  {
-    src: '/images/B360_dev_vr.jpeg',
-    alt: 'Development preview of the B-360 VR prototype',
-    width: 1600,
-    height: 900,
-  },
-  {
-    src: '/images/B360_budget_phoneVR.png',
-    alt: 'Low-cost mobile VR headset setup used for the prototype',
-    width: 1600,
-    height: 900,
-  },
-  {
-    src: '/images/B360_dirtbike_riders.jpg',
-    alt: 'B-360 dirt bike riders and community context',
-    width: 1600,
-    height: 900,
-  },
-  {
-    src: '/images/B360_mainmmenu.png',
-    alt: 'Main menu interface for the VR prototype',
-    width: 1600,
-    height: 900,
-  },
-  {
-    src: '/images/B360_volunteering_baltimore.jpeg',
-    alt: 'Community volunteering context tied to the B-360 collaboration',
-    width: 1600,
-    height: 900,
-  },
-];
+const slug = 'shift-culture-vr' as const;
 
-const [simulatorImage, devImage, budgetImage, ridersImage, menuImage, volunteeringImage] = gallery;
+export const metadata = projectMetadata(
+  slug,
+  'A VR dirt-bike safety prototype for B-360, a Baltimore youth STEM nonprofit, built to run on low-cost mobile VR for first-time users.'
+);
 
-const snapshotItems = [
-  {
-    label: 'Project',
-    value: 'VR dirt-bike safety prototype for B-360, a Baltimore youth STEM nonprofit',
-  },
-  {
-    label: 'Team',
-    value: 'Built with Zefran Jehle and Lewis Plested in Dr. Elka Cahn\'s community game-design class',
-  },
-  {
-    label: 'My Role',
-    value: 'Technical implementation, VR interaction flow, gameplay feel, and comfort testing',
-  },
-  {
-    label: 'Prototype Result',
-    value: 'Reviewed in person with B-360; testers reported no motion sickness during the session',
-  },
-];
+const glance = [
+  { label: 'My role', value: 'Technical implementation, VR interaction flow, gameplay feel and comfort testing' },
+  { label: 'Team', value: "Zefran Jehle and Lewis Plested, in Dr. Elka Cahn's community game-design class" },
+  { label: 'Client', value: 'B-360, a Baltimore youth STEM nonprofit' },
+  { label: 'Result', value: 'Reviewed in person with B-360; testers reported no motion sickness during the session' },
+] as const;
 
-const prototypeLoop = [
-  'Inspect a dirt bike in a workshop to learn parts and placement.',
-  'Answer short quiz prompts tied to safety and bike knowledge.',
-  'Test ride the bike in first-person instead of stopping at a static learning scene.',
-  'Deliver a prototype B-360 could evaluate for workshops and outreach.',
+const loop = [
+  'Inspect a dirt bike in a workshop to learn its parts.',
+  'Answer short quiz prompts on safety and bike knowledge.',
+  'Test-ride the bike in first person.',
 ];
 
 const constraints = [
   {
-    title: 'Affordable VR Target',
-    description:
-      'The prototype was built around Google Cardboard-style mobile VR instead of expensive headset setups.',
+    title: 'Affordable hardware',
+    body: 'Built for Google Cardboard-style mobile VR, not expensive headsets, so it could run in real workshops.',
   },
   {
-    title: 'Comfort First',
-    description:
-      'Camera behavior, movement, and pacing were tuned to reduce sickness risk for first-time VR users.',
+    title: 'Comfort first',
+    body: 'Camera behaviour, movement and pacing tuned to reduce sickness for people trying VR for the first time.',
   },
   {
-    title: 'Real-World Use',
-    description:
-      'The goal was to give B-360 a prototype they could evaluate for workshops and outreach.',
+    title: 'Useful to the client',
+    body: 'The goal was a prototype B-360 could evaluate for its workshops and outreach, not a class demo.',
   },
 ];
 
-const developmentNotes = [
+const process = [
   'Regular class critiques and team check-ins kept the scope under control.',
-  'Desktop and mobile test loops helped us catch comfort, clarity, and stability problems early.',
-  'We kept revising the UI, onboarding, and interactions to make the prototype easier for first-time users to follow.',
+  'Desktop and mobile test loops caught comfort, clarity and stability problems early.',
+  'We kept revising the UI, onboarding and interactions so first-time users could follow along.',
 ];
 
-const feedbackPoints = [
-  'We showed B-360 a working prototype during our final in-person meeting and gathered direct reactions while they playtested it.',
-  'That session helped us see how the project might fit real workshops instead of just classroom expectations.',
-  'Nobody reported motion sickness during the session, which mattered a lot for a low-cost mobile VR build.',
-  'That feedback mattered more because it came from the people the project was for.',
-];
-
-const continuationPlan = [
-  'The semester ended before the final cross-platform version was finished.',
-  'As of March 2026, Zefran and I plan to keep developing the project through Summer 2026.',
-  'The current target is a cleaner build for PC, Android phones, and Meta Quest headsets.',
-  'The next pass is focused on quality-of-life improvements, onboarding, polish, and broader device support.',
-];
-
-const takeaways = [
-  'I learned to judge VR decisions by usefulness, comfort, and access rather than novelty.',
-  'It taught me more about working with a real client and real constraints than a typical classroom project.',
-  'It also reminded me why I care about XR when it is tied to people and a real use case.',
-];
-
-export default function VRMicrogamesCaseStudy() {
+export default function ShiftCultureVrPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-5xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Shift Culture VR (B-360)' },
-            ]}
-            className="mb-4"
-          />
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Community VR Project</p>
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Shift Culture VR</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-3xl text-base leading-relaxed">
-            A VR dirt bike safety prototype built for B-360 under real client, hardware, and accessibility constraints.
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A VR dirt-bike safety prototype for B-360, a Baltimore youth STEM nonprofit. It had to run on cheap
+            phone-based VR and be comfortable for first-time users. I built the technical side: the VR interaction flow, the riding feel and
+            the comfort tuning.
           </p>
-        </header>
+        }
+        actions={
+          <ActionLinks
+            links={[
+              { href: 'https://www.ubalt.edu/about/newsroom/ubalt-stories-community-game-design.cfm', label: 'UBalt news story (Jan 30, 2026)', primary: true },
+              { href: 'https://b360baltimore.org/', label: 'About B-360' },
+            ]}
+          />
+        }
+        hero={
+          <LightboxImage
+            src="/images/B360_bike_simulator.png"
+            alt="First-person riding view in the B-360 VR dirt-bike simulator"
+            width={1920}
+            height={895}
+            priority
+            className="h-auto w-full"
+            roundedClassName="rounded-none"
+          />
+        }
+        heroCaption="The riding view we tuned for readability, obstacle awareness and comfort."
+        glance={glance}
+      />
 
-        <section className="grid gap-10">
-          <ProjectAtAGlance items={snapshotItems} />
+      <CaseStudyBody>
+        <Section
+          id="brief"
+          title="The brief"
+          intro={
+            <p>
+              The University of Baltimore newsroom featured the class collaboration on January 30, 2026. Our prototype had to reflect
+              B-360&apos;s mission, run on affordable mobile VR, and make sense in a workshop.
+            </p>
+          }
+        >
+          <CardGrid items={constraints} />
+          <Figure caption="B-360 riders. Photo: University of Baltimore newsroom.">
+            <LightboxImage
+              src="/images/B360_dirtbike_riders.jpg"
+              alt="B-360 dirt-bike riders in Baltimore"
+              width={1600}
+              height={900}
+              className="h-auto w-full"
+              roundedClassName="rounded-none"
+            />
+          </Figure>
+        </Section>
 
-          <div className="rounded-2xl border border-[var(--foreground)]/30 bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <div className="grid gap-8 md:grid-cols-2 md:items-start">
-              <div>
-                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Why It Matters</h2>
-                <p className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
-                  Featured by the University of Baltimore Newsroom on January 30, 2026
-                </p>
-                <p className="mt-3 text-sm text-[var(--muted)] leading-relaxed">
-                  The prototype had to reflect B-360&apos;s mission, run on affordable mobile VR hardware, and make sense in workshops.
-                </p>
-                <ul className="mt-5 space-y-2 text-sm text-[var(--muted)] leading-relaxed">
-                  <li>- Built with the Baltimore nonprofit B-360 around its workshop needs.</li>
-                  <li>- Designed around Google Cardboard-style access instead of high-end VR assumptions.</li>
-                  <li>- Reviewed in person with B-360 during prototype testing.</li>
-                </ul>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="https://www.ubalt.edu/about/newsroom/ubalt-stories-community-game-design.cfm"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-                  >
-                    Read UBalt Story
-                  </a>
-                  <a
-                    href="https://b360baltimore.org/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                  >
-                    Visit B-360
-                  </a>
-                </div>
-              </div>
-              <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-                <div className="relative aspect-video w-full">
-                  <LightboxImage
-                    src={ridersImage.src}
-                    alt={ridersImage.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    width={ridersImage.width}
-                    height={ridersImage.height}
-                    className="object-cover"
-                    roundedClassName="rounded-none"
-                    popupCaption="B-360 riders and program context in Baltimore."
-                  />
-                </div>
-                <div className="border-t border-[var(--border)] px-4 py-3">
-                  <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Source: University of Baltimore Newsroom</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-            <div className="relative aspect-video w-full">
+        <Section id="prototype" title="The prototype">
+          <Split
+            media={
+              <Figure caption="The menu and onboarding keep first-time players oriented before the workshop and riding sections.">
+                <LightboxImage
+                  src="/images/B360_mainmmenu.png"
+                  alt="Main menu of the VR prototype"
+                  width={1600}
+                  height={900}
+                  className="h-auto w-full"
+                  roundedClassName="rounded-none"
+                />
+              </Figure>
+            }
+          >
+            <p>
+              <strong>The player loop:</strong>
+            </p>
+            <BulletList items={loop} />
+          </Split>
+          <MediaGrid>
+            <Figure caption="The low-cost phone headset we designed for.">
               <LightboxImage
-                src={simulatorImage.src}
-                alt={simulatorImage.alt}
-                fill
-                sizes="100vw"
-                width={simulatorImage.width}
-                height={simulatorImage.height}
-                className="object-cover"
+                src="/images/B360_budget_phoneVR.png"
+                alt="Low-cost mobile VR headset used for the prototype"
+                width={1600}
+                height={900}
+                className="h-auto w-full"
                 roundedClassName="rounded-none"
-                popupCaption="In-simulator riding view used while testing readability, obstacle awareness, and first-person comfort."
               />
-            </div>
-          </div>
+            </Figure>
+            <Figure caption="Development and team testing.">
+              <LightboxImage
+                src="/images/B360_dev_vr.jpeg"
+                alt="Development preview of the B-360 VR prototype"
+                width={1600}
+                height={900}
+                className="h-auto w-full"
+                roundedClassName="rounded-none"
+              />
+            </Figure>
+          </MediaGrid>
+          <Prose>
+            <p>
+              <strong>How we worked:</strong>
+            </p>
+          </Prose>
+          <BulletList items={process} />
+        </Section>
 
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Core Loop</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
-                {prototypeLoop.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={menuImage.src}
-                  alt={menuImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={menuImage.width}
-                  height={menuImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Menu and onboarding pass meant to keep first-time players oriented before entering the workshop and riding sections."
-                />
-              </div>
-            </div>
-          </div>
+        <Section
+          id="outcome"
+          title="Outcome"
+          intro={
+            <>
+              <p>
+                We showed B-360 a working prototype at our final in-person meeting and watched them play it. Nobody reported motion sickness,
+                which mattered a lot for a low-cost phone VR build, and the session showed how the project could fit real workshops.
+              </p>
+              <p>
+                The semester ended before the final cross-platform version was finished. In March 2026, Zefran and I planned to keep developing
+                it through summer 2026, aiming for a cleaner build on PC, Android phones and Meta Quest with better onboarding and polish.
+              </p>
+              <p>
+                It taught me to judge VR decisions by usefulness, comfort and access rather than novelty, and what working with a real client
+                is like.
+              </p>
+            </>
+          }
+        >
+          <Figure caption="Community volunteering connected to the outreach side of the project.">
+            <LightboxImage
+              src="/images/B360_volunteering_baltimore.jpeg"
+              alt="Community volunteering in Baltimore tied to the B-360 collaboration"
+              width={1600}
+              height={900}
+              className="h-auto w-full"
+              roundedClassName="rounded-none"
+            />
+          </Figure>
+        </Section>
+      </CaseStudyBody>
 
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={budgetImage.src}
-                  alt={budgetImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={budgetImage.width}
-                  height={budgetImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Low-cost mobile VR setup chosen so the project could run on cheap hardware."
-                />
-              </div>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Main Constraints</h2>
-              <ul className="space-y-4 text-sm text-[var(--muted)] leading-relaxed">
-                {constraints.map((item) => (
-                  <li key={item.title}>
-                    <span className="text-[var(--foreground)] font-medium block mb-1">{item.title}</span>
-                    {item.description}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">How We Built It</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
-                {developmentNotes.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={devImage.src}
-                  alt={devImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={devImage.width}
-                  height={devImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Development setup during build checks and team testing."
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 md:items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">B-360 Feedback</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
-                {feedbackPoints.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Current Status</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
-                {continuationPlan.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src={volunteeringImage.src}
-                  alt={volunteeringImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={volunteeringImage.width}
-                  height={volunteeringImage.height}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Community context tied to the outreach side of the project."
-                />
-              </div>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">What I Learned</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)] leading-relaxed">
-                {takeaways.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
-
-

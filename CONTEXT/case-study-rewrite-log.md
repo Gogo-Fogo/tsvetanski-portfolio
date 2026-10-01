@@ -82,3 +82,38 @@ Still hosted and unlinked; **decide whether these are yours to publish:**
   build spec, design system, evidence-review interaction model.
 - **Check:** are you happy showing the team FigJam boards (they're now in a deep dive)? And
   is "Kamilah S." how she wants to be credited?
+
+## Birdwatching VR (`/projects/birdwatching`)
+
+- Order: Camera to field guide (steps + footage) → What I built → Playtests and showcase →
+  Dev logs and documents. Contents menu. The "Closer look" accordion is gone; the stack and
+  implemented-slice lists sit in a deep dive.
+- Kept: team (Felix Chughtai, Talulla Allen), versions, 7 species / 9 slots, IGDA® Baltimore
+  showcase, the grab-the-birds playtest story.
+- **Removed:** the "Planning document" viewer (the team's written plan). The original
+  planning deck stays in a deep dive, labelled as the team's.
+- **Check:** are the planning deck slides OK to show? See also the unlinked planning PDFs in
+  the documents sweep above.
+
+## Shift Culture VR (`/projects/shift-culture-vr`, was `/vr-microgames`)
+
+- Order: The brief (constraints, B-360 riders photo credited to the UBalt newsroom) → The
+  prototype → Outcome.
+- Status sentence changed from "As of March 2026, Zefran and I plan to keep developing…
+  through Summer 2026" to the past tense, since summer has passed.
+- **Check:** what happened over the summer? If development continued, give me one line.
+
+## VR Car Drift Simulator (`/projects/vr-drift-simulator`, was `/vr-interaction-lab`)
+
+- Fixed stale metadata (it described the B-360 bike project).
+- Demo video is now the hero. Order: What I built → Making it stable (three fixes, slides in a
+  deep dive) → In the cockpit → Documents.
+- Removed "Recruiter-ready artifacts" and the duplicate chase-camera image.
+- **Check:** was this a solo or team project? The page never said. If there was a team,
+  give me the names.
+
+## Patapon VR: The First Beat (`/projects/patapon-vr-the-first-beat`)
+
+- Shortened as approved: one "The design" section (four design cards, command patterns,
+  roadmap in a deep dive, Sony attribution). The lore paragraphs, project spec list and four
+  extra Sony images are gone.
