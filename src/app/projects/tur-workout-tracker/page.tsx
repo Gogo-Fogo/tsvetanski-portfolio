@@ -87,45 +87,57 @@ export default function TurWorkoutTrackerPage() {
         </header>
 
         <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
-
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-            <div className="mx-auto w-full max-w-xs overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-strong)]">
-              <LightboxImage
-                src="/images/projects/tur-workout-tracker/today-screen.jpg"
-                alt="TUR Today screen: the next workout, Upper + Easy Mile, with a Start workout button, weekly progress, and starred routines"
-                width={863}
-                height={1823}
-                className="h-auto w-full object-cover"
-                roundedClassName="rounded-none"
-                popupCaption="The Today screen: the next routine, this week's progress, and starred routines."
+          <div>
+            <div className="-mx-8 overflow-hidden border-y border-[var(--border)] bg-[#0d0d0f] shadow-[var(--shadow-strong)] sm:mx-0 sm:rounded-2xl sm:border">
+              <iframe
+                src="/embeds/tur-site/index.html"
+                title="TUR website prototype, interactive"
+                loading="lazy"
+                className="block h-[680px] w-full md:h-[760px]"
               />
             </div>
+            <div className="mt-3 flex flex-col gap-2 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
+              <p>
+                The product website I designed and built, embedded as a working snapshot (sign-up and roadmap are switched off).
+                Try the phone demo: start a workout, log three sets, see the progress. The app screens are design mockups, not device
+                captures.
+              </p>
+              <a
+                href="/embeds/tur-site/index.html"
+                target="_blank"
+                rel="noreferrer"
+                className="shrink-0 font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] underline underline-offset-4"
+              >
+                Open full screen
+              </a>
+            </div>
+          </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-                <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">The Product</h2>
-                <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Most workout apps are either too slow to use mid-set or lock your history behind an account. TUR keeps one action in
-                  focus at a time, keeps every record on your phone, and lets the watch on your wrist do the timing.
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                  The visual identity is a cave-wall theme: charcoal surfaces, one warm red accent for primary actions, and an
-                  aurochs-horn mark. I designed the brand, the app UI and the marketing site, which includes a public feature-request
-                  and roadmap portal running on Cloudflare Workers.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-[var(--border)] bg-[#0d0d0f] p-8 shadow-[var(--shadow)]">
-                <LightboxImage
-                  src="/images/projects/tur-workout-tracker/tur-lockup.png"
-                  alt="TUR logo: a red aurochs-horn mark next to the TUR wordmark"
-                  width={900}
-                  height={288}
-                  className="mx-auto h-auto w-full max-w-sm object-contain"
-                  roundedClassName="rounded-none"
-                  popupCaption="TUR brand lockup."
-                />
-              </div>
+          <ProjectAtAGlance items={snapshotItems} />
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
+              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">The Product</h2>
+              <p className="text-sm leading-relaxed text-[var(--muted)]">
+                Most workout apps are either too slow to use mid-set or lock your history behind an account. TUR keeps one action in
+                focus at a time, keeps every record on your phone, and lets the watch on your wrist do the timing.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+                The visual identity is a cave-wall theme: charcoal surfaces, one warm red accent for primary actions, and an
+                aurochs-horn mark. I designed the brand, the app UI and the marketing site, which includes a public feature-request
+                and roadmap portal running on Cloudflare Workers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[var(--border)] bg-[#0d0d0f] p-8 shadow-[var(--shadow)]">
+              <LightboxImage
+                src="/images/projects/tur-workout-tracker/tur-lockup.png"
+                alt="TUR logo: a red aurochs-horn mark next to the TUR wordmark"
+                width={900}
+                height={288}
+                className="mx-auto h-auto w-full max-w-sm object-contain"
+                roundedClassName="rounded-none"
+                popupCaption="TUR brand lockup."
+              />
             </div>
           </div>
 

@@ -14,7 +14,7 @@ const snapshotItems = [
   { label: 'My role', value: 'Toolkit programmer and tools designer' },
   { label: 'Status', value: 'Delivered as a university major project (spring 2026), packaged as a .unitypackage' },
   { label: 'Engine', value: 'Unity 6, C#, TextMeshPro, ScriptableObjects, custom editor drawers' },
-  { label: 'User', value: 'Built for Eden, the project’s writer, who shouldn’t have to write any code or markup' },
+  { label: 'Team', value: 'Eden: writer and artist. Me: toolkit programming and tools design' },
 ] as const;
 
 const systems = [
@@ -69,7 +69,7 @@ export default function HorrorVnKitPage() {
           </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight">Horror VN Kit</h1>
           <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            A Unity toolkit for branching psychological-horror visual novels. I built the systems so our writer could author every
+            A Unity toolkit for branching psychological-horror visual novels. I built the systems so Eden, our writer and artist, could author every
             scene, choice and scare from the Inspector, without code and without learning a scripting language.
           </p>
         </header>
@@ -85,7 +85,7 @@ export default function HorrorVnKitPage() {
               height={592}
               className="h-auto w-full object-cover"
               roundedClassName="rounded-none"
-              popupCaption="A branching choice. Once a path has been explored, its button hides automatically."
+              popupCaption="A branching choice. Once a path has been explored, its button hides automatically. Art by Eden."
             />
           </div>
 

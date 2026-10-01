@@ -1,0 +1,1864 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TUR Workout Tracker</title>
+<link rel="icon" href="assets/tur-mark.png">
+<meta name="description" content="TUR is a workout and burn tracker for iPhone and Garmin. It logs every set, works out the calories and tells you where each number came from.">
+<meta property="og:site_name" content="TUR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Cave-wall take on the app's Forge theme: charcoal stone, red ochre, bone-white type.
+     Colours follow App/DesignSystem/GymStyle.swift. Single dark look by design. */
+  :root {
+    color-scheme: dark;
+    --bg: #0d0c0b;
+    --surface: #171513;
+    --surface-2: #1f1c19;
+    --raised: #2a2724;
+    --hairline: rgba(239,231,218,.14);
+    --bone: #efe7da;
+    --text-2: rgba(239,231,218,.72);
+    --text-3: rgba(239,231,218,.5);
+    --accent: #e8412f;
+    --accent-press: #cf3525;
+    --ochre: #c94830;
+    --ok: #7cc58f;
+    --amber: #e8a55c;
+    --steel: #8fb6cf;
+    --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+    --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --control: 10px;
+    --wrap: 1200px;
+    /* Texture tiles are rendered once by render-textures.swift; bitmaps stay cheap while scrolling. */
+    --grain: url("assets/grain.png");
+    --rock: url("assets/rock.png");
+    --speckle: url("assets/speckle.png");
+    --erode: url("assets/erode.png");
+  }
+  [hidden] { display: none !important; }
+  html { background: var(--bg); }
+  body {
+    background: var(--bg); color: var(--bone);
+    font: 400 18px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+    padding-inline: 20px; position: relative; isolation: isolate;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    will-change: transform; transform: translateZ(0); /* its own layer, painted once, not on every scroll */
+    background: var(--grain), var(--rock), radial-gradient(120% 80% at 70% 0%, #1b1714 0%, var(--bg) 60%);
+  }
+  body.locked { overflow: hidden; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .skip { position: absolute; left: 20px; top: -60px; background: var(--accent); color: #fff; padding: 10px 14px; border-radius: var(--control); z-index: 40; font-weight: 700; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .wrap { max-width: var(--wrap); margin-inline: auto; }
+  #content:focus { outline: none; } /* focus moves here on page change; the ring would frame the whole page */
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: .95; margin: 0; text-wrap: balance; letter-spacing: -.005em; }
+  h1 { font-size: clamp(56px, 9vw, 112px); }
+  h2 { font-size: clamp(44px, 6vw, 72px); }
+  h3 { font-size: 32px; font-weight: 700; line-height: 1; }
+  p { margin: 0; max-width: 60ch; }
+  .lede { font-size: clamp(19px, 1.8vw, 22px); color: var(--text-2); }
+  .muted { color: var(--text-2); }
+  .small { font-size: 15px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .credit { font-size: 13px; color: var(--text-3); }
+  .credit a { color: var(--text-2); }
+
+  /* Section label: an ochre smear over a spaced mono word, as on the app's Train screen. */
+  .kicker { display: grid; gap: 10px; justify-items: start; font: 500 13px/1.3 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--text-2); }
+  .smear { width: 118px; height: 12px; color: var(--ochre); overflow: visible; }
+
+  /* Header */
+  header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(13,12,11,.97); margin-inline: -20px; padding-inline: 20px; border-bottom: 1px solid var(--hairline); }
+  .bar { display: flex; align-items: center; gap: 28px; height: 70px; }
+  .brand { display: flex; flex: none; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
+  .brand img { width: 38px; height: auto; }
+  .brand span { font: 900 32px/1 var(--body); font-stretch: 125%; font-variation-settings: "wdth" 125; color: var(--accent); letter-spacing: .01em; }
+  nav.main { display: flex; gap: 26px; }
+  nav.main a { text-decoration: none; font-weight: 600; font-size: 17px; color: var(--text-2); padding-block: 6px; border-bottom: 2px solid transparent; }
+  nav.main a:hover { color: var(--bone); }
+  nav.main a[aria-current="page"] { color: var(--bone); border-color: var(--accent); }
+
+  /* Buttons: the primary is grainy red, like the app's Start workout. */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: var(--control); font: 700 17px/1 var(--body); text-decoration: none; border: 0; cursor: pointer; color: var(--bone); background: none; }
+  .btn-primary { background: var(--speckle), var(--accent); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 30px -12px rgba(232,65,47,.6); }
+  .btn-primary:hover { background: var(--speckle), var(--accent-press); }
+  .btn-primary:disabled { opacity: .5; cursor: default; }
+  .chev { width: 8px; height: 8px; border: solid currentColor; border-width: 2px 2px 0 0; transform: rotate(45deg); }
+  .btn-ghost { color: var(--bone); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .btn-ghost:hover { background: rgba(239,231,218,.06); }
+  .btn-small { min-height: 42px; padding: 0 16px; font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+  main { padding-block: 48px 40px; }
+  .view { display: grid; gap: 120px; }
+  .section { display: grid; gap: 36px; }
+  .head { display: grid; gap: 22px; max-width: 800px; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+  /* Hero: the mark leads the copy; the real app sits beside it. */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; min-height: calc(100vh - 70px - 96px); }
+  .hero-copy { display: grid; gap: 28px; }
+  .hero h1 { font-size: clamp(44px, 5.2vw, 76px); -webkit-mask-image: var(--erode); mask-image: var(--erode); -webkit-mask-size: 256px; mask-size: 256px; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .status-line { font: 500 13px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+  /* Launch list: an email for the launch note, optionally a beta tester. */
+  .notify { display: grid; gap: 12px; max-width: 520px; }
+  .launch { display: grid; gap: 14px; }
+  .notify-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .notify-row input { flex: 1 1 220px; min-width: 0; }
+  .notify .beta { display: flex; gap: 10px; align-items: center; font-size: 16px; color: var(--text-2); cursor: pointer; }
+  .notify .beta input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+  /* The mark stands beside the phone, not behind it. */
+  /* The mark sits with the headline as one lockup; the app stands alone beside it. */
+  .lockup { display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); }
+  .hero-mark { flex: none; width: clamp(64px, 9vw, 140px); height: auto; }
+  .stage { justify-self: center; width: 100%; max-width: 300px; }
+  .stage .phone { width: min(300px, calc((100vh - 190px) / 2.17)); box-sizing: border-box; margin-inline: auto; } /* the whole phone fits on short laptop screens */
+  .phone { border-radius: 46px; padding: 10px; background: #0a0908; box-shadow: 0 0 0 1px #34302c, 0 0 0 7px #151311, 0 0 0 8px #34302c, 0 50px 90px -30px rgba(0,0,0,.9); }
+  .phone img { border-radius: 36px; width: 100%; height: auto; }
+
+  /* Try-it phone: the real Train screenshot with three small steps laid over it. Sizes are in
+     container units so the screen scales with the phone. */
+  .stage .phone.demo { width: min(300px, calc((100vh - 236px) / 2.17)); }
+  .demo .screen { position: relative; border-radius: 36px; overflow: hidden; container-type: inline-size; }
+  .demo .scr { position: absolute; inset: 0; }
+  .demo .scr.log, .demo .scr.done {
+    display: flex; flex-direction: column; gap: 3.2cqw; padding: 17cqw 7cqw 7cqw;
+    background: var(--grain), radial-gradient(120% 60% at 80% 0%, #1d1916 0%, #0e0d0c 60%);
+    font-family: var(--body); color: var(--bone);
+  }
+  .demo .hot { position: absolute; left: 5.8%; top: 50.6%; width: 88.3%; height: 5.9%; border: 0; padding: 0; border-radius: 2.4cqw; background: none; cursor: pointer; }
+  .demo .hot::after { content: ""; position: absolute; inset: -1.2cqw; border-radius: 3.4cqw; box-shadow: 0 0 0 .7cqw rgba(255,255,255,.75); opacity: 0; }
+  .demo .bubble { position: absolute; left: 50%; top: 58.2%; transform: translateX(-50%); white-space: nowrap; font: 600 4.2cqw/1 var(--body); padding: 2.4cqw 3.6cqw; border-radius: 99px; background: var(--bone); color: #140f0c; box-shadow: 0 6px 18px rgba(0,0,0,.5); pointer-events: none; }
+  .demo .bubble::before { content: ""; position: absolute; left: 50%; top: -1.6cqw; width: 3.2cqw; height: 3.2cqw; background: inherit; transform: translateX(-50%) rotate(45deg); border-radius: .4cqw; }
+  .demo .stamp { position: absolute; left: 15.2%; top: 40.9%; width: 5%; height: auto; border-radius: 0; }
+  .demo .log-top { display: flex; justify-content: space-between; font: 500 3.4cqw/1 var(--mono); letter-spacing: .14em; color: var(--text-2); }
+  .demo .log-top span:last-child { color: var(--accent); }
+  .demo .log-title { font: 800 14cqw/.86 var(--display); text-transform: uppercase; }
+  .demo .log-sub { font-size: 4cqw; color: var(--text-2); }
+  .demo .log-sub b { color: var(--bone); font-weight: 600; }
+  .demo .sets { list-style: none; margin: 1cqw 0 0; padding: 0; display: grid; gap: 2cqw; }
+  .demo .sets li { display: grid; grid-template-columns: 7cqw 1fr auto; align-items: center; gap: 2cqw; padding: 1.6cqw 1.6cqw 1.6cqw 3.4cqw; border-radius: 2.6cqw; background: rgba(239,231,218,.05); box-shadow: inset 0 0 0 1px var(--hairline); font-size: 4.6cqw; transition: background .25s, box-shadow .25s; }
+  .demo .sets .n { font: 500 3.6cqw/1 var(--mono); color: var(--text-3); }
+  .demo .sets .v { color: var(--text-2); }
+  .demo .sets .v b { color: var(--bone); font-weight: 700; }
+  .demo .chk { width: 10.5cqw; height: 10.5cqw; border-radius: 2.4cqw; border: 0; padding: 0; cursor: pointer; background: var(--raised); position: relative; }
+  .demo .chk::before { content: ""; position: absolute; left: 50%; top: 45%; width: 2.2cqw; height: 4.2cqw; border: solid rgba(239,231,218,.35); border-width: 0 .8cqw .8cqw 0; transform: translate(-50%, -50%) rotate(45deg); }
+  .demo .chk:disabled { cursor: default; }
+  .demo .sets li.active { box-shadow: inset 0 0 0 1px rgba(232,65,47,.7); }
+  .demo .sets li.active .chk { background: var(--raised); }
+  .demo .sets li.done { background: rgba(232,65,47,.14); box-shadow: inset 0 0 0 1px rgba(232,65,47,.35); }
+  .demo .sets li.done .chk { background: var(--speckle), var(--accent); }
+  .demo .sets li.done .chk::before { border-color: #fff; }
+  .demo .rest { display: flex; align-items: center; gap: 3.4cqw; padding: 2.6cqw 3.4cqw; border-radius: 2.6cqw; background: rgba(239,231,218,.05); }
+  .demo .rest svg { width: 13cqw; height: 13cqw; flex: none; transform: rotate(-90deg); }
+  .demo .rest circle { fill: none; stroke: var(--raised); stroke-width: 4; }
+  .demo .rest .arc { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; }
+  .demo .rest div { display: grid; gap: .6cqw; }
+  .demo .rest span { font: 500 3cqw/1 var(--mono); letter-spacing: .14em; color: var(--text-3); }
+  .demo .rest b { font: 800 8cqw/1 var(--display); }
+  .demo .rest small { font-size: 3.4cqw; color: var(--ok); }
+  .demo .finish { margin-top: auto; min-height: 12cqw; border: 0; border-radius: 2.6cqw; cursor: pointer; font: 700 4.8cqw/1 var(--body); color: #fff; background: var(--speckle), var(--accent); }
+  .demo .log .finish { margin-top: 0; }
+  .demo .live-burn { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; padding-top: 3cqw; border-top: 1px solid var(--hairline); font-size: 3.8cqw; color: var(--text-2); }
+  .demo .live-burn b { font: 800 7cqw/1 var(--display); color: var(--bone); }
+  .demo .saved { font: 500 3.4cqw/1 var(--mono); letter-spacing: .16em; color: var(--accent); }
+  .demo .pennant { position: absolute; right: 7cqw; top: 14cqw; width: 19cqw; padding: 2.6cqw 0 6cqw; display: grid; justify-items: center; gap: 1.2cqw; font: 700 4.2cqw/1 var(--display); color: var(--amber); background: #0d0b09; box-shadow: inset 0 0 0 .5cqw var(--amber); clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%); }
+  .demo .pennant span { font-size: 6.4cqw; }
+  .demo .next { display: grid; grid-template-columns: 1fr auto; gap: 1cqw 2cqw; padding: 3cqw 3.4cqw; border-radius: 2.6cqw; background: rgba(124,197,143,.08); box-shadow: inset 0 0 0 1px rgba(124,197,143,.25); }
+  .demo .next span { font: 500 3cqw/1.2 var(--mono); letter-spacing: .14em; color: var(--ok); }
+  .demo .next b { font: 800 5.4cqw/1 var(--display); grid-row: span 2; align-self: center; }
+  .demo .next small { font-size: 3.3cqw; line-height: 1.3; color: var(--text-2); }
+  .demo .log-hint { font-size: 3.8cqw; color: var(--text-2); display: flex; align-items: center; gap: 1.6cqw; }
+  .demo .log-hint .tick { display: inline-grid; width: 5.4cqw; height: 5.4cqw; border-radius: 1.2cqw; background: var(--raised); position: relative; }
+  .demo .log-hint .tick::before { content: ""; position: absolute; left: 50%; top: 45%; width: 1.2cqw; height: 2.3cqw; border: solid var(--bone); border-width: 0 .5cqw .5cqw 0; transform: translate(-50%, -50%) rotate(45deg); }
+  .demo .bubble.at-hands { left: 5%; top: 44.4%; transform: none; }
+  .demo .bubble.at-hands::before { left: 6cqw; }
+  .demo .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 4cqw; margin-top: 2cqw; }
+  .demo .compare .lbl { font: 700 3.4cqw/1 var(--display); letter-spacing: .02em; }
+  .demo .compare .prev .lbl { font-weight: 600; color: var(--text-2); }
+  .demo .cols { display: flex; align-items: flex-end; gap: 1.6cqw; height: 26cqw; margin-top: 2cqw; border-bottom: 1px solid var(--hairline); }
+  .demo .cols i { flex: 1; height: calc(var(--h) * 19cqw); background: var(--speckle), var(--accent); position: relative; }
+  .demo .prev .cols i { background: var(--speckle), #5e5a56; }
+  .demo .cols em { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font: 600 3.4cqw/1.4 var(--display); font-style: normal; }
+  .demo .gain { font: 700 4.6cqw/1 var(--display); color: var(--ok); }
+  .demo .kv { display: flex; justify-content: space-between; align-items: baseline; font-size: 3.8cqw; color: var(--text-2); padding-top: 2cqw; border-top: 1px solid var(--hairline); }
+  .demo .kv b { font: 800 6cqw/1 var(--display); color: var(--bone); }
+  .demo-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 14px; margin-top: 18px; min-height: 30px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); counter-reset: s; }
+  .steps li { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .steps li::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--hairline); font-size: 10px; }
+  .steps li + li::after { order: -1; content: ""; width: 10px; height: 1px; background: var(--hairline); }
+  .steps li.now { color: var(--bone); }
+  .steps li.now::before { box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent); }
+  .steps li.did::before { content: "✓"; background: var(--accent); color: #fff; box-shadow: none; }
+  .replay { border: 0; background: none; cursor: pointer; font: 600 14px/1 var(--body); color: var(--accent); padding: 6px 4px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .demo .hot::after, .demo .sets li.active .chk { animation: nudge 1.8s ease-out infinite; }
+    @keyframes nudge { 0% { opacity: .9; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.12); } }
+    .demo .sets li.active .chk { animation-name: glow; }
+    @keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(232,65,47,.6); } 60% { box-shadow: 0 0 0 2.2cqw rgba(232,65,47,0); } }
+    .demo .scr.log:not([hidden]), .demo .scr.done:not([hidden]) { animation: slide-in .32s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes slide-in { from { transform: translateY(6%); opacity: 0; } to { transform: none; opacity: 1; } }
+    .demo .stamp:not([hidden]) { animation: stamp .5s cubic-bezier(.3,1.6,.5,1) both; }
+    @keyframes stamp { from { transform: scale(2.2) rotate(-14deg); opacity: 0; } to { transform: none; opacity: 1; } }
+    .demo .pennant { animation: drop .5s .15s cubic-bezier(.3,1.5,.5,1) both; }
+    @keyframes drop { from { transform: translateY(-40%); opacity: 0; } to { transform: none; opacity: 1; } }
+    .demo .cols i { animation: grow .5s cubic-bezier(.2,.8,.2,1) both; transform-origin: bottom; }
+    .demo .cols i:nth-child(2) { animation-delay: .06s; } .demo .cols i:nth-child(3) { animation-delay: .12s; }
+    @keyframes grow { from { transform: scaleY(0); } }
+  }
+
+  /* The burn */
+  .burn { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+  .burn .copy { display: grid; gap: 22px; }
+  .sources { display: grid; gap: 8px; justify-items: start; }
+  .sources button, .choices button { font: 600 16px/1.2 var(--body); color: var(--text-2); background: transparent; border: 1px solid var(--hairline); border-radius: 999px; padding: 11px 18px; cursor: pointer; text-align: left; }
+  .sources button:hover, .choices button:hover { color: var(--bone); }
+  .sources button[aria-pressed="true"], .choices button[aria-pressed="true"] { background: var(--speckle), var(--accent); border-color: var(--accent); color: #fff; }
+  .meter { display: grid; gap: 22px; padding-top: 22px; border-top: 2px solid var(--accent); }
+  .meter .top { display: flex; justify-content: space-between; align-items: baseline; font: 500 13px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+  .kcal { font: 800 clamp(96px, 13vw, 150px)/.85 var(--display); letter-spacing: -.02em; }
+  .kcal small { font: 700 32px var(--display); color: var(--text-2); margin-left: 8px; letter-spacing: 0; }
+  .source-line { font-size: 18px; color: var(--bone); display: flex; gap: 10px; align-items: center; }
+  .source-line::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  .bars { display: flex; height: 16px; border-radius: 4px; overflow: hidden; gap: 2px; }
+  .bars span { display: block; transition: flex-grow .4s ease; }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin: 0; padding: 0; list-style: none; }
+  .legend li { display: flex; justify-content: space-between; gap: 12px; font-size: 16px; color: var(--text-2); border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+  .legend li b { color: var(--bone); font-weight: 600; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .facts div { display: grid; gap: 6px; padding-top: 16px; border-top: 2px solid var(--raised); }
+  .facts strong { font: 700 26px/1.05 var(--display); }
+  .facts span { color: var(--text-2); font-size: 16px; }
+
+  /* The watch */
+  .watch { width: min(320px, 80vw); aspect-ratio: 1; border-radius: 50%; justify-self: center; position: relative; background: #050505;
+    box-shadow: 0 0 0 10px #1d1b19, 0 0 0 12px #3a3632, 0 0 0 22px #121110, 0 0 0 23px #2c2926, 0 40px 80px -20px rgba(0,0,0,.9); }
+  .ring { position: absolute; inset: 10px; border-radius: 50%; background: conic-gradient(var(--accent) 0 62%, #2a2724 62% 100%);
+    -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 9px), #000 calc(100% - 8px)); mask: radial-gradient(closest-side, transparent calc(100% - 9px), #000 calc(100% - 8px)); }
+  .face { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; gap: 4px; }
+  .face .ex { font: 500 13px var(--mono); letter-spacing: .14em; color: var(--text-2); }
+  .face .load { font: 800 64px/.9 var(--display); }
+  .face .set { font: 600 15px var(--body); color: var(--text-2); }
+  .face .rest { font: 800 30px/1 var(--display); color: var(--accent); margin-top: 8px; }
+  .face .hr { font: 500 13px var(--mono); color: var(--text-2); letter-spacing: .08em; }
+  .points { margin: 0; padding: 0; list-style: none; display: grid; }
+  .points li { display: grid; gap: 4px; padding: 20px 0; border-bottom: 1px solid var(--hairline); }
+  .points li:first-child { border-top: 1px solid var(--hairline); }
+  .points strong { font: 700 28px/1.05 var(--display); }
+  .points span { color: var(--text-2); font-size: 17px; }
+
+  /* Coach demo: compact, rules instead of cards */
+  .coach { display: grid; gap: 26px; }
+  .coach-head { display: flex; flex-wrap: wrap; gap: 12px 40px; align-items: end; justify-content: space-between; }
+  .flow { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 28px; }
+  .step { display: grid; gap: 8px; align-content: start; padding-top: 16px; border-top: 2px solid var(--raised); }
+  .step b { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--text-3); font-weight: 500; }
+  .step strong { font: 800 48px/.95 var(--display); }
+  .step.next { border-top-color: var(--accent); }
+  .step.next strong, .step.next span { color: var(--accent); }
+  .choices { display: grid; gap: 6px; justify-items: start; }
+  .why { color: var(--text-2); font-size: 17px; }
+
+  /* Also in TUR: four small try-it demos behind tabs. Example data only. */
+  .demos { display: grid; gap: 20px; }
+  .tabs { display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid var(--hairline); }
+  .tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 12px 16px; margin-bottom: -1px; font: 600 17px/1 var(--body); color: var(--text-2); cursor: pointer; white-space: nowrap; }
+  .tabs button:hover { color: var(--bone); }
+  .tabs button[aria-selected="true"] { color: var(--bone); border-color: var(--accent); }
+  .panel { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; padding-top: 12px; }
+  .panel-copy { display: grid; gap: 18px; align-content: start; }
+  .panel h3 { font-size: 40px; }
+  .units, .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .units button, .chips button, .presets button { font: 600 15px/1.2 var(--body); color: var(--text-2); background: transparent; border: 1px solid var(--hairline); border-radius: 999px; padding: 9px 16px; cursor: pointer; }
+  .units button:hover, .chips button:hover, .presets button:hover { color: var(--bone); }
+  .units button[aria-pressed="true"], .chips button[aria-pressed="true"] { background: var(--speckle), var(--accent); border-color: var(--accent); color: #fff; }
+  .stepper { display: flex; align-items: center; gap: 10px; }
+  .stepper button { width: 52px; height: 52px; flex: none; border-radius: var(--control); border: 1px solid var(--hairline); background: var(--surface); font: 600 24px/1 var(--body); cursor: pointer; }
+  .stepper button:hover { background: var(--surface-2); }
+  .stepper input { width: 140px; min-width: 0; text-align: center; font: 800 40px/1 var(--display); padding: 6px 8px; }
+  .unit-label { font: 700 24px var(--display); color: var(--text-2); }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; }
+  .plate-out { display: grid; gap: 16px; padding: 24px; border-radius: 16px; background: var(--surface); border: 1px solid var(--hairline); }
+  .barbell { display: flex; align-items: center; justify-content: center; height: 170px; }
+  .barbell .shaft { height: 10px; flex: 1 1 60px; max-width: 150px; background: linear-gradient(#bdbdbd, #6a6a6a); }
+  .barbell .sleeve { height: 16px; width: 22px; flex: none; background: linear-gradient(#e6e6e6, #7a7a7a); }
+  .barbell .collar { width: 8px; height: 30px; flex: none; border-radius: 2px; background: linear-gradient(#d0d0d0, #555); }
+  .barbell .side { display: flex; align-items: center; gap: 2px; height: 100%; }
+  .barbell .side.left { flex-direction: row-reverse; }
+  .plate { width: 18px; flex: none; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.35), inset 3px 0 0 rgba(255,255,255,.14); display: grid; place-items: center; }
+  .plate span { writing-mode: vertical-rl; transform: rotate(180deg); font: 700 11px/1 var(--body); color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,.5); }
+  .plate-line { font: 700 22px/1.3 var(--display); }
+  .plate-line b { color: var(--accent); }
+  .figure { width: 100%; max-width: 520px; justify-self: center; }
+  .figure svg { width: 100%; height: auto; display: block; }
+  .figure path { fill: #2c2825; stroke: #0d0c0b; stroke-width: 3; transition: fill .3s; }
+  .figure path.n { fill: #221f1d; }
+  .figure path[data-l="1"] { fill: #6b3a2c; }
+  .figure path[data-l="2"] { fill: #a8422d; }
+  .figure path[data-l="3"] { fill: var(--accent); }
+  .figure path[data-g="main"] { fill: var(--accent); }
+  .figure path[data-g="second"] { fill: #7a4230; }
+  .ranks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .ranks li { display: grid; grid-template-columns: 110px 1fr 34px; gap: 12px; align-items: center; font-size: 15px; color: var(--text-2); }
+  .ranks li b { font-weight: 600; color: var(--bone); text-align: right; font-variant-numeric: tabular-nums; }
+  .ranks i { display: block; height: 8px; border-radius: 4px; background: var(--speckle), var(--accent); width: calc(var(--w) * 100%); transition: width .3s; }
+  .cal { display: grid; gap: 14px; padding: 22px; border-radius: 16px; background: var(--surface); border: 1px solid var(--hairline); }
+  .cal-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .cal-head strong { font: 700 26px/1 var(--display); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-grid .dow { font: 500 11px var(--mono); letter-spacing: .1em; color: var(--text-3); text-align: center; padding-bottom: 2px; }
+  .cal-grid button, .cal-grid .blank { aspect-ratio: 1; border-radius: 8px; border: 0; padding: 5px; display: grid; align-content: start; justify-items: start; font: 600 13px/1 var(--body); color: var(--text-2); background: rgba(239,231,218,.04); }
+  .cal-grid button { cursor: pointer; }
+  .cal-grid button.w { background: var(--c); color: #fff; }
+  .cal-grid button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bone); }
+  .cal-grid .blank { background: none; }
+  .cal-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 15px; color: var(--text-2); }
+  .cal-legend i, .key { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+  .key.main { background: var(--accent); }
+  .key.second { background: #7a4230; }
+  .guide-key { display: grid; gap: 4px; }
+  .cal-day { display: grid; gap: 6px; padding: 16px 0 0; border-top: 1px solid var(--hairline); min-height: 96px; }
+  .cal-day strong { font: 700 24px/1.1 var(--display); }
+  .cues { margin: 0; padding-left: 22px; display: grid; gap: 8px; color: var(--text-2); }
+  #more .facts { grid-template-columns: repeat(4, 1fr); }
+
+  .promise { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--hairline); }
+  .promise div { padding: 24px 20px 24px 0; display: grid; gap: 4px; }
+  .promise div + div { padding-left: 20px; border-left: 1px solid var(--hairline); }
+  .promise strong { font: 700 30px/1 var(--display); }
+  .promise span { font-size: 16px; color: var(--text-2); }
+
+  /* The cave-wall band */
+  .wall { position: relative; border-radius: 16px; overflow: hidden; padding: 56px 48px; display: grid; gap: 18px; align-content: end; min-height: 400px;
+    background: linear-gradient(90deg, rgba(13,12,11,.96) 0%, rgba(13,12,11,.86) 42%, rgba(13,12,11,.25) 100%), url("assets/lascaux-aurochs.jpg") center 30% / cover no-repeat; }
+  .wall::after { content: ""; position: absolute; inset: 0; background: var(--grain); pointer-events: none; }
+  .wall > * { position: relative; z-index: 1; max-width: 540px; }
+  .wall .credit { position: absolute; right: 16px; bottom: 12px; max-width: none; }
+  .wall.spirit { min-height: 560px; gap: 22px; padding-bottom: 64px; padding-right: 44%;
+    background: linear-gradient(90deg, rgba(13,12,11,.95) 0%, rgba(13,12,11,.84) 50%, rgba(13,12,11,.7) 100%), url("assets/lascaux-aurochs.jpg") 70% 30% / cover no-repeat; }
+  .wall-mark { position: absolute !important; right: 5%; top: 50%; transform: translateY(-50%); width: 36%; max-width: 420px !important; height: auto;
+    -webkit-mask-image: var(--erode); mask-image: var(--erode); -webkit-mask-size: 200px; mask-size: 200px; filter: drop-shadow(0 0 40px rgba(201,72,48,.25)); }
+  .wall.spirit h2 { font-size: clamp(56px, 8vw, 104px); }
+  .wall.spirit > * { max-width: 620px; }
+  .traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 760px !important; }
+  .traits div { display: grid; gap: 10px; justify-items: start; }
+  /* Cave handprints, as on the app's Train screen: red for done, stone grey for still to do. */
+  .hand { width: 44px; height: auto; }
+  .traits strong { font: 700 28px/1 var(--display); }
+  .traits span { font-size: 16px; color: var(--text-2); }
+  /* The pledge: a huge ochre 10% as the centrepiece. */
+  .big-ten { font: 800 clamp(150px, 24vw, 300px)/.8 var(--display); color: var(--ochre); letter-spacing: -.03em;
+    -webkit-mask-image: var(--erode); mask-image: var(--erode); -webkit-mask-size: 220px; mask-size: 220px; }
+  .big-ten span { font-size: .5em; vertical-align: .72em; margin-left: .04em; }
+  .pledge-band { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: center; padding-block: 48px; border-block: 1px solid var(--hairline); }
+  .pledge-copy { display: grid; gap: 20px; }
+  .pledge-copy h2 { font-size: clamp(40px, 5vw, 64px); }
+  .pledge-hero { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+  .pledge-steps div { border-top: 0; padding-top: 0; gap: 10px; }
+  .pledge-steps div::before { display: none; }
+  .ledger-wrap { overflow-x: auto; }
+  .ledger { width: 100%; border-collapse: collapse; font-size: 16px; }
+  .ledger caption { text-align: left; padding-bottom: 10px; }
+  .ledger th { text-align: left; font: 500 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); padding: 10px 12px 10px 0; border-bottom: 1px solid var(--hairline); }
+  .ledger td { padding: 14px 12px 14px 0; border-bottom: 1px solid var(--hairline); }
+  .tbc { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-2); border: 1px dashed var(--text-3); border-radius: 4px; padding: 5px 7px; vertical-align: middle; }
+
+  .next-step { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 28px 0; border-top: 1px solid var(--hairline); text-decoration: none; }
+  .next-step div { display: grid; gap: 6px; }
+  .next-step strong { font: 700 38px/1 var(--display); }
+  .next-step .arrow { font: 500 30px/1 var(--mono); color: var(--accent); transition: transform .2s; }
+  .next-step:hover .arrow { transform: translateX(6px); }
+
+  /* About */
+  .word { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; font: 500 14px var(--mono); color: var(--text-3); letter-spacing: .06em; }
+  .word strong { font: 800 48px/1 var(--display); color: var(--ochre); }
+  .founder { font: 600 clamp(22px, 2.6vw, 28px)/1.4 var(--body); max-width: 40ch; }
+  .plate { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .plate.flip { grid-template-columns: .9fr 1.1fr; }
+  .plate.flip figure { order: 2; }
+  figure { margin: 0; display: grid; gap: 10px; }
+  figure img { border-radius: 10px; filter: sepia(.15) contrast(1.02); }
+  .plate .text { display: grid; gap: 16px; align-content: start; }
+  .plate .text p { color: var(--text-2); }
+  .principles { display: grid; border-top: 1px solid var(--hairline); }
+  .principles div { display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+  .principles strong { font: 700 30px/1.05 var(--display); }
+  .principles p { color: var(--text-2); }
+  .refs { display: grid; gap: 6px; }
+
+  /* Pricing */
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 820px; }
+  .plan { background: var(--surface); border: 1px solid var(--hairline); border-radius: 16px; padding: 30px; display: grid; gap: 18px; align-content: start; position: relative; }
+  .plan.best { border-color: rgba(232,65,47,.7); box-shadow: 0 0 0 1px rgba(232,65,47,.7), 0 30px 60px -30px rgba(232,65,47,.4); }
+  .plan .tag { position: absolute; top: -12px; left: 24px; background: var(--speckle), var(--accent); color: #fff; font: 500 11px/1 var(--mono); letter-spacing: .14em; padding: 7px 9px; border-radius: 4px; text-transform: uppercase; }
+  .plan-name { font: 500 13px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--text-2); }
+  .price { display: flex; align-items: baseline; gap: 6px; }
+  .price b { font: 800 72px/.9 var(--display); }
+  .price span { color: var(--text-2); }
+  .plan ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; color: var(--text-2); font-size: 17px; }
+  .plan li { position: relative; padding-left: 16px; }
+  .plan li::before { content: ""; position: absolute; left: 0; top: 11px; width: 6px; height: 6px; background: var(--ochre); border-radius: 1px; }
+  .fine { font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+  .trial { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 820px; }
+  .trial div { display: grid; gap: 6px; padding: 26px 20px 0 0; border-top: 2px solid var(--raised); position: relative; }
+  .trial div::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px var(--text-3); }
+  .trial div:first-child::before { background: var(--accent); box-shadow: none; }
+  .trial b { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--text-2); font-weight: 500; }
+  .trial strong { font: 700 26px/1.05 var(--display); }
+  .trial span { color: var(--text-2); font-size: 16px; }
+  .faq { display: grid; border-top: 1px solid var(--hairline); max-width: 820px; }
+  .faq details { border-bottom: 1px solid var(--hairline); }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 0; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font: 500 22px/1 var(--mono); color: var(--accent); }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details p { padding-bottom: 20px; color: var(--text-2); }
+
+  /* Feedback portal: feature requests, roadmap and help center, laid out like a standard public roadmap. */
+  .view.portal { gap: 24px; }
+  .portal-tabs { display: flex; gap: 6px; overflow-x: auto; }
+  .portal-tabs a { white-space: nowrap; text-decoration: none; font-weight: 600; font-size: 16px; color: var(--text-2); padding: 10px 16px; border-radius: var(--control); display: inline-flex; gap: 8px; align-items: center; }
+  .portal-tabs a:hover { color: var(--bone); background: rgba(239,231,218,.05); }
+  .portal-tabs a[aria-current="page"] { background: var(--surface-2); color: var(--bone); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .portal-title { font: 800 clamp(44px, 6vw, 64px)/.95 var(--display); }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+  .sort { display: flex; gap: 6px; }
+  .sort button { background: none; border: 0; border-radius: var(--control); padding: 10px 14px; font-weight: 600; font-size: 16px; color: var(--text-2); cursor: pointer; }
+  .sort button[aria-pressed="true"] { background: var(--surface-2); color: var(--bone); box-shadow: inset 0 0 0 1px var(--hairline); }
+  .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  input, textarea, select { font: 400 17px/1.4 var(--body); color: var(--bone); background: rgba(13,12,11,.8); border: 1px solid var(--hairline); border-radius: var(--control); padding: 11px 14px; box-sizing: border-box; }
+  input::placeholder, textarea::placeholder { color: var(--text-3); }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); }
+  .search { width: 240px; }
+  .tagsel { width: auto; padding-right: 36px; }
+  .who { font-size: 15px; color: var(--text-3); }
+  .who button { background: none; border: 0; color: var(--text-2); text-decoration: underline; cursor: pointer; padding: 0; font-size: 15px; }
+  .state { color: var(--text-2); padding: 12px 0; }
+
+  .rq-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .rq { display: grid; grid-template-columns: 76px 1fr; background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px; overflow: hidden; }
+  .rq:hover { border-color: rgba(239,231,218,.26); }
+  .rq > .vote-cell { display: grid; place-items: start center; padding: 18px 0; border-right: 1px solid var(--hairline); }
+  .rq-open { all: unset; cursor: pointer; display: grid; gap: 8px; padding: 18px 22px; }
+  .rq-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .rq-open strong { font-size: 20px; font-weight: 700; line-height: 1.3; }
+  .rq-open p { color: var(--text-2); font-size: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .chip { font: 500 13px var(--body); color: var(--text-2); background: rgba(239,231,218,.08); border-radius: 999px; padding: 4px 10px; }
+  .count { font: 500 13px var(--mono); color: var(--text-3); }
+
+  .vote { display: grid; justify-items: center; gap: 4px; min-width: 52px; padding: 8px 6px; border-radius: var(--control); border: 1px solid transparent; background: none; color: var(--bone); cursor: pointer; }
+  .vote i { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 8px solid currentColor; }
+  .vote b { font: 700 18px/1 var(--body); font-variant-numeric: tabular-nums; }
+  .vote:hover { color: var(--accent); border-color: rgba(232,65,47,.5); }
+  .vote:active { transform: scale(.94); }
+  .vote[aria-pressed="true"] { color: var(--accent); border-color: rgba(232,65,47,.5); background: rgba(232,65,47,.1); }
+  .vote.asking { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,65,47,.3); }
+  .vote.closed { cursor: not-allowed; color: var(--text-3); }
+  .vote.closed:hover { border-color: var(--hairline); color: var(--text-3); }
+  .vote.nope { animation: nope .35s; }
+  .vote.pop b, .vote.pop i { animation: pop .35s; }
+  @keyframes nope { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+  @keyframes pop { 50% { transform: scale(1.35); } }
+  dialog .for { color: var(--bone); font-weight: 600; }
+
+  .badge { display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1 var(--body); padding: 5px 10px; border-radius: 999px; white-space: nowrap; box-shadow: inset 0 0 0 1px currentColor; justify-self: start; }
+  .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .s-considering { color: var(--bone); }
+  .s-planned_iphone { color: var(--amber); }
+  .s-planned_garmin { color: var(--steel); }
+  .s-wont { color: var(--text-3); }
+  .s-completed { color: var(--ok); }
+
+  .board-cols { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(270px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 12px; align-items: start; }
+  .col { background: rgba(23,21,19,.7); border: 1px solid var(--hairline); border-radius: 14px; padding: 12px; display: grid; gap: 10px; }
+  .col-head { display: flex; align-items: center; gap: 8px; padding: 4px 4px 6px; }
+  .col-head .count { font-size: 14px; }
+  .mini { display: grid; grid-template-columns: 58px 1fr; background: var(--surface); border: 1px solid var(--hairline); border-radius: 12px; }
+  .mini .vote-cell { display: grid; place-items: start center; padding: 12px 0; }
+  .mini .rq-open { padding: 12px 14px 12px 4px; gap: 4px; }
+  .mini .rq-open strong { font-size: 17px; }
+  .mini .rq-open p { font-size: 14.5px; }
+
+  .help-hero { background: rgba(8,7,6,.85); border: 1px solid var(--hairline); border-radius: 18px; padding: 48px 28px; display: grid; gap: 20px; justify-items: center; text-align: center; }
+  .help-hero h2 { font-size: clamp(38px, 5vw, 56px); }
+  .help-hero input { width: min(560px, 100%); font-size: 18px; padding: 15px 18px; }
+  .collections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .collection { background: var(--surface); border: 1px solid var(--hairline); border-radius: 14px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+  .collection h3 { font-size: 30px; }
+  .collection ul { list-style: none; margin: 0; padding: 0; display: grid; }
+  .collection li button { all: unset; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; width: 100%; box-sizing: border-box; padding: 11px 0; border-top: 1px solid var(--hairline); font-size: 17px; color: var(--bone); }
+  .collection li button:hover { color: var(--accent); }
+  .collection li button:focus-visible { outline: 2px solid var(--accent); }
+  .collection li button::after { content: "›"; color: var(--text-3); }
+  .contact { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; padding: 24px 0; border-top: 1px solid var(--hairline); }
+  .contact .addr { font: 500 16px var(--mono); }
+
+  /* Drawer: a request's detail, the request chat, or a help article. */
+  .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 30; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); z-index: 31; background: #141210; border-left: 1px solid var(--hairline); display: grid; grid-template-rows: auto 1fr auto; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .drawer-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--hairline); }
+  .drawer-top h2 { font-size: 30px; }
+  .x { background: none; border: 0; width: 42px; height: 42px; border-radius: var(--control); cursor: pointer; font-size: 26px; line-height: 1; color: var(--text-2); }
+  .x:hover { background: rgba(239,231,218,.06); color: var(--bone); }
+  .drawer-body { overflow-y: auto; padding: 24px 20px; display: grid; gap: 22px; align-content: start; }
+  .drawer-foot { padding: 14px 20px; border-top: 1px solid var(--hairline); }
+  .detail-head { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: start; }
+  .detail-head .vote { border-color: var(--hairline); min-width: 60px; padding: 10px 6px; }
+  .detail-head h3 { font: 700 24px/1.25 var(--body); }
+  .label { font: 500 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+  .comments { display: grid; gap: 14px; }
+  .comment { display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--ochre); color: #fff; font: 700 15px var(--body); }
+  .comment.team .avatar { background: var(--speckle), var(--accent); }
+  .bubble-c { background: var(--surface-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
+  .bubble-c p { font-size: 16px; white-space: pre-wrap; }
+  .bubble-c .when { font-size: 13px; color: var(--text-3); }
+  .team-tag { font: 600 12px var(--body); color: var(--accent); }
+  .composer { display: grid; gap: 10px; }
+  .composer textarea { width: 100%; min-height: 70px; resize: vertical; }
+  .composer .actions { justify-content: flex-end; }
+  .article p, .article li { color: var(--text-2); }
+  .article ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+  /* Request chat */
+  .chat { display: grid; gap: 12px; align-content: end; min-height: 100%; }
+  .bubble { max-width: 88%; padding: 12px 16px; border-radius: 16px; font-size: 16.5px; line-height: 1.5; }
+  .bubble.bot { background: var(--surface-2); border-bottom-left-radius: 4px; justify-self: start; }
+  .bubble.me { background: var(--speckle), var(--accent); color: #fff; border-bottom-right-radius: 4px; justify-self: end; white-space: pre-wrap; }
+  .bubble .mini { margin-top: 10px; }
+  .chat-input { display: flex; gap: 10px; }
+  .chat-input input { flex: 1; min-width: 0; }
+  .chat-input .btn { min-height: 48px; }
+  .skip-step { background: none; border: 0; color: var(--text-2); text-decoration: underline; cursor: pointer; font-size: 15px; justify-self: start; }
+
+  dialog { background: #1a1816; color: var(--bone); border: 1px solid var(--hairline); border-radius: 16px; padding: 26px; width: min(440px, calc(100% - 40px)); box-sizing: border-box; }
+  dialog::backdrop { background: rgba(0,0,0,.6); }
+  dialog form { display: grid; gap: 14px; }
+  dialog h2 { font: 700 24px/1.2 var(--body); }
+  dialog input { width: 100%; }
+  dialog .actions { justify-content: flex-end; }
+  .err { color: #ff8a80; font-size: 15px; }
+  .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--raised); border: 1px solid var(--hairline); color: var(--bone); padding: 12px 18px; border-radius: var(--control); font-size: 16px; z-index: 50; max-width: calc(100% - 40px); }
+
+  /* Privacy */
+  .legal { display: grid; gap: 18px; max-width: 740px; }
+  .legal h3 { font-size: 28px; margin-top: 12px; }
+  .legal p { color: var(--text-2); }
+
+  footer.site { border-top: 1px solid var(--hairline); padding-block: 36px 44px; margin-top: 40px; }
+  .foot { display: flex; flex-wrap: wrap; gap: 18px 28px; justify-content: space-between; align-items: center; font-size: 15px; color: var(--text-3); }
+  .foot .brand { margin-right: 0; }
+  .foot .brand img { width: 30px; }
+  .foot .brand span { font-size: 24px; }
+  .foot nav { display: flex; gap: 22px; flex-wrap: wrap; }
+  .foot a { color: var(--text-2); text-decoration: none; }
+  .foot a:hover { color: var(--bone); }
+
+  @media (max-width: 900px) {
+    .hero, .split, .burn, .plate, .plate.flip, .collections { grid-template-columns: 1fr; }
+    .hero, .split, .burn { gap: 44px; }
+    .plate.flip figure { order: 0; }
+    .facts, #more .facts { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .panel { grid-template-columns: 1fr; gap: 28px; }
+    .figure { max-width: 420px; }
+    .promise { grid-template-columns: 1fr 1fr; }
+    .promise div:nth-child(3) { padding-left: 0; border-left: 0; }
+    .promise div:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+    .principles div { grid-template-columns: 1fr; gap: 6px; }
+    .wall { padding: 170px 24px 48px; min-height: 0; background: linear-gradient(180deg, rgba(13,12,11,.35) 0%, rgba(13,12,11,.92) 55%), url("assets/lascaux-aurochs.jpg") center top / cover no-repeat; }
+    .pledge-band, .pledge-hero { grid-template-columns: 1fr; gap: 20px; }
+    .pledge-hero .big-ten { order: -1; }
+    .stage { max-width: 280px; }
+    .stage .phone { width: min(280px, 100%); }
+    .lockup { align-items: flex-start; }
+    .hero { min-height: 0; }
+    .wall.spirit { padding: 40px 24px 56px; background: linear-gradient(180deg, rgba(13,12,11,.7) 0%, rgba(13,12,11,.94) 50%), url("assets/lascaux-aurochs.jpg") 65% top / cover no-repeat; }
+    .wall-mark { position: relative !important; right: auto; top: auto; transform: none; width: 62%; max-width: 260px !important; justify-self: center; margin-bottom: 8px; }
+    .traits { grid-template-columns: 1fr; }
+    main { padding-block: 40px 24px; }
+    .view { gap: 88px; }
+    .search { flex: 1; width: auto; min-width: 0; }
+    .tools { width: 100%; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+    .plans, .trial, .flow, .legend, .facts, #more .facts { grid-template-columns: 1fr; }
+    .plate-out, .cal { padding: 16px; }
+    .plate { width: 14px; }
+    .ranks li { grid-template-columns: 92px 1fr 30px; }
+    .tabs button { padding: 12px 12px; font-size: 16px; }
+    .trial div { border-top: 0; border-left: 2px solid var(--raised); padding: 0 0 22px 22px; }
+    .trial div::before { top: 2px; left: -7px; }
+    .bar { gap: 16px; }
+    .bar .btn { display: none; }
+    nav.main { gap: 16px; }
+    nav.main a { font-size: 16px; }
+    .brand span { font-size: 26px; }
+    .brand img { width: 32px; }
+    .promise { grid-template-columns: 1fr; }
+    .promise div, .promise div + div { padding-left: 0; border-left: 0; }
+    .promise div + div { border-top: 1px solid var(--hairline); }
+    .rq { grid-template-columns: 62px 1fr; }
+    .rq-open { padding: 16px 16px 16px 14px; }
+    .rq-open strong { font-size: 18px; }
+    .board-cols { grid-auto-columns: 84%; }
+    .portal-tabs a { padding: 9px 12px; font-size: 15px; }
+  }
+  @media (max-width: 420px) {
+    .bar { gap: 12px; }
+    .brand { gap: 8px; }
+    header .brand span { display: none; }
+    nav.main { gap: 14px; }
+    nav.main a { font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .view:not([hidden]) { animation: rise .35s ease-out both; }
+    @keyframes rise { from { transform: translateY(8px); opacity: .6; } to { transform: none; opacity: 1; } }
+  }
+</style>
+<meta name="robots" content="noindex">
+<!-- Portfolio embed: a static snapshot of the TUR site. Server-backed parts (launch sign-up, feature requests, roadmap, help) are hidden. -->
+<style>
+  .launch, [data-portal-nav], footer.site nav a[href="#feedback"], footer.site nav a[href="#roadmap"], footer.site nav a[href="#help"] { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Shared ochre smear: a tapered brush stroke with a roughened edge. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="smear" viewBox="0 0 120 12">
+      <path fill="currentColor" d="M2 4.5 L4 4.7 L6 3.8 L8 3.8 L10 4.3 L12 4.2 L14 3.2 L16 3.5 L18 3.3 L20 2.9 L22 2.8 L24 3.5 L26 2.5 L28 2.9 L30 2.4 L32 3.2 L34 2.6 L36 2.2 L38 2.2 L40 3 L42 2.5 L44 2 L46 2.9 L48 1.9 L50 2.8 L52 2.4 L54 2.1 L56 2.3 L58 1.8 L60 2.6 L62 2.2 L64 2.8 L66 1.7 L68 2.1 L70 2 L72 2.1 L74 2.5 L76 2.7 L78 2.8 L80 2.5 L82 2.3 L84 2.6 L86 3.2 L88 2.6 L90 2.7 L92 2.6 L94 2.8 L96 3.7 L98 3.8 L100 3.6 L102 3.2 L104 3.9 L106 4.7 L108 3.7 L110 3.7 L112 4.1 L114 3.6 L116 4.3 L118 3.9 L118 6.8 L116 6.7 L114 6.4 L112 6.7 L110 6 L108 6.6 L106 6.4 L104 6.8 L102 6.7 L100 6.8 L98 8 L96 7.3 L94 7.3 L92 8.4 L90 8.3 L88 8.6 L86 8.3 L84 8.2 L82 8.8 L80 8.9 L78 9.1 L76 8.3 L74 8.5 L72 8.6 L70 9 L68 9.1 L66 9.5 L64 9.4 L62 9.2 L60 9.5 L58 9.2 L56 9.7 L54 9.6 L52 9 L50 9.2 L48 9.7 L46 10.1 L44 9.3 L42 9.6 L40 9 L38 9.6 L36 9.6 L34 9.6 L32 9.3 L30 9.4 L28 8.8 L26 8.8 L24 8.9 L22 9.3 L20 9.2 L18 9.5 L16 8.4 L14 8.7 L12 9.2 L10 8.3 L8 8.3 L6 8.1 L4 8.1 L2 8.2Z"/>
+      <path fill="currentColor" opacity=".55" d="M78 1.4 L80 1.5 L83 1.4 L86 1.3 L89 1.7 L92 1.2 L95 1.5 L98 1.7 L101 1.2 L104 1.5 L107 1.6 L110 1.2 L113 1.4 L116 1.6 L116 2.6 L113 2.5 L110 2.6 L107 2.3 L104 2.4 L101 2.3 L98 2.5 L95 2.7 L92 2.5 L89 2.6 L86 2.4 L83 2.6 L80 2.3Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<a class="skip" href="#content">Skip to content</a>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="TUR home"><img src="assets/tur-mark.png" alt=""><span>TUR</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#pledge">Pledge</a>
+      <a href="#feedback" data-portal-nav>Roadmap</a>
+    </nav>
+    <a class="btn btn-primary btn-small" data-store hidden>Download</a>
+  </div>
+</header>
+
+<main class="wrap" id="content" tabindex="-1">
+
+  <!-- PITCH -->
+  <section class="view" data-view="top" aria-label="TUR">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="kicker"><svg class="smear"><use href="#smear"/></svg>Workout &amp; Burn Tracker</div>
+        <div class="lockup">
+          <img class="hero-mark" src="assets/tur-mark.png" width="320" height="293" alt="The TUR mark: aurochs horns">
+          <h1>Strong as an ox.<br><em>Know what it burns.</em></h1>
+        </div>
+        <p class="lede">Every set logged. Every calorie counted.</p>
+        <div class="actions">
+          <a class="btn btn-primary" data-cta href="#pricing">See pricing <i class="chev"></i></a>
+          <button class="btn btn-ghost" type="button" data-scroll="burn">How it counts</button>
+        </div>
+        <div class="launch">
+          <div class="status-line" data-status>Coming soon to the App Store</div>
+          <form class="notify" data-prelaunch data-notify novalidate>
+            <div class="notify-row">
+              <label class="sr" for="notify-email">Email</label>
+              <input id="notify-email" type="email" autocomplete="email" placeholder="you@example.com">
+              <button class="btn btn-ghost btn-small" type="submit">Email me at launch</button>
+            </div>
+            <label class="beta"><input type="checkbox" id="notify-beta">I'd like to test an early build</label>
+            <p class="err" data-notify-err hidden></p>
+          </form>
+          <p class="muted small" data-notify-done hidden role="status"></p>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="phone demo" data-demo>
+          <div class="screen">
+            <img src="assets/app-today.jpg" width="863" height="1823" alt="TUR's Train screen: the next workout Upper + Easy Mile, one of three workouts done this week shown as handprints, a Start workout button and two starred routines.">
+            <!-- A short try-it loop over the real screenshot: start, log three sets, see the record. -->
+            <div class="scr train" data-scr="train">
+              <button class="hot" type="button" data-demo-start aria-label="Start workout: try logging a set"></button>
+              <img class="stamp" src="assets/hand-red.png" alt="" data-stamp hidden>
+              <div class="bubble" data-bubble>Tap <b>Start workout</b></div>
+            </div>
+            <div class="scr log" data-scr="log" hidden>
+              <div class="log-top"><span>IN PROGRESS</span><span class="num" data-clock>0:00</span></div>
+              <div class="log-title">Bench<br>press</div>
+              <div class="log-sub">Barbell · last time <b>160 × 3</b></div>
+              <ol class="sets" aria-label="Sets">
+                <li><span class="n">1</span><span class="v num"><b>135</b> lb × <b>8</b></span><button class="chk" type="button" aria-label="Log set 1: 135 lb for 8 reps"></button></li>
+                <li><span class="n">2</span><span class="v num"><b>155</b> lb × <b>5</b></span><button class="chk" type="button" aria-label="Log set 2: 155 lb for 5 reps"></button></li>
+                <li><span class="n">3</span><span class="v num"><b>165</b> lb × <b>3</b></span><button class="chk" type="button" aria-label="Log set 3: 165 lb for 3 reps"></button></li>
+              </ol>
+              <p class="log-hint" data-log-hint>Tap <i class="tick"></i> when the set's done</p>
+              <div class="rest" data-rest hidden>
+                <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><circle class="arc" cx="20" cy="20" r="17" pathLength="100" data-rest-arc/></svg>
+                <div><span>REST</span><b class="num" data-rest-time>1:30</b><small class="num">♥ 128 ↓ recovering</small></div>
+              </div>
+              <button class="finish" type="button" data-finish hidden>Finish workout</button>
+              <div class="live-burn"><span>Burn so far</span><b class="num"><span data-live-kcal>0</span> kcal</b></div>
+            </div>
+            <div class="scr done" data-scr="done" hidden>
+              <div class="saved">WORKOUT SAVED</div>
+              <div class="log-title">Bench<br>press</div>
+              <div class="pennant" aria-label="New personal record"><span>🏆</span>NEW PR</div>
+              <div class="compare" aria-hidden="true">
+                <div><span class="lbl">THIS SESSION</span><div class="cols"><i style="--h:.55"><em>135</em></i><i style="--h:.78"><em>155</em></i><i style="--h:1"><em>165</em></i></div></div>
+                <div class="prev"><span class="lbl">LAST TIME</span><div class="cols"><i style="--h:.55"><em>135</em></i><i style="--h:.7"><em>150</em></i><i style="--h:.9"><em>160</em></i></div></div>
+              </div>
+              <div class="gain">+5 lb on your top set</div>
+              <div class="kv"><span>Total volume</span><b class="num">2,350 lb</b></div>
+              <div class="kv"><span>Burn · sets + heart rate</span><b class="num">41 kcal</b></div>
+              <div class="next"><span>NEXT TIME</span><b class="num">170 lb × 3</b><small>Every set hit its reps, so the coach adds 5 lb.</small></div>
+              <button class="finish" type="button" data-back>Back to Train</button>
+            </div>
+          </div>
+        </div>
+        <div class="demo-bar">
+          <ol class="steps" aria-label="Try it">
+            <li data-step>Start</li><li data-step>Log sets</li><li data-step>See progress</li>
+          </ol>
+          <button class="replay" type="button" data-replay hidden>Replay</button>
+          <p class="sr" aria-live="polite" data-demo-status></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="burn">
+      <div class="burn">
+        <div class="copy">
+          <div class="kicker"><svg class="smear"><use href="#smear"/></svg>The burn</div>
+          <h2>Calories from what you actually did</h2>
+          <p class="lede">Sets, rest and walking, each counted on its own.</p>
+          <div class="sources" role="group" aria-label="What the estimate uses">
+            <button type="button" data-burn="sets" aria-pressed="false">Your sets only</button>
+            <button type="button" data-burn="hr" aria-pressed="true">Sets + heart rate</button>
+            <button type="button" data-burn="watch" aria-pressed="false">Sets + Garmin recording</button>
+          </div>
+        </div>
+        <div class="meter" aria-live="polite">
+          <div class="top"><span>Upper + Easy Mile · 58 min</span><span>Example</span></div>
+          <div class="kcal num"><span id="kcal">352</span><small>kcal</small></div>
+          <div class="source-line" id="kcal-source">Your heart rate, combined with your sets</div>
+          <div class="bars" id="kcal-bars" aria-hidden="true"></div>
+          <ul class="legend num" id="kcal-legend"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="split" id="watch">
+      <div class="watch" role="img" aria-label="TUR on a Garmin watch: bench press, 82.5 kg for 8 reps, set 2 of 3, 1:24 rest with heart rate 118 and falling">
+        <div class="ring"></div>
+        <div class="face">
+          <span class="ex">BENCH PRESS</span>
+          <span class="load num">82.5×8</span>
+          <span class="set">Set 2 of 3</span>
+          <span class="rest num">REST 1:24</span>
+          <span class="hr num">♥ 118 ↓</span>
+        </div>
+      </div>
+      <div class="section">
+        <div class="kicker"><svg class="smear"><use href="#smear"/></svg>On your wrist</div>
+        <h2>Your Garmin runs the session</h2>
+        <ul class="points">
+          <li><strong>Log sets from the watch</strong></li>
+          <li><strong>Rest ends when you've recovered</strong></li>
+          <li><strong>Saved to Garmin Connect</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="coach" id="coach">
+      <div class="coach-head">
+        <div class="kicker"><svg class="smear"><use href="#smear"/></svg>The coach</div>
+        <p class="muted">How did today go?</p>
+      </div>
+      <div class="flow">
+        <div class="step"><b>Last time</b><strong class="num">3 × 8</strong><span class="muted small">80 kg</span></div>
+        <div class="step"><b id="today-label">Today</b>
+          <div class="choices" role="group" aria-labelledby="today-label">
+            <button type="button" data-case="hit" aria-pressed="true">Hit every rep</button>
+            <button type="button" data-case="miss" aria-pressed="false">Missed a rep</button>
+            <button type="button" data-case="third" aria-pressed="false">Third miss</button>
+          </div>
+        </div>
+        <div class="step next" aria-live="polite"><b>Next time</b><strong class="num" id="coach-next">82.5 kg</strong><span class="small" id="coach-why">All reps done, so the load goes up.</span></div>
+      </div>
+    </div>
+
+    <div class="section" id="more">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>Also in TUR</div>
+      <div class="demos">
+        <div class="tabs" role="tablist" aria-label="Try a feature">
+          <button type="button" role="tab" id="tab-plates" aria-controls="tp-plates" aria-selected="true">Plates</button>
+          <button type="button" role="tab" id="tab-muscles" aria-controls="tp-muscles" aria-selected="false" tabindex="-1">Muscles</button>
+          <button type="button" role="tab" id="tab-calendar" aria-controls="tp-calendar" aria-selected="false" tabindex="-1">Calendar</button>
+          <button type="button" role="tab" id="tab-guides" aria-controls="tp-guides" aria-selected="false" tabindex="-1">Guides</button>
+        </div>
+
+        <div class="panel" role="tabpanel" id="tp-plates" aria-labelledby="tab-plates">
+          <div class="panel-copy">
+            <h3>Plate calculator</h3>
+            <p class="muted">Type the load. TUR works out the plates for each side of the bar, using the plates your gym has.</p>
+            <div class="units" role="group" aria-label="Units">
+              <button type="button" data-unit="kg" aria-pressed="true">kg</button>
+              <button type="button" data-unit="lb" aria-pressed="false">lb</button>
+            </div>
+            <div class="stepper">
+              <button type="button" data-step="-1" aria-label="Less weight">−</button>
+              <label class="sr" for="plate-target">Total weight</label>
+              <input id="plate-target" type="number" inputmode="decimal" min="0" value="100">
+              <span class="unit-label" data-unit-label>kg</span>
+              <button type="button" data-step="1" aria-label="More weight">+</button>
+            </div>
+            <div class="presets" data-presets></div>
+          </div>
+          <div class="plate-out" aria-live="polite">
+            <div class="barbell" data-barbell aria-hidden="true"></div>
+            <p class="plate-line" data-plate-line></p>
+            <p class="small muted" data-plate-note></p>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="tp-muscles" aria-labelledby="tab-muscles" hidden>
+          <div class="panel-copy">
+            <h3>Muscle map</h3>
+            <p class="muted">Every set counts toward the muscles it works. See where the week went, and what got less.</p>
+            <div class="chips" role="group" aria-label="Example workout">
+              <button type="button" data-load="push" aria-pressed="false">Push day</button>
+              <button type="button" data-load="pull" aria-pressed="false">Pull day</button>
+              <button type="button" data-load="legs" aria-pressed="false">Leg day</button>
+              <button type="button" data-load="week" aria-pressed="true">Full week</button>
+            </div>
+            <ol class="ranks" data-ranks aria-label="Working sets per muscle"></ol>
+            <p class="small muted" data-least></p>
+          </div>
+          <div class="figure" data-body="load" role="img" aria-label="Front and back body figure, shaded by working sets"></div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="tp-calendar" aria-labelledby="tab-calendar" hidden>
+          <div class="panel-copy">
+            <h3>Training calendar</h3>
+            <p class="muted">Each day is coloured by the kind of session. Tap one to see what you did.</p>
+            <ul class="cal-legend" data-cal-legend></ul>
+            <div class="cal-day" data-cal-day aria-live="polite"></div>
+          </div>
+          <div class="cal">
+            <div class="cal-head"><strong>Example month</strong><span class="small muted" data-cal-total></span></div>
+            <div class="cal-grid" data-cal-grid role="grid" aria-label="Example month of workouts"></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="tp-guides" aria-labelledby="tab-guides" hidden>
+          <div class="panel-copy">
+            <h3>Exercise guides</h3>
+            <p class="muted">Short cues for the lift in front of you, and the muscles it works.</p>
+            <div class="chips" role="group" aria-label="Exercise">
+              <button type="button" data-guide="squat" aria-pressed="true">Back squat</button>
+              <button type="button" data-guide="bench" aria-pressed="false">Bench press</button>
+              <button type="button" data-guide="rdl" aria-pressed="false">Romanian deadlift</button>
+              <button type="button" data-guide="pullup" aria-pressed="false">Pull-up</button>
+            </div>
+            <ol class="cues" data-cues></ol>
+            <p class="small muted guide-key"><span><i class="key main"></i>Main: <span data-guide-main></span></span><span><i class="key second"></i>Also works: <span data-guide-second></span></span></p>
+          </div>
+          <div class="figure" data-body="guide" role="img" aria-label="Front and back body figure showing the muscles this exercise works"></div>
+        </div>
+      </div>
+
+      <div class="facts">
+        <div><strong>Race mode</strong><span>Station splits for hybrid races, with a live gap to your last attempt.</span></div>
+        <div><strong>Gym swap</strong><span>Save each gym's equipment. Anything missing gets the closest substitute.</span></div>
+        <div><strong>Progress photos</strong><span>Private and week by week, beside your bodyweight and training.</span></div>
+        <div><strong>Year in Iron</strong><span>A shareable recap of your training year, made on your phone.</span></div>
+      </div>
+    </div>
+
+    <div class="promise" aria-label="What TUR promises">
+      <div><strong>No account</strong></div>
+      <div><strong>No ads</strong></div>
+      <div><strong>Works offline</strong></div>
+      <div><strong>Export anytime</strong></div>
+    </div>
+
+    <div class="wall spirit">
+      <img class="wall-mark" src="assets/tur-mark-ochre.png" width="720" height="660" alt="The TUR mark: aurochs horns in red ochre">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>The spirit of the ox</div>
+      <h2>Strength that outlasts</h2>
+      <p class="lede">Built to carry weight, not to pose.</p>
+      <div class="traits">
+        <div><img class="hand" src="assets/hand-red.png" width="64" height="70" alt=""><strong>Show up</strong></div>
+        <div><img class="hand" src="assets/hand-red.png" width="64" height="70" alt=""><strong>Carry real weight</strong></div>
+        <div><img class="hand" src="assets/hand-red.png" width="64" height="70" alt=""><strong>Outlast</strong></div>
+      </div>
+      <span class="credit">Lascaux cave. Photo: Prof saxx, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span>
+    </div>
+
+    <div class="pledge-band">
+      <div class="big-ten num" aria-hidden="true">10<span>%</span></div>
+      <div class="pledge-copy">
+        <div class="kicker"><svg class="smear"><use href="#smear"/></svg>The pledge</div>
+        <h2>10% of our profits bring the aurochs back</h2>
+        <p class="lede">Every subscription helps return Europe's wild ox to the wild.</p>
+        <div class="actions"><a class="btn btn-primary" href="#pledge">See the pledge <i class="chev"></i></a><a class="btn btn-ghost" href="#about">Why TUR is named after it</a></div>
+      </div>
+    </div>
+
+    <a class="next-step" href="#pricing"><div><span class="kicker">Next</span><strong>Pricing</strong><span class="muted">One price, free trial.</span></div><span class="arrow">→</span></a>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="view" data-view="about" aria-label="About" hidden>
+    <div class="head">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>About</div>
+      <h1>Named after the wild ox</h1>
+      <div class="word"><strong>ТУР · TUR</strong><span>the aurochs, <i>Bos primigenius</i></span></div>
+      <p class="founder">"I'm an American developer, Bulgarian by nationality. When this app needed a name, I went back to my roots and found the тур: the aurochs, the wild ox that once roamed Bulgaria's forests."</p>
+    </div>
+
+    <div class="plate">
+      <figure>
+        <img src="assets/lascaux-aurochs.jpg" width="720" height="472" alt="Cave painting of two large aurochs with horses and deer, in black and red ochre" loading="lazy">
+        <figcaption class="credit">Lascaux cave, France, about 17,000 years ago. Photo: Prof saxx, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Lascaux_painting.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption>
+      </figure>
+      <div class="text">
+        <h3>The ancestor of all cattle</h3>
+        <p>Bulls stood up to 1.8 metres at the shoulder. People painted them in red ochre, the same pigment as the TUR mark.</p>
+      </div>
+    </div>
+
+    <div class="plate flip">
+      <figure>
+        <img src="assets/harder-aurochs.jpg" width="900" height="561" alt="Painting of an aurochs bull in the snow, fending off a pack of wolves" loading="lazy">
+        <figcaption class="credit">Aurochs attacked by wolves. Heinrich Harder, about 1920. Public domain.</figcaption>
+      </figure>
+      <div class="text">
+        <h3>It may have held on longest in Bulgaria</h3>
+        <p>The last aurochs is usually said to have died in Poland in 1627. A horn core dug up in Sofia in 2020 dates from as late as the early 1700s.</p>
+      </div>
+    </div>
+
+    <div class="wall">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>The pledge <span class="tbc">Partner to be confirmed</span></div>
+      <h2>10% of profits go to the aurochs</h2>
+      <p class="muted">Each year a tenth of TUR's profit funds aurochs rewilding, and the amount and receipt are published.</p>
+      <div class="actions"><a class="btn btn-ghost" href="#pledge">See the pledge</a></div>
+      <span class="credit">Lascaux cave. Photo: Prof saxx, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span>
+    </div>
+
+    <div class="section">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>How we build it</div>
+      <div class="principles">
+        <div><strong>Show the working</strong><p>Every calorie and every suggestion says where it came from.</p></div>
+        <div><strong>Your data is yours</strong><p>Offline first, no trackers, full exports never behind a paywall.</p></div>
+        <div><strong>Build in the open</strong><p>Requests and plans are public, and you vote on what comes next.</p></div>
+      </div>
+    </div>
+
+    <div class="refs credit">
+      <span>Boev, Z. (2021). The last Bos primigenius survived in Bulgaria. Lynx, n.s. 52: 139–142.</span>
+      <span>Ivanova, S. et al. (2016). Magura Cave, Bulgaria. Quaternary International 415: 86–108.</span>
+    </div>
+
+    <a class="next-step" href="#pricing"><div><span class="kicker">Next</span><strong>Pricing</strong><span class="muted">One price, every feature, free trial.</span></div><span class="arrow">→</span></a>
+  </section>
+
+  <!-- PLEDGE -->
+  <section class="view" data-view="pledge" aria-label="The pledge" hidden>
+    <div class="pledge-hero">
+      <div class="head">
+        <div class="kicker"><svg class="smear"><use href="#smear"/></svg><span>The pledge <span class="tbc">Partner to be confirmed</span></span></div>
+        <h1>10% of profits bring the aurochs back</h1>
+        <p class="lede">TUR is named after the aurochs, Europe's wild ox. It was hunted until none were left. Now it's coming back, and part of every subscription helps.</p>
+      </div>
+      <div class="big-ten num" aria-hidden="true">10<span>%</span></div>
+    </div>
+
+    <div class="plate">
+      <figure>
+        <img src="assets/harder-aurochs.jpg" width="900" height="561" alt="Painting of an aurochs bull in the snow, fending off a pack of wolves" loading="lazy">
+        <figcaption class="credit">Aurochs attacked by wolves. Heinrich Harder, about 1920. Public domain.</figcaption>
+      </figure>
+      <div class="text">
+        <h2>Why bring it back</h2>
+        <p>Big wild grazers like the aurochs keep meadows and forest edges open, which lets many other plants and animals live there. Without them, landscapes grow over.</p>
+        <p>Rewilding groups are breeding cattle that look and live like the aurochs from old breeds such as the Maronesa and Sayaguesa, then releasing them into wild landscapes.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>How it works</div>
+      <div class="trial pledge-steps">
+        <div><img class="hand" src="assets/hand-red.png" width="64" height="70" alt=""><strong>You train with TUR</strong><span>Your subscription keeps the app running.</span></div>
+        <div><img class="hand" src="assets/hand-grey.png" width="64" height="70" alt=""><strong>We set aside 10%</strong><span>A tenth of each year's profit.</span></div>
+        <div><img class="hand" src="assets/hand-grey.png" width="64" height="70" alt=""><strong>We give it and show it</strong><span>The amount and the receipt go on this page.</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>Where it goes</div>
+      <div class="split" style="align-items:start">
+        <div class="head" style="gap:14px">
+          <h3>Aurochs rewilding</h3>
+          <p class="muted">The partner will be confirmed before the first payment. The leading candidate is the Tauros Programme, run by the Taurus Foundation with Rewilding Europe and the Ark foundation.</p>
+          <p><a href="https://rewildingeurope.com/rewilding-in-action/wildlife-comeback/tauros/" target="_blank" rel="noopener">About the Tauros Programme ↗</a></p>
+        </div>
+        <div class="ledger-wrap">
+          <table class="ledger">
+            <caption class="label">The ledger</caption>
+            <thead><tr><th scope="col">Year</th><th scope="col">Given</th><th scope="col">To</th><th scope="col">Receipt</th></tr></thead>
+            <tbody><tr><td class="num">First year</td><td colspan="3" class="muted">Starts when TUR launches on the App Store</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <a class="next-step" href="#pricing"><div><span class="kicker">Next</span><strong>Pricing</strong><span class="muted">One price, every feature, free trial.</span></div><span class="arrow">→</span></a>
+  </section>
+
+  <!-- PRICING -->
+  <section class="view" data-view="pricing" aria-label="Pricing" hidden>
+    <div class="head">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg><span>Pricing <span class="tbc" data-price-note>Launch prices not final</span></span></div>
+      <h1>One app, one price</h1>
+      <p class="lede">Every feature, no ads, no free tier. Try it free for <span data-trial>14</span> days.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan best">
+        <span class="tag" data-save>Save 44%</span>
+        <div class="plan-name">Yearly</div>
+        <div class="price"><b class="num" data-yearly>$39.99</b><span>/ year</span></div>
+        <ul>
+          <li><span class="num" data-per-month>$3.33</span> a month</li>
+          <li>Launch price kept while you stay subscribed</li>
+        </ul>
+        <p class="fine" data-prelaunch>Available at App Store launch</p>
+        <a class="btn btn-primary" data-store hidden>Start free trial</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Monthly</div>
+        <div class="price"><b class="num" data-monthly>$5.99</b><span>/ month</span></div>
+        <ul>
+          <li>Cancel any time</li>
+          <li>Switch to yearly whenever you like</li>
+        </ul>
+        <p class="fine" data-prelaunch>Available at App Store launch</p>
+        <a class="btn btn-ghost" data-store hidden>Start free trial</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>How the free trial works</div>
+      <div class="trial">
+        <div><b>Today</b><strong>Start free</strong><span>The full app.</span></div>
+        <div><b>Before day <span data-trial>14</span></b><strong>Decide</strong><span>Cancel in iPhone Settings and pay nothing.</span></div>
+        <div><b>Day <span data-trial>14</span></b><strong>Plan starts</strong><span>Monthly or yearly.</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg>Questions</div>
+      <div class="faq">
+        <details><summary>What happens to my data if I cancel?</summary><p>It stays on your iPhone, and you can still export all of it.</p></details>
+        <details><summary>Why is there no free version?</summary><p>A free tier gets paid for with ads or your data. We'd rather you pay us, and 10% of the profit goes to aurochs rewilding.</p></details>
+        <details><summary>Do I need a Garmin watch?</summary><p>No. TUR works on the iPhone alone. A watch adds wrist logging and heart-rate calories.</p></details>
+      </div>
+    </div>
+
+    <a class="next-step" href="#help"><div><span class="kicker">Still have a question?</span><strong>Help center</strong><span class="muted">Answers, and a way to reach us.</span></div><span class="arrow">→</span></a>
+  </section>
+
+  <!-- FEEDBACK PORTAL: #feedback (feature requests, also the App Store support URL), #roadmap, #help.
+       Requests, votes and comments come from /api (worker.js). -->
+  <section class="view portal" data-view="feedback" aria-label="Feature requests" hidden>
+    <nav class="portal-tabs" aria-label="Feedback"><a href="#feedback" aria-current="page">Feature requests</a><a href="#roadmap">Roadmap</a><a href="#help">Help center</a></nav>
+    <h1 class="portal-title">Feature requests</h1>
+    <div class="toolbar">
+      <div class="sort" role="group" aria-label="Sort">
+        <button type="button" data-sort="top" aria-pressed="true">Most votes</button>
+        <button type="button" data-sort="new" aria-pressed="false">Recent</button>
+      </div>
+      <div class="tools">
+        <input class="search" id="rq-search" type="search" placeholder="Search…" aria-label="Search feature requests">
+        <button class="btn btn-primary btn-small" type="button" data-request>+ Request a feature</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <select class="tagsel" id="rq-tag" aria-label="Filter by tag"><option value="">All tags</option></select>
+      <span class="who" data-who hidden>Voting as <span data-who-email></span> · <button type="button" data-forget>Change</button></span>
+    </div>
+    <p class="state" data-board-state role="status">Loading requests…</p>
+    <ol class="rq-list" id="rq-list"></ol>
+  </section>
+
+  <section class="view portal" data-view="roadmap" aria-label="Roadmap" hidden>
+    <nav class="portal-tabs" aria-label="Feedback"><a href="#feedback">Feature requests</a><a href="#roadmap" aria-current="page">Roadmap</a><a href="#help">Help center</a></nav>
+    <div class="toolbar">
+      <div class="head" style="gap:10px"><h1 class="portal-title">Roadmap</h1><p class="muted">See what we're working on and what's coming next.</p></div>
+      <input class="search" id="rm-search" type="search" placeholder="Search…" aria-label="Search the roadmap">
+    </div>
+    <p class="state" data-board-state role="status">Loading the roadmap…</p>
+    <div class="board-cols" id="board-cols"></div>
+  </section>
+
+  <section class="view portal" data-view="help" aria-label="Help center" hidden>
+    <nav class="portal-tabs" aria-label="Feedback"><a href="#feedback">Feature requests</a><a href="#roadmap">Roadmap</a><a href="#help" aria-current="page">Help center</a></nav>
+    <div class="help-hero">
+      <h2>Find answers to your questions</h2>
+      <input id="help-search" type="search" placeholder="Search for help" aria-label="Search for help">
+    </div>
+    <p class="state" id="help-empty" role="status" hidden>No articles match that. Try another word, or email us below.</p>
+    <div class="collections" id="collections"></div>
+    <div class="contact">
+      <strong>Still stuck?</strong>
+      <span class="muted">Email</span><span class="addr" data-email>supporttur@gmail.com</span>
+      <button class="btn btn-ghost btn-small" type="button" id="copy-email">Copy address</button>
+      <a class="btn btn-ghost btn-small" data-discord hidden>Ask in Discord</a>
+    </div>
+  </section>
+
+  <!-- PRIVACY: linked from the footer; App Store Connect needs a public URL. -->
+  <section class="view" data-view="privacy" aria-label="Privacy" hidden>
+    <div class="legal">
+      <div class="kicker"><svg class="smear"><use href="#smear"/></svg><span>Privacy <span class="tbc">Draft · final policy at release</span></span></div>
+      <h1>Your training stays on your phone</h1>
+      <p>TUR has no user account, no advertising SDK and no analytics service. Workouts, notes, bodyweight and progress photos are stored on your iPhone.</p>
+      <h3>Exercise media</h3>
+      <p>Bundled exercise images open offline. When you ask for more images or a video, the provider receives ordinary request details such as your IP address. Your workout log is never sent.</p>
+      <h3>Apple Health and Garmin</h3>
+      <p>Both are optional. TUR reads and writes only what you allow, and nothing is uploaded to us.</p>
+      <h3>Exports and backups</h3>
+      <p>Exports go only where you send them. Full backups include private notes and photos, so keep them somewhere you control.</p>
+      <h3>This website</h3>
+      <p>Voting, commenting and requesting features need your email, so each person gets one vote and hears from us when a request ships. Your email is never shown; comments show only its first letter. To limit abuse we count actions per scrambled IP address for 24 hours.</p>
+      <p>If you ask to hear about the launch or to test an early build, we use your email for that and nothing else.</p>
+      <h3>Contact</h3>
+      <p>Questions about privacy: <span data-email>supporttur@gmail.com</span></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <a class="brand" href="#top" aria-label="TUR home"><img src="assets/tur-mark.png" alt=""><span>TUR</span></a>
+    <span>© <span id="yr">2026</span> · 10% of profits to aurochs rewilding</span>
+    <nav aria-label="Footer">
+      <a href="#about">About</a><a href="#pricing">Pricing</a><a href="#pledge">The pledge</a><a href="#feedback">Feature requests</a><a href="#roadmap">Roadmap</a><a href="#help">Help</a><a href="#privacy">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Drawer shared by request details, the request chat and help articles. -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+  <div class="drawer-top"><h2 id="drawer-title"></h2><button class="x" type="button" id="drawer-close" aria-label="Close">×</button></div>
+  <div class="drawer-body" id="drawer-body"></div>
+  <div class="drawer-foot" id="drawer-foot" hidden></div>
+</aside>
+
+<dialog id="email-dialog" aria-labelledby="email-title">
+  <form method="dialog" id="email-form" novalidate>
+    <h2 id="email-title">Enter your email to upvote</h2>
+    <p class="muted" id="email-why"></p>
+    <label class="sr" for="email-input">Email</label>
+    <input id="email-input" type="email" autocomplete="email" placeholder="you@example.com" required>
+    <p class="err" id="email-err" hidden></p>
+    <div class="actions">
+      <button class="btn btn-ghost btn-small" type="button" id="email-cancel">Cancel</button>
+      <button class="btn btn-primary btn-small" type="submit" id="email-ok">Upvote</button>
+    </div>
+  </form>
+</dialog>
+
+<p class="toast" id="toast" role="status" hidden></p>
+
+<script>
+  // Everything the owner edits before launch lives here.
+  const SITE = {
+    appStoreUrl: null,              // e.g. "https://apps.apple.com/app/id123"; shows the download buttons
+    discordUrl: null,               // Discord invite; the Discord button stays hidden until it's set
+    supportEmail: "supporttur@gmail.com",
+    prices: { monthly: 5.99, yearly: 39.99, currency: "$", final: false },
+    trialDays: 14,
+  };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const money = n => SITE.prices.currency + n.toFixed(2);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Config into the page
+  $$("[data-monthly]").forEach(e => e.textContent = money(SITE.prices.monthly));
+  $$("[data-yearly]").forEach(e => e.textContent = money(SITE.prices.yearly));
+  $$("[data-per-month]").forEach(e => e.textContent = money(SITE.prices.yearly / 12));
+  $$("[data-save]").forEach(e => e.textContent = "Save " + Math.round((1 - SITE.prices.yearly / (SITE.prices.monthly * 12)) * 100) + "%");
+  $$("[data-trial]").forEach(e => e.textContent = SITE.trialDays);
+  $$("[data-email]").forEach(e => e.textContent = SITE.supportEmail);
+  if (SITE.prices.final) $$("[data-price-note]").forEach(e => e.hidden = true);
+  if (SITE.discordUrl) $$("[data-discord]").forEach(a => { a.href = SITE.discordUrl; a.target = "_blank"; a.rel = "noopener"; a.hidden = false; });
+  if (SITE.appStoreUrl) {
+    $$("[data-cta]").forEach(a => { a.href = SITE.appStoreUrl; a.firstChild.textContent = "Download on the App Store "; a.target = "_blank"; a.rel = "noopener"; });
+    $$("[data-store]").forEach(a => { a.href = SITE.appStoreUrl; a.target = "_blank"; a.rel = "noopener"; a.hidden = false; });
+    $$("[data-prelaunch]").forEach(e => e.hidden = true);
+    $$("[data-status]").forEach(e => e.textContent = "On the App Store");
+  }
+  $("#yr").textContent = new Date().getFullYear();
+
+  function toast(text) {
+    const t = $("#toast"); t.textContent = text; t.hidden = false;
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => t.hidden = true, 3800);
+  }
+
+  // In-page jumps (buttons, so the hash keeps choosing the page).
+  $$("[data-scroll]").forEach(b => b.addEventListener("click", () => $("#" + b.dataset.scroll).scrollIntoView({ behavior: reduced ? "auto" : "smooth" })));
+
+  // Burn demo: one example session, estimated three ways, with the app's own source labels.
+  const BURN_SPLIT = [["Back squat", .38, "#e8412f"], ["Bench press", .24, "#e0703a"], ["Easy mile", .22, "#e8a55c"], ["Seated row", .16, "#d9c39a"]];
+  const BURN = {
+    sets:  { kcal: 310, source: "Estimated from your sets" },
+    hr:    { kcal: 352, source: "Your heart rate, combined with your sets" },
+    watch: { kcal: 347, source: "Your watch's recording, combined with your sets" },
+  };
+  $("#kcal-bars").innerHTML = BURN_SPLIT.map(([, share, color]) => `<span style="flex-grow:${share};background:${color}"></span>`).join("");
+  function showBurn(key) {
+    const b = BURN[key];
+    $$("[data-burn]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.burn === key)));
+    $("#kcal-source").textContent = b.source;
+    $("#kcal-legend").innerHTML = BURN_SPLIT.map(([name, share, color]) =>
+      `<li><span><i style="background:${color}"></i>${name}</span><b>${Math.round(b.kcal * share)}</b></li>`).join("");
+    const el = $("#kcal"), from = Number(el.textContent) || b.kcal, start = performance.now();
+    if (reduced) { el.textContent = b.kcal; return; }
+    (function tick(now) {
+      const t = Math.min(1, (now - start) / 450);
+      el.textContent = Math.round(from + (b.kcal - from) * (1 - (1 - t) ** 3));
+      if (t < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+  $$("[data-burn]").forEach(b => b.addEventListener("click", () => showBurn(b.dataset.burn)));
+  showBurn("hr");
+
+  // Try-it phone: tap Start, log three bench sets, see the record, and the week's next handprint.
+  (() => {
+    const demo = $("[data-demo]"); if (!demo) return;
+    const screens = Object.fromEntries($$("[data-scr]", demo).map(e => [e.dataset.scr, e]));
+    const steps = $$("[data-step]"), rows = $$(".sets li", demo), status = $("[data-demo-status]");
+    const rest = $("[data-rest]", demo), arc = $("[data-rest-arc]", demo), restTime = $("[data-rest-time]", demo);
+    const kcalEl = $("[data-live-kcal]", demo), clock = $("[data-clock]", demo);
+    const SET_KCAL = [12, 14, 15];
+    let logged = 0, kcal = 0, started = 0, clockTimer = 0, restFrame = 0;
+
+    function show(name, step, message) {
+      Object.entries(screens).forEach(([key, el]) => el.hidden = key !== name);
+      steps.forEach((li, i) => { li.classList.toggle("now", i === step); li.classList.toggle("did", i < step); });
+      if (message) status.textContent = message;
+    }
+    function countTo(target) {
+      const from = kcal, start = performance.now(); kcal = target;
+      if (reduced) { kcalEl.textContent = target; return; }
+      (function tick(now) {
+        const t = Math.min(1, (now - start) / 600);
+        kcalEl.textContent = Math.round(from + (target - from) * (1 - (1 - t) ** 3));
+        if (t < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+    function activate() {
+      rows.forEach((li, i) => {
+        li.classList.toggle("done", i < logged); li.classList.toggle("active", i === logged);
+        $(".chk", li).disabled = i !== logged;
+      });
+    }
+    // A 1:30 rest shown in about two seconds; the next set can be logged any time.
+    function runRest() {
+      cancelAnimationFrame(restFrame); rest.hidden = false;
+      const start = performance.now(), length = reduced ? 1 : 2200;
+      (function tick(now) {
+        const t = Math.min(1, (now - start) / length), left = Math.round(90 * (1 - t));
+        restTime.textContent = Math.floor(left / 60) + ":" + String(left % 60).padStart(2, "0");
+        arc.style.strokeDashoffset = String(100 * t);
+        if (t < 1) restFrame = requestAnimationFrame(tick);
+      })(start);
+    }
+    function reset() {
+      logged = 0; kcal = 0; kcalEl.textContent = "0"; clock.textContent = "0:00";
+      clearInterval(clockTimer); cancelAnimationFrame(restFrame);
+      rest.hidden = true; $("[data-finish]", demo).hidden = true;
+      $("[data-stamp]", demo).hidden = true; $("[data-replay]").hidden = true;
+      $("[data-bubble]", demo).innerHTML = "Tap <b>Start workout</b>";
+      $("[data-bubble]", demo).classList.remove("at-hands");
+      $("[data-log-hint]", demo).hidden = false;
+      $("[data-demo-start]", demo).hidden = false;
+      activate(); show("train", 0);
+    }
+
+    $("[data-demo-start]", demo).addEventListener("click", () => {
+      started = Date.now(); clockTimer = setInterval(() => {
+        const s = Math.floor((Date.now() - started) / 1000); clock.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+      }, 1000);
+      show("log", 1, "Workout started. Log set 1: 135 pounds for 8.");
+      $(".chk", rows[0]).focus({ preventScroll: true });
+    });
+    rows.forEach((li, i) => $(".chk", li).addEventListener("click", () => {
+      if (i !== logged) return;
+      logged += 1; activate(); countTo(kcal + SET_KCAL[i]);
+      $("[data-log-hint]", demo).hidden = true;
+      if (logged < rows.length) {
+        runRest(); status.textContent = `Set ${i + 1} logged. Resting.`;
+        $(".chk", rows[logged]).focus({ preventScroll: true });
+      } else {
+        cancelAnimationFrame(restFrame); rest.hidden = true;
+        const finish = $("[data-finish]", demo); finish.hidden = false; finish.focus({ preventScroll: true });
+        status.textContent = "All three sets logged.";
+      }
+    }));
+    $("[data-finish]", demo).addEventListener("click", () => {
+      clearInterval(clockTimer);
+      show("done", 2, "Workout saved. New personal record: 165 pounds, 5 more than last time.");
+      $("[data-back]", demo).focus({ preventScroll: true });
+    });
+    $("[data-back]", demo).addEventListener("click", () => {
+      show("train", 3, "Back on Train: two of three workouts this week.");
+      $("[data-demo-start]", demo).hidden = true;
+      $("[data-stamp]", demo).hidden = false;
+      $("[data-bubble]", demo).innerHTML = "<b>2 of 3</b> workouts this week";
+      $("[data-bubble]", demo).classList.add("at-hands");
+      const replay = $("[data-replay]"); replay.hidden = false;
+    });
+    $("[data-replay]").addEventListener("click", () => { reset(); $("[data-demo-start]", demo).focus({ preventScroll: true }); });
+    reset();
+  })();
+
+  // Launch list: stored by the Worker; the form is hidden once the App Store link is set.
+  $("[data-notify]").addEventListener("submit", async e => {
+    e.preventDefault();
+    const form = e.currentTarget, err = $("[data-notify-err]"), email = $("#notify-email").value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = "Enter a full email address, like you@example.com."; err.hidden = false; $("#notify-email").focus(); return; }
+    const beta = $("#notify-beta").checked, button = $("button", form);
+    err.hidden = true; button.disabled = true;
+    try {
+      await api("notify", { method: "POST", body: JSON.stringify({ email, beta }) });
+      form.hidden = true;
+      const done = $("[data-notify-done]"); done.hidden = false;
+      done.textContent = beta ? `Thanks. We'll email ${email} about testing an early build, and again at launch.` : `Thanks. We'll email ${email} when TUR is on the App Store.`;
+    } catch (error) { err.textContent = error.message; err.hidden = false; button.disabled = false; }
+  });
+
+  // ---------- Also in TUR: tabbed demos (example data only) ----------
+  (() => {
+    const tabs = $$('#more [role="tab"]');
+    const select = tab => {
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+        $("#" + t.getAttribute("aria-controls")).hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t));
+      t.addEventListener("keydown", e => {
+        const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!step) return;
+        e.preventDefault(); const next = tabs[(i + step + tabs.length) % tabs.length]; select(next); next.focus();
+      });
+    });
+
+    // Plate calculator: the app's default racks (GymCore PlateStock.standard) and its colours, largest first.
+    const RACK = {
+      kg: { bar: 20, step: 2.5, plates: [[25, 2], [20, 1], [15, 1], [10, 2], [5, 1], [2.5, 1], [1.25, 1]], presets: [60, 80, 100, 140] },
+      lb: { bar: 45, step: 5, plates: [[45, 2], [35, 1], [25, 1], [10, 2], [5, 1], [2.5, 1]], presets: [135, 185, 225, 315] },
+    };
+    const PLATE_COLORS = ["#1860a8", "#bc4343", "#d2a842", "#30875a", "#6d7276", "#5f6469", "#5f6469"];
+    const fmt = n => String(Math.round(n * 100) / 100);
+    let unit = "kg";
+    // Every combination the rack allows (a few hundred at most): closest total, then fewest plates.
+    function plan(target, rack) {
+      let best = null;
+      (function walk(i, used, side) {
+        if (i === rack.plates.length) {
+          const total = rack.bar + 2 * side, count = used.reduce((a, b) => a + b, 0), gap = Math.abs(total - target);
+          // Closest first, then the lighter of two equally close loads, then fewer plates.
+          const better = !best || gap < best.gap - 1e-9 || (gap < best.gap + 1e-9 && (total < best.total - 1e-9 || (total < best.total + 1e-9 && count < best.count)));
+          if (better) best = { total, gap, count, used: [...used] };
+          return;
+        }
+        const [size, pairs] = rack.plates[i];
+        for (let n = 0; n <= pairs; n++) { used.push(n); walk(i + 1, used, side + n * size); used.pop(); }
+      })(0, [], 0);
+      return best;
+    }
+    function renderPlates() {
+      const rack = RACK[unit], input = $("#plate-target");
+      const target = Math.max(0, Number(input.value) || 0);
+      const best = plan(target, rack);
+      const perSide = [];
+      best.used.forEach((n, i) => { for (let k = 0; k < n; k++) perSide.push(i); });
+      const largest = rack.plates[0][0];
+      const plateHTML = i => { const size = rack.plates[i][0];
+        return `<div class="plate" style="height:${Math.round(150 * (0.53 + 0.47 * Math.sqrt(size / largest)))}px;background:${PLATE_COLORS[i]}"><span>${fmt(size)}</span></div>`; };
+      const side = cls => `<div class="side ${cls}">${perSide.map(plateHTML).join("")}</div>`;
+      $("[data-barbell]").innerHTML = `<div class="sleeve"></div>${side("left")}<div class="collar"></div><div class="shaft"></div><div class="collar"></div>${side("right")}<div class="sleeve"></div>`;
+      const names = perSide.map(i => fmt(rack.plates[i][0]));
+      $("[data-plate-line]").innerHTML = target < rack.bar ? `Use at least the bar, <b>${rack.bar} ${unit}</b>.`
+        : perSide.length ? `Each side: <b>${names.join(" + ")}</b>` : `Just the bar: <b>${rack.bar} ${unit}</b>`;
+      const diff = best.total - target;
+      $("[data-plate-note]").textContent = target < rack.bar ? "" : Math.abs(diff) < 0.005
+        ? `${fmt(best.total)} ${unit} with a ${rack.bar} ${unit} bar and ${best.count * 2} plates.`
+        : `Closest with these plates: ${fmt(best.total)} ${unit} (${diff > 0 ? "+" : ""}${fmt(diff)} ${unit}).`;
+    }
+    function setUnit(next) {
+      if (next === unit) return;
+      const input = $("#plate-target"), kg = unit === "kg" ? Number(input.value) : Number(input.value) / 2.20462;
+      unit = next;
+      // The physical load carries over; it isn't just relabelled.
+      const value = unit === "kg" ? kg : kg * 2.20462, step = RACK[unit].step;
+      input.value = fmt(Math.round(value / step) * step);
+      $$("[data-unit]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.unit === unit)));
+      $("[data-unit-label]").textContent = unit;
+      $("[data-presets]").innerHTML = RACK[unit].presets.map(v => `<button type="button" data-preset="${v}">${v} ${unit}</button>`).join("");
+      renderPlates();
+    }
+    $$("[data-unit]").forEach(b => b.addEventListener("click", () => setUnit(b.dataset.unit)));
+    $$("[data-step]").forEach(b => b.addEventListener("click", () => {
+      const input = $("#plate-target"), step = RACK[unit].step;
+      input.value = fmt(Math.max(0, Math.round(((Number(input.value) || 0) + step * Number(b.dataset.step)) / step) * step)); renderPlates();
+    }));
+    $("#plate-target").addEventListener("input", renderPlates);
+    $("[data-presets]").addEventListener("click", e => { const b = e.target.closest("[data-preset]"); if (b) { $("#plate-target").value = b.dataset.preset; renderPlates(); } });
+    $("[data-presets]").innerHTML = RACK.kg.presets.map(v => `<button type="button" data-preset="${v}">${v} kg</button>`).join("");
+    renderPlates();
+
+    // Muscle map and guides share one body figure (MIT artwork, see render-body-map.py).
+    const MUSCLE = { chest: "Chest", deltoids: "Shoulders", triceps: "Triceps", biceps: "Biceps", forearm: "Forearms", trapezius: "Traps",
+      "upper-back": "Upper back", "lower-back": "Lower back", abs: "Abs", obliques: "Obliques", quadriceps: "Quads", hamstring: "Hamstrings",
+      gluteal: "Glutes", calves: "Calves", adductors: "Adductors", tibialis: "Shins" };
+    const LOADS = {
+      push: { chest: 9, deltoids: 6, triceps: 6, abs: 2 },
+      pull: { "upper-back": 9, biceps: 6, trapezius: 4, forearm: 3, "lower-back": 2 },
+      legs: { quadriceps: 9, gluteal: 6, hamstring: 6, calves: 4, adductors: 3, "lower-back": 2 },
+      week: { "upper-back": 14, chest: 12, quadriceps: 12, gluteal: 10, deltoids: 10, hamstring: 8, biceps: 8, triceps: 8, calves: 6, trapezius: 5, "lower-back": 4, abs: 4, adductors: 3, forearm: 3, obliques: 2 },
+    };
+    const GUIDES = {
+      squat: { main: ["quadriceps", "gluteal"], second: ["hamstring", "adductors", "lower-back", "abs"],
+        cues: ["Brace your middle before you unrack.", "Sit down between your heels, knees tracking over your toes.", "Keep the bar over the middle of your foot.", "Drive up through the whole foot."] },
+      bench: { main: ["chest"], second: ["deltoids", "triceps"],
+        cues: ["Pull your shoulder blades back and down.", "Feet planted, a slight arch in the upper back.", "Lower to the middle of the chest under control.", "Press up and slightly back over the shoulders."] },
+      rdl: { main: ["hamstring", "gluteal"], second: ["lower-back", "forearm"],
+        cues: ["Soft knees, then push your hips back.", "Keep the bar close to your legs the whole way.", "Stop when your hamstrings stretch, back still flat.", "Stand tall by driving the hips forward."] },
+      pullup: { main: ["upper-back"], second: ["biceps", "forearm", "trapezius", "deltoids"],
+        cues: ["Start from a dead hang with a firm grip.", "Pull your elbows down toward your sides.", "Chin over the bar without swinging.", "Lower all the way under control."] },
+    };
+    const paint = (kind, fn) => $$(`[data-body="${kind}"] path[data-m]`).forEach(fn);
+    function showLoad(key) {
+      const load = LOADS[key], max = Math.max(...Object.values(load));
+      $$("[data-load]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.load === key)));
+      paint("load", el => { const n = load[el.dataset.m] || 0; el.dataset.l = n ? String(Math.min(3, Math.ceil(3 * n / max))) : "0"; });
+      const ranked = Object.entries(load).sort((a, b) => b[1] - a[1]);
+      $("[data-ranks]").innerHTML = ranked.slice(0, 6).map(([m, n]) => `<li><span>${MUSCLE[m]}</span><i style="--w:${n / max}"></i><b>${n}</b></li>`).join("");
+      const [least, sets] = ranked[ranked.length - 1];
+      $("[data-least]").textContent = key === "week" ? `Least trained this week: ${MUSCLE[least]}, ${sets} sets.` : "Working sets in one example session.";
+    }
+    function showGuide(key) {
+      const g = GUIDES[key];
+      $$("[data-guide]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.guide === key)));
+      $("[data-cues]").innerHTML = g.cues.map(c => `<li>${esc(c)}</li>`).join("");
+      $("[data-guide-main]").textContent = g.main.map(m => MUSCLE[m]).join(", ");
+      $("[data-guide-second]").textContent = g.second.map(m => MUSCLE[m]).join(", ");
+      paint("guide", el => { el.dataset.g = g.main.includes(el.dataset.m) ? "main" : g.second.includes(el.dataset.m) ? "second" : ""; });
+    }
+    $$("[data-load]").forEach(b => b.addEventListener("click", () => showLoad(b.dataset.load)));
+    $$("[data-guide]").forEach(b => b.addEventListener("click", () => showGuide(b.dataset.guide)));
+    fetch("assets/body-map.svg").then(r => r.ok ? r.text() : Promise.reject()).then(svg => {
+      $$("[data-body]").forEach(el => el.innerHTML = svg);
+      showLoad("week"); showGuide("squat");
+    }).catch(() => { $$("[data-body]").forEach(el => el.hidden = true); showLoad("week"); showGuide("squat"); });
+
+    // Calendar: an example month in the app's category colours (App/History/CalendarLog.swift).
+    const CATS = { upper: ["Upper", "#c44a29"], legs: ["Legs", "#637a96"], cardio: ["Cardio", "#c97a29"], hybrid: ["Hybrid", "#8f5787"], full: ["Full body", "#b08f70"], mobility: ["Mobility", "#8c7894"] };
+    const DAYS = {
+      1: ["upper", "Upper + Easy Mile", 58, 18, "Bench press, Seated row, Easy mile"], 3: ["legs", "Legs", 64, 20, "Back squat, Romanian deadlift, Calf raise"],
+      5: ["hybrid", "Race practice", 47, 8, "Run, Sled push, Wall balls"], 8: ["upper", "Upper", 55, 17, "Overhead press, Pull-up, Dips"],
+      10: ["legs", "Legs", 61, 19, "Front squat, Hip thrust, Leg curl"], 11: ["cardio", "Zone 2 run", 42, 1, "Easy run"],
+      13: ["full", "Full body", 50, 15, "Deadlift, Push-up, Farmer's carry"], 15: ["upper", "Upper + Easy Mile", 60, 18, "Bench press, Seated row, Easy mile"],
+      17: ["legs", "Legs", 66, 20, "Back squat, Romanian deadlift, Calf raise"], 19: ["hybrid", "Race practice", 45, 8, "Run, Sled pull, Burpee broad jumps"],
+      20: ["mobility", "Mobility", 25, 6, "Hip flow, Thoracic rotations"], 22: ["upper", "Upper", 57, 17, "Overhead press, Pull-up, Dips"],
+      24: ["legs", "Legs", 63, 19, "Front squat, Hip thrust, Leg curl"], 26: ["full", "Full body", 52, 15, "Deadlift, Push-up, Farmer's carry"],
+      29: ["upper", "Upper + Easy Mile", 59, 18, "Bench press, Seated row, Easy mile"],
+    };
+    const LEAD = 1, LENGTH = 30; // the example month starts on a Tuesday
+    const WEEKDAY = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const minutes = Object.values(DAYS).reduce((a, d) => a + d[2], 0);
+    $("[data-cal-total]").textContent = `${Object.keys(DAYS).length} workouts · ${Math.floor(minutes / 60)} h ${minutes % 60} min`;
+    $("[data-cal-legend]").innerHTML = Object.values(CATS).map(([label, color]) => `<li><i style="background:${color}"></i>${label}</li>`).join("");
+    $("[data-cal-grid]").innerHTML = ["M", "T", "W", "T", "F", "S", "S"].map(d => `<span class="dow" aria-hidden="true">${d}</span>`).join("")
+      + '<span class="blank"></span>'.repeat(LEAD)
+      + Array.from({ length: LENGTH }, (_, i) => { const n = i + 1, d = DAYS[n];
+          return d ? `<button type="button" class="w" style="--c:${CATS[d[0]][1]}" data-day="${n}" aria-pressed="false" aria-label="${WEEKDAY[(LEAD + i) % 7]} ${n}: ${esc(d[1])}">${n}</button>`
+                   : `<button type="button" data-day="${n}" aria-pressed="false" aria-label="${WEEKDAY[(LEAD + i) % 7]} ${n}: rest day">${n}</button>`; }).join("");
+    function showDay(n) {
+      const d = DAYS[n], name = `${WEEKDAY[(LEAD + n - 1) % 7]} ${n}`;
+      $$("[data-day]").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.day) === n)));
+      $("[data-cal-day]").innerHTML = d
+        ? `<span class="label">${name} · ${CATS[d[0]][0]}</span><strong>${esc(d[1])}</strong><span class="small muted">${d[2]} min · ${d[3]} ${d[3] === 1 ? "set" : "sets"} · ${esc(d[4])}</span>`
+        : `<span class="label">${name}</span><strong>Rest day</strong><span class="small muted">Nothing logged. Rest counts too.</span>`;
+    }
+    $("[data-cal-grid]").addEventListener("click", e => { const b = e.target.closest("[data-day]"); if (b) showDay(Number(b.dataset.day)); });
+    showDay(15);
+  })();
+
+  // Coach demo: the three rules the progression coach applies.
+  const CASES = {
+    hit:   { next: "82.5 kg", why: "All reps done, so the load goes up." },
+    miss:  { next: "80 kg",   why: "A rep short, so the load holds." },
+    third: { next: "72.5 kg", why: "Third miss in a row, so it drops about 10%." },
+  };
+  $$("[data-case]").forEach(b => b.addEventListener("click", () => {
+    $$("[data-case]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    $("#coach-next").textContent = CASES[b.dataset.case].next; $("#coach-why").textContent = CASES[b.dataset.case].why;
+  }));
+
+  // ---------- Feedback portal ----------
+  const STATUS = {
+    considering:    "Under consideration",
+    planned_iphone: "Planned · iPhone",
+    planned_garmin: "Planned · Garmin",
+    wont:           "Won't do",
+    completed:      "Completed",
+  };
+  const VOTABLE = new Set(["considering", "planned_iphone", "planned_garmin"]);
+  const TAGS = ["Integrations", "Invalid", "Out of scope"];
+  $("#rq-tag").insertAdjacentHTML("beforeend", TAGS.map(t => `<option>${t}</option>`).join(""));
+
+  let memoryEmail = "";
+  const getEmail = () => { try { return localStorage.getItem("tur-email") || memoryEmail; } catch (_) { return memoryEmail; } };
+  const setEmail = v => { memoryEmail = v; try { v ? localStorage.setItem("tur-email", v) : localStorage.removeItem("tur-email"); } catch (_) {} renderWho(); };
+  function renderWho() {
+    const e = getEmail();
+    $$("[data-who]").forEach(w => w.hidden = !e);
+    $$("[data-who-email]").forEach(w => w.textContent = e);
+  }
+  $$("[data-forget]").forEach(b => b.addEventListener("click", () => { setEmail(""); board.mine = new Set(); renderAll(); }));
+
+  const api = (path, opts = {}) =>
+    fetch("/api/" + path, { ...opts, headers: { ...(getEmail() ? { "X-Email": getEmail() } : {}), ...(opts.body ? { "Content-Type": "application/json" } : {}) } })
+      .then(async r => {
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(data.error || "That didn't work. Try again in a moment.");
+        return data;
+      });
+
+  // Asks for an email once, like most public roadmaps, then remembers it in this browser.
+  function requireEmail(action, why) {
+    if (getEmail()) return Promise.resolve(getEmail());
+    const dlg = $("#email-dialog"), input = $("#email-input"), err = $("#email-err");
+    $("#email-ok").textContent = action;
+    $("#email-title").textContent = action === "Upvote" ? "Enter your email to upvote" : "Enter your email to continue";
+    $("#email-why").innerHTML = why;
+    err.hidden = true; input.value = "";
+    return new Promise(resolve => {
+      const done = value => { dlg.close(); cleanup(); resolve(value); };
+      const submit = e => {
+        e.preventDefault();
+        const v = input.value.trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { err.textContent = "Enter a full email address, like you@example.com."; err.hidden = false; input.focus(); return; }
+        setEmail(v); done(v);
+      };
+      const cancel = () => done(null);
+      const cleanup = () => { $("#email-form").removeEventListener("submit", submit); $("#email-cancel").removeEventListener("click", cancel); dlg.removeEventListener("cancel", cancel); };
+      $("#email-form").addEventListener("submit", submit);
+      $("#email-cancel").addEventListener("click", cancel);
+      dlg.addEventListener("cancel", cancel);
+      dlg.showModal(); input.focus();
+    });
+  }
+
+  const board = { requests: [], mine: new Set(), sort: "top", q: "", rq: "", tag: "", loaded: false, loading: null };
+  const byId = id => board.requests.find(r => r.id === id);
+  const badge = s => `<span class="badge s-${s}">${STATUS[s]}</span>`;
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+  function voteBox(r) {
+    if (!VOTABLE.has(r.status)) return `<button class="vote closed" type="button" data-vote="${r.id}" aria-disabled="true" aria-label="${esc(r.title)}: ${plural(r.votes, "vote", "votes")}, voting closed"><i aria-hidden="true"></i><b>${r.votes}</b></button>`;
+    const on = board.mine.has(r.id);
+    return `<button class="vote" type="button" data-vote="${r.id}" title="${on ? "Remove your upvote" : "Upvote"}" aria-pressed="${on}" aria-label="${on ? "Remove your upvote" : "Upvote"}: ${esc(r.title)}, ${plural(r.votes, "vote", "votes")}"><i aria-hidden="true"></i><b>${r.votes}</b></button>`;
+  }
+  const card = r => `<li class="rq"><div class="vote-cell">${voteBox(r)}</div>
+    <button class="rq-open" type="button" data-open="${r.id}">
+      <span class="meta">${badge(r.status)}</span>
+      <strong>${esc(r.title)}</strong>${r.body ? `<p>${esc(r.body)}</p>` : ""}
+      ${r.tags.length || r.comments ? `<span class="meta">${r.tags.map(t => `<span class="chip">${esc(t)}</span>`).join("")}${r.comments ? `<span class="count">${plural(r.comments, "comment", "comments")}</span>` : ""}</span>` : ""}
+    </button></li>`;
+  const mini = r => `<div class="mini"><div class="vote-cell">${voteBox(r)}</div><button class="rq-open" type="button" data-open="${r.id}"><strong>${esc(r.title)}</strong>${r.body ? `<p>${esc(r.body)}</p>` : ""}</button></div>`;
+  const matches = (r, q) => !q || (r.title + " " + r.body).toLowerCase().includes(q.toLowerCase());
+
+  function renderRequests() {
+    const items = board.requests
+      .filter(r => matches(r, board.q) && (!board.tag || r.tags.includes(board.tag)))
+      .sort(board.sort === "new" ? (a, b) => b.created_at - a.created_at
+        : (a, b) => b.votes - a.votes || VOTABLE.has(b.status) - VOTABLE.has(a.status) || b.created_at - a.created_at);
+    $("#rq-list").innerHTML = items.map(card).join("");
+    const state = $('[data-view="feedback"] [data-board-state]');
+    if (board.loaded) { state.hidden = items.length > 0; state.textContent = "No requests match. Request it as a new feature."; }
+  }
+  function renderRoadmap() {
+    $("#board-cols").innerHTML = Object.entries(STATUS).map(([s, label]) => {
+      const items = board.requests.filter(r => r.status === s && matches(r, board.rq)).sort((a, b) => b.votes - a.votes);
+      return `<section class="col" aria-label="${label}"><div class="col-head">${badge(s)}<span class="count">${items.length}</span></div>${items.map(mini).join("")}</section>`;
+    }).join("");
+    if (board.loaded) $('[data-view="roadmap"] [data-board-state]').hidden = true;
+  }
+  function renderAll() { renderRequests(); renderRoadmap(); if (!$("#drawer").hidden && drawer.request) openRequest(drawer.request, true); }
+
+  function loadBoard() {
+    board.loading ||= api("board").then(d => {
+      board.requests = d.requests; board.mine = new Set(d.mine); board.loaded = true; renderAll();
+    }).catch(() => {
+      board.loading = null;
+      $$("[data-board-state]").forEach(s => s.textContent = `The board couldn't load. Refresh the page, or email ${SITE.supportEmail}.`);
+    });
+    return board.loading;
+  }
+
+  // Every arrow answers a tap: closed requests shake and say why, and without an email the
+  // arrow lights up while the prompt asks for one, then the vote goes through.
+  const buttonsFor = id => $$(`[data-vote="${id}"]`);
+  async function toggleVote(id) {
+    const r = byId(id);
+    if (!r) return;
+    if (!VOTABLE.has(r.status)) {
+      buttonsFor(id).forEach(b => { b.classList.remove("nope"); void b.offsetWidth; b.classList.add("nope"); });
+      toast(r.status === "completed" ? "This one has shipped, so voting is closed." : "We've decided not to build this one, so voting is closed.");
+      return;
+    }
+    if (!getEmail()) {
+      buttonsFor(id).forEach(b => b.classList.add("asking"));
+      const ok = await requireEmail("Upvote", `Upvoting <span class="for">${esc(r.title)}</span>. One vote per email, and we'll tell you when it ships.`);
+      buttonsFor(id).forEach(b => b.classList.remove("asking"));
+      if (!ok) return;
+    }
+    const had = board.mine.has(id);
+    const apply = on => on ? board.mine.add(id) : board.mine.delete(id);
+    apply(!had); r.votes += had ? -1 : 1; renderAll();
+    try { const d = await api(`requests/${id}/vote`, { method: "POST", body: JSON.stringify({ email: getEmail() }) }); r.votes = d.votes; apply(d.voted); }
+    catch (e) { apply(had); r.votes += had ? 1 : -1; toast(e.message); }
+    renderAll();
+    if (board.mine.has(id)) buttonsFor(id).forEach(b => b.classList.add("pop"));
+    $(`#drawer [data-vote="${id}"], #rq-list [data-vote="${id}"]`)?.focus({ preventScroll: true });
+  }
+
+  $$("[data-sort]").forEach(b => b.addEventListener("click", () => {
+    board.sort = b.dataset.sort; $$("[data-sort]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderRequests();
+  }));
+  $("#rq-search").addEventListener("input", e => { board.q = e.target.value; renderRequests(); });
+  $("#rm-search").addEventListener("input", e => { board.rq = e.target.value; renderRoadmap(); });
+  $("#rq-tag").addEventListener("change", e => { board.tag = e.target.value; renderRequests(); });
+
+  // ---------- Drawer ----------
+  const drawer = { request: null, opener: null };
+  function openDrawer(title, bodyHTML, footHTML) {
+    if ($("#drawer").hidden) drawer.opener = document.activeElement;
+    $("#drawer-title").textContent = title;
+    $("#drawer-body").innerHTML = bodyHTML;
+    $("#drawer-foot").innerHTML = footHTML || ""; $("#drawer-foot").hidden = !footHTML;
+    $("#drawer").hidden = false; $("#scrim").hidden = false; document.body.classList.add("locked");
+  }
+  function closeDrawer() {
+    $("#drawer").hidden = true; $("#scrim").hidden = true; document.body.classList.remove("locked");
+    drawer.request = null; chat.active = false;
+    if (location.hash.startsWith("#r-")) history.replaceState(null, "", "#feedback");
+    drawer.opener?.focus?.();
+  }
+  $("#drawer-close").addEventListener("click", closeDrawer);
+  $("#scrim").addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#drawer").hidden && !$("#email-dialog").open) closeDrawer(); });
+
+  const fmtDate = ms => new Date(ms).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+  const commentHTML = c => `<div class="comment${c.from_team ? " team" : ""}"><span class="avatar" aria-hidden="true">${esc(c.initial)}</span>
+    <div class="bubble-c">${c.from_team ? `<span class="team-tag">TUR team</span>` : ""}<p>${esc(c.body)}</p><span class="when">${fmtDate(c.created_at)}</span></div></div>`;
+
+  async function openRequest(id, refresh = false) {
+    const r = byId(id);
+    if (!r) return;
+    const kept = refresh ? $("#comment-text")?.value || "" : "";
+    drawer.request = id;
+    openDrawer("Feature request", `
+      <div class="detail-head">${voteBox(r)}<div style="display:grid;gap:10px"><h3>${esc(r.title)}</h3><span class="meta">${badge(r.status)}<span class="count">${fmtDate(r.created_at)}</span>${r.tags.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</span></div></div>
+      ${r.body ? `<div style="display:grid;gap:6px"><span class="label">Description</span><p>${esc(r.body)}</p></div>` : ""}
+      <div class="comments" id="comments" aria-live="polite"><p class="muted small">Loading comments…</p></div>`,
+      `<form class="composer" id="comment-form" novalidate><label class="sr" for="comment-text">Write a comment</label>
+        <textarea id="comment-text" placeholder="Write a comment…" maxlength="1500"></textarea>
+        <div class="actions"><button class="btn btn-primary btn-small" type="submit">Send</button></div></form>`);
+    $("#comment-text").value = kept;
+    if (!refresh) $("#drawer-close").focus();
+    if (location.hash !== "#r-" + id) history.replaceState(null, "", "#r-" + id);
+    $("#comment-form").addEventListener("submit", async e => {
+      e.preventDefault();
+      const text = $("#comment-text").value.trim();
+      if (text.length < 2) { toast("Write a comment first."); return; }
+      if (!(await requireEmail("Continue", "Comments need an email so we can reply. Only its first letter is shown."))) return;
+      try {
+        const c = await api(`requests/${id}/comments`, { method: "POST", body: JSON.stringify({ email: getEmail(), body: text }) });
+        $("#comment-text").value = "";
+        const list = $("#comments"); if (list.querySelector("p.muted")) list.innerHTML = "";
+        list.insertAdjacentHTML("beforeend", commentHTML(c)); r.comments++; renderRequests();
+      } catch (err) { toast(err.message); }
+    });
+    try {
+      const d = await api(`requests/${id}/comments`);
+      if (drawer.request !== id) return;
+      $("#comments").innerHTML = d.comments.length ? d.comments.map(commentHTML).join("") : `<p class="muted small">No comments yet.</p>`;
+    } catch (_) { $("#comments").innerHTML = `<p class="muted small">Comments couldn't load.</p>`; }
+  }
+
+  document.addEventListener("click", e => {
+    const v = e.target.closest("[data-vote]"); if (v) { toggleVote(v.dataset.vote); return; }
+    const o = e.target.closest("[data-open]"); if (o) openRequest(o.dataset.open);
+  });
+
+  // ---------- Request a feature: a short guided chat ----------
+  const chat = { active: false, step: 0, title: "", body: "" };
+  const stop = new Set(["the", "and", "for", "with", "let", "add", "make", "when", "that", "this", "from", "have", "more", "please", "would", "could", "should", "want", "able"]);
+  function say(text, who = "bot", html = false) {
+    const b = document.createElement("div"); b.className = "bubble " + who;
+    html ? b.innerHTML = text : b.textContent = text;
+    $("#chat").appendChild(b); b.scrollIntoView({ block: "end" });
+  }
+  function similarTo(text) {
+    const words = text.toLowerCase().match(/[a-z0-9]{3,}/g)?.filter(w => !stop.has(w)) ?? [];
+    return words.length ? board.requests.map(r => ({ r, score: words.filter(w => (r.title + " " + r.body).toLowerCase().includes(w)).length }))
+      .filter(h => h.score).sort((a, b) => b.score - a.score).slice(0, 3).map(h => h.r) : [];
+  }
+  function ask(placeholder, allowSkip) {
+    $("#chat-text").value = ""; $("#chat-text").placeholder = placeholder;
+    $("#chat-skip").hidden = !allowSkip; $("#chat-text").focus();
+  }
+  function openRequestChat() {
+    loadBoard();
+    Object.assign(chat, { active: true, step: 1, title: "", body: "" });
+    openDrawer("Request a feature", `<div class="chat" id="chat"></div>`,
+      `<form class="chat-input" id="chat-form" novalidate><label class="sr" for="chat-text">Your answer</label>
+        <input id="chat-text" autocomplete="off" maxlength="200"><button class="btn btn-primary" type="submit" aria-label="Send">›</button></form>
+       <button class="skip-step" type="button" id="chat-skip" hidden>Skip this step</button>`);
+    say("New feature requests and upvotes help us plan what to build. If your idea overlaps an existing request, we'll merge them and count it as your upvote. You'll hear from us when it ships.");
+    say("What would you name this feature?");
+    ask("A short title", false);
+    $("#chat-form").addEventListener("submit", e => { e.preventDefault(); answer($("#chat-text").value.trim()); });
+    $("#chat-skip").addEventListener("click", () => answer("", true));
+  }
+  async function answer(text, skipped = false) {
+    if (chat.step === 1) {
+      if (text.length < 4) { toast("Give it a name of at least 4 characters."); return; }
+      chat.title = text.slice(0, 80); say(chat.title, "me");
+      const alike = similarTo(chat.title);
+      if (alike.length) say(`These look close. Upvote one instead, or carry on.${alike.map(mini).join("")}`, "bot", true);
+      chat.step = 2; say("Describe it in a sentence or two. What would it help you do?"); ask("A few words (optional)", true);
+    } else if (chat.step === 2) {
+      chat.body = skipped ? "" : text; if (!skipped && text) say(text, "me");
+      chat.step = 3;
+      const known = getEmail();
+      say(known ? `We'll send updates to ${known}. Press send to submit, or type a different email.` : "What's your email? We'll let you know when it ships.");
+      ask(known || "you@example.com", false);
+    } else if (chat.step === 3) {
+      const email = (text || getEmail() || "").toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { toast("Enter a full email address, like you@example.com."); return; }
+      if (text) say(text, "me");
+      $("#chat-form button").disabled = true;
+      try {
+        await api("requests", { method: "POST", body: JSON.stringify({ title: chat.title, body: chat.body, email }) });
+        setEmail(email); chat.step = 4;
+        say("Thanks! We read every new request before it goes on the board. If it overlaps another one, we'll merge them and count your vote.");
+        $("#drawer-foot").innerHTML = `<button class="btn btn-ghost btn-small" type="button" id="chat-done">Close</button>`;
+        $("#chat-done").addEventListener("click", closeDrawer); $("#chat-done").focus();
+      } catch (err) { $("#chat-form button").disabled = false; toast(err.message); }
+    }
+  }
+  $$("[data-request]").forEach(b => b.addEventListener("click", openRequestChat));
+
+  // ---------- Help center ----------
+  const HELP = [
+    { c: "TUR for iPhone", t: "How TUR works out calories", b: ["TUR splits a session into working sets, rest between sets, and the walking and loading around them. Each costs a different amount, worked out from the movement, the load and your bodyweight.", "The figure is active calories: your resting burn is taken out, the same way Apple Health counts active energy."] },
+    { c: "TUR for iPhone", t: "Where a calorie number comes from", b: ["Every figure is labelled with its source: estimated from your sets, your heart rate combined with your sets, or your watch's recording combined with your sets.", "If the two disagree by more than three times, TUR flags it. That usually means the wrong recording is linked or a strap lost contact."] },
+    { c: "TUR for iPhone", t: "The progression coach", b: ["Turn it on in Settings. When every set hits its reps, the next session adds load. A miss holds the load, and three misses in a row deload about 10%.", "Each exercise shows the reason, and you can always change the numbers yourself."] },
+    { c: "TUR for iPhone", t: "Training at a different gym", b: ["Save the equipment at each place you train and pick where you are. Exercises that gym can't support show the closest swaps for the same muscles."] },
+    { c: "TUR for iPhone", t: "Rest timer notifications", b: ["TUR notifies you when a rest ends, even after you leave or close the app. Turn it off in Settings under Preferences, Rest timer notifications.", "With it off, the timer still counts down on screen and a Garmin watch still buzzes."] },
+    { c: "TUR on Garmin", t: "Log sets from your watch", b: ["Start the session on your Garmin and log each set from the wrist. Sets, timers and controls stay in sync with your iPhone.", "The session is saved as a real Garmin activity, so it reaches Garmin Connect."] },
+    { c: "TUR on Garmin", t: "Heart-rate-guided rest", b: ["Turn it on in Settings. While your watch streams heart rate, the rest bar shows your pulse coming down and marks the rest ready once you've recovered.", "It can end the rest for you, and warns when recovery slows across an exercise's sets."] },
+    { c: "TUR on Garmin", t: "GO/STOP for timed work", b: ["For sleds, carries, walking lunges, planks and ergs, press GO when you start and STOP when you finish. TUR logs the measured time, so calories use your real working time."] },
+    { c: "Your data", t: "Export and back up your log", b: ["Export CSV spreadsheets or a complete backup from Settings. Exports are always available, even if you cancel."] },
+    { c: "Your data", t: "Apple Health", b: ["Health access is optional. TUR can read your workouts and body details to fill in your profile, and save its own workouts to Health."] },
+    { c: "Your data", t: "Cancelling your subscription", b: ["Cancel any time in iPhone Settings under your Apple ID, then Subscriptions. Your log stays on your phone."] },
+  ];
+  function renderHelp(q = "") {
+    const hits = HELP.map((a, i) => ({ ...a, i })).filter(a => !q || (a.t + " " + a.b.join(" ")).toLowerCase().includes(q.toLowerCase()));
+    const groups = [...new Set(HELP.map(a => a.c))].map(c => [c, hits.filter(a => a.c === c)]).filter(([, list]) => list.length);
+    $("#collections").innerHTML = groups.map(([c, list]) => `<div class="collection"><h3>${c}</h3><ul>${list.map(a => `<li><button type="button" data-article="${a.i}">${esc(a.t)}</button></li>`).join("")}</ul></div>`).join("");
+    $("#help-empty").hidden = hits.length > 0;
+  }
+  $("#help-search").addEventListener("input", e => renderHelp(e.target.value));
+  document.addEventListener("click", e => {
+    const a = e.target.closest("[data-article]"); if (!a) return;
+    const art = HELP[a.dataset.article];
+    openDrawer(art.c, `<article class="article" style="display:grid;gap:16px"><h3 style="font:700 26px/1.25 var(--body)">${esc(art.t)}</h3>${art.b.map(p => `<p>${esc(p)}</p>`).join("")}</article>`,
+      `<p class="small muted">Didn't answer it? Email <span class="addr">${esc(SITE.supportEmail)}</span></p>`);
+    $("#drawer-close").focus();
+  });
+  renderHelp();
+
+  // Clipboard can be refused; then select the text so the viewer can copy it themselves.
+  $("#copy-email").addEventListener("click", e => {
+    const btn = e.currentTarget, source = $(".contact .addr");
+    const select = () => { const r = document.createRange(); r.selectNodeContents(source); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    if (!navigator.clipboard) return select();
+    navigator.clipboard.writeText(SITE.supportEmail).then(() => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy address", 1600); }).catch(select);
+  });
+
+  // ---------- Views: a bare #anchor picks the page; #r-<id> opens a request. ----------
+  const views = $$("[data-view]");
+  const PORTAL = new Set(["feedback", "roadmap", "help"]);
+  function show() {
+    let id = location.hash.slice(1), request = null;
+    if (id.startsWith("r-")) { request = id.slice(2); id = "feedback"; }
+    if (id === "content") return;
+    const target = views.find(v => v.dataset.view === id) || views[0];
+    const changed = target.hidden;
+    views.forEach(v => v.hidden = v !== target);
+    const name = target.dataset.view;
+    $$("nav.main a").forEach(a => {
+      const on = a.getAttribute("href") === "#" + name || (a.hasAttribute("data-portal-nav") && PORTAL.has(name));
+      on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
+    });
+    document.title = name === "top" ? "TUR Workout Tracker" : "TUR · " + target.getAttribute("aria-label");
+    if (PORTAL.has(name) && name !== "help") loadBoard().then(() => request && openRequest(request));
+    if (!request && !$("#drawer").hidden) closeDrawer();
+    if (changed) { window.scrollTo(0, 0); $("#content").focus({ preventScroll: true }); }
+  }
+  window.addEventListener("hashchange", show);
+  renderWho();
+  show();
+</script>
+</body>
+</html>
