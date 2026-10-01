@@ -206,20 +206,8 @@ const litReviewPages: DocPage[] = Array.from({ length: 10 }, (_, index) => ({
 
 const referenceLinks = [
   {
-    href: 'https://github.com/Gogo-Fogo/MUMOSA',
-    label: 'GitHub Repository',
-  },
-  {
-    href: '/documents/projects/mumosa-crisis-response-vr/mumosa-client-paper.pdf',
-    label: 'Open Final Client Report',
-  },
-  {
     href: 'https://youtu.be/88Qk5ThLEmc',
     label: 'Watch VR Proof Of Concept',
-  },
-  {
-    href: '/documents/projects/mumosa-crisis-response-vr/brief-and-assignment-scope.md',
-    label: 'Open Assignment Brief',
   },
   {
     href: '/documents/projects/mumosa-crisis-response-vr/georgi-tsvetanski-mumosa-literature-review.pdf',
@@ -324,14 +312,6 @@ export default function MumosaCrisisResponseVrCaseStudy() {
                     className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--background)] transition hover:bg-transparent hover:text-[var(--foreground)]"
                   >
                     Watch prototype
-                  </a>
-                  <a
-                    href="https://github.com/Gogo-Fogo/MUMOSA"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--foreground)] transition hover:border-[var(--foreground)]"
-                  >
-                    View repository
                   </a>
                 </div>
               </div>
@@ -758,8 +738,7 @@ export default function MumosaCrisisResponseVrCaseStudy() {
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
             <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Reference Documents</h2>
             <p className="mb-5 max-w-3xl text-sm text-[var(--muted)]">
-              These links are here for context and coursework documentation. The client paper is supporting reference, not presented as my authored portfolio work.
-              The GitHub repository contains the full project working materials.
+              My individual literature review and the recorded VR proof of concept. Team deliverables stay with the team and client.
             </p>
             <div className="flex flex-wrap gap-3">
               {referenceLinks.map((document) => (
