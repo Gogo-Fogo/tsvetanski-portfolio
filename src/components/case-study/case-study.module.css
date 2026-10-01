@@ -25,16 +25,16 @@
   align-items: center;
   min-height: 2rem;
   padding: 0 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--brand-cyan) 45%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--ui-strong) 45%, var(--border));
   border-radius: 999px;
   font-size: var(--text-sm);
-  color: var(--brand-cyan);
+  color: var(--ui-strong);
   transition: border-color 0.2s ease;
 }
 
 .chip:hover,
 .chip:focus-visible {
-  border-color: var(--brand-cyan);
+  border-color: var(--ui-strong);
 }
 
 .status {
@@ -479,7 +479,7 @@
 
 .action:hover,
 .action:focus-visible {
-  border-color: var(--brand-cyan);
+  border-color: var(--ui-strong);
 }
 
 .actionPrimary {

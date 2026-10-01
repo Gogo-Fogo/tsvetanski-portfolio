@@ -35,7 +35,7 @@
 }
 
 .searchField:focus-within {
-  border-color: var(--brand-cyan);
+  border-color: var(--ui-strong);
 }
 
 .searchField input {
@@ -96,9 +96,9 @@
   gap: 0.5rem;
   min-height: 14rem;
   padding: 1.25rem;
-  border: 1px dashed color-mix(in srgb, var(--brand-cyan) 45%, var(--border));
+  border: 1px dashed color-mix(in srgb, var(--ui-strong) 45%, var(--border));
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--brand-cyan) 5%, var(--surface));
+  background: color-mix(in srgb, var(--ui-strong) 5%, var(--surface));
   transition: border-color 0.25s ease;
 }
 
@@ -162,5 +162,5 @@
 
 .emptyButton:hover,
 .emptyButton:focus-visible {
-  border-color: var(--brand-cyan);
+  border-color: var(--ui-strong);
 }

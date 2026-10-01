@@ -77,7 +77,7 @@ export default function DocViewer({ title, description, pages, outline }: DocVie
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="group w-full max-w-xs text-left overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow),0_0_40px_rgba(86,215,255,0.05)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
+          className="group w-full max-w-xs text-left overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--hover-glow)]"
         >
           {/* thumbnail */}
           <div className="relative overflow-hidden bg-[var(--background)]" style={{ aspectRatio: '5/3' }}>
@@ -159,7 +159,7 @@ export default function DocViewer({ title, description, pages, outline }: DocVie
                               <span
                                 className={`mt-0.5 shrink-0 font-mono text-[9px] transition-colors ${
                                   isActive
-                                    ? 'text-[var(--accent-cyan)]'
+                                    ? 'text-white'
                                     : 'text-white/18 group-hover/item:text-white/40'
                                 }`}
                               >
@@ -217,7 +217,7 @@ export default function DocViewer({ title, description, pages, outline }: DocVie
                     onClick={() => goTo(i)}
                     className={`group/thumb relative overflow-hidden rounded-lg transition-all duration-150 ${
                       i === currentPage
-                        ? 'opacity-100 ring-2 ring-white/50 shadow-[0_0_12px_rgba(86,215,255,0.3)]'
+                        ? 'opacity-100 ring-2 ring-white/50 shadow-[0_0_12px_rgba(255,255,255,0.25)]'
                         : 'opacity-35 hover:opacity-65'
                     }`}
                     style={{ width: 52 }}

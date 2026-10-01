@@ -78,7 +78,7 @@ export default function FloatingContactBubble() {
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="inline-grid h-12 w-12 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow-strong)] transition-colors hover:border-[var(--brand-cyan)]"
+        className="inline-grid h-12 w-12 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-[var(--shadow-strong)] transition-colors hover:border-[var(--ui-strong)]"
         aria-expanded={open}
         aria-controls={open ? "quick-contact-panel" : undefined}
         aria-label={open ? "Hide contact form" : "Contact Georgi"}

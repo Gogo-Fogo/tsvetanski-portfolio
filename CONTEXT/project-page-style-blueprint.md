@@ -12,7 +12,7 @@ Ensure every project page acts as a cohesive case study with a clear narrative, 
   - Border: `border border-[var(--border)]`
   - Radius: `rounded-2xl`
   - Shadow: `shadow-[var(--shadow)]`
-  - Hover: `hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]` (consistent glow)
+  - Hover: `hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--hover-glow)]` (consistent glow)
 
 ## 3. The "Contextual Pairing" Pattern (Standard Layout)
 Avoid standalone image blocks. Instead, use 2-column grids to pair descriptions with visuals.
@@ -35,7 +35,7 @@ Reverse the order on alternating sections (`md:flex-row-reverse` if using flex, 
 
 ## 4. Standardized Media Wrapper
 Instead of duplicating long Tailwind strings, use this standard wrapper for images/videos:
-`group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]`
+`group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--hover-glow)]`
 
 ## 5. Aspect Ratio Guidelines
 - **Hero/Banner**: `aspect-[16/6]` or `aspect-video` (width: 1600, height: 900)

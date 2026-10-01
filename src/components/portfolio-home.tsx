@@ -86,7 +86,6 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
         </div>
         <div className={styles.heroPortrait}>
           <span className={styles.heroSlashOrange} aria-hidden="true" />
-          <span className={styles.heroSlashCyan} aria-hidden="true" />
           <Image
             src="/images/georgi-hero-portrait.webp"
             alt="Georgi Tsvetanski"
