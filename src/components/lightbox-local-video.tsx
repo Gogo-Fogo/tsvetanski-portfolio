@@ -74,7 +74,7 @@ export default function LightboxLocalVideo({
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="group relative block h-full w-full cursor-pointer focus:outline-none"
+          className="group relative block h-full w-full cursor-pointer"
           aria-label={`Play ${title}`}
         >
           <video
@@ -107,12 +107,13 @@ export default function LightboxLocalVideo({
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
         <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 outline-none">
           <Dialog.Title className="sr-only">{title}</Dialog.Title>
+          <Dialog.Description className="sr-only">{`Video player for ${title}. Press Escape to close.`}</Dialog.Description>
           <Dialog.Close asChild>
             <button
               type="button"
-              className="absolute -top-10 right-0 text-xs font-semibold uppercase tracking-[0.3em] text-white/80 hover:text-white"
+              className="absolute -top-12 right-0 inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-white/85 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
             >
-              Close
+              Close <span aria-hidden="true">✕</span>
             </button>
           </Dialog.Close>
           <div className="relative">

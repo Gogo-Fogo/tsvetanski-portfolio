@@ -66,7 +66,7 @@ export default function LightboxImage({
         {triggerVariant === 'preview-icon' ? (
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-[var(--archive-preview-border)] bg-[var(--archive-preview-background)] text-[var(--archive-preview-foreground)] shadow-lg backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[var(--archive-cyan-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--archive-cyan-border)]/60"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-white/30 bg-black/55 text-white shadow-lg backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/70"
             aria-label={`Preview image for ${alt}`}
           >
             <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
@@ -78,7 +78,7 @@ export default function LightboxImage({
         ) : (
           <button
             type="button"
-            className={`group relative block w-full ${fill ? 'h-full' : ''} ${roundedClassName} cursor-pointer focus:outline-none transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]`}
+            className={`group relative block w-full ${fill ? 'h-full' : ''} ${roundedClassName} cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:0_0_16px_rgba(251,146,60,0.68)]`}
             aria-label={`Open image ${alt}`}
           >
             <Image
@@ -88,13 +88,13 @@ export default function LightboxImage({
               height={fill ? undefined : height}
               fill={fill}
               sizes={sizes}
-              priority={priority}
+              preload={priority}
               className={`${roundedClassName} ${className ?? ''} relative z-0`.trim()}
             />
             {showPreviewIcon ? (
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute right-5 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-[var(--archive-preview-border)] bg-[var(--archive-preview-background)] text-[var(--archive-preview-foreground)] shadow-lg backdrop-blur-sm"
+                className="pointer-events-none absolute right-5 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-[7px] border border-white/30 bg-black/55 text-white shadow-lg backdrop-blur-sm"
               >
                 <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="3.5" y="4" width="17" height="16" rx="2" />
@@ -111,12 +111,13 @@ export default function LightboxImage({
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
         <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-6xl -translate-x-1/2 -translate-y-1/2 outline-none">
           <Dialog.Title className="sr-only">{alt}</Dialog.Title>
+          <Dialog.Description className="sr-only">{resolvedCaption || alt}</Dialog.Description>
           <Dialog.Close asChild>
             <button
               type="button"
-              className="absolute -top-10 right-0 text-xs font-semibold uppercase tracking-[0.3em] text-white/80 hover:text-white"
+              className="absolute -top-12 right-0 inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-white/85 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
             >
-              Close
+              Close <span aria-hidden="true">✕</span>
             </button>
           </Dialog.Close>
           <div

@@ -1,187 +1,155 @@
-import Breadcrumbs from '@/components/breadcrumbs';
-import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import Image from 'next/image';
+import { CardGrid, CaseStudyHeader, CaseStudyShell, Prose, Section, Split } from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'tur-workout-tracker' as const;
 
-export const metadata: Metadata = {
-  title: 'TUR Workout Tracker',
-  description:
-    'An offline-first iPhone workout log in SwiftUI with a Garmin watch companion in Monkey C. Solo product: design, engineering, catalog and website.',
-};
+export const metadata = projectMetadata(
+  slug,
+  'An offline-first iPhone workout log in SwiftUI with a Garmin watch companion in Monkey C. Solo product: design, engineering, catalog and website.'
+);
 
-const snapshotItems = [
-  { label: 'My role', value: 'Solo developer and designer: product, iOS app, watch app, data, brand and website' },
-  { label: 'Status', value: 'Runs on a physical iPhone; Garmin and App Store release checks still open' },
-  { label: 'Stack', value: 'Swift, SwiftUI, SwiftData, HealthKit, Garmin Connect IQ (Monkey C), Cloudflare Workers' },
+const glance = [
+  { label: 'My role', value: 'Solo: product, iOS app, watch app, data, brand and website' },
+  { label: 'Built with', value: 'Swift, SwiftUI, SwiftData, HealthKit, Garmin Connect IQ (Monkey C), Cloudflare Workers' },
   { label: 'Scale', value: '806-exercise catalog, about 350 Swift files, 42 test files' },
+  { label: 'Status', value: 'Runs on a physical iPhone; Garmin and App Store release checks still open' },
 ] as const;
 
 const features = [
   {
     title: 'Fast set logging',
-    body: 'Focused weight and rep controls, supersets, circuits, warm-up, drop and failure sets, and rest timers that keep running when you leave the app. Each session starts from last time’s numbers so you know what to beat.',
+    body: "Focused weight and rep controls, supersets, circuits, warm-up, drop and failure sets, and rest timers that keep running in the background. Each session starts from last time's numbers.",
   },
   {
     title: 'Gym-swap mode',
-    body: 'Save the equipment at each gym you train in. When a gym can’t support an exercise, the app suggests the closest substitutes, ranked by shared muscles, kind of work and movement pattern, without rewriting your logged history.',
+    body: "Save the equipment at each gym. When a gym can't support an exercise, the app suggests the closest substitutes, ranked by shared muscles, kind of work and movement pattern, without rewriting history.",
   },
   {
     title: 'Heart-rate guided rest',
-    body: 'With a Garmin watch streaming heart rate, the rest bar shows your pulse coming down toward a recovery target and can end the rest automatically. It also warns you when recovery slows across sets.',
+    body: 'With a Garmin watch streaming heart rate, the rest bar shows your pulse dropping toward a recovery target, can end the rest automatically, and warns when recovery slows across sets.',
   },
   {
     title: 'Race mode',
     body: 'For hybrid races, each station splits into work and transition on a wall-clock timer, with a live gap against a ghost of your previous attempt.',
   },
   {
-    title: 'Progress you can feel',
-    body: 'A front and back muscle-load body map, a week-by-week photo timeline, estimated one-rep-max records and a shareable year-in-review, all computed on the device.',
+    title: 'Progress you can see',
+    body: 'A front-and-back muscle-load body map, a weekly photo timeline, estimated one-rep-max records and a shareable year in review, all computed on the phone.',
   },
   {
     title: 'Share without accounts',
-    body: 'Workout plans share as an image card with a QR code. Anyone with the app scans it and saves the plan, with no account and no server.',
+    body: 'Plans share as an image card with a QR code. Anyone with the app scans it and saves the plan; no account, no server.',
   },
 ];
 
 const engineering = [
   {
     title: 'Offline and private by default',
-    body: 'Records live in SwiftData on the phone with atomic commits, migration recovery copies and full backups. There is no account or server for the log itself.',
+    body: 'Records live in SwiftData on the phone with atomic commits, migration recovery copies and full backups. The log needs no account or server.',
   },
   {
-    title: 'Portable core',
-    body: 'Training rules live in a separate GymCore Swift package that the iPhone app depends on. The Garmin app mirrors the same rules (next-set rotation, rest, set validation, volume), so phone and watch agree.',
+    title: 'One set of training rules',
+    body: 'Training rules live in a separate GymCore Swift package. The Garmin app mirrors the same rules (next-set rotation, rest, set validation, volume) so phone and watch agree.',
   },
   {
     title: 'A real Garmin activity',
-    body: 'Garmin watches don’t run watchOS, so the companion is a separate Connect IQ app written in Monkey C. It records a real Strength Training activity that reaches Garmin Connect, and syncs sets and timers with the phone over a versioned message link.',
+    body: "Garmin watches don't run watchOS, so the companion is a Connect IQ app in Monkey C. It records a real Strength Training activity in Garmin Connect and syncs sets and timers with the phone over a versioned message link.",
   },
   {
     title: 'Licensed catalog',
-    body: 'The exercise catalog is normalized from openly licensed sources, keeps per-entry license metadata, and merges duplicates so renamed exercises carry their history with them.',
+    body: 'The exercise catalog is normalised from openly licensed sources, keeps per-entry licence metadata, and merges duplicates so renamed exercises keep their history.',
   },
 ];
 
 export default function TurWorkoutTrackerPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] p-8 font-sans text-[var(--foreground)] md:p-24">
-      <div className="mx-auto max-w-5xl">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'TUR Workout Tracker' },
-            ]}
-            className="mb-4"
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            An offline-first workout notebook for iPhone with a Garmin watch companion. I built it because I wanted a log that&apos;s fast
+            between sets, needs no account, and fits how I train: lifting, hybrid racing and switching gyms.
+          </p>
+        }
+        hero={
+          <iframe
+            src="/embeds/tur-site/index.html"
+            title="TUR website, interactive snapshot"
+            loading="lazy"
+            className="h-[680px] bg-[#0d0d0f] md:h-[760px]"
           />
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-            iOS · SwiftUI · Garmin Connect IQ · Solo Product
-          </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight">TUR Workout Tracker</h1>
-          <p className="mt-3 max-w-3xl text-[var(--muted)]">
-            An offline-first workout notebook for iPhone, with a Garmin watch companion. I built it because I wanted a log that is fast
-            between sets, works without an account, and understands the way I train: lifting, hybrid racing and switching between gyms.
-          </p>
-        </header>
+        }
+        heroBleed
+        heroCaption={
+          <>
+            The product website I designed and built, embedded as a working snapshot (sign-up and roadmap switched off). Try the phone
+            demo: start a workout, log three sets, see the progress. The app screens on it are design mockups, not device captures.{' '}
+            <a href="/embeds/tur-site/index.html" target="_blank" rel="noreferrer">
+              Open the site full screen
+            </a>
+          </>
+        }
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <div>
-            <div className="-mx-8 overflow-hidden border-y border-[var(--border)] bg-[#0d0d0f] shadow-[var(--shadow-strong)] sm:mx-0 sm:rounded-2xl sm:border">
-              <iframe
-                src="/embeds/tur-site/index.html"
-                title="TUR website prototype, interactive"
-                loading="lazy"
-                className="block h-[680px] w-full md:h-[760px]"
-              />
-            </div>
-            <div className="mt-3 flex flex-col gap-2 text-xs text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-              <p>
-                The product website I designed and built, embedded as a working snapshot (sign-up and roadmap are switched off).
-                Try the phone demo: start a workout, log three sets, see the progress. The app screens are design mockups, not device
-                captures.
-              </p>
-              <a
-                href="/embeds/tur-site/index.html"
-                target="_blank"
-                rel="noreferrer"
-                className="shrink-0 font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] underline underline-offset-4"
-              >
-                Open full screen
-              </a>
-            </div>
-          </div>
-
-          <ProjectAtAGlance items={snapshotItems} />
-
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-              <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">The Product</h2>
-              <p className="text-sm leading-relaxed text-[var(--muted)]">
-                Most workout apps are either too slow to use mid-set or lock your history behind an account. TUR keeps one action in
-                focus at a time, keeps every record on your phone, and lets the watch on your wrist do the timing.
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                The visual identity is a cave-wall theme: charcoal surfaces, one warm red accent for primary actions, and an
-                aurochs-horn mark. I designed the brand, the app UI and the marketing site, which includes a public feature-request
-                and roadmap portal running on Cloudflare Workers.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-[var(--border)] bg-[#0d0d0f] p-8 shadow-[var(--shadow)]">
-              <LightboxImage
-                src="/images/projects/tur-workout-tracker/tur-lockup.png"
-                alt="TUR logo: a red aurochs-horn mark next to the TUR wordmark"
-                width={900}
-                height={288}
-                className="mx-auto h-auto w-full max-w-sm object-contain"
-                roundedClassName="rounded-none"
-                popupCaption="TUR brand lockup."
-              />
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">What It Does</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {features.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Engineering</h2>
-            <div className="mb-6 rounded-xl border border-[var(--border)] bg-[var(--background)] p-5 font-mono text-xs leading-relaxed text-[var(--muted)]">
-              feature views -&gt; feature controllers<br />
-              -&gt; GymCore rules and projections<br />
-              -&gt; repository (named actions) -&gt; SwiftData records<br />
-              -&gt; after commit: Health, notifications, Garmin link
-            </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {engineering.map((item) => (
-                <div key={item.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-5">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow)]">
-            <h2 className="mb-6 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">Where It Stands</h2>
-            <p className="text-sm leading-relaxed text-[var(--muted)]">
-              The app builds in Xcode and runs on my iPhone, and the Garmin app builds for the epix Gen 2 and runs in Garmin’s device simulator. Before release I
-              still need to finish the iPhone interaction checklist, test the watch link and recording on real hardware, and validate
-              the Apple Health integration. The project keeps a written list of what has and hasn’t been verified, so the status above
-              is not a guess.
+      <CaseStudyBody>
+        <Section id="product" title="Why I built it">
+          <Split
+            media={
+              <div className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[#0d0d0f] p-8">
+                <Image
+                  src="/images/projects/tur-workout-tracker/tur-lockup.png"
+                  alt="TUR logo: a red aurochs-horn mark next to the TUR wordmark"
+                  width={900}
+                  height={288}
+                  className="mx-auto h-auto w-full max-w-sm"
+                />
+              </div>
+            }
+          >
+            <p>
+              Most workout apps are either too slow to use mid-set or lock your history behind an account. TUR keeps one action in focus
+              at a time, keeps every record on your phone, and lets the watch do the timing.
             </p>
-          </div>
-        </section>
-      </div>
-    </main>
+            <p>
+              I also designed the brand: a cave-wall theme with charcoal surfaces, one warm red for primary actions, and an aurochs-horn
+              mark. The marketing site includes a public feature-request and roadmap portal on Cloudflare Workers.
+            </p>
+          </Split>
+        </Section>
+
+        <Section id="features" title="What it does">
+          <CardGrid items={features} />
+        </Section>
+
+        <Section
+          id="engineering"
+          title="How it's built"
+          intro={
+            <pre className="overflow-x-auto rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] p-4 font-mono text-sm leading-relaxed">
+              {'feature views → feature controllers\n→ GymCore rules and projections\n→ repository (named actions) → SwiftData records\n→ after commit: Health, notifications, Garmin link'}
+            </pre>
+          }
+        >
+          <CardGrid items={engineering} columns={2} />
+        </Section>
+
+        <Section id="status" title="Where it stands">
+          <Prose>
+            <p>
+              The app builds in Xcode and runs on my iPhone. The Garmin app builds for the epix Gen 2 and runs in Garmin&apos;s device
+              simulator. Before release I still need to finish the iPhone interaction checklist, test the watch link and recording on real
+              hardware, and validate the Apple Health integration. The project keeps a written list of what has and hasn&apos;t been
+              verified, so this status isn&apos;t a guess.
+            </p>
+          </Prose>
+        </Section>
+      </CaseStudyBody>
+
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
