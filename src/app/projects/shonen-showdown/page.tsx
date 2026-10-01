@@ -1,351 +1,200 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  DeepDive,
+  Figure,
+  MediaGrid,
+  Prose,
+  Section,
+  Split,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'shonen-showdown' as const;
 
-export const metadata: Metadata = {
-  title: "Shonen Showdown",
-  description: "Lead developer on a multiplayer first-person Trading Card Game built in Unity 6 — full TCG rules engine, Photon Fusion 2 networking, and a ScriptableObject-driven card data system.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'Lead developer on a networked first-person trading card game in Unity 6: the rules engine, Photon Fusion 2 networking and a ScriptableObject card-data system.'
+);
 
-const snapshotItems = [
+const IMG = '/images/projects/shonen-showdown';
+const DOCS = '/documents/projects/shonen-showdown/recruiter';
+
+const glance = [
+  { label: 'My role', value: 'Lead developer: battle rules, turn flow, networking and card-data architecture' },
+  { label: 'Team', value: 'Three-person student team: Georgi (lead developer), Ricardo (art), Sam (data and audio)' },
+  { label: 'Built with', value: 'Unity 6 (URP), C#, Photon Fusion 2 shared mode, Photon Voice, ScriptableObjects' },
+  { label: 'Challenge', value: 'Keep turn phases, card effects, summons, attacks and visible state in sync across the network' },
+] as const;
+
+const rules = [
   {
-    label: 'My Role',
-    value: 'Lead developer responsible for battle rules, turn flow, networking, and card-data architecture',
+    title: 'Six-phase turns',
+    body: 'A TurnManager state machine enforces Draw → Standby → Main 1 → Battle → Main 2 → End, with UI feedback at each step.',
   },
   {
-    label: 'Team',
-    value: 'Three-person student team with separate ownership of scenes and systems',
+    title: 'Summoning rules',
+    body: 'Level 1–4 summon free, 5–6 need one tribute, 7+ need two. A successful summon spawns the 3D monster above the flat card.',
   },
   {
-    label: 'Stack',
-    value: 'Unity 6, C#, Photon Fusion 2, ScriptableObjects, and shared-mode networking',
+    title: 'The chain stack',
+    body: 'Last-in, first-out resolution: Attack → Trap → Quick-Spell resolve in reverse. At most three conditional effects per card, enforced in the data.',
+  },
+];
+
+const modes = [
+  { title: 'Standard Duel (1v1)', body: 'Classic rules, 8,000 life points, players across the table.' },
+  { title: 'Tag Team (2v2)', body: '16,000 shared life points, alternating turns, voice chat for everyone.' },
+  { title: 'Raid Boss (2v1)', body: 'One boss player with double life points and bonus cards against two challengers.' },
+  { title: 'Battle Royale (FFA)', body: 'Four players; the last with life points wins.' },
+];
+
+const team = [
+  {
+    title: 'Georgi: lead developer',
+    body: 'Core battle scene and logic, lobby and menus, Photon Fusion 2 networking, the turn state machine, the card-data schema and keyword architecture, VR interaction handling.',
   },
   {
-    label: 'Technical Challenge',
-    value: 'Keep turn phases, card effects, summons, attacks, and player-visible state synchronized across the network',
+    title: 'Ricardo: art (in production)',
+    body: 'Custom 3D monster models and animation, the environment, card illustration import, UI polish.',
   },
+  {
+    title: 'Sam: data and audio',
+    body: 'Card data entry, keyword assets, balance and stats, sound effects and music.',
+  },
+];
+
+const systemsBuilt = [
+  'Full six-phase turn state machine.',
+  'Last-in, first-out chain resolution.',
+  'Level-based tribute summoning.',
+  'Attack and defence damage with life-point tracking.',
+  'Drag-to-target attack declaration.',
+  'A cinematic "Showdown Phase" for boss monster clashes.',
+  'ScriptableObject card registry with keyword references.',
 ];
 
 export default function ShonenShowdownPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Shonen Showdown' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">SHONEN SHOWDOWN</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A multiplayer first-person Trading Card Game prototype — players physically hold cards, declare attacks,
-            and watch monsters spawn as 3D holograms on the board. Built in Unity 6 with Photon Fusion 2 networking.
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A networked trading card game played in first person: you hold your cards, declare attacks, and summoned monsters appear as 3D
+            holograms on the board. I was the lead developer on our three-person team, building the rules engine, the networking and the card
+            data everyone else builds on.
           </p>
-        </header>
+        }
+        hero={
+          <div className="aspect-video">
+            <LightboxVideo
+              embedUrl="https://www.youtube.com/embed/CIesifEUpTg"
+              thumbnailUrl="https://img.youtube.com/vi/CIesifEUpTg/maxresdefault.jpg"
+              title="Shonen Showdown gameplay prototype"
+              className="h-full w-full object-cover"
+              roundedClassName="rounded-none"
+            />
+          </div>
+        }
+        heroCaption="Gameplay prototype."
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
-
-          {/* Hero — Full-width video */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="aspect-video w-full">
-              <LightboxVideo
-                embedUrl="https://www.youtube.com/embed/CIesifEUpTg"
-                thumbnailUrl="https://img.youtube.com/vi/CIesifEUpTg/maxresdefault.jpg"
-                title="Shonen Showdown — Gameplay Prototype"
-                className="h-full w-full object-cover"
+      <CaseStudyBody>
+        <Section
+          id="rules"
+          title="The rules engine"
+          intro={<p>I own the core battle logic: turn management, the chain stack, summoning, damage, and keeping it all in sync over Photon Fusion 2.</p>}
+        >
+          <CardGrid items={rules} />
+          <MediaGrid>
+            <Figure caption="Turn 11: both fields full, the turn manager running the whole phase flow.">
+              <LightboxImage
+                src={`${IMG}/field-full.png`}
+                alt="Full board with monsters on both sides during the battle phase"
+                width={1674}
+                height={666}
+                className="h-auto w-full"
                 roundedClassName="rounded-none"
               />
-            </div>
-          </div>
+            </Figure>
+            <Figure caption="Drag-to-target attack declaration; the dashed line runs from attacker to target.">
+              <LightboxImage
+                src={`${IMG}/attack-declare.png`}
+                alt="Attack declaration with a red dashed arrow targeting the opponent's monster"
+                width={1481}
+                height={599}
+                className="h-auto w-full"
+                roundedClassName="rounded-none"
+              />
+            </Figure>
+          </MediaGrid>
+        </Section>
 
-          {/* Project Summary — full width */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">How It Works And What I Owned</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Shonen Showdown presents a networked card battle from first person. Players hold cards, declare attacks, and see summoned monsters appear
-                as 3D holograms on the board. Social lobbies also support proximity voice chat.
-              </p>
-              <div>
-                <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-                  3-person team with strict scene sovereignty and Git discipline.
-                  I own the core battle logic: turn management, the chain stack, summoning rules, damage calculation,
-                  Photon Fusion 2 networking, and the ScriptableObject data architecture the whole team builds on.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {['Unity 6 (URP)', 'Photon Fusion 2', 'C#', 'ScriptableObjects', 'Shared Mode Networking'].map((tag) => (
-                    <span key={tag} className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-mono uppercase tracking-[0.15em] text-[var(--muted)]">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* FP Duel (right) + Rules Engine (left) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Rules Engine & Turn System</h2>
-              <ul className="space-y-4 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">6-Phase Turn Structure:</span>
-                  TurnManager enforces Draw → Standby → Main Phase 1 → Battle → Main Phase 2 → End Phase,
-                  with state-machine transitions and UI feedback at each step.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Summoning Rules:</span>
-                  Level 1–4: Normal Summon (free). Level 5–6: Tribute 1 monster. Level 7+: Tribute 2.
-                  Successful summons trigger 3D model instantiation — the card stays flat, the avatar stands above it.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">The Stack (Chain System):</span>
-                  LIFO priority resolution — Attack → Trap → Quick-Spell resolves in reverse order.
-                  Max 3 conditional effects per card enforced at the data layer.
-                </li>
-              </ul>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
+        <Section id="data" title="Card data the team can extend">
+          <Split
+            media={
+              <Figure caption="The CardData template in the Unity inspector. I designed it; teammates add cards by filling it in.">
                 <LightboxImage
-                  src="/images/projects/shonen-showdown/duel-fp-01.png"
-                  alt="First-person duel view — player holds Celtic Guardian, opponent has Blue-Eyes White Dragon on field"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={1705}
-                  height={691}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="First-person duel perspective — cards held in hand, opponent's monsters visible across the field"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Field Full + Attack Declare — two-shot gallery */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/shonen-showdown/field-full.png"
-                  alt="Full board state with multiple monsters on both sides — Turn 11 Battle Phase"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={1674}
-                  height={666}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Turn 11 — both sides have full fields. The TurnManager enforces the full phase flow end-to-end."
-                />
-              </div>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/shonen-showdown/attack-declare.png"
-                  alt="Battle phase attack declaration — red dashed arrow targeting opponent's monster"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={1481}
-                  height={599}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Attack declaration — drag-to-target selects valid attack targets. The dashed line renders from attacker to target during the Damage Step."
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Unity Editor (right) + Data Architecture (left) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Data Architecture</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                I designed the <code className="text-[var(--foreground)] text-[11px] bg-[var(--background)] px-1.5 py-0.5 rounded">CardData</code> ScriptableObject
-                schema — ID, name, frame type, rarity, attribute, level, ATK/DEF, keyword references, and full effect text.
-                The battle engine queries the SO directly; the team populates new cards by following the template.
-              </p>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Keywords like <em>Piercing</em> and <em>SpecialSummon</em> live as separate assets, so balance
-                changes propagate instantly across every card that references them — no merge conflicts, no script edits required.
-              </p>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/shonen-showdown/unity-editor.png"
-                  alt="Unity editor showing CardData ScriptableObject inspector and card assets"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  src={`${IMG}/unity-editor.png`}
+                  alt="Unity editor with the CardData ScriptableObject inspector"
                   width={1711}
                   height={1388}
-                  className="object-cover object-top"
+                  className="h-auto w-full"
                   roundedClassName="rounded-none"
-                  popupCaption="Unity editor — CardData ScriptableObject inspector. I designed this template; the team populates new cards by following it."
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* Game Modes */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Game Modes</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { name: 'Standard Duel', format: '1v1', desc: 'Classic TCG rules. 8,000 LP. Players sit across the table.' },
-                { name: 'Tag Team', format: '2v2', desc: '16,000 shared LP. Alternating turns. Voice chat open to all.' },
-                { name: 'Raid Boss', format: '2v1', desc: 'Asymmetrical. 1 Boss player (double LP + bonus cards) vs. 2 challengers.' },
-                { name: 'Battle Royale', format: 'FFA', desc: '4-player free-for-all. Last player with LP wins.' },
-              ].map((mode) => (
-                <div key={mode.name} className="rounded-xl border border-[var(--border)] p-4 bg-[var(--background)]">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-[var(--foreground)]">{mode.name}</span>
-                    <span className="text-[10px] font-mono text-[var(--muted)] border border-[var(--border)] rounded-full px-2 py-0.5">{mode.format}</span>
-                  </div>
-                  <p className="text-xs text-[var(--muted)] leading-relaxed">{mode.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Team & Roles */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Team & Responsibilities</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                {
-                  name: 'Georgi',
-                  role: 'Lead Developer',
-                  items: [
-                    'GameScene.unity — core battle logic',
-                    'MainMenu.unity — lobby & UI (current)',
-                    'Photon Fusion 2 networking',
-                    'Turn/Phase state machine',
-                    'CardData SO schema & keyword architecture',
-                    'VR interaction handling',
-                  ],
-                  highlight: true,
-                },
-                {
-                  name: 'Ricardo',
-                  role: 'Art Lead (in production)',
-                  items: [
-                    'Custom 3D monster models & animations',
-                    'Environment design (Share House)',
-                    'Card illustration import',
-                    'UI/UX polish & menus',
-                  ],
-                  highlight: false,
-                },
-                {
-                  name: 'Sam',
-                  role: 'Data & Audio',
-                  items: [
-                    'CardData entry',
-                    'Keyword asset population',
-                    'Game balance & stats',
-                    'SFX/BGM selection & QA',
-                  ],
-                  highlight: false,
-                },
-              ].map((member) => (
-                <div key={member.name} className={`rounded-xl border p-4 ${member.highlight ? 'border-[var(--foreground)] bg-[var(--background)]' : 'border-[var(--border)] bg-[var(--background)]'}`}>
-                  <p className="text-sm font-semibold text-[var(--foreground)] mb-0.5">{member.name}</p>
-                  <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-[var(--muted)] mb-3">{member.role}</p>
-                  <ul className="space-y-1">
-                    {member.items.map((item) => (
-                      <li key={item} className="text-xs text-[var(--muted)]">— {item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Tech Stack + Systems Built */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Tech Stack</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>— Unity 6 (URP) — primary engine</li>
-                <li>— Photon Fusion 2 (Shared Mode) — real-time networking</li>
-                <li>— Photon Voice — proximity voice chat</li>
-                <li>— C# — all gameplay and networking scripts</li>
-                <li>— ScriptableObjects — card data, keyword assets, game settings</li>
-                <li>— TextMesh Pro — UI text rendering</li>
-                <li>— GitHub (private) — version control with scene sovereignty</li>
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Systems Built</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>— Full 6-phase turn state machine</li>
-                <li>— LIFO chain/stack resolution system</li>
-                <li>— Level-based tribute summoning rules</li>
-                <li>— ATK/DEF damage calculation with LP tracking</li>
-                <li>— Drag-to-target attack declaration UI</li>
-                <li>— Cinematic &quot;Showdown Phase&quot; for boss monster clashes</li>
-                <li>— ScriptableObject card registry with keyword references</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Card Database */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Live Card Database</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-              The card roster is managed in a shared Google Sheet maintained by the team&apos;s Data Lead. Each row maps a
-              card&apos;s <code className="text-[var(--foreground)] text-[11px] bg-[var(--background)] px-1.5 py-0.5 rounded">Card ID</code> to
-              its Unity Prefab Name, Frame type, Rarity, Attribute, Level, ATK/DEF, Keywords, and full Effect text.
-              A custom <strong className="text-[var(--foreground)]">Anime Race</strong> column sits alongside Standard Race —
-              so a card can be both a <em>Spellcaster</em> (game rule) and an <em>Arrancar</em> (lore).
-              Card art thumbnails are embedded directly in the sheet for fast visual review.
+              </Figure>
+            }
+          >
+            <p>
+              I designed the <code>CardData</code> ScriptableObject schema: ID, name, frame, rarity, attribute, level, attack and defence,
+              keyword references and effect text. The battle engine reads it directly.
             </p>
-            <a
-              href="https://docs.google.com/spreadsheets/d/1j0_lvJtXyrgeOpKc3R4PLXgIjcxCwakaPbCksPANC-M/edit?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]"
-            >
-              View Card Database →
-            </a>
-          </div>
+            <p>
+              Keywords such as <em>Piercing</em> and <em>SpecialSummon</em> are separate assets, so a balance change reaches every card that
+              uses them, with no script edits or merge conflicts.
+            </p>
+            <p>
+              The roster lives in a shared spreadsheet kept by our data lead. A custom &quot;anime race&quot; column sits beside the standard
+              one, so a card can be a Spellcaster by the rules and an Arrancar by lore.
+            </p>
+          </Split>
+          <ActionLinks
+            links={[
+              { href: 'https://docs.google.com/spreadsheets/d/1j0_lvJtXyrgeOpKc3R4PLXgIjcxCwakaPbCksPANC-M/edit?usp=sharing', label: 'Card database (Google Sheet)' },
+            ]}
+          />
+        </Section>
 
-          {/* Documents */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Design Documents</h2>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="/documents/projects/shonen-showdown/recruiter/shonen-showdown-gdd-v0-2.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block rounded-full border border-[var(--border)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]"
-              >
-                Game Design Document (v0.2)
-              </a>
-              <a
-                href="/documents/projects/shonen-showdown/recruiter/shonen-showdown-technical-bible-v03.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block rounded-full border border-[var(--border)] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--foreground)] transition-colors hover:border-[var(--foreground)]"
-              >
-                Technical Bible (v0.3)
-              </a>
-            </div>
-          </div>
+        <Section id="team" title="Who did what" intro={<p>We worked with strict scene ownership and Git discipline: each person owned their own scenes.</p>}>
+          <CardGrid items={team} />
+          <DeepDive summary="Game modes and the full systems list">
+            <CardGrid items={modes} columns={2} />
+            <Prose>
+              <h3>Systems I built</h3>
+            </Prose>
+            <BulletList items={systemsBuilt} />
+          </DeepDive>
+        </Section>
 
-        </section>
-      </div>
-    </main>
+        <Section id="documents" title="Design documents">
+          <ActionLinks
+            links={[
+              { href: `${DOCS}/shonen-showdown-gdd-v0-2.pdf`, label: 'Game design document v0.2 (PDF)' },
+              { href: `${DOCS}/shonen-showdown-technical-bible-v03.pdf`, label: 'Technical bible v0.3 (PDF)' },
+            ]}
+          />
+        </Section>
+      </CaseStudyBody>
+
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }

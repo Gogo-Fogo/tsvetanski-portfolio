@@ -117,3 +117,63 @@ Still hosted and unlinked; **decide whether these are yours to publish:**
 - Shortened as approved: one "The design" section (four design cards, command patterns,
   roadmap in a deep dive, Sony attribution). The lore paragraphs, project spec list and four
   extra Sony images are gone.
+
+## Shinobi Story (`/projects/shinobi-story`)
+
+- Featured highlight video is the hero; the Embla carousel (arrows + dots) is replaced by a
+  plain grid of three more videos. Order: What I did → Results → Running a live game (content
+  planning, marketing, quality reviews) → More videos (links to Shinobi Story 2).
+- All numbers kept: 1M+ downloads, 56,000 players, 16,500+ Discord, $110K, ~85% margin,
+  2019–2024.
+- **Check:** the three extra videos fall back to "Shinobi Story video" when the YouTube API
+  key is missing. Make sure `YOUTUBE_API_KEY` is set on Vercel so real titles show.
+
+## Shinobi Story 2 (`/projects/shinobi-story-2`)
+
+- Ported to the kit with light edits; ownership wording unchanged ("all mine", "my C++ layer on
+  top of third-party movement plugins"). Contents menu added.
+
+## Shonen Showdown (`/projects/shonen-showdown`)
+
+- Title no longer in capitals. Gameplay video is the hero. Order: The rules engine → Card data
+  the team can extend (with the shared card spreadsheet) → Who did what (Georgi, Ricardo, Sam)
+  → Design documents. Game modes and the full systems list are in a deep dive.
+- **Check:** are Ricardo and Sam happy to be named by first name only, or do they want surnames?
+
+## Prince of Persia: Warrior Within Mod (`/projects/prince-of-persia-warrior-within-mod`)
+
+- Gameplay capture is the hero. Contents menu. Order: rewind system → Dahaka loop → card
+  families → art and presentation (ComfyUI disclosure kept, sprite sheets in a deep dive) →
+  what the build contains (reviewer documents in a deep dive).
+- Breadcrumb said "Prince"; now the full title.
+- Rewrote the art-pipeline bullets that read like internal notes ("Prince combat proof now
+  shows… v15_fullcanvas").
+
+## Fallout 4 Level Design (`/projects/fallout-level-design`)
+
+- Renamed from "Fallout Mod (Level Design)". Order: Hall of Idols puzzle → The team level
+  (Floating Institute: challenges, optimisation) → Earlier work: Milestone One → Documents.
+- **Check, please:** the old page mixed two projects. My reading: the team level is the
+  Floating Institute (you owned the third floor), and the Hall of Idols puzzle belongs to your
+  earlier "Ashen Vale" Milestone One build, where you were project lead. The lede now says
+  exactly that. Correct me if the Hall of Idols was actually part of the team build.
+
+## Shogun: Flowers Fall in Blood (`/projects/shogun-flowers-fall-in-blood`)
+
+- March 2026 battle slice is the hero. Order: What changed since 2025 (2025 video beside the
+  current slice scope) → Support scenes → Build and art pipeline (AI-assisted art disclosed:
+  Gemini ideation, PixelLab sprites). The "Closer look" accordion is gone.
+- **Check:** the page still describes the March 2026 build. Anything newer since then?
+
+## Guilty As Arrr (`/projects/guilty-as-arrr`, was `/repo-x`)
+
+- Hero is now an in-game deck shot (the old hero, a square playtest photo, moved to the
+  Playtests section). Order: What I built → Rescoping mid-semester (docs) → Playtests →
+  Outcome.
+- **Removed claim:** "ensuring sub-50ms latency for critical social cues". I couldn't find a
+  measurement behind it. If you measured it, tell me and I'll restore it with the source.
+- Removed "portfolio-ready" and the temporary parrot avatar.
+
+## Lizard Wizard (`/projects/lizard-wizard`)
+
+- Ported to the kit; team names moved into the at-a-glance list. No new claims.

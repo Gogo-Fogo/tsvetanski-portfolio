@@ -1,300 +1,181 @@
-import Image from 'next/image';
-import Breadcrumbs from '@/components/breadcrumbs';
+import { CardGrid, CaseStudyHeader, CaseStudyShell, Figure, Prose, Section, Split } from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
+import VideoGrid from '@/components/case-study/video-grid';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
-import VideoCarousel, { type VideoCard } from '../../creative/video-carousel';
-import {
-  formatYouTubeStats,
-  getYouTubeThumbnailUrl,
-  getYouTubeVideoId,
-  getYouTubeVideoStats,
-} from '@/app/youtube';
+import LightboxVideo from '@/components/lightbox-video';
+import { formatYouTubeStats, getYouTubeThumbnailUrl, getYouTubeVideoId, getYouTubeVideoStats } from '@/app/youtube';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'shinobi-story' as const;
 
-export const metadata: Metadata = {
-  title: "Shinobi Story",
-  description: "Led content strategy and live operations for a fully custom Naruto MMORPG — complete WoW 3.3.5 client overhaul, original animations, $110K in revenue, 1M+ downloads, 56K players.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'Five years of live operations on a custom Naruto MMORPG built on an overhauled WoW 3.3.5 client: $110K revenue, 1M+ downloads, 56,000 players.'
+);
 
 export const revalidate = 3600;
 
+const glance = [
+  { label: 'My role', value: 'Live operations, content planning, animation, player support, marketing and developer mentoring' },
+  { label: 'Project', value: 'Custom MMORPG built by overhauling the World of Warcraft 3.3.5 client and gameplay systems' },
+  { label: 'Reach', value: '1M+ downloads, 56,000 players, a 16,500-member Discord' },
+  { label: 'Result', value: '$110K revenue over five live years, 2019–2024' },
+] as const;
 
-type ShinobiVideo = {
-  title: string;
-  url: string;
-  embedUrl: string;
-  note: string;
-  thumbnailUrl?: string;
-  zoomClassName?: string;
-};
+const featured = { embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0', fallbackTitle: 'Shinobi Story featured highlight' };
 
-const snapshotItems = [
-  {
-    label: 'My Role',
-    value: 'Live operations, content planning, animation, player support, marketing, and developer mentoring',
-  },
-  {
-    label: 'Project',
-    value: 'Custom MMORPG built by overhauling the World of Warcraft 3.3.5 client and gameplay systems',
-  },
-  {
-    label: 'Reach',
-    value: '1M+ downloads, 56,000 players, and a 16,500-member Discord community',
-  },
-  {
-    label: 'Commercial Result',
-    value: '$110K revenue across a five-year live project from 2019 to 2024',
-  },
+const moreVideos = [
+  { embedUrl: 'https://www.youtube.com/embed/mkfwWyJT5OU', fallbackTitle: 'Shinobi Story video' },
+  { embedUrl: 'https://www.youtube.com/embed/X1hkWDu-i9E', fallbackTitle: 'Shinobi Story video' },
+  { embedUrl: 'https://www.youtube.com/embed/3NiuTEdX1IU', fallbackTitle: 'Shinobi Story video' },
 ];
 
-const shinobiStoryVideos: ShinobiVideo[] = [
-  {
-    title: 'Shinobi Story | Featured Highlight',
-    url: 'https://youtu.be/bPsGUDkz6-0',
-    embedUrl: 'https://www.youtube.com/embed/bPsGUDkz6-0',
-    note: 'Featured video - personal milestone'
-  },
-  {
-    title: 'Shinobi Story | Video 1',
-    url: 'https://youtu.be/mkfwWyJT5OU',
-    embedUrl: 'https://www.youtube.com/embed/mkfwWyJT5OU',
-    note: 'Shinobi Story video'
-  },
-  {
-    title: 'Shinobi Story | Video 2',
-    url: 'https://youtu.be/X1hkWDu-i9E',
-    embedUrl: 'https://www.youtube.com/embed/X1hkWDu-i9E',
-    note: 'Shinobi Story video',
-    thumbnailUrl: 'https://img.youtube.com/vi/X1hkWDu-i9E/hqdefault.jpg',
-    zoomClassName: 'scale-[1.3] object-[center_65%]'
-  },
-  {
-    title: 'Shinobi Story | Video 3',
-    url: 'https://youtu.be/3NiuTEdX1IU',
-    embedUrl: 'https://www.youtube.com/embed/3NiuTEdX1IU',
-    note: 'Shinobi Story video'
-  }
+const results = [
+  { title: 'Scale', body: '1M+ downloads, 56,000 players and a 16,500+ member Discord community.' },
+  { title: 'Revenue', body: '$110K total revenue at roughly an 85% margin, with low cost of goods.' },
+  { title: 'Longevity', body: 'Engagement sustained across a five-year live project, 2019–2024.' },
 ];
 
 export default async function ShinobiStoryPage() {
-  const videoIds = shinobiStoryVideos
-    .map((video) => getYouTubeVideoId(video.embedUrl))
-    .filter(Boolean);
-  const statsById = await getYouTubeVideoStats(videoIds);
-
-  const getStatsText = (embedUrl: string) => {
-    const videoId = getYouTubeVideoId(embedUrl);
-    return formatYouTubeStats(statsById.get(videoId));
-  };
-
-  const getTitle = (embedUrl: string, fallbackTitle: string) => {
-    const videoId = getYouTubeVideoId(embedUrl);
-    return statsById.get(videoId)?.title ?? fallbackTitle;
-  };
-
-  const videoCards: VideoCard[] = shinobiStoryVideos.map((video) => ({
-    title: getTitle(video.embedUrl, video.title),
-    url: video.url,
-    embedUrl: video.embedUrl,
-    thumbnailUrl: video.thumbnailUrl ?? getYouTubeThumbnailUrl(video.embedUrl),
-    note: video.note,
-    statsText: getStatsText(video.embedUrl),
-    className: video.zoomClassName,
-  }));
+  const ids = [featured, ...moreVideos].map((video) => getYouTubeVideoId(video.embedUrl));
+  const stats = await getYouTubeVideoStats(ids);
+  const titleOf = (embedUrl: string, fallback: string) => stats.get(getYouTubeVideoId(embedUrl))?.title ?? fallback;
+  const metaOf = (embedUrl: string) => formatYouTubeStats(stats.get(getYouTubeVideoId(embedUrl)));
 
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Shinobi Story' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Shinobi Story</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            A custom Naruto MMORPG with original animation, rebuilt gameplay systems, weekly content releases, and five years of live operations. I grew
-            from customer support into animation, content production, marketing, and developer mentoring.
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A custom Naruto MMORPG with original animation, rebuilt gameplay systems, weekly content and five years of live operations. I
+            started in customer support and grew into animation, content production, marketing and mentoring new developers.
           </p>
-        </header>
-
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
-
-          {/* Hero Banner */}
-          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] max-w-2xl mx-auto border-2 border-[#D8B33C]">
-            <Image
-              src="/images/ShinobiStoryBanner.jpg"
-              alt="Shinobi Story banner"
-              width={1600}
-              height={900}
-              className="h-auto w-full object-cover rounded-2xl"
+        }
+        hero={
+          <div className="aspect-video">
+            <LightboxVideo
+              embedUrl={featured.embedUrl}
+              thumbnailUrl={getYouTubeThumbnailUrl(featured.embedUrl)}
+              title={titleOf(featured.embedUrl, featured.fallbackTitle)}
+              className="h-full w-full object-cover"
+              roundedClassName="rounded-none"
             />
           </div>
+        }
+        heroCaption={
+          <>
+            The featured highlight video{metaOf(featured.embedUrl) ? ` · ${metaOf(featured.embedUrl)}` : ''}.
+          </>
+        }
+        glance={glance}
+      />
 
-          {/* Featured Video Highlight */}
-          <div className="space-y-8">
-            <div className="space-y-2 text-center">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)]">
-                Featured Video Highlight
-              </h2>
-              <p className="text-sm text-[var(--muted)]">
-                The main showcase video — start here.
+      <CaseStudyBody>
+        <Section
+          id="what-i-did"
+          title="What I did"
+          intro={
+            <>
+              <p>
+                The team used the WoW 3.3.5 client as a technical base, then replaced its characters, abilities, animation, combat and
+                supporting systems to make a distinct MMORPG.
               </p>
-            </div>
-            <div className="relative z-10">
-              <VideoCarousel items={videoCards} />
-            </div>
-          </div>
+              <p>
+                I began in customer support, which taught me what the community actually felt, then moved into development: character and
+                ability animation, guiding new developers through scripting, level design and debugging, and shaping content rollouts and
+                training material.
+              </p>
+            </>
+          }
+        />
 
-          {/* Business Impact & Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="space-y-6">
-              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Live-Ops Performance</h2>
-                <ul className="space-y-4 text-sm text-[var(--muted)]">
-                  <li>
-                    <span className="text-[var(--foreground)] font-medium block">Scale & Community:</span>
-                    1M+ downloads, 56,000 players, and a 16,500+ member Discord community.
-                  </li>
-                  <li>
-                    <span className="text-[var(--foreground)] font-medium block">Commercial Success:</span>
-                    $110k total revenue with an ~85% margin and low COGS.
-                  </li>
-                  <li>
-                    <span className="text-[var(--foreground)] font-medium block">Longevity:</span>
-                    Sustained engagement across a 5-year project lifecycle (2019–2024).
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <Section id="results" title="Results">
+          <CardGrid items={results} />
+        </Section>
 
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Narrative</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                The team used the WoW 3.3.5 client as a technical base, then replaced its characters, abilities, animation, combat, and supporting gameplay
-                systems to create a distinct MMORPG.
-              </p>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I started in customer support to learn the live community pulse, then transitioned into development. I contributed character and ability animations, guided new developers in scripting, level design, and debugging, and shaped content rollouts and training resources.
-              </p>
-            </div>
-          </div>
-
-          {/* Marketing & Content Strategy */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/SS_MarketingCampaign.png"
-                  alt="Shinobi Story marketing campaign"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={1200}
-                  height={900}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                />
-              </div>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Marketing Rollouts</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I built promo materials timed to major content drops — update trailers, event graphics, and community announcements designed around peak player activity windows.
-              </p>
-            </div>
-          </div>
-
-          {/* Content Strategy Alternating */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-2">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Content Planning</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I mapped content drops to player progression milestones — quests, story beats, and seasonal events timed to keep both new players and 5-year veterans coming back.
-              </p>
-            </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-1">
-              <div className="relative aspect-video w-full">
+        <Section id="live-ops" title="Running a live game">
+          <Split
+            media={
+              <Figure>
                 <LightboxImage
                   src="/images/SS_NewContentStrategy.png"
-                  alt="Shinobi Story new content strategy"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt="Shinobi Story content planning board"
                   width={1200}
                   height={900}
-                  className="object-cover"
+                  className="h-auto w-full"
                   roundedClassName="rounded-none"
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Optimization / Quality */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
+              </Figure>
+            }
+          >
+            <h3>Content planning</h3>
+            <p>
+              I mapped content drops to player progression: quests, story beats and seasonal events timed to keep both new players and
+              five-year veterans coming back.
+            </p>
+          </Split>
+          <Split
+            reverse
+            media={
+              <Figure>
+                <LightboxImage
+                  src="/images/SS_MarketingCampaign.png"
+                  alt="Shinobi Story marketing campaign graphics"
+                  width={1200}
+                  height={900}
+                  className="h-auto w-full"
+                  roundedClassName="rounded-none"
+                />
+              </Figure>
+            }
+          >
+            <h3>Marketing rollouts</h3>
+            <p>
+              Promo material timed to major content drops: update trailers, event graphics and community announcements planned around peak
+              player hours.
+            </p>
+          </Split>
+          <Split
+            media={
+              <Figure>
                 <LightboxImage
                   src="/images/SS_BeforeAndAfter.png"
-                  alt="Shinobi Story before and after visual optimization"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt="Before and after comparison of a Shinobi Story area"
                   width={1200}
                   height={900}
-                  className="object-cover"
+                  className="h-auto w-full"
                   roundedClassName="rounded-none"
                 />
-              </div>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Visual & Technical Polish</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                I built a before/after audit workflow to standardize level quality — reviewing community-created areas against official content benchmarks.
-              </p>
-              <p className="text-sm text-[var(--muted)] leading-relaxed font-medium text-[var(--foreground)]">
-                Focus: Environmental lighting, asset density, and player pathfinding clarity.
-              </p>
-            </div>
-          </div>
+              </Figure>
+            }
+          >
+            <h3>Quality reviews</h3>
+            <p>
+              A before-and-after review process to hold community-built areas to the standard of official content, focused on lighting, asset
+              density and how clearly players can find their way.
+            </p>
+          </Split>
+        </Section>
 
-        </section>
-      </div>
-    </main>
+        <Section id="videos" title="More videos">
+          <VideoGrid
+            items={moreVideos.map((video) => ({
+              title: titleOf(video.embedUrl, video.fallbackTitle),
+              embedUrl: video.embedUrl,
+              thumbnailUrl: getYouTubeThumbnailUrl(video.embedUrl),
+              meta: metaOf(video.embedUrl),
+            }))}
+          />
+          <Prose>
+            <p>
+              The sequel is in development in Unreal Engine 5: see <a href="/projects/shinobi-story-2">Shinobi Story 2</a>.
+            </p>
+          </Prose>
+        </Section>
+      </CaseStudyBody>
+
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

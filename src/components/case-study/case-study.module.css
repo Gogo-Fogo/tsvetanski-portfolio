@@ -541,3 +541,37 @@
     transition: none;
   }
 }
+
+/* Video grid */
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem 1rem;
+}
+
+.videoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.videoThumb {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.videoTitle {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.videoMeta {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}

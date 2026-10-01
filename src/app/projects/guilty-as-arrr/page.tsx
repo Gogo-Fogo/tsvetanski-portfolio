@@ -1,349 +1,167 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  DeepDive,
+  Figure,
+  MediaGrid,
+  Section,
+  Split,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'guilty-as-arrr' as const;
 
-export const metadata: Metadata = {
-  title: "Guilty As Arrr",
-  description: "Real-time spatial audio deduction game in Unity with Photon Fusion — multi-user networked multiplayer with role-based social mechanics.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'A networked pirate social-deduction game in Unity with Photon Fusion and proximity voice. I led the team and rescoped it to a working multiplayer slice.'
+);
 
-const snapshotItems = [
-  { label: 'My role', value: 'Team lead, systems developer, and playtest coordinator' },
-  { label: 'Core challenge', value: 'Keep proximity voice and social cues readable over a network' },
+const IMG = '/images/projects/guilty-as-arr';
+const DOCS = '/documents/projects/guilty-as-arrr/recruiter';
+
+const glance = [
+  { label: 'My role', value: 'Team lead, systems developer and playtest coordinator' },
   { label: 'Built with', value: 'Unity URP, Photon Fusion, Photon Voice 2' },
-  { label: 'Result', value: 'Testable multiplayer slice rescoped and delivered within one semester' },
+  { label: 'Challenge', value: 'Keep proximity voice and social cues readable over a network' },
+  { label: 'Result', value: 'A testable multiplayer slice, rescoped and delivered within one semester' },
 ] as const;
 
-
-const guiltyDocuments = [
+const contributions = [
   {
-    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-gdd-original.docx',
-    label: 'Original GDD',
+    title: 'Proximity voice',
+    body: 'Photon Voice 2 attenuates speech by in-game distance and direction. I tuned the baselines for clarity and social tension, so deception and accusation both work.',
   },
   {
-    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-gdd-rescoped.docx',
-    label: 'Rescoped GDD',
+    title: 'Session flow',
+    body: 'Lightweight session management and round rules on Photon Fusion, kept simple so playtests stayed reliable after the rescope.',
   },
   {
-    href: '/documents/projects/guilty-as-arrr/recruiter/guilty-as-arrr-dgc-community.docx',
-    label: 'DGC & Community Notes',
+    title: 'Spatial cues',
+    body: 'Balanced visual and audio feedback so players can read each other in chaotic rounds.',
+  },
+  {
+    title: 'Scope and delivery',
+    body: 'Re-prioritised the backlog and cut non-essential features so the remaining systems could be polished and documented.',
   },
 ];
 
-const guiltyPlaytestImage = {
-  src: '/images/GuiltyAsArr_Playtest.png',
-  alt: 'Guilty As Arrr playtester pushing collision boundaries and exploring ship traversal routes',
-  width: 1031,
-  height: 1029,
-};
+const rescope = [
+  'Reframed the goal from a broad feature set to a stable multiplayer prototype.',
+  'Prioritised session flow, proximity voice and readable social feedback.',
+  'Tracked ownership and weekly priorities on Trello, re-ranking after every playtest to protect core gameplay over polish.',
+];
 
-const guiltyParrotImage = {
-  src: '/images/GuiltyAsArr_Parrot.png',
-  alt: 'Temporary pirate-themed avatar icon used on the project social profile',
-  width: 512,
-  height: 512,
-};
-
-const guiltyXProfileImage = {
-  src: '/images/GuiltyAsArr_XProfile.png',
-  alt: 'GuiltyAsArrDev X profile used for community-facing updates',
-  width: 2048,
-  height: 893,
-};
-
-export default function RepoXCaseStudy() {
+export default function GuiltyAsArrrPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Guilty As Arrr' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Guilty As Arrr</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Multiplayer pirate social deduction prototype focused on real-time spatial audio attenuation and networked systems.
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A multiplayer pirate social-deduction game built around proximity voice: distance and direction change who can hear you, so where
+            you stand is part of every private conversation and accusation. I led the team, built the core systems and ran the playtests.
           </p>
-        </header>
+        }
+        hero={
+          <LightboxImage
+            src={`${IMG}/deck-helm.png`}
+            alt="First-person view of the ship deck and helm with a tropical island behind"
+            width={2231}
+            height={957}
+            priority
+            className="h-auto w-full"
+            roundedClassName="rounded-none"
+          />
+        }
+        heroCaption="The ship deck in the playable build."
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
+      <CaseStudyBody>
+        <Section id="what-i-built" title="What I built">
+          <CardGrid items={contributions} columns={2} />
+        </Section>
 
-          {/* Hero — playtest highlight */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-            <div className="relative aspect-video w-full">
-              <LightboxImage
-                src={guiltyPlaytestImage.src}
-                alt={guiltyPlaytestImage.alt}
-                fill
-                sizes="100vw"
-                width={guiltyPlaytestImage.width}
-                height={guiltyPlaytestImage.height}
-                className="object-cover object-top"
-                roundedClassName="rounded-none"
-                popupCaption="Playtest highlight — a tester pushed traversal and collision boundaries, revealing useful movement edge-cases."
-              />
-            </div>
-          </div>
-
-          {/* Overview & Core Mechanic */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Guilty As Arrr is a multiplayer pirate social deduction prototype. The core gameplay revolves around
-              <span className="text-[var(--foreground)] font-medium"> proximity voice</span>: physical distance and direction change
-              who players can hear, so positioning becomes part of every private conversation and accusation.
+        <Section
+          id="rescope"
+          title="Rescoping mid-semester"
+          intro={
+            <p>
+              Midway through, a teammate left the class. That forced a full scope reset and moved more of the implementation, testing and
+              delivery onto me. Instead of over-promising, I narrowed the project to a working multiplayer slice we could finish and test.
             </p>
-          </div>
+          }
+        >
+          <BulletList items={rescope} />
+          <ActionLinks
+            links={[
+              { href: `${DOCS}/guilty-as-arrr-gdd-original.docx`, label: 'Original GDD (Word)' },
+              { href: `${DOCS}/guilty-as-arrr-gdd-rescoped.docx`, label: 'Rescoped GDD (Word)' },
+              { href: `${DOCS}/guilty-as-arrr-dgc-community.docx`, label: 'Community notes (Word)' },
+            ]}
+          />
+        </Section>
 
-          {/* In-game screenshots */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
+        <Section id="playtests" title="Playtests">
+          <Split
+            media={
+              <Figure caption="A tester used collision seams to climb the rigging, then walked along a rope.">
                 <LightboxImage
-                  src="/images/projects/guilty-as-arr/deck-helm.png"
-                  alt="Ship deck with helm — first-person view, tropical island in background"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={2231}
-                  height={957}
-                  className="object-cover"
+                  src="/images/GuiltyAsArr_Playtest.png"
+                  alt="Playtester exploring ship traversal routes and collision boundaries"
+                  width={1031}
+                  height={1029}
+                  className="h-auto w-full"
                   roundedClassName="rounded-none"
-                  popupCaption="Ship deck — the helm and open ocean. Low-poly environment with colorful tropical backdrop."
                 />
-              </div>
-            </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/guilty-as-arr/ship-interior.png"
-                  alt="Ship interior hold — cannonballs stacked, round enemy on deck, amber light through windows"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={2242}
-                  height={945}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Ship hold interior — warm amber lighting, stacked cannonballs, and traversable geometry that players used in unexpected ways during playtests."
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Rescope & Production Reality</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Midway through development, one teammate left the class. That shift required a full scope reset and moved a larger share
-              of implementation, testing, and delivery onto my workload. Instead of over-promising, I narrowed the project to a realistic,
-              working multiplayer slice that could be completed and tested within the semester.
+              </Figure>
+            }
+          >
+            <p>
+              My favourite part of development is watching people either play the intended loop or break it creatively. In one session a tester
+              climbed higher than we expected using collision seams, then walked a rope like a true pirate.
             </p>
-            <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-              <li>- Reframed the target from a broad feature set to a stable multiplayer prototype.</li>
-              <li>- Prioritized core systems: session flow, voice proximity logic, and readable social feedback.</li>
-              <li>- Focused on testable delivery and documentation to keep the project useful beyond class scope.</li>
-            </ul>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Team Lead Workflow (Trello)</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              I used Trello as the team lead to keep the project moving after the rescope. The board tracked
-              ownership, weekly priorities, and what the smaller team could finish.
+            <p>
+              <strong>Feature, not a bug</strong>, and useful data for navigation boundaries, movement readability and player freedom.
             </p>
-            <ul className="mt-5 space-y-3 text-sm text-[var(--muted)]">
-              <li>- Broke work by teammate and system area so accountability stayed clear.</li>
-              <li>- Re-ranked cards after each playtest to protect core gameplay over optional polish.</li>
-              <li>- Used the board to communicate tradeoffs quickly when capacity changed.</li>
-            </ul>
-          </div>
+            <p>I also ran a project social account to share progress and collect playtest feedback.</p>
+          </Split>
+          <DeepDive summary="More screenshots">
+            <MediaGrid>
+              <Figure caption="The ship hold: warm light and geometry players used in unexpected ways.">
+                <LightboxImage src={`${IMG}/ship-interior.png`} alt="Ship hold interior with stacked cannonballs" width={2242} height={945} className="h-auto w-full" roundedClassName="rounded-none" />
+              </Figure>
+              <Figure caption="The ship scene in the Unity editor.">
+                <LightboxImage src={`${IMG}/ship-editor.png`} alt="Unity editor with the pirate ship scene" width={3608} height={1394} className="h-auto w-full" roundedClassName="rounded-none" />
+              </Figure>
+              <Figure caption="The ocean level the ship travels through.">
+                <LightboxImage src={`${IMG}/level-ocean.png`} alt="Ocean level with dark rock formations in the Unity editor" width={4417} height={1393} className="h-auto w-full" roundedClassName="rounded-none" />
+              </Figure>
+              <Figure caption="The project's X profile for community updates.">
+                <LightboxImage src="/images/GuiltyAsArr_XProfile.png" alt="Guilty As Arrr X profile" width={2048} height={893} className="h-auto w-full" roundedClassName="rounded-none" />
+              </Figure>
+            </MediaGrid>
+          </DeepDive>
+        </Section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Community Updates</h2>
-              <div className="mb-5 w-24">
-                <LightboxImage
-                  src={guiltyParrotImage.src}
-                  alt={guiltyParrotImage.alt}
-                  width={guiltyParrotImage.width}
-                  height={guiltyParrotImage.height}
-                  className="h-auto w-full rounded-xl bg-[var(--background)] p-2"
-                  popupCaption="Temporary avatar icon used for the Guilty As Arrr social profile."
-                />
-              </div>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                I used a dedicated social profile to share progress and collect playtest feedback.
-                The avatar was just a temporary visual marker, while the main goal was keeping updates visible and organized for the team and testers.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-4 shadow-[var(--shadow)]">
-              <LightboxImage
-                src={guiltyXProfileImage.src}
-                alt={guiltyXProfileImage.alt}
-                width={guiltyXProfileImage.width}
-                height={guiltyXProfileImage.height}
-                className="h-auto w-full rounded-xl object-cover"
-                popupCaption="Community-facing X profile used for the Guilty As Arrr project."
-              />
-            </div>
-          </div>
-
-          {/* Editor screenshots */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/guilty-as-arr/ship-editor.png"
-                  alt="Unity editor — detailed pirate ship scene with foliage, ropes, and treasure chest selected"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={3608}
-                  height={1394}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Unity editor — ship deck scene. Detailed low-poly geometry with foliage, rigging, and interactive props."
-                />
-              </div>
-            </div>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="relative aspect-video w-full">
-                <LightboxImage
-                  src="/images/projects/guilty-as-arr/level-ocean.png"
-                  alt="Unity editor — ocean level with floating dark rock formations and volcanic background"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  width={4417}
-                  height={1393}
-                  className="object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption="Ocean level in the Unity editor — floating rock formations and lava backdrop. The ship traverses this environment during gameplay."
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Implementation & Contributions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Network Architecture</h2>
-              <ul className="space-y-4 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Photon Fusion:</span>
-                  Built for high-performance networked state synchronization, ensuring sub-50ms latency for critical social cues.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Photon Voice 2:</span>
-                  Integrated for spatial voice proximity, dynamically attenuating audio based on in-game distances.
-                </li>
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Key Contributions</h2>
-              <ul className="space-y-4 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Proximity Voice Logic:</span>
-                  Designed and tuned baselines for audio clarity and social tension, crucial for effective deception and accusation.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Multiplayer Session Flow Ownership:</span>
-                  Carried implementation of lightweight session management and round rules to keep playtests reliable under the rescoped plan.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Spatial UX Cues:</span>
-                  Balanced visual and audio feedback to support player reads in chaotic, fast-paced multiplayer rounds.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Scope & Delivery Management:</span>
-                  Re-prioritized backlog and cut non-essential features so the remaining systems could be polished and documented.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Tools & Outcome */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Tools & Technologies</h2>
-              <ul className="space-y-2 text-sm text-[var(--muted)]">
-                <li>- Unity (URP)</li>
-                <li>- Photon Fusion (Networking)</li>
-                <li>- Photon Voice 2 (Spatial Audio)</li>
-                <li>- Gameplay Input & Interaction Systems</li>
-              </ul>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Outcome</h2>
-              <p className="text-[var(--muted)] text-sm">
-                Delivered a testable multiplayer slice that validated the social loop, stayed realistic after the team-size change, and established a documented foundation for future expansion.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Playtest Highlight</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                One of my favorite parts of development is watching people playtest and either experience the intended loop or completely break it in creative ways.
-                In this session, a tester pushed the ship traversal limits, used collision seams to climb higher than expected, and then walked along a rope like a true pirate.
-              </p>
-              <p className="mt-4 text-sm text-[var(--foreground)] font-medium">
-                Feature, not a bug.
-              </p>
-              <p className="mt-2 text-xs text-[var(--muted)]">
-                That moment became useful design data for navigation boundaries, movement readability, and player freedom.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-4 shadow-[var(--shadow)]">
-              <LightboxImage
-                src={guiltyPlaytestImage.src}
-                alt={guiltyPlaytestImage.alt}
-                width={guiltyPlaytestImage.width}
-                height={guiltyPlaytestImage.height}
-                className="h-auto w-full rounded-xl object-cover"
-                popupCaption="Playtest moment where emergent movement and collision edge-cases revealed unexpected but fun ship traversal behavior."
-              />
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Documents</h2>
-            <p className="text-sm text-[var(--muted)] mb-6">
-              Supporting documents, including the original plan and the rescoped version used after team capacity changed.
+        <Section
+          id="outcome"
+          title="Outcome"
+          intro={
+            <p>
+              A testable multiplayer slice that proved the social loop and stayed realistic after the team shrank. The lesson was production
+              judgement: with less capacity, I traded feature breadth for execution quality and still shipped something coherent and testable.
             </p>
-            <div className="flex flex-wrap gap-3">
-              {guiltyDocuments.map((document) => (
-                <a
-                  key={document.href}
-                  href={document.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-                >
-                  {document.label}
-                </a>
-              ))}
-            </div>
-          </div>
+          }
+        />
+      </CaseStudyBody>
 
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Reflection</h2>
-            <p className="text-[var(--muted)] text-sm leading-relaxed">
-              This project became an exercise in realistic production judgment. With less team capacity than planned, I shifted from
-              feature breadth to execution quality and pushed as far as possible within constraints while still delivering something
-              testable, coherent, and portfolio-ready.
-              </p>
-            </div>
-        </section>
-      </div>
-    </main>
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
-
-
-
-
