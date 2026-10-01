@@ -106,3 +106,21 @@ Each project should have:
 - Morville, P., & Rosenfeld, L. (2006). *Information Architecture for the World Wide Web*.
 - Wodtke, C., & Govella, A. (2009). *Information Architecture: Blueprints for the Web*.
 - Nielsen Norman Group (2022). *Polyhierarchy in Information Architecture* (video).
+
+---
+
+## 7) Current structure (October 2026 overhaul)
+
+- **Global navigation** on every page: logo (home) · Projects · About · Contact (jumps to the
+  footer), plus search (Ctrl/⌘K command palette) and the theme button. Creative is reached
+  through the Creative category and the homepage tab, not the top nav.
+- **One label per place:** "Projects" is the page, its h1, its breadcrumb and its URL
+  (`/projects`). Category labels come only from `src/content/categories.ts`.
+- **Polyhierarchy is implemented:** each project in `src/content/projects.ts` has
+  `categories` (any number) and one `primaryCategory` (used for "Next in …" and ordering).
+- **Breadcrumbs = hierarchy:** `Home / Projects / {Project}` on every case study, including
+  `/cpse`. Category chips under the title link to `/projects?category=…`.
+- **Deep-entry recovery:** every case study ends with "Next in {category}", two related projects
+  and "All {category} projects", followed by the site-wide contact footer.
+- **Redirects** keep old links working: `/career` (and `?filter=games|xr|tools`), `repo-x`,
+  `vr-microgames`, `vr-interaction-lab`, `breda`, `v4n-gogo-figurine-lab`.

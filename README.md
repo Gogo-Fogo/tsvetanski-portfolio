@@ -17,11 +17,12 @@ Before pushing, `npm run lint` and `npm run build` must both pass.
 
 | Path | What's there |
 |---|---|
-| `src/app/` | Routes: homepage, `about`, `career` (the full project list), `creative`, `cpse`, `projects/<slug>` case studies, sitemap |
-| `src/components/` | Shared UI: homepage, lightboxes, breadcrumbs, command palette, degree graph |
+| `src/content/` | The project registry and category labels that every page reads from |
+| `src/app/` | Routes: homepage, `projects` (the full list) and `projects/<slug>` case studies, `about`, `creative`, `cpse`, sitemap, share image |
+| `src/components/` | Site shell (`site/`), case-study kit (`case-study/`), shared UI (`ui/`), lightboxes, command palette, degree graph |
 | `public/images/` | Site images; case-study media lives in `public/images/projects/<slug>/` |
 | `art-source/` | Full-resolution artwork; `scripts/build-creative-art.py` builds the `/creative` gallery from it |
-| `scripts/` | Art pipeline, agent-skill installer, UI snapshot scripts |
+| `scripts/` | Art and card-image pipelines, portrait cutout, agent-skill installer, UI snapshot and sweep scripts |
 | `CONTEXT/` | IA guidelines, page blueprint, UX audits, background docs |
 | `.agents/skills/` | Pinned agent skills for UX, interaction design and IA work |
 
@@ -49,8 +50,9 @@ were left out.
 ```bash
 npm run build
 npx next start -p 3000 -H 127.0.0.1
-node scripts/ui-snapshots/capture.mjs   # home, about, career at 1440 and 390 px, light and dark
+node scripts/ui-snapshots/capture.mjs   # key pages at 1440/768/375 px, light and dark
 node scripts/ui-snapshots/verify.mjs
+node scripts/ui-snapshots/sweep.mjs     # every route: no sideways scroll, one main, one h1
 ```
 
 Screenshots land in `tmp/graph-shots/` (git-ignored). The capture script drives a local

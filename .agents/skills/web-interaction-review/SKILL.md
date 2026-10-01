@@ -56,11 +56,11 @@ Walk at least tasks 1–3 on a phone width for any homepage change, and 3–5 fo
 ## 1. Navigation and labels
 
 - Global navigation stays small: Projects, About, Contact. Category names match everywhere
-  (homepage tabs, `/career` filters, case-study kickers): `XR + Simulation`,
+  (homepage tabs, `/projects` tabs, case-study category chips; all from `src/content/categories.ts`): `XR + Simulation`,
   `Gameplay Systems`, `Tools & AI`, `Creative`.
 - Tabs switch peer views of the same content and use `aria-pressed` toggle buttons or a full
   ARIA tab pattern with arrow-key support, never a half-implemented one.
-- Filters on `/career` are shareable through the URL (`?filter=`); keep them that way.
+- The `/projects` category and search are shareable through the URL (`?category=&q=`); keep them that way.
 - Every case study has breadcrumbs (`Home / Projects / Name`) and a visible way back.
 - Labels predict their destination. Avoid vague umbrellas ("Works", "More", "Stuff").
 
@@ -71,8 +71,8 @@ Walk at least tasks 1–3 on a phone width for any homepage change, and 3–5 fo
   is reachable by tap.
 - No horizontal page scroll at 375 px. Horizontally scrolling rows (tabs) show that more items
   exist (a cut-off item or fade), and have no visible scrollbar.
-- Fixed controls (Command palette pill bottom-left, theme toggle, contact bubble) must not
-  cover primary content or CTAs at rest or at the end of the page. Leave bottom padding.
+- The only fixed control is the contact bubble (inner pages; it hides while the footer is in
+  view). Theme and search live in the header. Don't add floating buttons.
 - Embedded iframes run full-bleed on phones when their content needs more width than the
   padded column (see the TUR site embed).
 - Primary actions sit within thumb reach and are not crowded by destructive or secondary ones.
@@ -109,8 +109,10 @@ Walk at least tasks 1–3 on a phone width for any homepage change, and 3–5 fo
 1. **Scope.** Name the pages and states the change touches, and which visitor tasks they serve.
 2. **Read the code** for evidence: components, CSS modules, routes. Cite `file:line`.
 3. **Run the site** (`npm run build` then `npx next start -p 3000 -H 127.0.0.1`).
-4. **Capture** with `node scripts/ui-snapshots/capture.mjs` (home, about and career at
-   1440 × 1100 and 390 × 844, light and dark), then `node scripts/ui-snapshots/verify.mjs`.
+4. **Capture** with `node scripts/ui-snapshots/capture.mjs` (key pages at 1440, 768 and 375 px,
+   light and dark; shot list in `scripts/ui-snapshots/shots.mjs`), then
+   `node scripts/ui-snapshots/verify.mjs`, then `node scripts/ui-snapshots/sweep.mjs` for every
+   route.
    For pages the script does not cover, use the browser tools at 375, 768 and 1440 px, and
    check `document.documentElement.scrollWidth` equals the viewport width.
 5. **Look at every screenshot.** Check the tasks above, overlap, clipping, contrast, and
