@@ -210,3 +210,50 @@ Still hosted and unlinked; **decide whether these are yours to publish:**
 ## Legion Go Console Dock (`/projects/legion-go-console-dock`)
 
 - Ported to the kit; no copy changes beyond trimming.
+
+## Cranky (Game Jam 2024) (`/projects/cranky-game-jam`)
+
+- Hero is the pug rig (the old banner had a printed title). Order: The pug, from model to game
+  → Running the jam → Results (links, thanks to Julian Apostolov).
+- **Contradiction resolved toward the at-a-glance list:** the old metadata said "Lead
+  Animator and Co-Designer"; the role list said "Project manager, 3D artist, and animator".
+  I used the role list everywhere. Tell me if "co-designer" should be added.
+- **Check:** Global Game Jam is usually a 48-hour event; the page says "one week". Was your
+  site's jam really a week?
+
+## Cranky: The Squirrel Annihilator (`/projects/cranky-squirrel-annihilator`)
+
+- Gameplay video is the hero; itch.io link in the header; 3D pug viewer kept. Thanks
+  condensed into one line.
+
+## Totally Bugged Out (`/projects/totally-bugged-out`)
+
+- Title no longer in capitals. Gameplay video is the hero. Fixed the zero-height image
+  containers the old page had.
+
+## The Signal (`/projects/the-signal`)
+
+- The finished game is the hero. Order: Design pillars (+ walkthrough video) → Story and
+  visuals → Balancing (sheets and docs). Duplicate images and the duplicate "Overview" are
+  gone; the 38 Adobe Stock IDs moved into a collapsed "Image credits" block (approved).
+
+## The Last Paycheck (`/projects/the-last-paycheck`)
+
+- Short concept page: header with the GDD link, banner, three design-focus cards.
+
+## Trash Been (`/projects/trash-been`, absorbs `/projects/breda`)
+
+- Merged as approved; `/projects/breda` redirects here. Live demo video is the hero.
+- "May 2022" and "helped secure my acceptance to Breda" kept from the old page.
+- **Check:** should it say "Breda University of Applied Sciences" in full?
+
+## Horror VN Kit (`/projects/horror-vn-kit`)
+
+- Ported to the kit; Eden credited as writer and artist in the lede, glance and hero caption.
+
+## Figuresmith (`/projects/figuresmith`)
+
+- The seven YouTube Shorts no longer load seven live players up front; they're click-to-play
+  thumbnails. Title shortened to "Figuresmith" (the lede still says Figuresmith LLC).
+- No hero image: the page has no local photos. Send a good photo of a finished figure and I'll
+  use it as the hero and the card image.

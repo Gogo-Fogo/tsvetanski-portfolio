@@ -1,103 +1,71 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import { ActionLinks, CardGrid, CaseStudyHeader, CaseStudyShell, Section } from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'the-last-paycheck' as const;
 
-export const metadata: Metadata = {
-  title: "The Last Paycheck",
-  description: "Narrative and systems design document for a dystopian 2050 board game — poverty, unstable jobs, inflation pressure, and player emotional engagement.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'Narrative and systems design document for a dystopian 2050 board game about poverty, unstable work and inflation. Concept only.'
+);
 
-const snapshotItems = [
-  { label: 'Status', value: 'Completed design document; no playable build' },
+const glance = [
   { label: 'My role', value: 'Solo narrative and systems designer' },
-  { label: 'Design focus', value: 'Economic pressure, unstable work, and family trade-offs' },
+  { label: 'Focus', value: 'Economic pressure, unstable work and family trade-offs' },
   { label: 'Deliverable', value: 'Board-game concept and full game design document' },
+  { label: 'Status', value: 'Completed design document; no playable build' },
 ] as const;
 
+const focus = [
+  { title: 'Narrative systems', body: 'Social pressure and personal trade-offs in a harsh economy.' },
+  { title: 'Economic mechanics', body: 'Unstable income and rising costs, and how they bend every daily decision.' },
+  { title: 'Emotional stakes', body: 'A parent keeping a child afloat, with consequence-driven decision loops.' },
+];
 
 export default function TheLastPaycheckPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'The Last Paycheck' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">The Last Paycheck</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Solo Project · Narrative + Systems Design · Dystopian Simulation (2050)
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A game design document about poverty, unstable work and emotional survival in a dystopian 2050 America. The player supports their
+            child through job insecurity, inflation and high-risk daily choices. Solo concept; there is no playable build.
           </p>
-        </header>
+        }
+        actions={
+          <ActionLinks
+            links={[
+              {
+                href: 'https://docs.google.com/document/d/1JTBtBdJxqJtGmq32sABKRfg9poBi-yePNI8TkbjgvEI/edit?usp=sharing',
+                label: 'Read the game design document',
+                primary: true,
+              },
+            ]}
+          />
+        }
+        hero={
+          <LightboxImage
+            src="/images/TheLastPaycheck_Banner.png"
+            alt="The Last Paycheck banner with silhouetted figures"
+            width={1600}
+            height={900}
+            priority
+            className="h-auto w-full"
+            roundedClassName="rounded-none"
+          />
+        }
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
+      <CaseStudyBody>
+        <Section id="focus" title="Design focus">
+          <CardGrid items={focus} />
+        </Section>
+      </CaseStudyBody>
 
-          {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="relative aspect-video w-full">
-              <LightboxImage
-                src="/images/TheLastPaycheck_Banner.png"
-                alt="The Last Paycheck project banner"
-                fill
-                sizes="100vw"
-                width={1600}
-                height={900}
-                className="object-cover"
-                roundedClassName="rounded-none"
-              />
-            </div>
-          </div>
-
-          {/* Project Premise & Type */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Premise</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed">
-                The Last Paycheck is a game design document exploring poverty, unstable labor, and emotional survival in a dystopian
-                2050 America. The player must support their child while navigating job insecurity, inflation pressure, and high-risk
-                daily decisions.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Focus</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Narrative Systems:</span>
-                  Designing for social pressure and personal trade-offs in a harsh economic climate.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Economic Mechanics:</span>
-                  Modeling unstable income, rising costs, and their impact on daily decisions.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Emotional Engagement:</span>
-                  Focus on parent-child survival stakes and consequence-driven decision loops.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Call to Action for GDD */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] text-center">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Explore the Full Design</h2>
-            <a
-              href="https://docs.google.com/document/d/1JTBtBdJxqJtGmq32sABKRfg9poBi-yePNI8TkbjgvEI/edit?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-            >
-              Read the Game Design Document
-            </a>
-          </div>
-        </section>
-      </div>
-    </main>
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }

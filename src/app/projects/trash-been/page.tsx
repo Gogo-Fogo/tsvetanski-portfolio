@@ -1,200 +1,105 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  Figure,
+  MediaGrid,
+  Section,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
-import LightboxVideo from '@/components/lightbox-video'; // Added import
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import LightboxVideo from '@/components/lightbox-video';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'trash-been' as const;
 
-export const metadata: Metadata = {
-  title: "Trash Been",
-  description: "Solo Unity platformer built in one week for a Breda application — collect trash to restore a polluted city, unlock movement upgrades, and maintain momentum.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'Solo Unity platformer built in one week for a Breda application: collect trash to restore a polluted city, unlock movement upgrades and keep your momentum.'
+);
 
-const snapshotItems = [
+const glance = [
   { label: 'My role', value: 'Solo designer and developer' },
-  { label: 'Timeframe', value: 'One week, from concept to playable build' },
+  { label: 'Timeframe', value: 'One week, from concept to playable build (May 2022)' },
   { label: 'Built with', value: 'Unity visual scripting, Blender, WebGL' },
-  { label: 'Result', value: 'Playable application project that helped secure Breda acceptance' },
+  { label: 'Result', value: 'A complete playable build, submitted on time; it helped secure my acceptance to Breda' },
 ] as const;
 
+const loop = [
+  { title: 'Core loop', body: 'Run and jump through a polluted city, collecting trash bags to clean each zone.' },
+  { title: 'Progression', body: 'As the city gets cleaner it shifts from grim to vibrant, and you earn speed and jump upgrades.' },
+  { title: 'Pressure', body: 'Enemy "globs" slow your momentum and force cleaner routes.' },
+];
 
-export default function TrashBeenCaseStudy() {
-  const trashBeenVideos = [
-    {
-      url: 'https://youtu.be/zCdPRazVHYM',
-      embedUrl: 'https://www.youtube.com/embed/zCdPRazVHYM',
-      fallbackTitle: 'Trash Been live demo',
-      caption: 'Live demo walkthrough'
-    },
-    {
-      url: 'https://youtu.be/BzVovBaY99o',
-      embedUrl: 'https://www.youtube.com/embed/BzVovBaY99o',
-      fallbackTitle: 'Trash Been young tester',
-      caption: 'Young tester playthrough'
-    }
-  ];
+const process = [
+  'Kept the scope small enough to finish in a week.',
+  'Used community resources when blocked, and tested every playable revision remotely.',
+  'Retopologised assets in Blender to keep the WebGL build light.',
+];
 
-  const getVideoId = (embedUrl: string) => embedUrl.split('/embed/')[1]?.split('?')[0] ?? '';
-  const getThumbnailUrl = (embedUrl: string) => {
-    const videoId = getVideoId(embedUrl);
-    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-  };
-  const getTitle = (embedUrl: string, fallbackTitle: string) => {
-    // In a real app, this would fetch from YouTube API
-    return fallbackTitle; // Using fallback for now
-  };
-
+export default function TrashBeenPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Trash Been: Urban Logistics' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Trash Been: Urban Logistics</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-2xl">
-            Built in one week as a Breda application project — a platformer where cleaning a polluted city restores color, pace, and player momentum.
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <p>
+            A platformer where cleaning a polluted city restores its colour, its pace and your momentum. I designed and built it alone in one
+            week in May 2022 for my Breda application.
           </p>
-        </header>
+        }
+        actions={<ActionLinks links={[{ href: 'https://gogo81.itch.io/trash-been', label: 'Play in the browser (itch.io)', primary: true }]} />}
+        hero={
+          <div className="aspect-video">
+            <LightboxVideo
+              embedUrl="https://www.youtube.com/embed/zCdPRazVHYM"
+              thumbnailUrl="https://img.youtube.com/vi/zCdPRazVHYM/maxresdefault.jpg"
+              title="Trash Been live demo walkthrough"
+              className="h-full w-full object-cover"
+              roundedClassName="rounded-none"
+            />
+          </div>
+        }
+        heroCaption="Live demo walkthrough."
+        glance={glance}
+      />
 
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
+      <CaseStudyBody>
+        <Section id="game" title="The game">
+          <CardGrid items={loop} />
+        </Section>
 
-          {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="aspect-video w-full">
-              <LightboxImage
-                src="/images/Breda_Banner.png"
-                alt="Trash Been playable character banner"
-                width={1600}
-                height={900}
+        <Section
+          id="process"
+          title="One week, start to finish"
+          intro={<p>The hardest part was building and debugging the whole loop in a week.</p>}
+        >
+          <BulletList items={process} />
+          <MediaGrid>
+            <Figure caption="Gameplay and systems mind map.">
+              <LightboxImage src="/images/TB_MindMap.png" alt="Trash Been gameplay and systems mind map" width={1400} height={900} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+            <Figure caption="QA and testing notes.">
+              <LightboxImage src="/images/TB_QA.png" alt="Trash Been QA and testing notes" width={1400} height={900} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+          </MediaGrid>
+          <Figure caption="A young tester playing the build.">
+            <div className="aspect-video">
+              <LightboxVideo
+                embedUrl="https://www.youtube.com/embed/BzVovBaY99o"
+                thumbnailUrl="https://img.youtube.com/vi/BzVovBaY99o/maxresdefault.jpg"
+                title="Trash Been young tester playthrough"
                 className="h-full w-full object-cover"
                 roundedClassName="rounded-none"
               />
             </div>
-          </div>
+          </Figure>
+        </Section>
+      </CaseStudyBody>
 
-          {/* Project Overview & Live Demo */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Project Overview</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                Trash Been was developed under an extreme timeline in <span className="text-[var(--foreground)] font-medium">May 2022</span>: one week to design and build a complete game from scratch for
-                my Breda application.
-              </p>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Core Loop:</span>
-                  Players run and jump through a polluted city, collecting trash bags to clean each zone.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Dynamic Progression:</span>
-                  As more trash is collected, the world transitions from grim to vibrant, and the player gains movement upgrades (speed and jump).
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Pressure & Pacing:</span>
-                  Enemy “globs” apply pressure by slowing momentum and forcing cleaner route execution.
-                </li>
-              </ul>
-              <a
-                href="https://gogo81.itch.io/trash-been"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-              >
-                Play WebGL Build
-              </a>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-video w-full">
-                <LightboxVideo
-                  embedUrl={trashBeenVideos[0].embedUrl}
-                  thumbnailUrl={getThumbnailUrl(trashBeenVideos[0].embedUrl)}
-                  title={getTitle(trashBeenVideos[0].embedUrl, trashBeenVideos[0].fallbackTitle)}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption={trashBeenVideos[0].caption}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Design & QA */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-2">
-              <div className="grid grid-cols-1 gap-4 p-4">
-                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
-                  <LightboxImage
-                    src="/images/TB_MindMap.png"
-                    alt="Trash Been gameplay and systems mind map"
-                    width={1400}
-                    height={900}
-                    className="h-full w-full object-cover"
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
-                  <LightboxImage
-                    src="/images/TB_QA.png"
-                    alt="Trash Been QA and testing notes"
-                    width={1400}
-                    height={900}
-                    className="h-full w-full object-cover"
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Rapid Development & QA</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-4">
-                The hardest part was building and debugging the full loop within one week. I kept the scope small, used community resources when blocked, and tested each playable revision.
-              </p>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>- Unity (Engine, Visual Scripting)</li>
-                <li>- Blender (Asset Retopology)</li>
-                <li>- Rapid iteration + remote playtest loop</li>
-              </ul>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mt-4">
-                <span className="text-[var(--foreground)] font-medium">Outcome:</span> I submitted a complete playable build on time, and the project helped secure my acceptance into Breda.
-              </p>
-            </div>
-          </div>
-
-          {/* Additional Gameplay Video */}
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Additional Gameplay</h2>
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-video w-full">
-                <LightboxVideo
-                  embedUrl={trashBeenVideos[1].embedUrl}
-                  thumbnailUrl={getThumbnailUrl(trashBeenVideos[1].embedUrl)}
-                  title={getTitle(trashBeenVideos[1].embedUrl, trashBeenVideos[1].fallbackTitle)}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                  popupCaption={trashBeenVideos[1].caption}
-                />
-              </div>
-            </div>
-            <p className="mt-4 text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] text-center">
-              {getTitle(trashBeenVideos[1].embedUrl, trashBeenVideos[1].fallbackTitle)}
-            </p>
-            <p className="text-xs text-[var(--muted)] text-center mt-2">{trashBeenVideos[1].caption}</p>
-          </div>
-        </section>
-      </div>
-    </main>
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
-
-
-
-
-

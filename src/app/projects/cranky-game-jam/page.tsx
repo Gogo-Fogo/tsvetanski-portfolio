@@ -1,282 +1,156 @@
-import Breadcrumbs from '@/components/breadcrumbs';
+import {
+  ActionLinks,
+  BulletList,
+  CardGrid,
+  CaseStudyHeader,
+  CaseStudyShell,
+  Figure,
+  MediaGrid,
+  Prose,
+  Section,
+} from '@/components/case-study/case-study';
+import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import LightboxImage from '@/components/lightbox-image';
-import ProjectAtAGlance from '@/components/project-at-a-glance';
+import { projectMetadata } from '@/content/project-helpers';
 
-import type { Metadata } from 'next';
+const slug = 'cranky-game-jam' as const;
 
-export const metadata: Metadata = {
-  title: "Cranky (Global Game Jam 2024)",
-  description: "Split-screen local multiplayer built in one week for Global Game Jam 2024 — chaotic pug-chases-squirrel action. Lead Animator and Co-Designer.",
-};
+export const metadata = projectMetadata(
+  slug,
+  'Split-screen local multiplayer built in one week for Global Game Jam 2024: pugs chasing squirrels. I was project manager, 3D artist and animator.'
+);
 
-const snapshotItems = [
-  { label: 'My role', value: 'Project manager, 3D artist, and animator' },
-  { label: 'Team and pace', value: 'Global Game Jam team, one-week sprint' },
+const glance = [
+  { label: 'My role', value: 'Project manager, 3D artist and animator' },
+  { label: 'Team and pace', value: 'Global Game Jam 2024 team, one-week sprint, UBalt site at the Universities at Shady Grove' },
   { label: 'Built with', value: 'Unity, Blender, Substance Painter' },
-  { label: 'Result', value: 'Complete split-screen Windows build delivered on time' },
+  { label: 'Result', value: 'A complete split-screen Windows build, delivered on time' },
 ] as const;
 
+const art = [
+  {
+    title: 'Modelling and rigging',
+    body: 'Built from scratch in Blender with a flexible rig for the exaggerated, floppy movement the game needed.',
+  },
+  {
+    title: 'Textures',
+    body: 'Hand-painted stylised textures in Substance Painter, chosen to stay readable on a split screen.',
+  },
+];
+
+const management = [
+  {
+    title: 'Trello sprint board',
+    body: 'Structured the sprint tasks and live progress tracking so everyone stayed aligned on a tight timeline.',
+  },
+  {
+    title: 'Team coordination',
+    body: 'Split design and art tasks and managed the timeline so every core pug animation was in before the final build.',
+  },
+];
+
+const results = [
+  'A complete, playable jam build in one week.',
+  'The pug character pipeline integrated into gameplay.',
+  'Designed and tested for keyboard and handheld controller play.',
+];
 
 export default function CrankyGameJamPage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] p-8 md:p-24 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Projects', href: '/projects' },
-              { label: 'Cranky (Game Jam 2024)' },
-            ]}
-            className="mb-4"
-          />
-          <h1 className="text-4xl font-bold tracking-tight mt-4">Cranky (Game Jam 2024)</h1>
-          <p className="text-[var(--muted)] mt-3 max-w-3xl">
-            1 Week Game Jam · Local Split-Screen Co-op · Unity · Not to be confused with the later solo expansion,
-            <span className="text-[var(--foreground)]"> Cranky: The Squirrel Annihilator</span>
-          </p>
-        </header>
-
-        <section className="flex flex-col gap-12 md:gap-16">
-          <ProjectAtAGlance items={snapshotItems} />
-
-          {/* Hero Banner */}
-          <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] max-w-2xl mx-auto">
-            <div className="aspect-video w-full">
-              <LightboxImage
-                src="/images/Cranky_GameJam_Banner_2024.jpg"
-                alt="Cranky Game Jam 2024 banner"
-                width={1600}
-                height={900}
-                className="h-full w-full object-cover"
-                roundedClassName="rounded-none"
-              />
-            </div>
-          </div>
-
-          {/* Overview & Core pug render */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Overview</h2>
-                <p className="text-sm text-[var(--muted)] leading-relaxed">
-                  Cranky is a local split-screen co-op game where players control pugs trying to catch squirrels. Built for Global Game
-                  Jam 2024 under the theme <span className="text-[var(--foreground)]">Make Me Laugh</span>, the game embraces chaotic,
-                  intentionally clunky movement inspired by Party Animals and Fall Guys.
-                </p>
-                <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
-                  <li>- Jam Year: 2024</li>
-                  <li>- Jam Site: uBalt at the Universities at Shady Grove</li>
-                  <li>- Platform: MS Windows</li>
-                </ul>
-              </div>
-
-              <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-                <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Roles & Tools</h2>
-                <div className="grid grid-cols-2 gap-4 text-sm text-[var(--muted)]">
-                  <ul className="space-y-1">
-                    <li className="text-[var(--foreground)] font-medium">Roles</li>
-                    <li>3D Artist</li>
-                    <li>Animator</li>
-                    <li>Project Manager</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li className="text-[var(--foreground)] font-medium">Tools</li>
-                    <li>Unity</li>
-                    <li>Blender</li>
-                    <li>Substance Painter</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-square w-full">
-                <LightboxImage
-                  src="/images/Cranky_Pug_Render_Blender.png"
-                  alt="Cranky pug render in Blender"
-                  width={1000}
-                  height={1000}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Production & Leadership */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)] md:order-2">
-              <div className="grid grid-cols-1 gap-4 p-4">
-                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
-                  <LightboxImage
-                    src="/images/GAMEJAM_CRANKY_PlanningWithTeamBoard.jpg"
-                    alt="Cranky game jam planning board"
-                    width={1400}
-                    height={900}
-                    className="h-auto w-full object-cover"
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-xl border border-[var(--border)]">
-                  <LightboxImage
-                    src="/images/Cranky_GameJam_Trello.png"
-                    alt="Cranky game jam Trello management board"
-                    width={1400}
-                    height={900}
-                    className="h-auto w-full object-cover"
-                    roundedClassName="rounded-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)] md:order-1">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Management & Leadership</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-                As the Project Manager and 3D Lead, I focused on keeping a one-week scope realistic while maintaining a high visual standard.
-              </p>
-              <ul className="space-y-4 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Trello Workflow Management:</span>
-                  I structured sprint tasks and live progress tracking so contributors stayed aligned throughout the tight jam timeline.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Team Coordination:</span>
-                  Managed design/art task distribution and timeline to ensure all core pug animations were integrated before the final build.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Technical Art Deep Dive */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="grid grid-cols-2 gap-0">
-                <LightboxImage
-                  src="/images/CRANKY_Animation_Blender_Rigging.png"
-                  alt="Cranky animation rigging work in Blender"
-                  width={1000}
-                  height={1000}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                />
-                <LightboxImage
-                  src="/images/Cranky_SubstancePainter.png"
-                  alt="Cranky texture workflow in Substance Painter"
-                  width={1000}
-                  height={1000}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                />
-              </div>
-            </div>
-
-            <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Technical Art Pipeline</h2>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-6">
-                The pug character was built from scratch to support the game’s playful, goofy tone. I handled the full pipeline from initial poly-modeling to final game-ready export.
-              </p>
-              <ul className="space-y-4 text-sm text-[var(--muted)]">
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Modeling & Rigging:</span>
-                  Built in Blender with a focus on flexible rigging to allow for the exaggerated, &quot;floppy&quot; movements inspired by Party Animals.
-                </li>
-                <li>
-                  <span className="text-[var(--foreground)] font-medium block mb-1">Texture Workflow:</span>
-                  Applied hand-painted stylized textures in Substance Painter to ensure visual clarity on a split-screen display.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-            <div className="md:col-span-2 border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-              <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Final Results</h2>
-              <ul className="space-y-3 text-sm text-[var(--muted)]">
-                <li>- A complete, playable jam build delivered within one week.</li>
-                <li>- Distinctive pug character pipeline integrated into gameplay successfully.</li>
-                <li>- Designed and tested for both keyboard and handheld controller play.</li>
-                <li>- Team delivery quality supported by clear production structure and ownership.</li>
-              </ul>
-              <p className="mt-6 text-xs text-[var(--muted)] leading-relaxed border-t border-[var(--border)] pt-4 italic">
-                While the pug character concept was inspired by the work of Gil Rimmer and Rhenan Fidelis, all 3D modeling, rigging, and animations were created from scratch for this project.
-              </p>
-            </div>
-
-            <div className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-all duration-150 hover:-translate-y-0.5 hover:[box-shadow:var(--shadow-strong),0_0_28px_var(--accent-cyan)]">
-              <div className="aspect-square w-full">
-                <LightboxImage
-                  src="/images/Cranky_GameJam_DemoDay_Handheld_LegionGo.jpg"
-                  alt="Cranky game jam demo day on Lenovo Legion Go"
-                  width={1400}
-                  height={900}
-                  className="h-full w-full object-cover"
-                  roundedClassName="rounded-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Links & Documents</h2>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="https://globalgamejam.org/games/2024/cranky-6"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--foreground)] bg-[var(--foreground)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--background)] shadow-[var(--shadow)] transition-all duration-300 hover:bg-transparent hover:text-[var(--foreground)] hover:[box-shadow:var(--shadow-strong),0_0_22px_var(--accent-cyan)]"
-              >
-                GGJ Page
-              </a>
-
-              <a
-                href="https://drive.google.com/drive/folders/1Ptmv3frb4hGwuTKd5TdjwfhNmiuD52Ra?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                Build + Source Files
-              </a>
-
-              <a
-                href="https://docs.google.com/presentation/d/1-Pe5afGlmk3xhx1DTXY-sLpxyAqgKiaYJ33Mq-4bof8/edit?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                Presentation
-              </a>
-
-              <a
-                href="https://docs.google.com/document/d/1tJRc-iaIuqC71HeNq85wr4q9N26GP7WCNk34q3LItCQ/edit?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                Jam GDD
-              </a>
-
-              <a
-                href="https://docs.google.com/document/d/1eFnm2fgrBZUmR9nk0wMXdvT5SPWTmVtTMpOW1DCmleg/edit?usp=sharing"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-[var(--border)] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--foreground)] transition-all duration-300 hover:border-[var(--foreground)]"
-              >
-                Concept Overview
-              </a>
-            </div>
-          </div>
-
-          <div className="border border-[var(--border)] bg-[var(--surface)] rounded-2xl p-8 shadow-[var(--shadow)]">
-            <h2 className="text-xs font-mono uppercase tracking-[0.3em] text-[var(--muted)] mb-6">Acknowledgments</h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Special thanks to Julian Apostolov for helping troubleshoot 3D pug and texture issues at 2AM.
-              {' '}<a className="text-[var(--foreground)] underline underline-offset-4" href="https://www.instagram.com/uapostolov_17/" target="_blank" rel="noreferrer">@uapostolov_17</a>
+    <CaseStudyShell>
+      <CaseStudyHeader
+        slug={slug}
+        lede={
+          <>
+            <p>
+              A local split-screen game where players control pugs trying to catch squirrels, built in one week for Global Game Jam 2024 under
+              the theme &quot;Make Me Laugh&quot;. The movement is intentionally clunky, inspired by Party Animals and Fall Guys.
             </p>
-          </div>
-        </section>
-      </div>
-    </main>
+            <p>
+              I was the project manager and built the pug: model, rig, textures and animation. Not to be confused with my later solo follow-up,{' '}
+              <a href="/projects/cranky-squirrel-annihilator">Cranky: The Squirrel Annihilator</a>.
+            </p>
+          </>
+        }
+        hero={
+          <LightboxImage
+            src="/images/CRANKY_Animation_Blender_Rigging.png"
+            alt="The Cranky pug rig and animation controls in Blender"
+            width={3840}
+            height={2043}
+            priority
+            className="h-auto w-full"
+            roundedClassName="rounded-none"
+          />
+        }
+        heroCaption="The pug rig in Blender."
+        glance={glance}
+      />
+
+      <CaseStudyBody>
+        <Section id="pug" title="The pug, from model to game">
+          <CardGrid items={art} columns={2} />
+          <MediaGrid>
+            <Figure caption="The finished pug render.">
+              <LightboxImage src="/images/Cranky_Pug_Render_Blender.png" alt="Cranky pug render in Blender" width={1000} height={1000} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+            <Figure caption="Texturing in Substance Painter.">
+              <LightboxImage src="/images/Cranky_SubstancePainter.png" alt="Cranky pug texturing in Substance Painter" width={1000} height={1000} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+          </MediaGrid>
+          <Prose>
+            <p>
+              <small>
+                The pug concept was inspired by the work of Gil Rimmer and Rhenan Fidelis; all modelling, rigging and animation were made from
+                scratch for this project.
+              </small>
+            </p>
+          </Prose>
+        </Section>
+
+        <Section
+          id="management"
+          title="Running the jam"
+          intro={<p>As project manager and 3D lead, my job was to keep a one-week scope realistic without dropping the visual standard.</p>}
+        >
+          <CardGrid items={management} columns={2} />
+          <MediaGrid>
+            <Figure caption="Planning with the team board.">
+              <LightboxImage src="/images/GAMEJAM_CRANKY_PlanningWithTeamBoard.jpg" alt="Cranky jam planning board" width={1400} height={900} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+            <Figure caption="The Trello sprint board.">
+              <LightboxImage src="/images/Cranky_GameJam_Trello.png" alt="Cranky jam Trello board" width={1400} height={900} className="h-auto w-full" roundedClassName="rounded-none" />
+            </Figure>
+          </MediaGrid>
+        </Section>
+
+        <Section id="results" title="Results">
+          <BulletList items={results} />
+          <Figure caption="Demo day, playing on a Lenovo Legion Go.">
+            <LightboxImage src="/images/Cranky_GameJam_DemoDay_Handheld_LegionGo.jpg" alt="Cranky demo day on a Lenovo Legion Go" width={1400} height={900} className="h-auto w-full" roundedClassName="rounded-none" />
+          </Figure>
+          <ActionLinks
+            links={[
+              { href: 'https://globalgamejam.org/games/2024/cranky-6', label: 'Global Game Jam page', primary: true },
+              { href: 'https://drive.google.com/drive/folders/1Ptmv3frb4hGwuTKd5TdjwfhNmiuD52Ra?usp=sharing', label: 'Build and source files' },
+              { href: 'https://docs.google.com/presentation/d/1-Pe5afGlmk3xhx1DTXY-sLpxyAqgKiaYJ33Mq-4bof8/edit?usp=sharing', label: 'Presentation' },
+              { href: 'https://docs.google.com/document/d/1tJRc-iaIuqC71HeNq85wr4q9N26GP7WCNk34q3LItCQ/edit?usp=sharing', label: 'Jam GDD' },
+              { href: 'https://docs.google.com/document/d/1eFnm2fgrBZUmR9nk0wMXdvT5SPWTmVtTMpOW1DCmleg/edit?usp=sharing', label: 'Concept overview' },
+            ]}
+          />
+          <Prose>
+            <p>
+              Thanks to Julian Apostolov (
+              <a href="https://www.instagram.com/uapostolov_17/" target="_blank" rel="noreferrer">
+                @uapostolov_17
+              </a>
+              ) for helping troubleshoot pug and texture issues at 2 a.m.
+            </p>
+          </Prose>
+        </Section>
+      </CaseStudyBody>
+
+      <CaseStudyFooter slug={slug} />
+    </CaseStudyShell>
   );
 }
