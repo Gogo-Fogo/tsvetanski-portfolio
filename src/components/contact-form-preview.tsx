@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const EMAIL = "georgi@tsvetanski.com";
+const EMAIL = "georgi.tsvetanski@gmail.com";
 
 type ContactFormValues = {
   name: string;

@@ -2,7 +2,7 @@ import { ArrowUp, FileText, Instagram, Linkedin, Mail } from 'lucide-react';
 import CopyEmailButton from '@/components/copy-email-button';
 import styles from './site.module.css';
 
-export const CONTACT_EMAIL = 'georgi@tsvetanski.com';
+export const CONTACT_EMAIL = 'georgi.tsvetanski@gmail.com';
 
 export default function SiteFooter() {
   return (

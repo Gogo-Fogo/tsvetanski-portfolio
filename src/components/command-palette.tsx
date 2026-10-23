@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { categories, categoryIds } from "@/content/categories";
 import { allProjects } from "@/content/project-helpers";
 
-const EMAIL = "georgi@tsvetanski.com";
+const EMAIL = "georgi.tsvetanski@gmail.com";
 
 interface PaletteItem {
   id: string;
