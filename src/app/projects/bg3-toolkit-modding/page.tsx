@@ -13,7 +13,7 @@ const glance = [
   { label: 'My role', value: 'Programmer on the Path to Menzoberranzan tech team' },
   { label: 'Built with', value: 'BG3 Toolkit, Osiris, Dialog and Timeline editors, Stats editor' },
   { label: 'Focus', value: 'Dialogue, flags, skill checks and Osiris scripts' },
-  { label: 'Status', value: 'Started September 2026. Joined PtM in October 2026.' },
+  { label: 'Status', value: 'Still learning. Started September 2026, joined PtM October 2026.' },
 ] as const;
 
 const skills = [
@@ -35,19 +35,10 @@ const skills = [
   },
 ];
 
-const lessons = [
-  {
-    title: 'Dialogues have two IDs',
-    body: "To start a dialogue from Osiris you need its resource ID, not the ID inside the dialogue file. If you use the wrong one, the error says the dialogue doesn't exist.",
-  },
-  {
-    title: 'Reloading the level is not always enough',
-    body: "I changed a dialogue's timeline setting and reloaded the level, but the old version kept playing. I had to restart the Toolkit.",
-  },
-  {
-    title: 'I keep a work log',
-    body: "I write down what I tested in game mode and what I haven't yet, like both results of a roll, saving and loading, or talking to someone twice.",
-  },
+const learningLog = [
+  "To start a dialogue from Osiris, use its resource ID, not the ID inside the dialogue file. The wrong one gives a \"doesn't exist\" error.",
+  "Reloading the level didn't pick up a timeline change. I had to restart the Toolkit.",
+  "I log what I've tested in game mode and what I haven't yet, like both results of a roll, save and load, or talking to someone twice.",
 ];
 
 export default function Bg3ToolkitModdingPage() {
@@ -69,9 +60,14 @@ export default function Bg3ToolkitModdingPage() {
           <CardGrid items={skills} columns={2} />
         </Section>
 
-        <Section id="lessons" title="Things I learned">
-          <CardGrid items={lessons} />
+        <Section id="learning-log" title="Learning log">
           <Prose>
+            <p>I&apos;m still learning the Toolkit, so this page changes as I go. Recent notes:</p>
+            <ul>
+              {learningLog.map((note) => (
+                <li key={note}>{note}</li>
+              ))}
+            </ul>
             <p>
               <small>Baldur&apos;s Gate 3 and the BG3 Toolkit belong to Larian Studios. This is personal modding work, not affiliated with Larian.</small>
             </p>
