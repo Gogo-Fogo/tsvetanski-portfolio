@@ -6,14 +6,14 @@ const slug = 'bg3-toolkit-modding' as const;
 
 export const metadata = projectMetadata(
   slug,
-  "Learning Larian's BG3 Toolkit: Osiris story scripting, dialogue with flags and skill checks, and an offline reference built from the official modding docs."
+  "Learning Larian's BG3 Toolkit: Osiris story scripting and dialogue with flags and skill checks."
 );
 
 const glance = [
-  { label: 'My role', value: 'Solo modder, learning the Toolkit from scratch' },
-  { label: 'Built with', value: 'BG3 Toolkit, Osiris, Dialog and Timeline editors, Stats editor, Python' },
+  { label: 'My role', value: 'Programmer in the technical department of Path to Menzoberranzan; solo modder' },
+  { label: 'Built with', value: 'BG3 Toolkit, Osiris, Dialog and Timeline editors, Stats editor' },
   { label: 'Focus', value: 'Gameplay scripting: dialogue, flags, skill checks and story goals' },
-  { label: 'Status', value: 'Ongoing since September 2026' },
+  { label: 'Status', value: 'Modding since September 2026; joined Path to Menzoberranzan in October 2026' },
 ] as const;
 
 const skills = [
@@ -32,25 +32,6 @@ const skills = [
   {
     title: 'Cinematics',
     body: 'First dialogue timelines: camera shots and a speaker-framed greeting. My least practised area so far.',
-  },
-];
-
-const reference = [
-  {
-    title: 'Osiris function index',
-    body: 'A script pulls the official modding wiki through its API and builds an offline index of 1,149 Osiris entries (269 events, 387 queries, 493 calls), each with its signature and a link to the source page.',
-  },
-  {
-    title: 'Curated essentials',
-    body: "A short guide to the functions behind flags, dialogue, doors, rolls and rewards, with the wiki's examples beside each signature.",
-  },
-  {
-    title: 'Toolkit cheat sheet',
-    body: "Shortcuts, debug-console commands and testing tricks merged from the community sheet and Larian's official guide, such as forcing every roll to pass or fail to test both branches.",
-  },
-  {
-    title: 'Tutorial notes',
-    body: 'Toolkit tutorials transcribed locally with Whisper and turned into step-by-step notes for scripting, timelines and the stats editor.',
   },
 ];
 
@@ -77,7 +58,9 @@ export default function Bg3ToolkitModdingPage() {
         lede={
           <p>
             I&apos;m learning Larian&apos;s official Baldur&apos;s Gate 3 Toolkit, focused on gameplay scripting. I first opened it in September
-            2026, so alongside building encounters I built myself an offline reference to learn faster.
+            2026 and have been building small encounters to learn it. In October 2026 I joined the technical department of Path to
+            Menzoberranzan (PtM), a large community-made BG3 campaign, as a programmer, to keep learning the engine alongside a big team of
+            very creative people.
           </p>
         }
         glance={glance}
@@ -86,19 +69,6 @@ export default function Bg3ToolkitModdingPage() {
       <CaseStudyBody>
         <Section id="what-i-build" title="What I can build so far">
           <CardGrid items={skills} columns={2} />
-        </Section>
-
-        <Section
-          id="reference"
-          title="An offline reference I built"
-          intro={
-            <p>
-              BG3 modding knowledge is spread across a wiki, community spreadsheets, a search engine and videos. I pulled what I needed into
-              one searchable set of notes, every entry linked back to its source.
-            </p>
-          }
-        >
-          <CardGrid items={reference} columns={2} />
         </Section>
 
         <Section id="lessons" title="What the Toolkit taught me">

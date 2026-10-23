@@ -241,7 +241,7 @@ export const projects: Record<ProjectSlug, Project> = {
     categories: ['gameplay'],
     primaryCategory: 'gameplay',
     status: 'In development',
-    role: 'Solo modder, learning the Toolkit from scratch',
+    role: 'Programmer, Path to Menzoberranzan technical department',
     card: card('bg3-toolkit-modding', "Baldur's Gate 3 Modding title card"),
     searchTerms: ["baldur's gate 3", 'bg3', 'toolkit', 'osiris', 'dialogue', 'skill check', 'larian', 'mod'],
   },
