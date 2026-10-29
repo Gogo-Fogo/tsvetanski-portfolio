@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { CardGrid, CaseStudyHeader, CaseStudyShell, Figure, Prose, Section, Split } from '@/components/case-study/case-study';
 import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import VideoGrid from '@/components/case-study/video-grid';
@@ -85,6 +86,10 @@ export default async function ShinobiStoryPage() {
                 I began in customer support, which taught me what the community actually felt, then moved into development: character and
                 ability animation, guiding new developers through scripting, level design and debugging, and shaping content rollouts and
                 training material.
+              </p>
+              <p>
+                My <Link href="/animation">Digital Animation training</Link> was central to that work. I combined animation and technical problem solving to create
+                character and ability motions beyond what the base client supported out of the box.
               </p>
             </>
           }

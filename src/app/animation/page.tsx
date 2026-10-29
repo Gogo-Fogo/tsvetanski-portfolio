@@ -48,7 +48,7 @@ export default function AnimationPage() {
             <LightboxImage src="/images/CRANKY_Animation_Blender_Rigging.png" alt="Cranky pug rig and animation controls in Blender" width={3840} height={2043} sizes="(min-width: 1024px) 1000px, 90vw" className="h-auto w-full" roundedClassName="rounded-none" />
           </Figure>
           <div className={styles.cards}>
-            <Prose><h3>Characters for games</h3><p>For <Link href="/projects/cranky-game-jam">Cranky</Link>, I made the pug model, rig, textures and animation for a team game jam. On <Link href="/projects/shinobi-story">Shinobi Story</Link>, I worked on character and ability animation as part of a larger development team.</p></Prose>
+            <Prose><h3>Characters for games</h3><p>For <Link href="/projects/cranky-game-jam">Cranky</Link>, I made the pug model, rig, textures and animation for a team game jam. On <Link href="/projects/shinobi-story">Shinobi Story</Link>, I combined my animation training with technical work to create character and ability motions beyond what the base game client supported out of the box, as part of a larger development team.</p></Prose>
             <Prose><h3>Movement in interaction</h3><p>In <Link href="/projects/shinobi-story-2">Shinobi Story 2</Link>, code controls traversal while animation communicates the pose and action to players.</p></Prose>
             <Prose><h3>Storytelling in video</h3><p>My visual training also informs how I frame, sequence and edit media. See my <Link href="/cpse">UMD CPSE program films and campaign work</Link> and the wider <Link href="/creative">Creative portfolio</Link>.</p></Prose>
           </div>
