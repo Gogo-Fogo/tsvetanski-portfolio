@@ -10,7 +10,7 @@ import ThemeButton from './theme-button';
 import styles from './site.module.css';
 
 const navLinks = [
-  { href: '/projects', label: 'Projects', match: (path: string) => path.startsWith('/projects') || path === '/cpse' || path === '/creative' },
+  { href: '/projects', label: 'Projects', match: (path: string) => path.startsWith('/projects') || path === '/cpse' || path === '/creative' || path === '/animation' },
   { href: '/about', label: 'About', match: (path: string) => path === '/about' },
 ] as const;
 

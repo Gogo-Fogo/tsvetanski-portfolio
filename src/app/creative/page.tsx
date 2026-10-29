@@ -4,13 +4,13 @@ import type { ReactNode } from 'react';
 import { ActionLinks, DeepDive, Figure, Prose, Split } from '@/components/case-study/case-study';
 import cs from '@/components/case-study/case-study.module.css';
 import VideoGrid, { type VideoGridItem } from '@/components/case-study/video-grid';
-import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 import ProjectCard from '@/components/ui/project-card';
 import ui from '@/components/ui/ui.module.css';
 import { formatYouTubeStats, getYouTubeThumbnailUrl, getYouTubeVideoId, getYouTubeVideoStats } from '@/app/youtube';
 import { pageMetadata, projectsIn } from '@/content/project-helpers';
-import { animationCategories, animationUiDesign, type AnimationPiece } from './animation-gallery';
+import { animationCategories, animationSelected, animationUiDesign } from './animation-gallery';
+import ArtGallery from './art-gallery';
 import styles from './creative.module.css';
 
 export const metadata = pageMetadata({
@@ -36,51 +36,6 @@ const moreVideos = [
   { id: 'ZgFJxupFYzQ', title: 'UMD CPSE | Team Video' },
 ];
 
-const animationVideos = [
-  { id: 'v9rzaW82IU4', title: 'Animation process video' },
-  { id: 'lMrWcN3ko-I', title: 'Animation process video 2' },
-  { id: 'UfA0f0ih1I8', title: 'Animation project (degree work)' },
-  { id: 'bWOdY2UhzWE', title: 'Animation concept video' },
-  { id: '7hqtDkMbLaQ', title: 'Animatic' },
-  { id: 'hwuUvoTI_JM', title: 'Intro logo animation (for a friend)' },
-  { id: 'FtY1ZvEQQM0', title: 'Sketchbook video' },
-];
-
-const VISIBLE = 8;
-
-function Gallery({ pieces, label }: { pieces: AnimationPiece[]; label: string }) {
-  const tile = (piece: AnimationPiece) => (
-    <li key={piece.src} className={styles.tile}>
-      <LightboxImage
-        src={piece.src}
-        alt={piece.title}
-        width={piece.width}
-        height={piece.height}
-        sizes="(min-width: 1024px) 300px, 45vw"
-        popupCaption={piece.note}
-        lightboxMaxWidth={Math.round(Math.min(piece.width, 1200))}
-        className="h-auto w-full"
-        roundedClassName="rounded-none"
-      />
-    </li>
-  );
-  const shown = pieces.slice(0, VISIBLE);
-  const rest = pieces.slice(VISIBLE);
-  return (
-    <>
-      <ul className={styles.masonry}>{shown.map(tile)}</ul>
-      {rest.length ? (
-        <details className={styles.more}>
-          <summary className={styles.moreSummary}>
-            Show all {pieces.length} {label}
-          </summary>
-          <ul className={styles.masonry}>{rest.map(tile)}</ul>
-        </details>
-      ) : null}
-    </>
-  );
-}
-
 function Block({ id, title, intro, children }: { id: string; title: string; intro?: ReactNode; children: ReactNode }) {
   return (
     <section id={id} className={cs.section} aria-labelledby={`${id}-title`}>
@@ -94,7 +49,7 @@ function Block({ id, title, intro, children }: { id: string; title: string; intr
 }
 
 export default async function CreativePage() {
-  const ids = [pathway.id, summerProgram.id, ...moreVideos.map((video) => video.id), ...animationVideos.map((video) => video.id)];
+  const ids = [pathway.id, summerProgram.id, ...moreVideos.map((video) => video.id)];
   const stats = await getYouTubeVideoStats(ids.map((id) => getYouTubeVideoId(embed(id))));
   const toItem = (video: { id: string; title: string }): VideoGridItem => ({
     title: stats.get(video.id)?.title ?? video.title,
@@ -205,19 +160,13 @@ export default async function CreativePage() {
           title="Animation and 3D"
           intro={
             <p>
-              Work from my Digital Animation associate&apos;s degree: rig tests, sculpts, low-poly scenes and shading, plus process videos and
-              older degree projects.
+              My Digital Animation degree gave me a foundation in movement, visual storytelling and making art for a finished experience.
+              I have used it in game characters, interactive work and video production.
             </p>
           }
         >
-          {animationCategories
-            .filter((category) => category.id === '3d')
-            .map((category) => (
-              <Gallery key={category.id} pieces={category.pieces} label="3D pieces" />
-            ))}
-          <DeepDive summary="Animation videos and the degree archive">
-            <VideoGrid items={animationVideos.map(toItem)} />
-          </DeepDive>
+          <ArtGallery pieces={animationSelected} label="3D pieces" visible={animationSelected.length} curated />
+          <Link href="/animation" className={styles.allLink}>Explore my animation work <ArrowRight aria-hidden="true" size={17} strokeWidth={1.8} /></Link>
         </Block>
 
         <Block
@@ -233,7 +182,7 @@ export default async function CreativePage() {
                   <h3>{category.id === 'digital' ? 'Digital' : 'Traditional'}</h3>
                   <p>{category.blurb}</p>
                 </Prose>
-                <Gallery pieces={category.pieces} label={`${category.id} pieces`} />
+                <ArtGallery pieces={category.pieces} label={`${category.id} pieces`} />
               </div>
             ))}
           {animationUiDesign.length ? (
@@ -244,7 +193,7 @@ export default async function CreativePage() {
                   scene, the incidents it surfaces, and the controller mapping, worked out on paper before anything was built.
                 </p>
               </Prose>
-              <Gallery pieces={animationUiDesign} label="sketches" />
+              <ArtGallery pieces={animationUiDesign} label="sketches" />
             </DeepDive>
           ) : null}
         </Block>

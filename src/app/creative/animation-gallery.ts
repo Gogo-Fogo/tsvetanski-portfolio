@@ -81,3 +81,8 @@ export const animationCategories: AnimationCategory[] = CATEGORY_COPY.map((categ
   ...category,
   pieces: piecesFor(category.id),
 })).filter((category) => category.pieces.length > 0);
+
+const selectedNames = ['3d-character-rig-pose.jpg', '3d-skeleton-rig.jpg', '3d-maya-animation-context.jpg', '3d-character-render-officer.jpg'];
+export const animationSelected = selectedNames.flatMap((name) =>
+  piecesFor('3d').filter((piece) => piece.src.endsWith(name)),
+);

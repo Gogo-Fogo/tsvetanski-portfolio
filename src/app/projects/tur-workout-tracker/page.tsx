@@ -7,14 +7,14 @@ const slug = 'tur-workout-tracker' as const;
 
 export const metadata = projectMetadata(
   slug,
-  'An offline-first iPhone workout log in SwiftUI with a Garmin watch companion in Monkey C. Solo product: design, engineering, catalog and website.'
+  'A local-first iPhone workout log in invitation-only TestFlight beta, with a Garmin Connect IQ companion. Solo product: design, engineering, catalog and website.'
 );
 
 const glance = [
   { label: 'My role', value: 'Solo: product, iOS app, watch app, data, brand and website' },
   { label: 'Built with', value: 'Swift, SwiftUI, SwiftData, HealthKit, Garmin Connect IQ (Monkey C), Cloudflare Workers' },
-  { label: 'Scale', value: '806-exercise catalog, about 350 Swift files, 42 test files' },
-  { label: 'Status', value: 'Runs on a physical iPhone; Garmin and App Store release checks still open' },
+  { label: 'Scale', value: '806 bundled exercises' },
+  { label: 'Status', value: 'Invitation-only iPhone TestFlight beta; Garmin companion listed on Connect IQ' },
 ] as const;
 
 const features = [
@@ -39,15 +39,15 @@ const features = [
     body: 'A front-and-back muscle-load body map, a weekly photo timeline, estimated one-rep-max records and a shareable year in review, all computed on the phone.',
   },
   {
-    title: 'Share without accounts',
-    body: 'Plans share as an image card with a QR code. Anyone with the app scans it and saves the plan; no account, no server.',
+    title: 'Share and export',
+    body: 'Plans share as an image card with a QR code. Workout history can be exported as CSV or a complete backup.',
   },
 ];
 
 const engineering = [
   {
-    title: 'Offline and private by default',
-    body: 'Records live in SwiftData on the phone with atomic commits, migration recovery copies and full backups. The log needs no account or server.',
+    title: 'Local-first records',
+    body: 'Workout records live in SwiftData on the phone, with atomic commits and migration recovery copies. The beta also includes accounts and online backups.',
   },
   {
     title: 'One set of training rules',
@@ -70,14 +70,14 @@ export default function TurWorkoutTrackerPage() {
         slug={slug}
         lede={
           <p>
-            An offline-first workout notebook for iPhone with a Garmin watch companion. I built it because I wanted a log that&apos;s fast
-            between sets, needs no account, and fits how I train: lifting, hybrid racing and switching gyms.
+            A local-first workout notebook for iPhone with a Garmin watch companion. I built it because I wanted a log that&apos;s fast
+            between sets and fits how I train: lifting, hybrid racing and switching gyms.
           </p>
         }
         hero={
           <iframe
-            src="/embeds/tur-site/index.html"
-            title="TUR website, interactive snapshot"
+            src="https://tur-app.tur-gym-georgi.workers.dev/"
+            title="TUR product website"
             loading="lazy"
             className="h-[680px] bg-[#0d0d0f] md:h-[760px]"
           />
@@ -85,9 +85,8 @@ export default function TurWorkoutTrackerPage() {
         heroBleed
         heroCaption={
           <>
-            The product website I designed and built, embedded as a working snapshot (sign-up and roadmap switched off). Try the phone
-            demo: start a workout, log three sets, see the progress. The app screens on it are design mockups, not device captures.{' '}
-            <a href="/embeds/tur-site/index.html" target="_blank" rel="noreferrer">
+            The live product website I designed and built. Its interactive demos use example data.{' '}
+            <a href="https://tur-app.tur-gym-georgi.workers.dev/" target="_blank" rel="noreferrer">
               Open the site full screen
             </a>
           </>
@@ -111,8 +110,9 @@ export default function TurWorkoutTrackerPage() {
             }
           >
             <p>
-              Most workout apps are either too slow to use mid-set or lock your history behind an account. TUR keeps one action in focus
-              at a time, keeps every record on your phone, and lets the watch do the timing.
+              I wanted faster set logging and control over my training history. TUR keeps one action in focus at a time, stores the
+              workout log on the phone, and lets the watch do the timing. Beta accounts and online backups add ways to carry that log
+              across devices.
             </p>
             <p>
               I also designed the brand: a cave-wall theme with charcoal surfaces, one warm red for primary actions, and an aurochs-horn
@@ -140,10 +140,12 @@ export default function TurWorkoutTrackerPage() {
         <Section id="status" title="Where it stands">
           <Prose>
             <p>
-              The app builds in Xcode and runs on my iPhone. The Garmin app builds for the epix Gen 2 and runs in Garmin&apos;s device
-              simulator. Before release I still need to finish the iPhone interaction checklist, test the watch link and recording on real
-              hardware, and validate the Apple Health integration. The project keeps a written list of what has and hasn&apos;t been
-              verified, so this status isn&apos;t a guess.
+              TUR runs on a physical iPhone and is available to invited TestFlight testers. Its Garmin companion is listed on the{' '}
+              <a href="https://apps.garmin.com/apps/0d792d60-3471-4eab-bb92-4a1aa06f0a7a" target="_blank" rel="noreferrer">
+                Connect IQ Store
+              </a>
+              . The iPhone app is not yet on the public App Store; device testing, Garmin sync reliability and release checks are still
+              in progress.
             </p>
           </Prose>
         </Section>

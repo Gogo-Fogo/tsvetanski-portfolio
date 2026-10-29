@@ -92,7 +92,7 @@ export default function CrankyGameJamPage() {
           <CardGrid items={art} columns={2} />
           <MediaGrid>
             <Figure caption="The finished pug render.">
-              <LightboxImage src="/images/Cranky_Pug_Render_Blender.png" alt="Cranky pug render in Blender" width={1000} height={1000} className="h-auto w-full" roundedClassName="rounded-none" />
+              <LightboxImage src="/images/Cranky_Pug_Render_Blender.png" alt="Cranky pug render in Blender" width={430} height={212} sizes="(min-width: 1024px) 430px, 90vw" lightboxMaxWidth={430} className="h-auto w-full" roundedClassName="rounded-none" />
             </Figure>
             <Figure caption="Texturing in Substance Painter.">
               <LightboxImage src="/images/Cranky_SubstancePainter.png" alt="Cranky pug texturing in Substance Painter" width={1000} height={1000} className="h-auto w-full" roundedClassName="rounded-none" />
@@ -105,6 +105,7 @@ export default function CrankyGameJamPage() {
                 scratch for this project.
               </small>
             </p>
+            <p>See how this character work grew from my <a href="/animation">Digital Animation foundation</a>.</p>
           </Prose>
         </Section>
 

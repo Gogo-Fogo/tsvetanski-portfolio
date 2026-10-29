@@ -10,7 +10,7 @@ const slug = 'cpse' as const;
 
 export const metadata = projectMetadata(
   slug,
-  'Two roles making video and social media for the UMD Cyber-Physical Systems Engineering program: interviews, recruitment videos and the Summer Program 2024 film.'
+  'Films, interviews, social content and campaign graphics that helped UMD CPSE show prospective students what the program offers.'
 );
 
 export const revalidate = 3600;
@@ -26,21 +26,21 @@ const moreVideos = [
 const glance = [
   { label: 'Roles', value: 'Digital & Visual Media Specialist (May–Oct 2024); Social Media & Marketing Content Creator (Sep 2023 – May 2024)' },
   { label: 'Organisation', value: 'UMD Cyber-Physical Systems Engineering (CPSE)' },
-  { label: 'Work', value: 'Interviews, recruitment and program videos, weekly social content, campaign graphics' },
-  { label: 'Type', value: 'Paid role' },
+  { label: 'Work', value: 'Program films, interviews, weekly social content, campaign graphics and intern mentoring' },
+  { label: 'Program context', value: 'About 6–8 students per semester at the start; roughly three times that by my departure' },
 ] as const;
 
 const impact = [
   'Led video production from planning to post: interview strategy, filming and editing.',
-  'Produced the Summer Program 2024 video, which attracted a Nobel Prize-winning physicist as a special guest.',
+  'Produced the Summer Program 2024 film; the program also welcomed a Nobel Prize-winning physicist as a special guest.',
   'Ran weekly social campaigns and analytics reporting across Instagram, Facebook and YouTube.',
   'Mentored interns, coordinated media at events, and handled equipment and materials purchasing.',
 ];
 
 const assets = [
-  { src: '/images/CPSE_FLYER_SummerProgram.jpg', alt: 'CPSE Summer Program flyer', width: 624, height: 800, caption: 'Summer Program flyer.' },
-  { src: '/images/CPSE_MoCoShowArticleHeader.jpg', alt: 'CPSE MoCoShow article header', width: 800, height: 674, caption: 'Header for a MoCoShow article.' },
-  { src: '/images/CPSE_FactSheet.jpg', alt: 'CPSE program fact sheet', width: 619, height: 800, caption: 'Program fact sheet.' },
+  { src: '/images/CPSE_FLYER_SummerProgram.jpg', alt: 'CPSE Summer Program flyer', width: 624, height: 800, caption: 'Summer Program flyer: a quick visual introduction to the event.' },
+  { src: '/images/CPSE_FactSheet.jpg', alt: 'CPSE program fact sheet', width: 619, height: 800, caption: 'Program fact sheet: key information for prospective students.' },
+  { src: '/images/CPSE_MoCoShowArticleHeader.jpg', alt: 'CPSE MoCoShow article header', width: 800, height: 674, caption: 'Article header used to introduce the program to a wider audience.' },
 ];
 
 export default async function CpsePage() {
@@ -54,8 +54,8 @@ export default async function CpsePage() {
         slug={slug}
         lede={
           <p>
-            Two back-to-back roles making media for the University of Maryland&apos;s Cyber-Physical Systems Engineering program: turning technical
-            IoT and cyber-physical research into videos people want to watch, running weekly social content, and producing recruitment videos.
+            In two media roles at the University of Maryland&apos;s Cyber-Physical Systems Engineering program, I built videos, interviews,
+            weekly social content and campaign graphics that made its people and opportunities easier for prospective students to see.
           </p>
         }
         hero={
@@ -74,11 +74,11 @@ export default async function CpsePage() {
       />
 
       <CaseStudyBody>
-        <Section id="impact" title="What I did">
+        <Section id="impact" title="Building the program’s digital portfolio" intro={<p>Students considering a technical program need to see the people, projects and experiences behind its name. I helped CPSE show those through a steady mix of video and social media. During my tenure, the program grew from about 6–8 students per semester to roughly three times that size.</p>}>
           <BulletList items={impact} />
         </Section>
 
-        <Section id="videos" title="More videos">
+        <Section id="videos" title="People and program stories" intro={<p>Interviews and team videos gave prospective students a closer look at the faculty and community behind CPSE.</p>}>
           <VideoGrid
             items={moreVideos.map((video) => ({
               title: titleOf(video),
@@ -90,11 +90,11 @@ export default async function CpsePage() {
           <ActionLinks links={[{ href: 'https://www.youtube.com/@UMDCPSE', label: 'UMD CPSE YouTube channel' }]} />
         </Section>
 
-        <Section id="graphics" title="Campaign graphics">
-          <MediaGrid columns={3}>
+        <Section id="graphics" title="Program graphics" intro={<p>Supporting pieces for program promotion and information. Open an image to see it more closely.</p>}>
+          <MediaGrid columns={2}>
             {assets.map((asset) => (
               <Figure key={asset.src} caption={asset.caption}>
-                <LightboxImage src={asset.src} alt={asset.alt} width={asset.width} height={asset.height} className="h-auto w-full" roundedClassName="rounded-none" />
+                <LightboxImage src={asset.src} alt={asset.alt} width={asset.width} height={asset.height} sizes="(min-width: 1024px) 420px, 90vw" lightboxMaxWidth={asset.width} className="h-auto w-full" roundedClassName="rounded-none" />
               </Figure>
             ))}
           </MediaGrid>

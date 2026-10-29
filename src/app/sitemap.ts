@@ -3,7 +3,7 @@ import { allProjects, SITE_URL } from '@/content/project-helpers';
 
 // Generated from the project registry so new case studies are listed automatically.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ['/', '/projects', '/about', '/creative'];
+  const pages = ['/', '/projects', '/about', '/creative', '/animation'];
   const projectRoutes = allProjects().map((project) => project.href);
 
   return [...pages, ...projectRoutes].map((route) => ({
