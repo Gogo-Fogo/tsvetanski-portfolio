@@ -1,4 +1,5 @@
-import { ActionLinks, BulletList, CaseStudyHeader, CaseStudyShell, Figure, MediaGrid, Section } from '@/components/case-study/case-study';
+import Link from 'next/link';
+import { ActionLinks, BulletList, CaseStudyHeader, CaseStudyShell, Figure, MediaGrid, Prose, Section } from '@/components/case-study/case-study';
 import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-study-layout';
 import VideoGrid from '@/components/case-study/video-grid';
 import LightboxImage from '@/components/lightbox-image';
@@ -98,6 +99,10 @@ export default async function CpsePage() {
               </Figure>
             ))}
           </MediaGrid>
+        </Section>
+
+        <Section id="testudo" title="Testudo at USG" intro={<p>One collaboration took my 3D work beyond the screen and into a shared campus space.</p>}>
+          <Prose><p>I improved a Testudo model for 3D printing, printed it with CPSE, and painted it with contributions from other students. The finished turtle stands in front of the Universities at Shady Grove library. <Link href="/animation#testudo">Read the story and see my photo with Montgomery College President Dr. Jermaine F. Williams</Link>.</p></Prose>
         </Section>
       </CaseStudyBody>
 

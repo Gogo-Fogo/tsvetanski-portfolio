@@ -28,6 +28,11 @@ const END_OF_PAGE = [
   { name: "mumosa", path: "/projects/mumosa-crisis-response-vr", viewports: ["desktop", "mobile"] },
 ];
 
+const TESTUDO = [
+  { name: "animation", path: "/animation", viewports: ["desktop", "tablet", "mobile"] },
+  { name: "cpse", path: "/cpse", viewports: ["desktop", "mobile"] },
+];
+
 export const SHOTS = [];
 
 for (const theme of ["dark", "light"]) {
@@ -43,6 +48,17 @@ for (const theme of ["dark", "light"]) {
         path: page.path,
         theme,
         scroll: "bottom",
+        ...VIEWPORTS[viewport],
+      });
+    }
+  }
+  for (const page of TESTUDO) {
+    for (const viewport of page.viewports) {
+      SHOTS.push({
+        file: `${page.name}-${viewport}-${theme}-testudo.png`,
+        path: page.path,
+        theme,
+        scroll: "testudo",
         ...VIEWPORTS[viewport],
       });
     }

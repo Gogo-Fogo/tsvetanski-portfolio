@@ -54,6 +54,17 @@ export default function AnimationPage() {
           </div>
         </Section>
 
+        <Section id="testudo" title="A 3D project for the campus" intro={<p>My animation and 3D skills also helped make something students can see at the Universities at Shady Grove.</p>}>
+          <Prose>
+            <p>I improved an existing Testudo 3D model for printing, then printed it with CPSE. I painted the turtle and invited other students to contribute to the finish. The completed piece stands in front of the USG library.</p>
+            <p>At the Montgomery County Chamber of Commerce Business Awards Dinner, Montgomery College President Dr. Jermaine F. Williams recognized me from the Testudo project. He shared this group photo with me and fellow students.</p>
+          </Prose>
+          <Figure caption="With Montgomery College President Dr. Jermaine F. Williams and fellow students at the Montgomery County Chamber of Commerce Business Awards Dinner.">
+            <LightboxImage src="/images/animation/montgomery-college-president-group.jpg" alt="Georgi Tsvetanski with Montgomery College President Jermaine F. Williams and two fellow students at an awards dinner" width={1280} height={923} sizes="(min-width: 1024px) 1000px, 90vw" className="h-auto w-full" roundedClassName="rounded-none" />
+          </Figure>
+          <Prose><p><a href="https://www.linkedin.com/posts/jermainefwilliams_awesome-to-see-former-montgomery-college-ugcPost-7128932818302238720-vZfl" target="_blank" rel="noopener noreferrer">See President Williams’s LinkedIn post</a> and read more about my <Link href="/cpse">CPSE work</Link>.</p></Prose>
+        </Section>
+
         <Section id="motion" title="Motion and process videos" intro={<p>Degree projects, animatics and process recordings from the archive.</p>}>
           <VideoGrid items={degreeVideos.map((video) => {
             const embedUrl = `https://www.youtube.com/embed/${video.id}`;

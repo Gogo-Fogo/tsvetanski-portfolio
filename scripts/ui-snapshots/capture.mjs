@@ -104,7 +104,9 @@ async function captureShot(debuggingUrl, shot) {
       `(async () => {
         await document.fonts.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-        if (${JSON.stringify(shot.scroll ?? "top")} === 'bottom') {
+        if (${JSON.stringify(shot.scroll ?? "top")} === 'testudo') {
+          document.querySelector('#testudo')?.scrollIntoView();
+        } else if (${JSON.stringify(shot.scroll ?? "top")} === 'bottom') {
           window.scrollTo(0, document.documentElement.scrollHeight);
         } else {
           window.scrollTo(0, 0);
