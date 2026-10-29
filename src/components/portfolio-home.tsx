@@ -22,7 +22,7 @@ const shinobiTrailer: ProjectCardData = {
 
 const alienWalk: ProjectCardData = {
   title: 'Alien Walk Cycle',
-  href: '/creative#animation',
+  href: '/animation',
   summary: 'A motion study in weight, rhythm and posing.',
   tags: ['3D animation', 'Walk cycle'],
   card: {
