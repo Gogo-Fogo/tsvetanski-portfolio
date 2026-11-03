@@ -21,6 +21,7 @@ const PAGES = [
   { name: "tur", path: "/projects/tur-workout-tracker", viewports: ["mobile"] },
   { name: "shinobi", path: "/projects/shinobi-story", viewports: ["desktop", "mobile"] },
   { name: "prince", path: "/projects/prince-of-persia-warrior-within-mod", viewports: ["desktop", "mobile"] },
+  { name: "project-be", path: "/projects/project-be", viewports: ["desktop", "tablet", "mobile"] },
 ];
 
 const END_OF_PAGE = [
