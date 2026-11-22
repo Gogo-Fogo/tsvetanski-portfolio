@@ -74,11 +74,11 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
           </p>
           <p className={styles.heroLine}>I build interactive experiences that bridge research and play.</p>
           <div className={styles.heroActions}>
-            <a href="/resume.pdf" target="_blank" rel="noreferrer" className={ui.buttonPrimary}>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer" className={`${ui.buttonPrimary} ${ui.buttonIconTurn}`}>
               <FileText aria-hidden="true" size={18} strokeWidth={1.8} />
               View Resume
             </a>
-            <a href="#contact" className={ui.buttonSecondary}>
+            <a href="#contact" className={`${ui.buttonSecondary} ${ui.buttonIconTurn}`}>
               <Send aria-hidden="true" size={17} strokeWidth={1.8} />
               Contact Me
             </a>

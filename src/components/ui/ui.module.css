@@ -222,6 +222,61 @@
   }
 }
 
+/* Quieter overlay cards: a faint edge, tags as plain text, and the arrow without a ring
+   until the card is hovered or focused. Less to read, same information. */
+
+.cardFeatured,
+.cardCompact {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.cardFeatured .tags,
+.cardCompact .tags {
+  gap: 0.15rem 0.55rem;
+}
+
+.cardFeatured .tag,
+.cardCompact .tag {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cardFeatured .tag + .tag::before,
+.cardCompact .tag + .tag::before {
+  margin-right: 0.55rem;
+  content: "\00B7";
+}
+
+.cardFeatured .cardArrow,
+.cardCompact .cardArrow {
+  border-color: transparent;
+}
+
+/* Buttons whose icon turns toward the pointer (homepage hero). */
+
+.buttonIconTurn svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.buttonIconTurn:hover svg,
+.buttonIconTurn:focus-visible svg {
+  transform: rotate(-12deg) scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buttonIconTurn svg {
+    transition: none;
+  }
+
+  .buttonIconTurn:hover svg,
+  .buttonIconTurn:focus-visible svg {
+    transform: none;
+  }
+}
+
 /* ---------- Category tabs ---------- */
 
 .tabsWrap {

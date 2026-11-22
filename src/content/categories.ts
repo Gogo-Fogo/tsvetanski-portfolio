@@ -1,8 +1,11 @@
 /**
  * The four project categories. These labels are used everywhere: homepage tabs, the Projects
  * page filter, case-study chips and the command palette. Change them here only.
+ *
+ * Order matters: the homepage "All Projects" view leads with MUMOSA (XR), so the tab next to it
+ * is Gameplay Systems. Its first click then swaps the big card instead of showing MUMOSA again.
  */
-export const categoryIds = ['xr', 'gameplay', 'tools', 'creative'] as const;
+export const categoryIds = ['gameplay', 'xr', 'tools', 'creative'] as const;
 
 export type CategoryId = (typeof categoryIds)[number];
 
