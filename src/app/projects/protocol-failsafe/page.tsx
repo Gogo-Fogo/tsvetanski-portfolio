@@ -12,15 +12,15 @@ import { CaseStudyBody, CaseStudyFooter } from '@/components/case-study/case-stu
 import LightboxImage from '@/components/lightbox-image';
 import { projectMetadata } from '@/content/project-helpers';
 
-const slug = 'project-be' as const;
+const slug = 'protocol-failsafe' as const;
 
 export const metadata = projectMetadata(
   slug,
   'An offline kit for a household: a Kiwix library, a local Ollama AI that answers only from it with citations, and printable first-aid cards. Measured on a GPU desktop and an Intel MacBook on battery.'
 );
 
-const IMG = '/images/projects/project-be';
-const REPO = 'https://github.com/Gogo-Fogo/project-be';
+const IMG = '/images/projects/protocol-failsafe';
+const REPO = 'https://github.com/Gogo-Fogo/protocol-failsafe';
 
 // Screenshots still to capture (real ones only): the chat page answering "how do I stop severe
 // bleeding" with the card on top and cited sources, the library home, and a printed card.
@@ -168,21 +168,21 @@ const toc = [
   { id: 'outcome', label: 'Outcome' },
 ];
 
-export default function ProjectBePage() {
+export default function ProtocolFailsafePage() {
   return (
     <CaseStudyShell>
       <CaseStudyHeader
         slug={slug}
         lede={
           <p>
-            I designed an offline kit for a household: an encyclopedia library, a local AI that answers only from it and cites its sources,
-            and printable first-aid cards. I built it with Claude Code as my AI pair and measured every model choice on the two machines it
-            runs on.
+            When the power, internet and phones are out, this kit still answers questions. A local AI replies only from an offline library
+            and cites its sources, and printed first-aid cards cover the moments with no device at all. I designed it, directed the build
+            with Claude Code, and chose every model by measuring it on the two machines it runs on.
           </p>
         }
         hero={
           <LightboxImage
-            src={`${IMG}/project-be-pipeline-hero.png`}
+            src={`${IMG}/protocol-failsafe-pipeline-hero.png`}
             alt="Diagram: a question goes to a first-aid card, then the offline library, then a cited answer, all with no internet"
             width={1600}
             height={660}
@@ -202,9 +202,9 @@ export default function ProjectBePage() {
           title="The problem"
           intro={
             <p>
-              When power, internet or cell service are out for days, a household loses the tools it normally uses to look things up. The goal
-              was a kit that still answers practical questions, from first aid to safe food and water, on hardware the household already
-              owns.
+              When power, internet or cell service is out for days, a household loses every tool it normally uses to look things up. The
+              goal: a kit that still answers practical questions, from stopping bleeding to keeping food and water safe, on hardware the
+              household already owns.
             </p>
           }
         >
@@ -313,8 +313,9 @@ export default function ProjectBePage() {
           intro={
             <>
               <p>
-                The kit runs on a Windows desktop and an Intel MacBook, answers in about 7–12 s on the GPU and about 50 s on the laptop CPU,
-                and refuses questions its library cannot answer. A generalised version is public with a setup guide any AI agent can follow.
+                The kit runs on a Windows desktop and an Intel MacBook with no network: about 7–12 s per answer on the GPU, about 50 s on the
+                laptop CPU, and a plain refusal when the library has no answer. A generalised version is public, with a setup guide any AI
+                agent can follow.
               </p>
               <p>
                 My part: the requirements, the answer pipeline design, the safety rules, model selection, the tests on both machines and the

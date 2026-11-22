@@ -50,7 +50,7 @@ CARDS: dict[str, tuple[str, tuple[float, float]]] = {
     "black-dice-engine": ("images/projects/black-dice-engine/black-dice-home-card.jpg", (0.5, 0.5)),
     "ami-research-companion": ("images/projects/ami/ami-chat-evidence-illustrated.png", (0.5, 0.3)),
     # Placeholder: a pipeline diagram until a real capture of the chat page exists.
-    "project-be": ("images/projects/project-be/project-be-pipeline-diagram.png", (0.5, 0.5)),
+    "protocol-failsafe": ("images/projects/protocol-failsafe/protocol-failsafe-pipeline-diagram.png", (0.5, 0.5)),
     "feh-barracks-manager": ("images/projects/feh-barracks/feh-hero-library.png", (0.5, 0.3)),
     "tur-workout-tracker": ("images/projects/tur-workout-tracker/tur-banner.jpg", (0.9, 0.5)),
     "comfyui-production-pipeline": ("images/projects/comfyui-production-pipeline/prince-birefnet-cutout.png", (0.5, 0.5)),
