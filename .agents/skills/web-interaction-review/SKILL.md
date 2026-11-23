@@ -41,9 +41,11 @@ Walk at least tasks 1–3 on a phone width for any homepage change, and 3–5 fo
 - **Content budget per card:** title, one sentence of roughly ten words, at most two tags.
   The whole card is the link; an arrow is only a cue. No counters, dots or carousel arrows.
 - **Homepage:** compact hero (real portrait, name, `Simulation · XR · Gameplay Systems`, one
-  line in Georgi's voice, View Resume + Contact Me), category tabs that swap cards in place,
-  one featured card and two smaller cards, then a "View all" link. No second Resume button in
-  the header. No stock or AI-generated scenery.
+  line in Georgi's voice, View Resume + Contact Me), then one featured card and two smaller
+  cards. From 761 px up, category tabs swap the cards in place, then a "View all" link. On
+  phones (760 px and below) there are no tabs: the selected projects, then a "Browse by
+  category" list with counts that opens `/projects?category=`, All projects and search. No
+  second Resume button in the header. No stock or AI-generated scenery.
 - **Too much and too little both fail.** The owner rejected dense dashboards (cognitive
   overload) and bare image-plus-title rows (no message, no context). Stay in the middle.
 - **Imagery:** real captures and Georgi's real photo only. Never AI-generated screenshots,

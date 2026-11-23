@@ -301,3 +301,8 @@
     transition: none;
   }
 }
+
+/* The logo link is a full 44 px tap target on phones (the mark alone is 34 px wide). */
+.brand {
+  min-width: 2.75rem;
+}

@@ -77,8 +77,10 @@ Don't add or update third-party skills without pinning a reviewed commit in
 - **Density:** both extremes failed review. Dense dashboards read as cognitive overload; bare
   image + title rows lose the message. Stay in the middle.
 - **Homepage:** compact hero (real portrait, name, `Simulation · XR · Gameplay Systems`, one
-  sentence in Georgi's voice, View Resume + Contact Me), category tabs that swap projects in
-  place, one featured card plus two smaller ones, then "View all".
+  sentence in Georgi's voice, View Resume + Contact Me), then one featured card plus two smaller
+  ones. From 761 px up, category tabs above the cards swap them in place, then "View all".
+  Phones (760 px and below) have no tabs: the selected projects, then a "Browse by category"
+  list (each category with its count, opening `/projects?category=`), All projects and search.
 - **Categories** use the same names everywhere: `XR + Simulation`, `Gameplay Systems`,
   `Tools & AI`, `Creative`.
 - **Imagery:** real captures and Georgi's real photo only. Never present AI-generated faces,

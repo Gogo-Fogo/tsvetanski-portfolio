@@ -448,3 +448,62 @@
     transform: none;
   }
 }
+
+/* Phones: the two smaller homepage cards become slim rows (thumbnail, then text on the page
+   surface), so the three projects read as one list instead of three full screens. */
+
+@media (max-width: 760px) {
+  .cardCompact {
+    display: grid;
+    grid-template-columns: 6.75rem minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 0;
+    border-color: var(--border);
+    background: var(--surface);
+    color: var(--foreground);
+  }
+
+  .cardCompact::after {
+    display: none;
+  }
+
+  .cardCompact .cardMedia {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+  }
+
+  .cardCompact .cardCopy {
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.8rem 2.75rem 0.8rem 0.95rem;
+  }
+
+  .cardCompact .cardTitle {
+    font-size: 1.02rem;
+  }
+
+  .cardCompact .cardSummary {
+    font-size: 0.85rem;
+    line-height: 1.35;
+    color: color-mix(in srgb, var(--foreground) 74%, transparent);
+  }
+
+  .cardCompact .tags {
+    margin-top: 0.15rem;
+  }
+
+  .cardCompact .tag {
+    font-size: 0.74rem;
+    color: var(--muted);
+  }
+
+  .cardCompact .cardArrow {
+    top: calc(50% - 1rem);
+    right: 0.55rem;
+    bottom: auto;
+    width: 2rem;
+    height: 2rem;
+    color: var(--muted);
+  }
+}

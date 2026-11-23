@@ -2,12 +2,26 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, FileText, Send } from 'lucide-react';
+import {
+  ArrowRight,
+  BrainCircuit,
+  ChevronRight,
+  Clapperboard,
+  FileText,
+  Gamepad2,
+  LayoutGrid,
+  RectangleGoggles,
+  Search,
+  Send,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useState } from 'react';
+import { useCommandPalette } from '@/components/site/command-palette-provider';
 import CategoryTabs, { type TabValue } from '@/components/ui/category-tabs';
 import ProjectCard, { type ProjectCardData } from '@/components/ui/project-card';
 import ui from '@/components/ui/ui.module.css';
-import { categories } from '@/content/categories';
+import { categories, categoryIds, type Category } from '@/content/categories';
+import { allProjects, projectsIn } from '@/content/project-helpers';
 import { projects } from '@/content/projects';
 import styles from './portfolio-home.module.css';
 
@@ -48,12 +62,32 @@ const viewAll: Record<TabValue, { href: string; label: string }> = {
   creative: { href: '/projects?category=creative', label: `All ${categories.creative.label} projects` },
 };
 
+/** Phones: every category is a direct way into the full list, with its size up front. */
+const categoryIcons: Record<Category['icon'], LucideIcon> = {
+  goggles: RectangleGoggles,
+  gamepad: Gamepad2,
+  brain: BrainCircuit,
+  clapperboard: Clapperboard,
+};
+
+const browseRows = categoryIds.map((id) => ({
+  id,
+  href: `/projects?category=${id}`,
+  label: categories[id].label,
+  description: categories[id].description,
+  count: projectsIn(id).length,
+  Icon: categoryIcons[categories[id].icon],
+}));
+
+const totalProjects = allProjects().length;
+
 interface PortfolioHomeProps {
   shinobiVideoStatsText?: string | null;
 }
 
 export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomeProps) {
   const [activeLens, setActiveLens] = useState<TabValue>('all');
+  const { openPalette, preloadPalette } = useCommandPalette();
 
   // Live view counts replace the generic second tag on the Shinobi trailer card.
   const views = shinobiVideoStatsText?.split(' · ')[0];
@@ -98,6 +132,8 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
         </div>
       </section>
 
+      <h2 className={styles.phoneHeading}>Selected work</h2>
+
       <div className={styles.tabBar}>
         <CategoryTabs value={activeLens} onChange={setActiveLens} controls="project-panel" />
       </div>
@@ -117,6 +153,57 @@ export default function PortfolioHome({ shinobiVideoStatsText }: PortfolioHomePr
           {viewAll[activeLens].label} <ArrowRight aria-hidden="true" size={18} strokeWidth={1.6} />
         </Link>
       </section>
+
+      <nav className={styles.browse} aria-labelledby="browse-heading">
+        <h2 id="browse-heading" className={styles.phoneHeading}>
+          Browse by category
+        </h2>
+        <ul className={styles.browseList}>
+          {browseRows.map(({ id, href, label: rowLabel, description, count, Icon }) => (
+            <li key={id}>
+              <Link href={href} className={styles.browseRow}>
+                <span className={styles.browseIcon} aria-hidden="true">
+                  <Icon size={20} strokeWidth={1.6} />
+                </span>
+                <span className={styles.browseText}>
+                  <span className={styles.browseLabel}>{rowLabel}</span>
+                  <span className={styles.browseDescription}>{description}</span>
+                </span>
+                <span className={styles.browseCount}>
+                  {count}
+                  <span className="sr-only"> projects</span>
+                </span>
+                <ChevronRight aria-hidden="true" size={18} strokeWidth={1.6} className={styles.browseChevron} />
+              </Link>
+            </li>
+          ))}
+          <li>
+            <Link href="/projects" className={styles.browseRow}>
+              <span className={styles.browseIcon} aria-hidden="true">
+                <LayoutGrid size={20} strokeWidth={1.6} />
+              </span>
+              <span className={styles.browseText}>
+                <span className={styles.browseLabel}>All projects</span>
+              </span>
+              <span className={styles.browseCount}>
+                {totalProjects}
+                <span className="sr-only"> projects</span>
+              </span>
+              <ChevronRight aria-hidden="true" size={18} strokeWidth={1.6} className={styles.browseChevron} />
+            </Link>
+          </li>
+        </ul>
+        <button
+          type="button"
+          className={styles.browseSearch}
+          onClick={openPalette}
+          onPointerEnter={preloadPalette}
+          onFocus={preloadPalette}
+        >
+          <Search aria-hidden="true" size={18} strokeWidth={1.8} />
+          Search projects and pages
+        </button>
+      </nav>
     </main>
   );
 }
