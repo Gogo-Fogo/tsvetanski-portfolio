@@ -126,6 +126,22 @@ Don't add or update third-party skills without pinning a reviewed commit in
   Start from his own wording and keep his lines; edit before replacing. Pull facts from his
   portfolio and `CONTEXT/` yourself before asking him; ask only for what isn't there, and never
   fill a gap with an invented detail. Keep the length he asked for.
+
+  **Every version, no exceptions.** Run steps 0–4 on every draft you hand him, including a
+  one-line fix, a shortened version, or a merge of two earlier versions. Stitching pieces
+  together without re-running the checks is how repeated words ("grateful… thankful…
+  grateful") and filler ("along the way") slip back in. Show the takeaway sentence and a
+  short note of what each skill changed with every version, so he can see the skills ran.
+
+  **Track the agreed text.** Keep the latest version he accepted for each paragraph. When he
+  pastes his document back, compare it with that version and point out anything that went
+  missing (for example a key detail lost when he pasted an older draft) before editing further.
+  Edit from the newest agreed text, never an older draft.
+
+  **Don't over-fill.** Never sharpen a detail past the source: if the source says "Derailment",
+  don't write "train derailment"; if it says "AI", don't upgrade it to a specific model unless
+  he confirms. Don't fold several topics into one paragraph; if a paragraph does two jobs, split
+  it.
 - **Art:** full-resolution originals go in `art-source/`; run
   `python scripts/build-creative-art.py` to regenerate `/creative` images and the manifest.
 
