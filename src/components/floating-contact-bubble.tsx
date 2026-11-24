@@ -45,8 +45,12 @@ export default function FloatingContactBubble() {
     return null;
   }
 
+  const isWritingPage = pathname === "/writing" || pathname.startsWith("/writing/");
+
   return (
-    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40">
+    <div
+      className={`fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40${isWritingPage ? " max-[850px]:hidden" : ""}`}
+    >
       {open ? (
         <div
           id="quick-contact-panel"

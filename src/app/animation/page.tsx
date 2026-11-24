@@ -6,6 +6,7 @@ import VideoGrid from '@/components/case-study/video-grid';
 import LightboxImage from '@/components/lightbox-image';
 import { getYouTubeThumbnailUrl } from '@/app/youtube';
 import { pageMetadata } from '@/content/project-helpers';
+import { testudoPostPath } from '@/content/usg-writing';
 import { animationCategories, animationSelected } from '@/app/creative/animation-gallery';
 import ArtGallery from '@/app/creative/art-gallery';
 import styles from '@/app/creative/creative.module.css';
@@ -62,7 +63,7 @@ export default function AnimationPage() {
           <Figure caption="With Montgomery College President Dr. Jermaine F. Williams and fellow students at the Montgomery County Chamber of Commerce Business Awards Dinner.">
             <LightboxImage src="/images/animation/montgomery-college-president-group.jpg" alt="Georgi Tsvetanski with Montgomery College President Jermaine F. Williams and two fellow students at an awards dinner" width={1280} height={923} sizes="(min-width: 1024px) 1000px, 90vw" className="h-auto w-full" roundedClassName="rounded-none" />
           </Figure>
-          <Prose><p><a href="https://www.linkedin.com/posts/jermainefwilliams_awesome-to-see-former-montgomery-college-ugcPost-7128932818302238720-vZfl" target="_blank" rel="noopener noreferrer">See President Williams’s LinkedIn post</a> and read more about my <Link href="/cpse">CPSE work</Link>.</p></Prose>
+          <Prose><p>Read my USG blog post, <Link href={testudoPostPath}>Testudo Joins USG!</Link>, and see more of my <Link href="/cpse">CPSE work</Link>.</p></Prose>
         </Section>
 
         <Section id="motion" title="Motion and process videos" intro={<p>Degree projects, animatics and process recordings from the archive.</p>}>

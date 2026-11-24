@@ -4,6 +4,7 @@ import Link from 'next/link';
 import DegreeGraph from '@/components/degree-graph';
 import ui from '@/components/ui/ui.module.css';
 import { pageMetadata } from '@/content/project-helpers';
+import { writingPath, writingTitle } from '@/content/usg-writing';
 import styles from './about.module.css';
 
 export const metadata = pageMetadata({
@@ -155,6 +156,10 @@ export default function AboutPage() {
           How the degrees connect to the skills I use. Select a degree to see what it added; the list above has the same information.
         </p>
         <DegreeGraph className="mx-auto h-[560px] w-full max-w-3xl sm:h-[500px] lg:h-[540px]" />
+      </section>
+      <section className={styles.section} aria-labelledby="writing-title">
+        <h2 id="writing-title" className={styles.sectionTitle}>Writing</h2>
+        <Link href={writingPath} className={styles.rowLink}>{writingTitle}</Link>
       </section>
     </main>
   );

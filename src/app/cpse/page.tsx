@@ -6,6 +6,7 @@ import LightboxImage from '@/components/lightbox-image';
 import LightboxVideo from '@/components/lightbox-video';
 import { formatYouTubeStats, getYouTubeThumbnailUrl, getYouTubeVideoStats } from '@/app/youtube';
 import { projectMetadata } from '@/content/project-helpers';
+import { testudoPostPath } from '@/content/usg-writing';
 
 const slug = 'cpse' as const;
 
@@ -102,7 +103,7 @@ export default async function CpsePage() {
         </Section>
 
         <Section id="testudo" title="Testudo at USG" intro={<p>One collaboration took my 3D work beyond the screen and into a shared campus space.</p>}>
-          <Prose><p>I improved a Testudo model for 3D printing, printed it with CPSE, and painted it with contributions from other students. The finished turtle stands in front of the Universities at Shady Grove library. <Link href="/animation#testudo">Read the story and see my photo with Montgomery College President Dr. Jermaine F. Williams</Link>.</p></Prose>
+          <Prose><p>I improved a Testudo model for 3D printing, printed it with CPSE, and painted it with contributions from other students. The finished turtle stands in front of the Universities at Shady Grove library. Read my USG blog post, <Link href={testudoPostPath}>Testudo Joins USG!</Link>, or <Link href="/animation#testudo">see my photo with Montgomery College President Dr. Jermaine F. Williams</Link>.</p></Prose>
         </Section>
       </CaseStudyBody>
 

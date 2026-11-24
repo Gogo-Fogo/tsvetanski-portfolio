@@ -43,14 +43,6 @@ connect with our vibrant USG community. Continue reading →
 Posted in Life at USG, students, Work Experience | Tagged advice, Art, blog, Blogging, expression, inspiration, life, real world, the Universities a
 videography, writer | Leave a comment
 
-Spotlight on USG’s Artist: Jennifer Cueva at Glenstone
-### Posted on April 25, 2024 by georgitsvetanskigogo
-
-Discover the serene beauty of Jennifer Cueva’s painting “I am Home Again,” a mindful masterpiece that gen
-scenery into a harmonious and healing visual experience. Continue reading →
-Posted in Campus Activities, Fitness & Wellness, Life at USG, students | Tagged Art, glenstone museum, life, mental health, Priddy Library, Stud
-Shady Grove, USG | Leave a comment
-
 ### The Hidden Danger of Taking Photos During a Solar Eclipse
 ### Posted on April 10, 2024 by georgitsvetanskigogo
 
