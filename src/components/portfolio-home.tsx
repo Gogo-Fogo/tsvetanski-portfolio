@@ -25,7 +25,7 @@ import { allProjects, projectsIn } from '@/content/project-helpers';
 import { projects } from '@/content/projects';
 import styles from './portfolio-home.module.css';
 
-/** Creative highlights that aren't full case studies. */
+/** Trailer highlight that shares the Shinobi Story case study. */
 const shinobiTrailer: ProjectCardData = {
   title: 'Shinobi Story Highlight',
   href: '/projects/shinobi-story',
@@ -34,24 +34,13 @@ const shinobiTrailer: ProjectCardData = {
   card: { src: 'https://img.youtube.com/vi/bPsGUDkz6-0/maxresdefault.jpg', alt: 'Shinobi Story featured video highlight' },
 };
 
-const alienWalk: ProjectCardData = {
-  title: 'Alien Walk Cycle',
-  href: '/animation',
-  summary: 'A motion study in weight, rhythm and posing.',
-  tags: ['3D animation', 'Walk cycle'],
-  card: {
-    src: '/images/projects/creative/alien-walk-wide.png',
-    alt: 'Alien walking animation study in an extended grayscale street scene',
-  },
-};
-
 /** One featured card plus two smaller ones per tab. */
 const lenses: Record<TabValue, readonly [ProjectCardData, ProjectCardData, ProjectCardData]> = {
   all: [projects['mumosa-crisis-response-vr'], projects['shinobi-story'], projects['black-dice-engine']],
   xr: [projects['mumosa-crisis-response-vr'], projects['shift-culture-vr'], projects.birdwatching],
   gameplay: [projects['shinobi-story'], projects['shonen-showdown'], projects['cranky-game-jam']],
-  tools: [projects['black-dice-engine'], projects['ami-research-companion'], projects['feh-barracks-manager']],
-  creative: [projects.cpse, shinobiTrailer, alienWalk],
+  tools: [projects['black-dice-engine'], projects['ami-research-companion'], projects['tur-workout-tracker']],
+  creative: [projects.cpse, shinobiTrailer, projects.figuresmith],
 };
 
 const viewAll: Record<TabValue, { href: string; label: string }> = {

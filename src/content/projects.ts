@@ -399,7 +399,7 @@ export const projects: Record<ProjectSlug, Project> = {
     primaryCategory: 'tools',
     status: 'In development',
     role: 'Solo developer and designer: product, iOS app, watch app, data, brand and website',
-    card: card('tur-workout-tracker', 'TUR app Today screen with the next workout'),
+    card: card('tur-workout-tracker', 'Red aurochs-horn mark for TUR', '64% top'),
     searchTerms: ['tur', 'gym', 'workout', 'fitness', 'iphone', 'ios', 'swift', 'garmin', 'watch', 'hyrox'],
   },
   'comfyui-production-pipeline': {

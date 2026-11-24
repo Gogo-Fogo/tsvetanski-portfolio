@@ -52,7 +52,7 @@ CARDS: dict[str, tuple[str, tuple[float, float]]] = {
     # Placeholder: a pipeline diagram until a real capture of the chat page exists.
     "protocol-failsafe": ("images/projects/protocol-failsafe/protocol-failsafe-pipeline-diagram.png", (0.5, 0.5)),
     "feh-barracks-manager": ("images/projects/feh-barracks/feh-hero-library.png", (0.5, 0.3)),
-    "tur-workout-tracker": ("images/projects/tur-workout-tracker/tur-banner.jpg", (0.9, 0.5)),
+    "tur-workout-tracker": ("images/projects/tur-workout-tracker/tur-banner.jpg", (0.5, 0.5)),
     "comfyui-production-pipeline": ("images/projects/comfyui-production-pipeline/prince-birefnet-cutout.png", (0.5, 0.5)),
     "horror-vn-kit": ("images/projects/horror-vn-kit/branching-choices.png", (0.5, 0.5)),
     "legion-go-console-dock": ("images/projects/legion-go-console-dock/dock-exploded-render.jpg", (0.5, 0.5)),
@@ -79,12 +79,21 @@ def crop_to_ratio(image: Image.Image, focus: tuple[float, float]) -> Image.Image
     return image.crop((left, top, left + new_width, top + new_height))
 
 
+def build_card(slug: str, source: str, focus: tuple[float, float]) -> Image.Image:
+    image = load(source)
+    if slug == "tur-workout-tracker":
+        # Isolate the aurochs mark so the banner's lettering stays out of the card.
+        image = image.crop((68, 270, 444, 505))
+    card = crop_to_ratio(image, focus)
+    if card.width > MAX_WIDTH:
+        card = card.resize((MAX_WIDTH, round(MAX_WIDTH / RATIO)), Image.LANCZOS)
+    return card
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for slug, (source, focus) in CARDS.items():
-        card = crop_to_ratio(load(source), focus)
-        if card.width > MAX_WIDTH:
-            card = card.resize((MAX_WIDTH, round(MAX_WIDTH / RATIO)), Image.LANCZOS)
+        card = build_card(slug, source, focus)
         path = OUT / f"{slug}.jpg"
         card.save(path, "JPEG", quality=82, optimize=True, progressive=True)
         print(f"{slug}: {card.width}x{card.height}, {path.stat().st_size // 1024} KB")
