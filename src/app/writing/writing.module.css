@@ -15,8 +15,7 @@
   font-size: var(--text-sm);
 }
 
-.pageLinks a,
-.prose figure > p > a {
+.pageLinks a {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
