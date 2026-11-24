@@ -114,6 +114,9 @@ Don't add or update third-party skills without pinning a reviewed commit in
   URL even when unlinked. Personal and private files stay out of git (`output/`).
 - **Writing paragraphs:** whenever Georgi asks for a paragraph or a rewrite (case studies, bios,
   personal stories, applications), load the skills before drafting, not after he complains:
+  0. Write one sentence first: what should the reader think or feel at the end? Make it
+     specific ("he builds for real people and keeps going after the grade"), not "inspired".
+     Ask Georgi if it isn't clear, and check the finished paragraph against it.
   1. `storytelling`: find the real conflict and the last line in the source facts, so the
      paragraph has tension instead of a list of duties.
   2. `viral-hooks`, only when the opening line is the problem.
