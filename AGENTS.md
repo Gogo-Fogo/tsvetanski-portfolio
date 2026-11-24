@@ -46,6 +46,7 @@ Code gets its mirror in `.claude/skills/`. Load the matching skill **before** do
 | A new flow or stateful feature (contact form, filters, embeds) | `product-design-and-ux` |
 | A design or IA decision with real trade-offs, before building | `grilling` |
 | A hard bug or regression | `diagnosing-bugs` |
+| Case-study narrative, bios, Georgi's own story; anything that reads stiff or AI-written | `storytelling`, `viral-hooks`, `anti-ai-writing`, then `de-ai` or `orwells-rules` |
 
 Don't add or update third-party skills without pinning a reviewed commit in
 `scripts/install-agent-skills.sh` and recording the licence in
@@ -111,6 +112,36 @@ Don't add or update third-party skills without pinning a reviewed commit in
   material or unannounced work without the owner's explicit approval. Credit published client
   figures to their source (e.g. ARL's MUMOSA figure). Anything in `public/` is downloadable by
   URL even when unlinked. Personal and private files stay out of git (`output/`).
+- **Writing paragraphs:** whenever Georgi asks for a paragraph or a rewrite (case studies, bios,
+  personal stories, applications), load the skills before drafting, not after he complains:
+  0. Write one sentence first: what should the reader think or feel at the end? Make it
+     specific ("he builds for real people and keeps going after the grade"), not "inspired".
+     Ask Georgi if it isn't clear, and check the finished paragraph against it.
+  1. `storytelling`: find the real conflict and the last line in the source facts, so the
+     paragraph has tension instead of a list of duties.
+  2. `viral-hooks`, only when the opening line is the problem.
+  3. `anti-ai-writing`: concrete details over categories, no hollow "not X, it's Y", no stale
+     metaphors ("my journey", "bridge the gap").
+  4. `de-ai` as the last pass.
+  Start from his own wording and keep his lines; edit before replacing. Pull facts from his
+  portfolio and `CONTEXT/` yourself before asking him; ask only for what isn't there, and never
+  fill a gap with an invented detail. Keep the length he asked for.
+
+  **Every version, no exceptions.** Run steps 0–4 on every draft you hand him, including a
+  one-line fix, a shortened version, or a merge of two earlier versions. Stitching pieces
+  together without re-running the checks is how repeated words ("grateful… thankful…
+  grateful") and filler ("along the way") slip back in. Show the takeaway sentence and a
+  short note of what each skill changed with every version, so he can see the skills ran.
+
+  **Track the agreed text.** Keep the latest version he accepted for each paragraph. When he
+  pastes his document back, compare it with that version and point out anything that went
+  missing (for example a key detail lost when he pasted an older draft) before editing further.
+  Edit from the newest agreed text, never an older draft.
+
+  **Don't over-fill.** Never sharpen a detail past the source: if the source says "Derailment",
+  don't write "train derailment"; if it says "AI", don't upgrade it to a specific model unless
+  he confirms. Don't fold several topics into one paragraph; if a paragraph does two jobs, split
+  it.
 - **Art:** full-resolution originals go in `art-source/`; run
   `python scripts/build-creative-art.py` to regenerate `/creative` images and the manifest.
 

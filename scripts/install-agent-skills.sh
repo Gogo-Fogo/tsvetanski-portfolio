@@ -80,6 +80,22 @@ MATT_REV="d81f3a183412e71a5b1e84ca21bc1a35eea03a60"
 install_skill "$MATT" "$MATT_REV" "skills/productivity/grilling" "grilling"
 install_skill "$MATT" "$MATT_REV" "skills/engineering/diagnosing-bugs" "diagnosing-bugs"
 
+# --- Writing: voice, story and cutting AI-sounding prose ----------------------
+# For case-study copy, bios and personal stories. Brand Voice (Tribe AI) was
+# considered but needs its plugin agents and enterprise connectors to work.
+
+CONTENT="https://github.com/artemnovitckii/content-skills.git"
+CONTENT_REV="1c6e909c975b15d80f6ffcb0e2b60904b7da6656"
+for skill in anti-ai-writing storytelling viral-hooks; do
+  install_skill "$CONTENT" "$CONTENT_REV" "$skill" "$skill"
+done
+
+SURENDRAN="https://github.com/surendranb/writing-skills.git"
+SURENDRAN_REV="03bd5bb33e0760cf44c32822d2d79d7e2c42c6a6"
+for skill in de-ai orwells-rules; do
+  install_skill "$SURENDRAN" "$SURENDRAN_REV" "skills/$skill" "$skill"
+done
+
 # --- Vercel Web Interface Guidelines ------------------------------------------
 # Upstream's skill fetches the rules from an unpinned URL on every run. Here the
 # rules file is vendored at a reviewed commit and wrapped by a local SKILL.md.
@@ -143,6 +159,19 @@ License: MIT
 Pinned revision: e3d624baaf29dc1fc645aff3e38f03e564d2d6b1
 License: MIT
 - web-interface-guidelines (command.md vendored as guidelines.md; SKILL.md is a local wrapper)
+
+## artemnovitckii/content-skills
+Pinned revision: 1c6e909c975b15d80f6ffcb0e2b60904b7da6656
+License: MIT
+- anti-ai-writing
+- storytelling
+- viral-hooks
+
+## surendranb/writing-skills
+Pinned revision: 03bd5bb33e0760cf44c32822d2d79d7e2c42c6a6
+License: MIT
+- de-ai
+- orwells-rules
 
 Each installed skill contains its upstream LICENSE file. Keep those LICENSE files if the
 vendored skill content is retained or redistributed.
