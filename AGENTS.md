@@ -46,6 +46,7 @@ Code gets its mirror in `.claude/skills/`. Load the matching skill **before** do
 | A new flow or stateful feature (contact form, filters, embeds) | `product-design-and-ux` |
 | A design or IA decision with real trade-offs, before building | `grilling` |
 | A hard bug or regression | `diagnosing-bugs` |
+| Case-study narrative, bios, Georgi's own story; anything that reads stiff or AI-written | `storytelling`, `viral-hooks`, `anti-ai-writing`, then `de-ai` or `orwells-rules` |
 
 Don't add or update third-party skills without pinning a reviewed commit in
 `scripts/install-agent-skills.sh` and recording the licence in

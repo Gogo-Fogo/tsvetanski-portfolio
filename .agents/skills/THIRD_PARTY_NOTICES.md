@@ -29,5 +29,18 @@ Pinned revision: e3d624baaf29dc1fc645aff3e38f03e564d2d6b1
 License: MIT
 - web-interface-guidelines (command.md vendored as guidelines.md; SKILL.md is a local wrapper)
 
+## artemnovitckii/content-skills
+Pinned revision: 1c6e909c975b15d80f6ffcb0e2b60904b7da6656
+License: MIT
+- anti-ai-writing
+- storytelling
+- viral-hooks
+
+## surendranb/writing-skills
+Pinned revision: 03bd5bb33e0760cf44c32822d2d79d7e2c42c6a6
+License: MIT
+- de-ai
+- orwells-rules
+
 Each installed skill contains its upstream LICENSE file. Keep those LICENSE files if the
 vendored skill content is retained or redistributed.
