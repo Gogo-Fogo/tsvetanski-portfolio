@@ -112,6 +112,17 @@ Don't add or update third-party skills without pinning a reviewed commit in
   material or unannounced work without the owner's explicit approval. Credit published client
   figures to their source (e.g. ARL's MUMOSA figure). Anything in `public/` is downloadable by
   URL even when unlinked. Personal and private files stay out of git (`output/`).
+- **Writing paragraphs:** whenever Georgi asks for a paragraph or a rewrite (case studies, bios,
+  personal stories, applications), load the skills before drafting, not after he complains:
+  1. `storytelling`: find the real conflict and the last line in the source facts, so the
+     paragraph has tension instead of a list of duties.
+  2. `viral-hooks`, only when the opening line is the problem.
+  3. `anti-ai-writing`: concrete details over categories, no hollow "not X, it's Y", no stale
+     metaphors ("my journey", "bridge the gap").
+  4. `de-ai` as the last pass.
+  Start from his own wording and keep his lines; edit before replacing. Pull facts from his
+  portfolio and `CONTEXT/` yourself before asking him; ask only for what isn't there, and never
+  fill a gap with an invented detail. Keep the length he asked for.
 - **Art:** full-resolution originals go in `art-source/`; run
   `python scripts/build-creative-art.py` to regenerate `/creative` images and the manifest.
 
